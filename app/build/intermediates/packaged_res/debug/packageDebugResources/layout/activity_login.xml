@@ -13,18 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Đăng nhập"
-            app:titleTextColor="@android:color/white" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ScrollView
         android:layout_width="0dp"
@@ -89,16 +78,18 @@
             </LinearLayout>
 
             <!-- Login Form (grouped) -->
+
+            <!-- Register Form (hidden by default) -->
             <LinearLayout
                 android:id="@+id/loginForm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="589dp"
                 android:orientation="vertical">
 
                 <!-- Email/Phone Input -->
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="224dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="Hoặc tài khoản Hasagi.vn"
@@ -110,14 +101,14 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email/ Số điện thoại"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    android:hint="Email/ Số điện thoại">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailOrPhoneEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"/>
+                        android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Password Input -->
@@ -126,15 +117,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:hint="Mật khẩu"
-                    app:passwordToggleEnabled="true"
-                    android:layout_marginBottom="8dp">
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Forgot Password -->
@@ -142,42 +133,41 @@
                     android:id="@+id/forgotPasswordTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quên mật khẩu?"
-                    android:textColor="?attr/colorPrimary"
                     android:layout_gravity="end"
                     android:layout_marginBottom="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"/>
+                    android:text="Quên mật khẩu?"
+                    android:textColor="?attr/colorPrimary" />
 
                 <!-- Login Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
                     android:text="ĐĂNG NHẬP"
                     android:textColor="@android:color/white"
-                    app:backgroundTint="#00695C"
-                    android:layout_marginBottom="16dp"/>
+                    app:backgroundTint="#00695C" />
 
                 <!-- Sign Up Row: prompt text + button -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Bạn chưa có tài khoản đăng nhập?"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@android:color/darker_gray" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signUpButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="Đăng ký"
-                    android:layout_marginBottom="32dp"/>
+                    android:layout_marginBottom="32dp"
+                    android:text="Đăng ký" />
             </LinearLayout>
 
-            <!-- Register Form (hidden by default) -->
             <LinearLayout
                 android:id="@+id/registerForm"
                 android:layout_width="match_parent"

@@ -12,16 +12,20 @@
         "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_activity_home.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/activity_home.xml"
-    },
-    {
         "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_google.png.flat",
         "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_google.png"
     },
     {
         "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_launcher_background.xml.flat",
         "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_item_employee.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\item_employee.xml"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_home.xml"
     },
     {
         "merged": "com.example.myapplication.app-debug-60:/layout_activity_login.xml.flat",
@@ -94,5 +98,13 @@
     {
         "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_admin_dashboard.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_admin_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_dialog_employee_form.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\dialog_employee_form.xml"
     }
 ]

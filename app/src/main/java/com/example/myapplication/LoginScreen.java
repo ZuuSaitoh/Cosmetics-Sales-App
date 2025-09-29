@@ -46,13 +46,7 @@ public class LoginScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login); // QUAN TRỌNG: Thay đổi thành tên tệp XML của bạn
 
-        // Khởi tạo Toolbar
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút back
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        
 
         // Khởi tạo Views
         emailOrPhoneInputLayout = findViewById(R.id.emailOrPhoneInputLayout);
