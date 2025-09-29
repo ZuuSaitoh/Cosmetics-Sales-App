@@ -23,6 +23,8 @@ public class LoginScreen extends AppCompatActivity {
 
     private static final String HARDCODED_USERNAME = "admin";
     private static final String HARDCODED_PASSWORD = "123456";
+    private static final String CUSTOMER_USERNAME = "customer";
+    private static final String CUSTOMER_PASSWORD = "123456";
 
     private TextInputLayout emailOrPhoneInputLayout;
     private TextInputEditText emailOrPhoneEditText;
@@ -44,13 +46,7 @@ public class LoginScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login); // QUAN TRỌNG: Thay đổi thành tên tệp XML của bạn
 
-        // Khởi tạo Toolbar
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút back
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        
 
         // Khởi tạo Views
         emailOrPhoneInputLayout = findViewById(R.id.emailOrPhoneInputLayout);
@@ -96,9 +92,13 @@ public class LoginScreen extends AppCompatActivity {
                     passwordInputLayout.setError(null); // Xóa lỗi
                 }
 
-                // Kiểm tra tài khoản cứng
-                if (HARDCODED_USERNAME.equals(emailOrPhone) && HARDCODED_PASSWORD.equals(password)) {
-                    Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
+                // Kiểm tra tài khoản cứng (admin hoặc customer)
+                boolean isAdmin = HARDCODED_USERNAME.equals(emailOrPhone) && HARDCODED_PASSWORD.equals(password);
+                boolean isCustomer = CUSTOMER_USERNAME.equals(emailOrPhone) && CUSTOMER_PASSWORD.equals(password);
+
+                if (isAdmin || isCustomer) {
+                    Class<?> destination = isAdmin ? AdminDashboardActivity.class : HomeScreen.class;
+                    Intent intent = new Intent(LoginScreen.this, destination);
                     intent.putExtra("username", emailOrPhone);
                     startActivity(intent);
                 } else {
