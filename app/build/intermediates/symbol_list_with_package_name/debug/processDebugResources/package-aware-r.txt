@@ -3164,6 +3164,9 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btnDelete
+id btnEdit
+id btnOpenAdminDashboard
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3251,9 +3254,13 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etEmail
+id etName
+id etRole
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fabAdd
 id facebookLoginButton
 id fade
 id fill
@@ -3444,6 +3451,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id recyclerEmployees
 id registerForm
 id report_drawn
 id reverseSawtooth
@@ -3564,6 +3572,9 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvEmail
+id tvName
+id tvRole
 id unchecked
 id uniform
 id unlabeled
@@ -3704,6 +3715,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_admin_dashboard
 layout activity_home
 layout activity_login
 layout activity_main
@@ -3723,8 +3735,10 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_employee_form
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
+layout item_employee
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title

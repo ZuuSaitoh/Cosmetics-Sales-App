@@ -21,5 +21,12 @@
         android:textColor="@android:color/white"
         android:backgroundTint="#00695C"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnOpenAdminDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Mở Dashboard Quản trị"
+        android:layout_marginTop="12dp"/>
+
 </LinearLayout>
 

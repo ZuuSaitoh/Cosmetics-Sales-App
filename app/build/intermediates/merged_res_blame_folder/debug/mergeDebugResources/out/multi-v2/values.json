@@ -57,23 +57,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\dokyd\\AndroidStudioProjects\\MyApplication\\app\\src\\main\\res\\values\\colors.xml",
-                    "from": {
-                        "startLines": "7,2,3,4,5,6,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "286,55,102,149,196,241,328",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "323,97,144,191,236,281,365"
-                    },
-                    "to": {
-                        "startLines": "642,949,950,951,962,963,966",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "32919,55779,55826,55873,56617,56662,56828",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "32956,55821,55868,55915,56657,56702,56865"
-                    }
-                },
-                {
                     "source": "C:\\Users\\dokyd\\.gradle\\caches\\8.13\\transforms\\7d47fbd684c8639db4e740f5d7e3554c\\transformed\\savedstate-release\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -222,13 +205,13 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\dokyd\\AndroidStudioProjects\\MyApplication\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "D:\\FPTU\\SWP391\\Cosmetics-Sales-App\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
-                        "startOffsets": "16",
+                        "startOffsets": "17",
                         "endColumns": "51",
-                        "endOffsets": "63"
+                        "endOffsets": "64"
                     },
                     "to": {
                         "startLines": "1987",
@@ -328,6 +311,23 @@
                     }
                 },
                 {
+                    "source": "D:\\FPTU\\SWP391\\Cosmetics-Sales-App\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "7,2,3,4,5,6,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "293,57,105,153,201,247,336",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "330,99,147,195,241,287,373"
+                    },
+                    "to": {
+                        "startLines": "642,949,950,951,962,963,966",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "32919,55779,55826,55873,56617,56662,56828",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "32956,55821,55868,55915,56657,56702,56865"
+                    }
+                },
+                {
                     "source": "C:\\Users\\dokyd\\.gradle\\caches\\8.13\\transforms\\495c9fd0413242d0d289ccad68face30\\transformed\\material3-release\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,15,16,17,18,19,20,21,22,23,24,25,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,74",
@@ -344,6 +344,23 @@
                         "endLines": "1924,2039,2040,2041,2042,2043,2044,2045,2046,2047,2050,2051,2052,2053,2054,2055,2056,2057,2058,2059,2060,2063,2064,2065,2066,2067,2068,2069,2070,2071,2072,2073,2074,2075,2076,2077,2078,2079,2080,2081,2082,2083,2084,2085,2086,2087,2088,2089,2090,2091,2092,2093,2094,2095,2096,2097,2098,2099,5634,5637",
                         "endColumns": "72,87,85,80,83,68,64,82,105,85,13,53,68,60,68,88,94,73,96,92,97,13,90,87,95,97,63,67,86,93,66,71,71,100,108,75,68,47,65,63,73,56,56,71,49,53,70,70,69,68,57,75,70,73,85,49,69,64,12,12",
                         "endOffsets": "127088,137068,137154,137235,137319,137388,137453,137536,137642,137728,137848,137902,137971,138032,138101,138190,138285,138359,138456,138549,138647,138796,138887,138975,139071,139169,139233,139301,139388,139482,139549,139621,139693,139794,139903,139979,140048,140096,140162,140226,140300,140357,140414,140486,140536,140590,140661,140732,140802,140871,140929,141005,141076,141150,141236,141286,141356,141421,395661,395814"
+                    }
+                },
+                {
+                    "source": "D:\\FPTU\\SWP391\\Cosmetics-Sales-App\\app\\src\\main\\res\\values\\themes.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "59",
+                        "endColumns": "92",
+                        "endOffsets": "147"
+                    },
+                    "to": {
+                        "startLines": "6636",
+                        "startColumns": "4",
+                        "startOffsets": "465426",
+                        "endColumns": "91",
+                        "endOffsets": "465513"
                     }
                 },
                 {
@@ -435,23 +452,6 @@
                         "startOffsets": "124257",
                         "endColumns": "42",
                         "endOffsets": "124295"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\dokyd\\AndroidStudioProjects\\MyApplication\\app\\src\\main\\res\\values\\themes.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "56",
-                        "endColumns": "92",
-                        "endOffsets": "144"
-                    },
-                    "to": {
-                        "startLines": "6636",
-                        "startColumns": "4",
-                        "startOffsets": "465426",
-                        "endColumns": "91",
-                        "endOffsets": "465513"
                     }
                 },
                 {
