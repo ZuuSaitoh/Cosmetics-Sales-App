@@ -8,7 +8,6 @@ color teal_200
 color teal_700
 color white
 drawable ic_apple
-drawable ic_arrow_back
 drawable ic_facebook
 drawable ic_google
 drawable ic_launcher_background

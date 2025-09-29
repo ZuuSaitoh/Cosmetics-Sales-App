@@ -1,106 +1,110 @@
 [
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_activity_home.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/activity_home.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/xml/data_extraction_rules.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_google.png.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_google.png"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_apple.png.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_apple.png"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_item_employee.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\item_employee.xml"
+    },
+    {
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_home.xml"
     },
     {
         "merged": "com.example.myapplication.app-debug-60:/layout_activity_login.xml.flat",
         "source": "com.example.myapplication.app-main-62:/layout/activity_login.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_dialog_employee_form.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/dialog_employee_form.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_activity_main.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/activity_main.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_login.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_facebook.png.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_facebook.png"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_google.png.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_google.png"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_activity_admin_dashboard.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/activity_admin_dashboard.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_arrow_back.png.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_arrow_back.png"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/layout_item_employee.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/layout/item_employee.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_facebook.png.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_facebook.png"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\drawable_ic_apple.png.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\drawable\\ic_apple.png"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/xml_backup_rules.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_arrow_back.png.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_arrow_back.png"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_activity_admin_dashboard.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\activity_admin_dashboard.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-60:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.myapplication.app-main-62:/drawable/ic_launcher_background.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-60:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.myapplication.app-main-62:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-60:\\layout_dialog_employee_form.xml.flat",
+        "source": "C:\\Users\\dokyd\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-62:\\layout\\dialog_employee_form.xml"
     }
 ]
