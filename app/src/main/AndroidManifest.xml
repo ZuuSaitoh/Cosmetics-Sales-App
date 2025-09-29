@@ -38,6 +38,12 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication"/>
 
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:label="Quản lý nhân viên"
+            android:theme="@style/Theme.MyApplication"/>
+
     </application>
 
 </manifest>
