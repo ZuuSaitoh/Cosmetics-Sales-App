@@ -2,21 +2,20 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.os.Handler;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
 import com.example.myapplication.model.Banner;
 import com.example.myapplication.model.Product;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreen extends AppCompatActivity {
+public class ProductListingScreen extends AppCompatActivity {
     private RecyclerView bannerRecyclerView;
     private RecyclerView productRecyclerView;
     private BannerAdapter bannerAdapter;
@@ -26,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
     private Handler autoScrollHandler = new Handler();
     private Runnable autoScrollRunnable;
     private int currentBannerPosition = 0;
-    private int scrollDelay = 2000;
+    private int scrollDelay = 5000; 
 
 
 
@@ -87,5 +86,29 @@ public class HomeScreen extends AppCompatActivity {
         autoScrollHandler.postDelayed(autoScrollRunnable, scrollDelay);
     }
 
+    private void stopAutoScroll() {
+        if (autoScrollRunnable != null) {
+            autoScrollHandler.removeCallbacks(autoScrollRunnable);
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopAutoScroll();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopAutoScroll();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (autoScrollRunnable != null) {
+            startAutoScroll();
+        }
+    }
 }

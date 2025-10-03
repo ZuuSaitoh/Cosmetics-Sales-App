@@ -3,6 +3,7 @@
   <component name="deploymentTargetSelector">
     <selectionStates>
       <SelectionState runConfigName="app">
+<<<<<<< HEAD
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2025-09-30T06:22:51.660224600Z">
           <Target type="DEFAULT_BOOT">
@@ -17,6 +18,8 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="ProductListScreen (1)">
+=======
+>>>>>>> origin/main
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
