@@ -41,7 +41,7 @@ id recyclerEmployees
 id registerForm
 id signUpButton
 id textPrice
-id textSubtitle
+id textSold
 id textTitle
 id toolbar
 id tvEmail

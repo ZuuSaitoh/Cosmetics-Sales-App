@@ -3,59 +3,110 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:background="#FFFFFF">
 
-        <ImageView
-            android:id="@+id/imageProduct"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginBottom="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_google" />
+        <!-- Product Image -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp">
 
+            <ImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                android:background="#F5F5F5"
+                android:src="@drawable/ic_google" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Product Info -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
+            <!-- Product Name -->
             <TextView
                 android:id="@+id/textTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product name"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp" />
 
-            <TextView
-                android:id="@+id/textSubtitle"
-                android:layout_width="wrap_content"
+            <!-- Price Section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Short description"
-                android:textColor="#666666"
-                android:textSize="13sp" />
+                android:layout_marginTop="4dp">
 
-            <TextView
-                android:id="@+id/textPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="$9.99"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₫99.000"
+                    android:textSize="16sp"
+                    android:textColor="#EE4D2D"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/textSold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đã bán 1.2k"
+                    android:textSize="11sp"
+                    android:textColor="#757575"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+<!--            &lt;!&ndash; Location (Optional) &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:gravity="center_vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="12dp"-->
+<!--                    android:layout_height="12dp"-->
+<!--                    android:src="@drawable/ic_location"-->
+<!--                    android:tint="#757575"-->
+<!--                    android:layout_marginEnd="4dp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textLocation"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="TP. Hồ Chí Minh"-->
+<!--                    android:textSize="11sp"-->
+<!--                    android:textColor="#757575"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:ellipsize="end" />-->
+<!--            </LinearLayout>-->
+
         </LinearLayout>
-
 
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
-
-

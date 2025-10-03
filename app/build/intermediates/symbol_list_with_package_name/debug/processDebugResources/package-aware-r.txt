@@ -3548,10 +3548,10 @@ id text
 id text2
 id textEnd
 id textPrice
+id textSold
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
-id textSubtitle
 id textTitle
 id textTop
 id text_input_end_icon
