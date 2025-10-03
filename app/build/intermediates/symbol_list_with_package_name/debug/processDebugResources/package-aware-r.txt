@@ -293,6 +293,10 @@ attr circularflow_defaultAngle
 attr circularflow_defaultRadius
 attr circularflow_radiusInDP
 attr circularflow_viewCenter
+attr civ_border_color
+attr civ_border_overlay
+attr civ_border_width
+attr civ_circle_background_color
 attr clearsTag
 attr clickAction
 attr clockFaceBackgroundColor
@@ -2949,6 +2953,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable banner
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3153,6 +3158,7 @@ id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
 id backToLoginText
+id bannerRecyclerView
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -3185,7 +3191,6 @@ id clear_text
 id clip_horizontal
 id clip_vertical
 id clockwise
-id closeButton
 id closest
 id collapseActionView
 id compose_view_saveable_id_tag
@@ -3279,7 +3284,6 @@ id gone
 id googleLoginButton
 id graph
 id graph_wrap
-id greetingText
 id group_divider
 id grouping
 id groups
@@ -3298,6 +3302,8 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageProduct
+id imgBanner
 id immediateStop
 id included
 id indeterminate
@@ -3439,6 +3445,7 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id productRecyclerView
 id progress_circular
 id progress_horizontal
 id radio
@@ -3534,9 +3541,12 @@ id tag_window_insets_animation_callback
 id text
 id text2
 id textEnd
+id textPrice
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textSubtitle
+id textTitle
 id textTop
 id text_input_end_icon
 id text_input_error_icon
@@ -3706,7 +3716,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_home
 layout activity_login
-layout activity_main
+layout banner_product
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -3725,6 +3735,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
+layout item_product
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -5185,6 +5196,7 @@ styleable Carousel carousel_backwardTransition carousel_emptyViewsBehavior carou
 styleable CheckedTextView android_checkMark checkMarkCompat checkMarkTint checkMarkTintMode
 styleable Chip android_textAppearance android_textSize android_textColor android_ellipsize android_maxWidth android_text android_checkable checkedIcon checkedIconEnabled checkedIconTint checkedIconVisible chipBackgroundColor chipCornerRadius chipEndPadding chipIcon chipIconEnabled chipIconSize chipIconTint chipIconVisible chipMinHeight chipMinTouchTargetSize chipStartPadding chipStrokeColor chipStrokeWidth chipSurfaceColor closeIcon closeIconEnabled closeIconEndPadding closeIconSize closeIconStartPadding closeIconTint closeIconVisible ensureMinTouchTargetSize hideMotionSpec iconEndPadding iconStartPadding rippleColor shapeAppearance shapeAppearanceOverlay showMotionSpec textEndPadding textStartPadding
 styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVertical selectionRequired singleLine singleSelection
+styleable CircleImageView civ_border_color civ_border_overlay civ_border_width civ_circle_background_color
 styleable CircularProgressIndicator indicatorDirectionCircular indicatorInset indicatorSize
 styleable ClockFaceView clockFaceBackgroundColor clockNumberTextColor
 styleable ClockHandView clockHandColor materialCircleRadius selectorSize
