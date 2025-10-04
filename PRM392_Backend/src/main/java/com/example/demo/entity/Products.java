@@ -34,8 +34,10 @@ public class Products {
     @ManyToOne
     @JoinColumn(name = "CategoryID", referencedColumnName = "CategoryID", nullable = false)
     Category categoryID;
+    @Column(name = "Brand")
+    String brand;
 
-    public Products(String productName, String briefDescription, String fullDescription, BigDecimal price, int instockQuantity, String imageURL, Category categoryID) {
+    public Products(String productName, String briefDescription, String fullDescription, BigDecimal price, int instockQuantity, String imageURL, Category categoryID, String brand) {
         this.productName = productName;
         this.briefDescription = briefDescription;
         this.fullDescription = fullDescription;
@@ -43,5 +45,6 @@ public class Products {
         this.instockQuantity = instockQuantity;
         this.imageURL = imageURL;
         this.categoryID = categoryID;
+        this.brand = brand;
     }
 }

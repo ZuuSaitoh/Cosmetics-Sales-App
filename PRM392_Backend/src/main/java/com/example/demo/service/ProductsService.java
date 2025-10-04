@@ -30,53 +30,57 @@ public class ProductsService {
     @Autowired
     CategoryService categoryService;
 
-    public Products addNewProducts(ProductsAddRequest request){
-        if (!categoryRepository.existsById(request.getCategoryID())){
+    public Products addNewProducts(ProductsAddRequest request) {
+        if (!categoryRepository.existsById(request.getCategoryID())) {
             throw new AppException(ErrorCode.CATEGORY_NOT_EXISTED);
         }
         Category category = categoryService.getCategoryByID(request.getCategoryID());
         Products products = new Products(request.getProductName(), request.getBriefDescription(), request.getFullDescription(),
-                request.getPrice(), request.getInstockQuantity(), request.getImageURL(), category);
+                request.getPrice(), request.getInstockQuantity(), request.getImageURL(), category, request.getBrand());
         return productsRepository.save(products);
     }
 
-    public Products getProductByID(int id){
-        return productsRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+    public Products getProductByID(int id) {
+        return productsRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
     }
 
-    public List<Products> getAllProducts(){
+    public List<Products> getAllProducts() {
         return productsRepository.findAll();
     }
 
-    public void deleteProductByID(int id){
+    public void deleteProductByID(int id) {
         productsRepository.deleteById(id);
     }
 
-    public Products updateProductInfo(int id, UpdateProductInfoRequest updateProductInfo){
+    public Products updateProductInfo(int id, UpdateProductInfoRequest updateProductInfo) {
         Products products = getProductByID(id);
-        if (updateProductInfo.getProductName()!=null)
+        if (updateProductInfo.getProductName() != null)
             products.setProductName(updateProductInfo.getProductName());
-        if (updateProductInfo.getBriefDescription()!=null)
+        if (updateProductInfo.getBriefDescription() != null)
             products.setBriefDescription(updateProductInfo.getBriefDescription());
-        if (updateProductInfo.getFullDescription()!=null)
+        if (updateProductInfo.getFullDescription() != null)
             products.setFullDescription(updateProductInfo.getFullDescription());
-        if (updateProductInfo.getPrice()!=null)
+        if (updateProductInfo.getPrice() != null)
             products.setPrice(updateProductInfo.getPrice());
-        if (updateProductInfo.getImageURL()!=null)
+        if (updateProductInfo.getImageURL() != null)
             products.setImageURL(updateProductInfo.getImageURL());
-        if (updateProductInfo.getCategoryID()!=products.getCategoryID().getCategoryID()){ //trong Category co categoryID
-            Category category = categoryService.getCategoryByID(updateProductInfo.getCategoryID())  ;
+        if (updateProductInfo.getCategoryID() != null
+                && !updateProductInfo.getCategoryID().equals(products.getCategoryID().getCategoryID())) { //trong Category co categoryID
+            Category category = categoryService.getCategoryByID(updateProductInfo.getCategoryID());
             products.setCategoryID(category);
         }
+        if (updateProductInfo.getBrand() != null)
+            products.setBrand(updateProductInfo.getBrand());
+
         return productsRepository.save(products);
     }
 
-    public Products updateQuantity(int id, UpdateQuantityProductRequest request){
+    public Products updateQuantity(int id, UpdateQuantityProductRequest request) {
         Products products = getProductByID(id);
-        if (request.getInstockQuantity()!= products.getInstockQuantity()){
+        if (request.getInstockQuantity() != products.getInstockQuantity()) {
             products.setInstockQuantity(request.getInstockQuantity());
             return productsRepository.save(products);
-        } else{
+        } else {
             throw new AppException(ErrorCode.QUANTITY_NOT_CHANGED);
         }
     }

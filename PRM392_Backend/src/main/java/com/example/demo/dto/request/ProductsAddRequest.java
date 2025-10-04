@@ -30,4 +30,6 @@ public class ProductsAddRequest {
     String imageURL;
     @Min(value = 0, message = "CATEGORY_ID_CANNOT_BE_NEGATIVE")
     int categoryID;
+    @NotBlank(message = "ENTER_ALL_FIELDS")
+    String brand;
 }
