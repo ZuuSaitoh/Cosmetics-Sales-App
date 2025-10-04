@@ -26,11 +26,13 @@
 
 
 
+
         <activity
-            android:name=".ProductListingScreen"
+            android:name=".HomeScreen"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication"/>
+
         <activity
             android:name=".AdminDashboardActivity"
             android:exported="false"
