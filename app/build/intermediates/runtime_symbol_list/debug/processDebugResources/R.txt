@@ -2961,6 +2961,9 @@ int drawable avd_show_password 0x7f070079
 int drawable badge_background 0x7f0700f2
 int drawable banner 0x7f07007a
 int drawable baseline_360_24 0x7f07007b
+int drawable baseline_chat_24 0x7f0700f6
+int drawable baseline_circle_notifications_24 0x7f0700f7
+int drawable baseline_home_24 0x7f0700f8
 int drawable btn_checkbox_checked_mtrl 0x7f07007c
 int drawable btn_checkbox_checked_to_unchecked_mtrl_animation 0x7f07007d
 int drawable btn_checkbox_unchecked_mtrl 0x7f07007e
@@ -3077,7 +3080,9 @@ int drawable notification_template_icon_bg 0x7f0700ea
 int drawable notification_template_icon_low_bg 0x7f0700eb
 int drawable notification_tile_bg 0x7f0700ec
 int drawable notify_panel_notification_icon_bg 0x7f0700ed
+int drawable outline_account_circle_24 0x7f0700f9
 int drawable outline_add_24 0x7f0700ee
+int drawable outline_category_24 0x7f0700fa
 int drawable search_background 0x7f0700f5
 int drawable test_level_drawable 0x7f0700ef
 int drawable tooltip_frame_dark 0x7f0700f0
@@ -3130,6 +3135,7 @@ int id accessibility_custom_action_6 0x7f08002c
 int id accessibility_custom_action_7 0x7f08002d
 int id accessibility_custom_action_8 0x7f08002e
 int id accessibility_custom_action_9 0x7f08002f
+int id account 0x7f080236
 int id actionDown 0x7f080030
 int id actionDownUp 0x7f080031
 int id actionUp 0x7f080032
@@ -3197,6 +3203,7 @@ int id cancel_button 0x7f08006f
 int id carryVelocity 0x7f080070
 int id cartBadge 0x7f080231
 int id cartIcon 0x7f080232
+int id category 0x7f080234
 int id center 0x7f080071
 int id centerCrop 0x7f080072
 int id centerInside 0x7f080073
@@ -3205,6 +3212,7 @@ int id center_vertical 0x7f080075
 int id chain 0x7f080076
 int id chain2 0x7f080077
 int id chains 0x7f080078
+int id chat 0x7f080237
 int id checkbox 0x7f080079
 int id checked 0x7f08007a
 int id chronometer 0x7f08007b
@@ -3286,7 +3294,6 @@ int id etRole 0x7f0800c6
 int id exitUntilCollapsed 0x7f0800c7
 int id expand_activities_button 0x7f0800c8
 int id expanded_menu 0x7f0800c9
-int id fab 0x7f0800ca
 int id fabAdd 0x7f0800cb
 int id facebookLoginButton 0x7f0800cc
 int id fade 0x7f0800cd
@@ -3324,6 +3331,7 @@ int id hide_in_inspector_tag 0x7f0800ec
 int id hideable 0x7f0800ed
 int id home 0x7f0800ee
 int id homeAsUp 0x7f0800ef
+int id homeFragment 0x7f080235
 int id honorRequest 0x7f0800f0
 int id horizontal_only 0x7f0800f1
 int id icon 0x7f0800f2
@@ -3354,7 +3362,6 @@ int id layoutVideo 0x7f08010a
 int id left 0x7f08010b
 int id leftToRight 0x7f08010c
 int id legacy 0x7f08010d
-int id library 0x7f08010e
 int id line1 0x7f08010f
 int id line3 0x7f080110
 int id linear 0x7f080111
@@ -3423,12 +3430,6 @@ int id mtrl_picker_text_input_range_start 0x7f08014f
 int id mtrl_picker_title_text 0x7f080150
 int id mtrl_view_tag_bottom_padding 0x7f080151
 int id multiply 0x7f080152
-int id nav_about 0x7f080153
-int id nav_home 0x7f080154
-int id nav_logout 0x7f080155
-int id nav_settings 0x7f080156
-int id nav_share 0x7f080157
-int id nav_view 0x7f080158
 int id navigation_bar_item_active_indicator_view 0x7f080159
 int id navigation_bar_item_icon_container 0x7f08015a
 int id navigation_bar_item_icon_view 0x7f08015b
@@ -3444,6 +3445,7 @@ int id noState 0x7f080164
 int id none 0x7f080165
 int id normal 0x7f080166
 int id north 0x7f080167
+int id notification 0x7f080238
 int id notification_background 0x7f080168
 int id notification_main_column 0x7f080169
 int id notification_main_column_container 0x7f08016a
@@ -3528,7 +3530,6 @@ int id selection_type 0x7f0801b7
 int id sharedValueSet 0x7f0801b8
 int id sharedValueUnset 0x7f0801b9
 int id shortcut 0x7f0801ba
-int id shorts 0x7f0801bb
 int id showCustom 0x7f0801bc
 int id showHome 0x7f0801bd
 int id showTitle 0x7f0801be
@@ -3564,7 +3565,6 @@ int id stop 0x7f0801db
 int id stretch 0x7f0801dc
 int id submenuarrow 0x7f0801dd
 int id submit_area 0x7f0801de
-int id subscriptions 0x7f0801df
 int id supportScrollUp 0x7f0801e0
 int id tabMode 0x7f0801e1
 int id tag_accessibility_actions 0x7f0801e2
@@ -3762,7 +3762,6 @@ int layout abc_search_view 0x7f0b0019
 int layout abc_select_dialog_material 0x7f0b001a
 int layout abc_tooltip 0x7f0b001b
 int layout activity_admin_dashboard 0x7f0b001c
-int layout activity_home 0x7f0b001d
 int layout activity_login 0x7f0b001e
 int layout banner_product 0x7f0b001f
 int layout bottomsheetlayout 0x7f0b0020
@@ -3783,6 +3782,7 @@ int layout design_navigation_menu_item 0x7f0b002e
 int layout design_text_input_end_icon 0x7f0b002f
 int layout design_text_input_start_icon 0x7f0b0030
 int layout dialog_employee_form 0x7f0b0031
+int layout fragment_category 0x7f0b0079
 int layout fragment_home 0x7f0b0032
 int layout fragment_library 0x7f0b0033
 int layout fragment_shorts 0x7f0b0034
@@ -3843,7 +3843,6 @@ int layout mtrl_picker_text_input_date 0x7f0b006a
 int layout mtrl_picker_text_input_date_range 0x7f0b006b
 int layout mtrl_search_bar 0x7f0b006c
 int layout mtrl_search_view 0x7f0b006d
-int layout nav_header 0x7f0b006e
 int layout notification_action 0x7f0b006f
 int layout notification_action_tombstone 0x7f0b0070
 int layout notification_template_custom_big 0x7f0b0071
@@ -3855,7 +3854,6 @@ int layout select_dialog_multichoice_material 0x7f0b0076
 int layout select_dialog_singlechoice_material 0x7f0b0077
 int layout support_simple_spinner_dropdown_item 0x7f0b0078
 int menu bottom_menu 0x7f0d0000
-int menu nav_menu 0x7f0d0001
 int mipmap ic_launcher 0x7f0e0000
 int mipmap ic_launcher_round 0x7f0e0001
 int plurals mtrl_badge_content_description 0x7f0f0000
