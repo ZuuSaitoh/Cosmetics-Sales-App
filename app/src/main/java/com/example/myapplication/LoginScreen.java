@@ -96,8 +96,8 @@ public class LoginScreen extends AppCompatActivity {
                 boolean isCustomer = CUSTOMER_USERNAME.equals(emailOrPhone) && CUSTOMER_PASSWORD.equals(password);
 
                 if (isAdmin || isCustomer) {
-                    Class<?> destination = isAdmin ? AdminDashboardActivity.class : ProductListingScreen.class;
-                    Intent intent = new Intent(LoginScreen.this, destination);
+                    Class<?> destination = isAdmin ? AdminDashboardActivity.class : HomeFragment.class;
+                    Intent intent = new Intent(LoginScreen.this, Main.class);
                     intent.putExtra("username", emailOrPhone);
                     startActivity(intent);
                 } else {

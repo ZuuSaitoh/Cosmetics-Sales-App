@@ -62,8 +62,8 @@
 39        </activity>
 40        <activity
 40-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:9-34:57
-41            android:name="com.example.myapplication.HomeScreen"
-41-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:13-39
+41            android:name="com.example.myapplication.Main"
+41-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:13-33
 42            android:exported="false"
 42-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:32:13-37
 43            android:label="@string/app_name"

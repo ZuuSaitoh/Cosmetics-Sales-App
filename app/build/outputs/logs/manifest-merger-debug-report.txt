@@ -151,7 +151,7 @@ category#android.intent.category.LAUNCHER
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:22:17-77
 	android:name
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:22:27-74
-activity#com.example.myapplication.HomeScreen
+activity#com.example.myapplication.Main
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:9-34:57
 	android:label
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:33:13-45
@@ -160,7 +160,7 @@ ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.
 	android:theme
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:34:13-55
 	android:name
-		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:13-39
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:13-33
 activity#com.example.myapplication.AdminDashboardActivity
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:36:9-40:57
 	android:label
