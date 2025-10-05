@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.CartCreationRequest;
+import com.example.demo.dto.request.CartFindByUserIDRequest;
 import com.example.demo.dto.request.CartUpdateStatusRequest;
 import com.example.demo.dto.request.ProductsAddRequest;
 import com.example.demo.dto.response.ApiResponse;
@@ -24,6 +25,11 @@ public class CartController {
         return cartService.findCartByID(id);
     }
 
+    @GetMapping("/get-by-userID/{userID}")
+    Cart getActiveCartByUserID(@PathVariable Integer userID){
+        return cartService.getActiveCart(userID);
+    }
+
     @PostMapping("/create")
     ApiResponse<Cart> addNewCart(@RequestBody @Valid CartCreationRequest request){
         ApiResponse<Cart> apiResponse= new ApiResponse<>();
@@ -39,7 +45,7 @@ public class CartController {
 
     @PutMapping("/update-status")
     ApiResponse<Cart> updateCartStatus(@RequestBody @Valid CartUpdateStatusRequest request){
-        return new ApiResponse<Cart>(9999,"Cart status have been update to completed and create a new active cart",
+        return new ApiResponse<Cart>(9999,"Cart status have been update to completed",
                 cartService.changeStatus(request.getUserID()));
     }
     @GetMapping("/fetchAll")
