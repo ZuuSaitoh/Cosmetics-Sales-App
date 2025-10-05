@@ -52,7 +52,10 @@ public enum ErrorCode {
     QUANTITY_CANNOT_BE_NEGATIVE(1047,"You can't input negative quantity!"),
     PRICE_MUST_BE_POSITIVE(1048,"Price must be positive!"),
     PRICE_TOO_HIGH(1049,"Price can't higher than 1 billions"),
-    CATEGORY_ID_CANNOT_BE_NEGATIVE(1050,"Category ID can't be lower than 1!")
+    CATEGORY_ID_CANNOT_BE_NEGATIVE(1050,"Category ID can't be lower than 1!"),
+    ACTIVE_CART_NOT_EXISTED(1051,"User has no active cart"),
+    ACTIVE_CART_EXISTED(1052,"User already have a active cart"),
+    CART_NOT_EXISTED(1053, "Cart is not existed!")
     ;
 
     ErrorCode(int code, String message) {
