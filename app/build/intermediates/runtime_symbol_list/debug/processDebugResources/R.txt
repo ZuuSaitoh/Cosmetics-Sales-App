@@ -2960,7 +2960,6 @@ int drawable avd_hide_password 0x7f070078
 int drawable avd_show_password 0x7f070079
 int drawable badge_background 0x7f0700f2
 int drawable banner 0x7f07007a
-int drawable baseline_360_24 0x7f07007b
 int drawable baseline_chat_24 0x7f0700f6
 int drawable baseline_circle_notifications_24 0x7f0700f7
 int drawable baseline_home_24 0x7f0700f8
@@ -2979,9 +2978,6 @@ int drawable design_password_eye 0x7f070087
 int drawable design_snackbar_background 0x7f070088
 int drawable ic_apple 0x7f070089
 int drawable ic_arrow_back_black_24 0x7f07008a
-int drawable ic_baseline_upload_24 0x7f07008b
-int drawable ic_baseline_vibration_24 0x7f07008c
-int drawable ic_baseline_whatshot_24 0x7f07008d
 int drawable ic_call_answer 0x7f07008e
 int drawable ic_call_answer_low 0x7f07008f
 int drawable ic_call_answer_video 0x7f070090
@@ -2994,8 +2990,6 @@ int drawable ic_clock_black_24dp 0x7f070095
 int drawable ic_facebook 0x7f070096
 int drawable ic_google 0x7f070097
 int drawable ic_keyboard_black_24dp 0x7f070098
-int drawable ic_launcher_background 0x7f070099
-int drawable ic_launcher_foreground 0x7f07009a
 int drawable ic_m3_chip_check 0x7f07009b
 int drawable ic_m3_chip_checked_circle 0x7f07009c
 int drawable ic_m3_chip_close 0x7f07009d
@@ -3065,7 +3059,6 @@ int drawable mtrl_switch_thumb_unchecked_pressed 0x7f0700db
 int drawable mtrl_switch_track 0x7f0700dc
 int drawable mtrl_switch_track_decoration 0x7f0700dd
 int drawable mtrl_tabs_default_indicator 0x7f0700de
-int drawable nav_head_image 0x7f0700df
 int drawable navigation_empty_icon 0x7f0700e0
 int drawable notification_action_background 0x7f0700e1
 int drawable notification_bg 0x7f0700e2
@@ -3081,7 +3074,6 @@ int drawable notification_template_icon_low_bg 0x7f0700eb
 int drawable notification_tile_bg 0x7f0700ec
 int drawable notify_panel_notification_icon_bg 0x7f0700ed
 int drawable outline_account_circle_24 0x7f0700f9
-int drawable outline_add_24 0x7f0700ee
 int drawable outline_category_24 0x7f0700fa
 int drawable search_background 0x7f0700f5
 int drawable test_level_drawable 0x7f0700ef
@@ -3198,7 +3190,6 @@ int id btnEdit 0x7f08006a
 int id buttonPanel 0x7f08006b
 int id cache_measures 0x7f08006c
 int id callMeasure 0x7f08006d
-int id cancelButton 0x7f08006e
 int id cancel_button 0x7f08006f
 int id carryVelocity 0x7f080070
 int id cartBadge 0x7f080231
@@ -3238,7 +3229,6 @@ int id cos 0x7f08008e
 int id counterclockwise 0x7f08008f
 int id cradle 0x7f080090
 int id createAccountButton 0x7f080091
-int id createText 0x7f080092
 int id currentState 0x7f080093
 int id custom 0x7f080094
 int id customPanel 0x7f080095
@@ -3356,9 +3346,6 @@ int id jumpToEnd 0x7f080104
 int id jumpToStart 0x7f080105
 int id labeled 0x7f080106
 int id layout 0x7f080107
-int id layoutLive 0x7f080108
-int id layoutShorts 0x7f080109
-int id layoutVideo 0x7f08010a
 int id left 0x7f08010b
 int id leftToRight 0x7f08010c
 int id legacy 0x7f08010d
@@ -3764,7 +3751,6 @@ int layout abc_tooltip 0x7f0b001b
 int layout activity_admin_dashboard 0x7f0b001c
 int layout activity_login 0x7f0b001e
 int layout banner_product 0x7f0b001f
-int layout bottomsheetlayout 0x7f0b0020
 int layout custom_dialog 0x7f0b0021
 int layout design_bottom_navigation_item 0x7f0b0022
 int layout design_bottom_sheet_dialog 0x7f0b0023

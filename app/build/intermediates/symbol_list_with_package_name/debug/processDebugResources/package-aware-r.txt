@@ -2961,7 +2961,6 @@ drawable avd_hide_password
 drawable avd_show_password
 drawable badge_background
 drawable banner
-drawable baseline_360_24
 drawable baseline_chat_24
 drawable baseline_circle_notifications_24
 drawable baseline_home_24
@@ -2980,9 +2979,6 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_apple
 drawable ic_arrow_back_black_24
-drawable ic_baseline_upload_24
-drawable ic_baseline_vibration_24
-drawable ic_baseline_whatshot_24
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -2995,8 +2991,6 @@ drawable ic_clock_black_24dp
 drawable ic_facebook
 drawable ic_google
 drawable ic_keyboard_black_24dp
-drawable ic_launcher_background
-drawable ic_launcher_foreground
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3066,7 +3060,6 @@ drawable mtrl_switch_thumb_unchecked_pressed
 drawable mtrl_switch_track
 drawable mtrl_switch_track_decoration
 drawable mtrl_tabs_default_indicator
-drawable nav_head_image
 drawable navigation_empty_icon
 drawable notification_action_background
 drawable notification_bg
@@ -3082,7 +3075,6 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable outline_account_circle_24
-drawable outline_add_24
 drawable outline_category_24
 drawable search_background
 drawable test_level_drawable
@@ -3199,7 +3191,6 @@ id btnEdit
 id buttonPanel
 id cache_measures
 id callMeasure
-id cancelButton
 id cancel_button
 id carryVelocity
 id cartBadge
@@ -3239,7 +3230,6 @@ id cos
 id counterclockwise
 id cradle
 id createAccountButton
-id createText
 id currentState
 id custom
 id customPanel
@@ -3357,9 +3347,6 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
-id layoutLive
-id layoutShorts
-id layoutVideo
 id left
 id leftToRight
 id legacy
@@ -3765,7 +3752,6 @@ layout abc_tooltip
 layout activity_admin_dashboard
 layout activity_login
 layout banner_product
-layout bottomsheetlayout
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

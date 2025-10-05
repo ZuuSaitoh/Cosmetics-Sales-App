@@ -1,5 +1,7 @@
 package com.example.myapplication.adapter;
 
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-    private final List<Product> products;
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> implements Filterable {
+    private final List<Product> originalProducts;
+    private final List<Product> filteredProducts;
 
     public ProductAdapter(List<Product> products) {
-        this.products = products;
+        this.originalProducts = new ArrayList<>(products);
+        this.filteredProducts = new ArrayList<>(products);
     }
 
     @NonNull
@@ -30,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = products.get(position);
+        Product product = filteredProducts.get(position);
         holder.titleText.setText(product.getName());
 //        holder.subtitleText.setText(product.getDescription());
         holder.priceText.setText(String.format("$%.2f", product.getPrice()));
@@ -39,7 +44,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return filteredProducts.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String query = constraint == null ? "" : constraint.toString().trim().toLowerCase();
+                List<Product> result = new ArrayList<>();
+                if (query.isEmpty()) {
+                    result.addAll(originalProducts);
+                } else {
+                    for (Product product : originalProducts) {
+                        String name = product.getName() == null ? "" : product.getName().toLowerCase();
+                        String description = product.getDescription() == null ? "" : product.getDescription().toLowerCase();
+                        if (name.contains(query) || description.contains(query)) {
+                            result.add(product);
+                        }
+                    }
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = result;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredProducts.clear();
+                if (results != null && results.values instanceof List) {
+                    //noinspection unchecked
+                    filteredProducts.addAll((List<Product>) results.values);
+                }
+                notifyDataSetChanged();
+            }
+        };
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {

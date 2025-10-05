@@ -69,8 +69,13 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Filter products based on search text
-                filterProducts(s.toString());
+                if (productAdapter != null) {
+                    productAdapter.getFilter().filter(s);
+                }
+                boolean hasQuery = s != null && s.length() > 0;
+                if (bannerRecyclerView != null) {
+                    bannerRecyclerView.setVisibility(hasQuery ? View.GONE : View.VISIBLE);
+                }
             }
 
             @Override
@@ -87,15 +92,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void filterProducts(String searchText) {
-        if (productAdapter != null) {
-            // This would filter the products based on search text
-            // For now, just show a toast
-            if (!searchText.isEmpty()) {
-                Toast.makeText(getContext(), "Tìm kiếm: " + searchText, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+    // filter handled by adapter's Filterable implementation
 
     public void addToCart() {
         cartItemCount++;
