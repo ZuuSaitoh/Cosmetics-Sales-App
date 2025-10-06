@@ -55,7 +55,10 @@ public enum ErrorCode {
     CATEGORY_ID_CANNOT_BE_NEGATIVE(1050,"Category ID can't be lower than 1!"),
     ACTIVE_CART_NOT_EXISTED(1051,"User has no active cart"),
     ACTIVE_CART_EXISTED(1052,"User already have a active cart"),
-    CART_NOT_EXISTED(1053, "Cart is not existed!")
+    CART_NOT_EXISTED(1053, "Cart is not existed!"),
+    CART_HAVE_NOTHING(1054,"Cart don't have any item!"),
+    PRODUCT_QUANTITY_NOT_FULLFILL(1055,"You add product's quantity bigger than instock quantity!"),
+    PRODUCT_ALREADY_IN_CART(1056, "You have already add this product to cart!")
     ;
 
     ErrorCode(int code, String message) {
