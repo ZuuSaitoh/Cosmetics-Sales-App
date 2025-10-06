@@ -56,9 +56,9 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    
+    implementation("com.google.android.material:material:1.12.0")
     // Alternative CircleImageView if above doesn't work
-    // implementation("com.github.bumptech.glide:glide:4.16.0")
+    //implementation("com.github.bumptech.glide:glide:4.16.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

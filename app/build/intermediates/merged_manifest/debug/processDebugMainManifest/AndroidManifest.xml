@@ -48,6 +48,11 @@
             android:label="Quản lý nhân viên"
             android:theme="@style/Theme.MyApplication" />
         <activity
+            android:name="com.example.myapplication.ProductDetailActivity"
+            android:exported="false"
+            android:label="Chi tiết sản phẩm"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />
         <activity

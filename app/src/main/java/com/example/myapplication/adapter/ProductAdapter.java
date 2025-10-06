@@ -1,5 +1,7 @@
 package com.example.myapplication.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.view.LayoutInflater;
@@ -13,18 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.Product;
+import com.example.myapplication.ProductDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> implements Filterable {
+    private final Context context;
     private final List<Product> originalProducts;
     private final List<Product> filteredProducts;
 
-    public ProductAdapter(List<Product> products) {
+
+    public ProductAdapter(Context context, List<Product> products) {
+        this.context = context;
         this.originalProducts = new ArrayList<>(products);
         this.filteredProducts = new ArrayList<>(products);
     }
+
+
 
     @NonNull
     @Override
@@ -37,9 +45,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = filteredProducts.get(position);
         holder.titleText.setText(product.getName());
-//        holder.subtitleText.setText(product.getDescription());
         holder.priceText.setText(String.format("$%.2f", product.getPrice()));
         holder.imageView.setImageResource(product.getImageResId());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProductDetailActivity.class);
+            intent.putExtra("product", product); // ✅ truyền đúng object
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -74,7 +87,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredProducts.clear();
                 if (results != null && results.values instanceof List) {
-                    //noinspection unchecked
                     filteredProducts.addAll((List<Product>) results.values);
                 }
                 notifyDataSetChanged();
@@ -85,17 +97,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView;
         final TextView titleText;
-//        final TextView subtitleText;
         final TextView priceText;
 
         ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageProduct);
             titleText = itemView.findViewById(R.id.textTitle);
-//            subtitleText = itemView.findViewById(R.id.textSubtitle);
             priceText = itemView.findViewById(R.id.textPrice);
         }
     }
 }
-
-

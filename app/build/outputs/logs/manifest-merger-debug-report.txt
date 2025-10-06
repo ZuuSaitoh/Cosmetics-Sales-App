@@ -1,10 +1,10 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-47:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-47:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-47:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-47:12
-MERGED from [com.google.android.material:material:1.10.0] C:\Users\HP\.gradle\caches\8.13\transforms\49b110078e880328f1e0d719e5be62e2\transformed\material-1.10.0\AndroidManifest.xml:17:1-24:12
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\HP\.gradle\caches\8.13\transforms\9ae2788559f27bdf173529f0617805ab\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\HP\.gradle\caches\8.13\transforms\3acaa86d0391d929266ad0364cac6c09\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -34,8 +34,8 @@ MERGED from [androidx.activity:activity:1.11.0] C:\Users\HP\.gradle\caches\8.13\
 MERGED from [androidx.activity:activity-compose:1.11.0] C:\Users\HP\.gradle\caches\8.13\transforms\84954781db550f49d0c93cca551ff14f\transformed\activity-compose-1.11.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\HP\.gradle\caches\8.13\transforms\6f998516b069ce16445ffbb8f22ad2bf\transformed\drawerlayout-1.1.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\5ab8414b72c2e53af2f7413d1ab816ac\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\HP\.gradle\caches\8.13\transforms\a079b163b478d403c862e41bf607ed5b\transformed\transition-1.5.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\HP\.gradle\caches\8.13\transforms\9c37309c462ffc3d2643d155c6e792d8\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.transition:transition:1.2.0] C:\Users\HP\.gradle\caches\8.13\transforms\0dce11ac3bb1731a51da62919ed992ab\transformed\transition-1.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\244fbbf874b0444a517efe0adcb2e541\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\d628b7ad1a2135dbd4a3b0f8891012bf\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\HP\.gradle\caches\8.13\transforms\534bbc4e60cbe668f14e922665361e1c\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -91,10 +91,10 @@ MERGED from [de.hdodenhof:circleimageview:3.1.0] C:\Users\HP\.gradle\caches\8.13
 	xmlns:android
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-42:15
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-42:15
-MERGED from [com.google.android.material:material:1.10.0] C:\Users\HP\.gradle\caches\8.13\transforms\49b110078e880328f1e0d719e5be62e2\transformed\material-1.10.0\AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.material:material:1.10.0] C:\Users\HP\.gradle\caches\8.13\transforms\49b110078e880328f1e0d719e5be62e2\transformed\material-1.10.0\AndroidManifest.xml:22:5-20
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-48:15
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-48:15
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\HP\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
@@ -171,12 +171,22 @@ ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-55
 	android:name
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:13-51
+activity#com.example.myapplication.ProductDetailActivity
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:42:9-46:57
+	android:label
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-46
+	android:exported
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:44:13-37
+	android:theme
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-55
+	android:name
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-50
 uses-sdk
 INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml
 INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml
-MERGED from [com.google.android.material:material:1.10.0] C:\Users\HP\.gradle\caches\8.13\transforms\49b110078e880328f1e0d719e5be62e2\transformed\material-1.10.0\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.material:material:1.10.0] C:\Users\HP\.gradle\caches\8.13\transforms\49b110078e880328f1e0d719e5be62e2\transformed\material-1.10.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\HP\.gradle\caches\8.13\transforms\9ae2788559f27bdf173529f0617805ab\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
@@ -235,10 +245,10 @@ MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\HP\.gradle\cache
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\HP\.gradle\caches\8.13\transforms\6f998516b069ce16445ffbb8f22ad2bf\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\5ab8414b72c2e53af2f7413d1ab816ac\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\5ab8414b72c2e53af2f7413d1ab816ac\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\HP\.gradle\caches\8.13\transforms\a079b163b478d403c862e41bf607ed5b\transformed\transition-1.5.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\HP\.gradle\caches\8.13\transforms\a079b163b478d403c862e41bf607ed5b\transformed\transition-1.5.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\HP\.gradle\caches\8.13\transforms\9c37309c462ffc3d2643d155c6e792d8\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\HP\.gradle\caches\8.13\transforms\9c37309c462ffc3d2643d155c6e792d8\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.transition:transition:1.2.0] C:\Users\HP\.gradle\caches\8.13\transforms\0dce11ac3bb1731a51da62919ed992ab\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.2.0] C:\Users\HP\.gradle\caches\8.13\transforms\0dce11ac3bb1731a51da62919ed992ab\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\244fbbf874b0444a517efe0adcb2e541\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\244fbbf874b0444a517efe0adcb2e541\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\HP\.gradle\caches\8.13\transforms\d628b7ad1a2135dbd4a3b0f8891012bf\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41

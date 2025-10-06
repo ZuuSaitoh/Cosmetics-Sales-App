@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment {
         products.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner));
         products.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner));
         
-        productAdapter = new ProductAdapter(products);
+        productAdapter = new ProductAdapter(getContext(), products);
         productRecyclerView.setAdapter(productAdapter);
     }
 
