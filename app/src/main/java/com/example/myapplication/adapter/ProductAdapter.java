@@ -48,9 +48,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.priceText.setText(String.format("$%.2f", product.getPrice()));
         holder.imageView.setImageResource(product.getImageResId());
 
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("product", product); // ✅ truyền đúng object
+            intent.putExtra("product", product);
             context.startActivity(intent);
         });
     }
@@ -98,11 +99,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         final ImageView imageView;
         final TextView titleText;
         final TextView priceText;
+        //final TextView descriptionText;
+
 
         ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageProduct);
             titleText = itemView.findViewById(R.id.textTitle);
+           // descriptionText = itemView.findViewById(R.id.textDescription);
             priceText = itemView.findViewById(R.id.textPrice);
         }
     }

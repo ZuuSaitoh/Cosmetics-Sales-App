@@ -1,9 +1,15 @@
 package com.example.myapplication;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +26,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private String productPrice;
     private String productDescription;
     private String productImageUrl;
-
+    private Product product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void getProductDataFromIntent() {
-        Product product = (Product) getIntent().getSerializableExtra("product");
+        product = (Product) getIntent().getSerializableExtra("product");
         if (product != null) {
             productName = product.getName();
             productPrice = String.format("$%.2f", product.getPrice());
@@ -62,7 +68,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void loadProductImage(String imageResIdString) {
         try {
-            int imageResId = Integer.parseInt(imageResIdString);
+            int imageResId = parseInt(imageResIdString);
             imageProduct.setImageResource(imageResId);
         } catch (NumberFormatException e) {
             imageProduct.setImageResource(R.drawable.img_no_product);
@@ -73,9 +79,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProductDetailActivity.this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_quantity);
 
+        TextView textTotalPrice = bottomSheetDialog.findViewById(R.id.text_total_price);
         TextView textQuantity = bottomSheetDialog.findViewById(R.id.text_quantity);
-        Button btnMinus = bottomSheetDialog.findViewById(R.id.btn_minus);
-        Button btnPlus = bottomSheetDialog.findViewById(R.id.btn_plus);
+        ImageButton btnMinus = bottomSheetDialog.findViewById(R.id.btn_minus);
+        ImageButton btnPlus = bottomSheetDialog.findViewById(R.id.btn_plus);
         Button btnConfirm = bottomSheetDialog.findViewById(R.id.btn_confirm_add);
 
         if (textQuantity == null || btnMinus == null || btnPlus == null || btnConfirm == null) {
@@ -83,19 +90,41 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
 
+        // Set bottom sheet behavior after showing
+        bottomSheetDialog.setOnShowListener(dialog -> {
+            View bottomSheetView = bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheetView != null) {
+                BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheetView);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                //behavior.setPeekHeight(800); // Increased height to show all content
+                behavior.setSkipCollapsed(true); // Allow full expansion
+            }
+        });
+
         final int[] quantity = {1};
         textQuantity.setText(String.valueOf(quantity[0]));
+        
+        // Calculate total price correctly
+        double totalPrice = product.getPrice() * quantity[0];
+        textTotalPrice.setText(String.format("$%.2f", totalPrice));
+
 
         btnMinus.setOnClickListener(v -> {
             if (quantity[0] > 1) {
                 quantity[0]--;
                 textQuantity.setText(String.valueOf(quantity[0]));
+                // Update total price
+                double totalPriceMinus = product.getPrice() * quantity[0];
+                textTotalPrice.setText(String.format("$%.2f", totalPriceMinus));
             }
         });
 
         btnPlus.setOnClickListener(v -> {
             quantity[0]++;
             textQuantity.setText(String.valueOf(quantity[0]));
+            // Update total price
+            double totalPricePlus = product.getPrice() * quantity[0];
+            textTotalPrice.setText(String.format("$%.2f", totalPricePlus));
         });
 
         btnConfirm.setOnClickListener(v -> {

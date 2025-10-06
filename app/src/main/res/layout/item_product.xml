@@ -51,6 +51,18 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp" />
 
+<!--            &lt;!&ndash; Product description &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/textDescription"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Product description"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:maxLines="2"-->
+<!--                android:ellipsize="end"-->
+<!--                android:lineSpacingExtra="2dp" />-->
+
             <!-- Price Section -->
             <RelativeLayout
                 android:layout_width="match_parent"
