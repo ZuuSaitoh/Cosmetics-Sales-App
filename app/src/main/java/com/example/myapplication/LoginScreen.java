@@ -18,6 +18,16 @@ import com.google.android.material.button.MaterialButton; // Nên sử dụng Ma
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import com.example.myapplication.auth.AuthManager;
+import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.AuthService;
+import com.example.myapplication.network.dto.LoginRequest;
+import com.example.myapplication.network.dto.LoginResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginScreen extends AppCompatActivity {
 
     private static final String HARDCODED_USERNAME = "admin";
@@ -38,12 +48,16 @@ public class LoginScreen extends AppCompatActivity {
     private ImageButton googleLoginButton;
     private ImageButton appleLoginButton;
     private Toolbar toolbar;
+    private AuthService authService;
+    private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login); // QUAN TRỌNG: Thay đổi thành tên tệp XML của bạn
+        authService = ApiClient.getRetrofit(this).create(AuthService.class);
+        authManager = new AuthManager(this);
 
         
 
@@ -90,19 +104,7 @@ public class LoginScreen extends AppCompatActivity {
                 } else {
                     passwordInputLayout.setError(null); // Xóa lỗi
                 }
-
-                // Kiểm tra tài khoản cứng (admin hoặc customer)
-                boolean isAdmin = HARDCODED_USERNAME.equals(emailOrPhone) && HARDCODED_PASSWORD.equals(password);
-                boolean isCustomer = CUSTOMER_USERNAME.equals(emailOrPhone) && CUSTOMER_PASSWORD.equals(password);
-
-                if (isAdmin || isCustomer) {
-                    Class<?> destination = isAdmin ? AdminDashboardActivity.class : HomeFragment.class;
-                    Intent intent = new Intent(LoginScreen.this, Main.class);
-                    intent.putExtra("username", emailOrPhone);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(LoginScreen.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
-                }
+                performLogin(emailOrPhone, password);
             }
         });
 
@@ -173,6 +175,34 @@ public class LoginScreen extends AppCompatActivity {
         if (passwordEditText != null) {
             passwordEditText.setText("");
         }
+    }
+
+    private void performLogin(String username, String password) {
+        loginButton.setEnabled(false);
+        Call<LoginResponse> call = authService.login(new LoginRequest(username, password));
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                loginButton.setEnabled(true);
+                if (response.isSuccessful() && response.body() != null) {
+                    LoginResponse body = response.body();
+                    authManager.saveAuth(body.getToken(), body.getRole());
+                    Intent intent = new Intent(LoginScreen.this, Main.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginScreen.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                loginButton.setEnabled(false);
+                loginButton.setEnabled(true);
+                Toast.makeText(LoginScreen.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Xử lý sự kiện nhấn nút back trên Toolbar
