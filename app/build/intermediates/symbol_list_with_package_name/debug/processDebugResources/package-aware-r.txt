@@ -3010,6 +3010,7 @@ drawable banner
 drawable baseline_chat_24
 drawable baseline_circle_notifications_24
 drawable baseline_home_24
+drawable baseline_location_on_24
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3018,6 +3019,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable button_confirm_background
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
@@ -3412,6 +3414,7 @@ id line3
 id linear
 id listMode
 id list_item
+id locationIcon
 id loginButton
 id loginForm
 id m3_side_sheet
@@ -3539,6 +3542,7 @@ id radio
 id ratio
 id rectangles
 id recyclerEmployees
+id recycler_cart
 id registerForm
 id report_drawn
 id reverseSawtooth
@@ -3632,13 +3636,16 @@ id text
 id text2
 id textEnd
 id textPrice
+id textQty
 id textSold
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTitle
 id textTop
+id textTotal
 id text_description
+id text_grand_total
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -3818,6 +3825,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_admin_dashboard
+layout activity_cart
 layout activity_login
 layout activity_product_detail
 layout banner_product
@@ -3846,6 +3854,7 @@ layout fragment_shorts
 layout fragment_subscriptions
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
+layout item_cart
 layout item_employee
 layout item_product
 layout m3_alert_dialog
@@ -4796,7 +4805,6 @@ style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
 style Theme_MyApplication
-style Theme_NavigationDrawer
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark

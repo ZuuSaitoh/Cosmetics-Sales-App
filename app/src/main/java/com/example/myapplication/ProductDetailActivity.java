@@ -128,6 +128,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         btnConfirm.setOnClickListener(v -> {
+            // Add to cart
+            com.example.myapplication.data.CartManager.getInstance().add(product, quantity[0]);
             Toast.makeText(ProductDetailActivity.this,
                     "Đã thêm " + quantity[0] + " sản phẩm vào giỏ hàng!",
                     Toast.LENGTH_SHORT).show();

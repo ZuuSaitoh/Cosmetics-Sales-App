@@ -125,17 +125,13 @@
     <!-- Add to Cart Button -->
     <Button
         android:id="@+id/btn_confirm_add"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="56dp"
-        android:background="@drawable/quantity_selector_background"
-        android:drawableStart="@drawable/ic_cart"
-        android:drawablePadding="8dp"
-        android:elevation="0dp"
-        android:gravity="center"
-        android:stateListAnimator="@null"
-        android:text="  Thêm vào giỏ hàng"
-        android:textColor="@android:color/white"
+        android:text="Thêm vào giỏ hàng"
+        android:background="@drawable/button_confirm_background"
         android:textSize="16sp"
         android:textStyle="bold" />
+
 
 </LinearLayout>

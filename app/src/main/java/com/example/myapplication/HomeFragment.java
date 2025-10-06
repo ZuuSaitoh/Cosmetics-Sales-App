@@ -84,10 +84,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCart() {
+        updateCartBadge();
         cartIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Giỏ hàng (" + cartItemCount + " sản phẩm)", Toast.LENGTH_SHORT).show();
+                android.content.Context ctx = getContext();
+                if (ctx != null) {
+                    android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.cart.CartActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
@@ -95,10 +100,28 @@ public class HomeFragment extends Fragment {
     // filter handled by adapter's Filterable implementation
 
     public void addToCart() {
-        cartItemCount++;
-        cartBadge.setText(String.valueOf(cartItemCount));
-        cartBadge.setVisibility(View.VISIBLE);
+        updateCartBadge();
         Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateCartBadge() {
+        int total = com.example.myapplication.data.CartManager.getInstance().getTotalQuantity();
+        if (total > 0) {
+            cartBadge.setText(String.valueOf(total));
+            cartBadge.setVisibility(View.VISIBLE);
+        } else {
+            cartBadge.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (autoScrollRunnable != null) {
+            startAutoScroll();
+        }
+        // refresh badge on return
+        updateCartBadge();
     }
 
     private void setupBannerList() {
@@ -160,13 +183,5 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopAutoScroll();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (autoScrollRunnable != null) {
-            startAutoScroll();
-        }
     }
 }

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-53:12
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-59:12
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\HP\.gradle\caches\8.13\transforms\9ae2788559f27bdf173529f0617805ab\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -91,8 +91,8 @@ MERGED from [de.hdodenhof:circleimageview:3.1.0] C:\Users\HP\.gradle\caches\8.13
 	xmlns:android
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-48:15
-INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-48:15
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-54:15
+INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-54:15
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\HP\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\HP\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -171,16 +171,26 @@ ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-55
 	android:name
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:13-51
-activity#com.example.myapplication.ProductDetailActivity
+activity#com.example.myapplication.cart.CartActivity
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:42:9-46:57
 	android:label
-		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-46
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-37
 	android:exported
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:44:13-37
 	android:theme
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-55
 	android:name
-		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-50
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-46
+activity#com.example.myapplication.ProductDetailActivity
+ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:48:9-52:57
+	android:label
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:13-46
+	android:exported
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:50:13-37
+	android:theme
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-55
+	android:name
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:49:13-50
 uses-sdk
 INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml

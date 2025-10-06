@@ -8,16 +8,16 @@
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_admin_dashboard.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/layout_item_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/item_cart.xml"
+    },
+    {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_main.xml.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\main.xml"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\anim_slide_in.xml.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\anim\\slide_in.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-61:/layout_bottom_sheet_quantity.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/layout/bottom_sheet_quantity.xml"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\anim_slide_out.xml.flat",
@@ -56,12 +56,12 @@
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\banner.png"
     },
     {
-        "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_no_product.png.flat",
-        "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\img_no_product.png"
-    },
-    {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_badge_background.xml.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\badge_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_no_product.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\img_no_product.png"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_bottom_sheet_quantity.xml.flat",
@@ -86,6 +86,10 @@
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_chat_24.xml.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_chat_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_button_confirm_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\button_confirm_background.xml"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_quantity_selector_background.xml.flat",
@@ -130,6 +134,10 @@
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_app_icon.png.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\img_app_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_location_on_24.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_location_on_24.xml"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
@@ -178,6 +186,10 @@
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_plus.xml.flat",
         "source": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_plus.xml"
+    },
+    {
+        "merged": "com.example.myapplication.app-debug-61:/layout_activity_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/activity_cart.xml"
     },
     {
         "merged": "C:\\Users\\HP\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_cart.xml.flat",

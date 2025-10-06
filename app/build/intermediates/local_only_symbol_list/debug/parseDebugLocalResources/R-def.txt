@@ -18,6 +18,8 @@ drawable banner
 drawable baseline_chat_24
 drawable baseline_circle_notifications_24
 drawable baseline_home_24
+drawable baseline_location_on_24
+drawable button_confirm_background
 drawable ic_apple
 drawable ic_cart
 drawable ic_facebook
@@ -66,6 +68,7 @@ id homeFragment
 id imageProduct
 id image_product
 id imgBanner
+id locationIcon
 id loginButton
 id loginForm
 id main
@@ -74,14 +77,18 @@ id passwordEditText
 id passwordInputLayout
 id productRecyclerView
 id recyclerEmployees
+id recycler_cart
 id registerForm
 id scroll_view
 id searchEditText
 id signUpButton
 id textPrice
+id textQty
 id textSold
 id textTitle
+id textTotal
 id text_description
+id text_grand_total
 id text_name
 id text_popup_title
 id text_price
@@ -93,6 +100,7 @@ id tvEmail
 id tvName
 id tvRole
 layout activity_admin_dashboard
+layout activity_cart
 layout activity_login
 layout activity_product_detail
 layout banner_product
@@ -103,6 +111,7 @@ layout fragment_home
 layout fragment_library
 layout fragment_shorts
 layout fragment_subscriptions
+layout item_cart
 layout item_employee
 layout item_product
 layout main
@@ -115,6 +124,5 @@ string hello_blank_fragment
 string open_nav
 style DialogAnimation
 style Theme.MyApplication
-style Theme.NavigationDrawer
 xml backup_rules
 xml data_extraction_rules

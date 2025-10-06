@@ -40,6 +40,12 @@
             android:theme="@style/Theme.MyApplication"/>
 
         <activity
+            android:name=".cart.CartActivity"
+            android:exported="false"
+            android:label="Giỏ hàng"
+            android:theme="@style/Theme.MyApplication"/>
+
+        <activity
             android:name=".ProductDetailActivity"
             android:exported="false"
             android:label="Chi tiết sản phẩm"
