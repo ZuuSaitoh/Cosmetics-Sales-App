@@ -23,6 +23,8 @@ import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.dto.LoginRequest;
 import com.example.myapplication.network.dto.LoginResponse;
+import com.example.myapplication.network.dto.RegisterRequest;
+import com.example.myapplication.network.dto.RegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -163,6 +165,16 @@ public class LoginScreen extends AppCompatActivity {
                 }
             });
         }
+
+        // Đăng ký tài khoản (không captcha/giới tính/tick)
+        if (createAccountButton != null) {
+            createAccountButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleRegisterClick();
+                }
+            });
+        }
     }
 
     @Override
@@ -203,6 +215,63 @@ public class LoginScreen extends AppCompatActivity {
                 Toast.makeText(LoginScreen.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void handleRegisterClick() {
+        // Cố gắng lấy các trường theo ID; nếu không có thì báo lỗi thân thiện
+        TextInputEditText fullNameEt = safeFindEditText(R.id.registerFullNameEditText);
+        TextInputEditText emailPhoneEt = safeFindEditText(R.id.registerEmailOrPhoneEditText);
+        TextInputEditText passwordEt = safeFindEditText(R.id.registerPasswordEditText);
+        TextInputEditText birthDateEt = safeFindEditText(R.id.registerBirthDateEditText);
+
+        if (fullNameEt == null || emailPhoneEt == null || passwordEt == null) {
+            Toast.makeText(this, "Thiếu trường đăng ký trong layout", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String fullName = valueOf(fullNameEt);
+        String emailOrPhone = valueOf(emailPhoneEt);
+        String password = valueOf(passwordEt);
+        String birthDate = birthDateEt != null ? valueOf(birthDateEt) : "";
+
+        if (fullName.isEmpty()) { Toast.makeText(this, "Vui lòng nhập họ tên", Toast.LENGTH_SHORT).show(); return; }
+        if (emailOrPhone.isEmpty()) { Toast.makeText(this, "Vui lòng nhập Email/SĐT", Toast.LENGTH_SHORT).show(); return; }
+        if (password.isEmpty()) { Toast.makeText(this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show(); return; }
+
+        createAccountButton.setEnabled(false);
+        Call<RegisterResponse> call = authService.register(new RegisterRequest(fullName, emailOrPhone, password, birthDate));
+        call.enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                createAccountButton.setEnabled(true);
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginScreen.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                    // Quay lại màn hình đăng nhập
+                    View loginForm = findViewById(R.id.loginForm);
+                    View registerForm = findViewById(R.id.registerForm);
+                    if (registerForm != null && loginForm != null) {
+                        registerForm.setVisibility(View.GONE);
+                        loginForm.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Toast.makeText(LoginScreen.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                createAccountButton.setEnabled(true);
+                Toast.makeText(LoginScreen.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private TextInputEditText safeFindEditText(int id) {
+        try { return findViewById(id); } catch (Exception ignored) { return null; }
+    }
+
+    private String valueOf(TextInputEditText et) {
+        return et.getText() == null ? "" : et.getText().toString().trim();
     }
 
     // Xử lý sự kiện nhấn nút back trên Toolbar
