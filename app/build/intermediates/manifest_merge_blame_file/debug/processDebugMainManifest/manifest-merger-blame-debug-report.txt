@@ -9,179 +9,179 @@
 9        android:targetSdkVersion="36" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-67
-11-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:22-64
+11-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:5-67
+11-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:22-64
 12
 13    <permission
-13-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:22:5-24:47
+13-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:22:5-24:47
 14        android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-14-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:23:9-81
+14-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:23:9-81
 15        android:protectionLevel="signature" />
-15-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:24:9-44
+15-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:24:9-44
 16
 17    <uses-permission android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-17-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:26:5-97
-17-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:26:22-94
+17-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:26:5-97
+17-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:26:22-94
 18
 19    <application
-19-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-57:15
+19-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-57:15
 20        android:allowBackup="true"
-20-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:8:9-35
+20-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:8:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-21-->[androidx.core:core:1.17.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
+21-->[androidx.core:core:1.17.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8263c6242fb212b04c6e70c577612044\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
 22        android:dataExtractionRules="@xml/data_extraction_rules"
-22-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:9:9-65
+22-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:9:9-65
 23        android:debuggable="true"
 24        android:extractNativeLibs="false"
 25        android:fullBackupContent="@xml/backup_rules"
-25-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:10:9-54
+25-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:10:9-54
 26        android:icon="@mipmap/ic_launcher"
-26-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:11:9-43
+26-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:11:9-43
 27        android:label="@string/app_name"
-27-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:9-41
+27-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:9-41
 28        android:roundIcon="@mipmap/ic_launcher_round"
-28-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:13:9-54
+28-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:13:9-54
 29        android:supportsRtl="true"
-29-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:14:9-35
+29-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:14:9-35
 30        android:testOnly="true"
 31        android:theme="@style/Theme.MyApplication"
-31-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:15:9-51
+31-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:15:9-51
 32        android:usesCleartextTraffic="true" >
-32-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:16:9-44
+32-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:16:9-44
 33        <activity
-33-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:19:9-27:20
+33-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:19:9-27:20
 34            android:name="com.example.myapplication.LoginScreen"
-34-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:20:13-40
+34-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:20:13-40
 35            android:exported="true" > <!-- Hoặc false tùy theo nhu cầu -->
-35-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:21:13-36
+35-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:21:13-36
 36            <!-- Nếu là activity khởi chạy -->
 37            <intent-filter>
-37-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:23:13-26:29
+37-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:23:13-26:29
 38                <action android:name="android.intent.action.MAIN" />
-38-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:24:17-69
-38-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:24:25-66
+38-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:24:17-69
+38-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:24:25-66
 39
 40                <category android:name="android.intent.category.LAUNCHER" />
-40-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:17-77
-40-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:27-74
+40-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:17-77
+40-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:27-74
 41            </intent-filter>
 42        </activity>
 43        <activity
-43-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:33:9-37:57
+43-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:33:9-37:57
 44            android:name="com.example.myapplication.Main"
-44-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:34:13-33
+44-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:34:13-33
 45            android:exported="false"
-45-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:35:13-37
+45-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:35:13-37
 46            android:label="@string/app_name"
-46-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:36:13-45
+46-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:36:13-45
 47            android:theme="@style/Theme.MyApplication" />
-47-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:13-55
+47-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:13-55
 48        <activity
-48-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:39:9-43:57
+48-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:39:9-43:57
 49            android:name="com.example.myapplication.AdminDashboardActivity"
-49-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-51
+49-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-51
 50            android:exported="false"
-50-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:41:13-37
+50-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:41:13-37
 51            android:label="Quản lý nhân viên"
-51-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:42:13-46
+51-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:42:13-46
 52            android:theme="@style/Theme.MyApplication" />
-52-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-55
+52-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-55
 53        <activity
-53-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:9-49:57
+53-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:9-49:57
 54            android:name="com.example.myapplication.cart.CartActivity"
-54-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-46
+54-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-46
 55            android:exported="false"
-55-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:47:13-37
+55-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:47:13-37
 56            android:label="Giỏ hàng"
-56-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:48:13-37
+56-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:48:13-37
 57            android:theme="@style/Theme.MyApplication" />
-57-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:49:13-55
+57-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:49:13-55
 58        <activity
-58-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:9-55:57
+58-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:9-55:57
 59            android:name="com.example.myapplication.ProductDetailActivity"
-59-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-50
+59-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-50
 60            android:exported="false"
-60-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:53:13-37
+60-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:53:13-37
 61            android:label="Chi tiết sản phẩm"
-61-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:54:13-46
+61-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:54:13-46
 62            android:theme="@style/Theme.MyApplication" />
-62-->C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:55:13-55
+62-->D:\FPTU\SWP391\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:55:13-55
 63        <activity
-63-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+63-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
 64            android:name="androidx.compose.ui.tooling.PreviewActivity"
-64-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+64-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
 65            android:exported="true" />
-65-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+65-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\de00b5510d65e586d8ee31b58a35096e\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
 66        <activity
-66-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:23:9-25:39
+66-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:23:9-25:39
 67            android:name="androidx.activity.ComponentActivity"
-67-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:24:13-63
+67-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:24:13-63
 68            android:exported="true" />
-68-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:25:13-36
+68-->[androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\8249d2a58ee17b9fcd90de802c1b4ef8\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:25:13-36
 69
 70        <provider
-70-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+70-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
 71            android:name="androidx.startup.InitializationProvider"
-71-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+71-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
 72            android:authorities="com.example.myapplication.androidx-startup"
-72-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+72-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
 73            android:exported="false" >
-73-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+73-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
 74            <meta-data
-74-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+74-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
 75                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-75-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+75-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
 76                android:value="androidx.startup" />
-76-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+76-->[androidx.emoji2:emoji2:1.3.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\54a0b36c1789007c2a2d8453c007a4b4\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
 77            <meta-data
-77-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\Admin\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:29:13-31:52
+77-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\dokyd\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:29:13-31:52
 78                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-78-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\Admin\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:30:17-78
+78-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\dokyd\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:30:17-78
 79                android:value="androidx.startup" />
-79-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\Admin\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:31:17-49
+79-->[androidx.lifecycle:lifecycle-process:2.9.4] C:\Users\dokyd\.gradle\caches\8.13\transforms\4a3cddf8cded3778baab28dbf652fac0\transformed\lifecycle-process-2.9.4\AndroidManifest.xml:31:17-49
 80            <meta-data
-80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
 81                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-81-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
 82                android:value="androidx.startup" />
-82-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
 83        </provider>
 84
 85        <receiver
-85-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
 86            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
 87            android:directBootAware="false"
-87-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+87-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
 88            android:enabled="true"
-88-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+88-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
 89            android:exported="true"
-89-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+89-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
 90            android:permission="android.permission.DUMP" >
-90-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+90-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
 91            <intent-filter>
-91-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
 92                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-92-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
-92-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+92-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+92-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
 93            </intent-filter>
 94            <intent-filter>
-94-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
 95                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-95-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
-95-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+95-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+95-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
 96            </intent-filter>
 97            <intent-filter>
-97-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
 98                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-98-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
-98-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+98-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+98-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
 99            </intent-filter>
 100            <intent-filter>
-100-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+100-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
 101                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-101-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
-101-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+101-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+101-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\dokyd\.gradle\caches\8.13\transforms\e1f0e991b732118f1f4d6a940fa09cd3\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
 102            </intent-filter>
 103        </receiver>
 104    </application>
