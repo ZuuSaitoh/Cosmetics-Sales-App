@@ -66,6 +66,46 @@ public class CartItemsService {
         cartItemsRepository.deleteByCart_CartID(cartID);
     }
 
+    public CartItems findByCartItemsID(Integer cartItemsID){
+        return cartItemsRepository.findById(cartItemsID)
+                .orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_IN_CART));
+    }
+
+    public void deleteOneItemInCart(Integer cartItemsID){
+        CartItems cartItems = findByCartItemsID(cartItemsID);// vao CartItemsID
+        Cart cart = cartItems.getCart();//vao Cart
+        cart.setTotalPrice(cart.getTotalPrice().subtract(cartItems.getPrice()));//lay total price ben cart - price ben cart items
+        cartRepository.save(cart);
+        cartItemsRepository.deleteById(cartItemsID);
+    }
+
+    public void changeQuantity(Integer cartItemsID, Integer newQuantity){
+        CartItems cartItems = findByCartItemsID(cartItemsID);
+        Cart cart = cartItems.getCart();
+        if (newQuantity == 0){
+            deleteOneItemInCart(cartItemsID);
+            return;
+        }
+        if (newQuantity > cartItems.getProducts().getInstockQuantity()){
+            throw new AppException(ErrorCode.PRODUCT_QUANTITY_NOT_FULLFILL);
+        } else if (newQuantity > cartItems.getQuantity()){ //them vao
+            int increaseQuantity = newQuantity - cartItems.getQuantity();
+            BigDecimal addPrice = cartItems.getProducts().getPrice().multiply(BigDecimal.valueOf(increaseQuantity));
+            cartItems.setPrice(cartItems.getPrice().add(addPrice));//chinh sua price ben cartItem
+            cart.setTotalPrice(cart.getTotalPrice().add(addPrice));//chinh sua TotalPrice ben Cart
+            cartItems.setQuantity(newQuantity);// sua quantity moi
+            cartRepository.save(cart);
+            cartItemsRepository.save(cartItems);
+        } else { //giam di
+            int decreaseQuantity = cartItems.getQuantity() - newQuantity;
+            BigDecimal decreasePrice = cartItems.getProducts().getPrice().multiply(BigDecimal.valueOf(decreaseQuantity));
+            cartItems.setPrice(cartItems.getPrice().subtract(decreasePrice));
+            cart.setTotalPrice(cart.getTotalPrice().subtract(decreasePrice));
+            cartItems.setQuantity(newQuantity);
+            cartRepository.save(cart);
+            cartItemsRepository.save(cartItems);
+        }
+    }
     //thieu lenh update quantity(dieu chinh gia totalPrice)
     //thieu lenh xoa tung san pham khoi gio hang
     //thieu lenh check lai current quantity khi load gio hang

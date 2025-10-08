@@ -38,6 +38,9 @@ public class UsersService {
         users.setUsername(request.getUsername());
         users.setPasswordHash(request.getPassword());
         users.setEmail(request.getEmail());
+        if(request.getPhoneNumber()!=null){
+            users.setPhoneNumber(request.getPhoneNumber());
+        }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         users.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         if(request.getRole().equals("User") || request.getRole().equals("Admin")||request.getRole().equals("Staff")){

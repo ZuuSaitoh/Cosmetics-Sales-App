@@ -2,6 +2,7 @@ package com.example.demo.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -28,47 +29,13 @@ public class UserCreationRequest {
     @Email(message = "INVALID_EMAIL")
     String email;
 
+    @Pattern(
+            regexp = "^(\\+84|0)(3|5|7|8|9)[0-9]{8}$",
+            message = "PHONE_NUMBER_INVALID",
+            flags = Pattern.Flag.CASE_INSENSITIVE
+    )
+    String phoneNumber;
+
     @NotBlank(message = "ENTER_ALL_FIELDS")
     String role;
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getConfirm_password() {
-        return confirm_password;
-    }
-
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

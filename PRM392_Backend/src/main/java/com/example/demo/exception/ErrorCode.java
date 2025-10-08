@@ -58,7 +58,8 @@ public enum ErrorCode {
     CART_NOT_EXISTED(1053, "Cart is not existed!"),
     CART_HAVE_NOTHING(1054,"Cart don't have any item!"),
     PRODUCT_QUANTITY_NOT_FULLFILL(1055,"You add product's quantity bigger than instock quantity!"),
-    PRODUCT_ALREADY_IN_CART(1056, "You have already add this product to cart!")
+    PRODUCT_ALREADY_IN_CART(1056, "You have already add this product to cart!"),
+    PRODUCT_NOT_IN_CART(1057,"The product is not existed in your cart")
     ;
 
     ErrorCode(int code, String message) {

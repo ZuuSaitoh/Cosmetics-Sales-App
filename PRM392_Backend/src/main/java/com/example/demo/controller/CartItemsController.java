@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.CartChangeQuantityRequest;
 import com.example.demo.dto.request.CartItemsAddProductToCartRequest;
 import com.example.demo.dto.response.ApiResponse;
 import com.example.demo.entity.CartItems;
@@ -35,4 +36,15 @@ public class CartItemsController {
         return new ApiResponse<String>(9999, "Delete all items in cart");
     }
 
+    @DeleteMapping("delete/item/{cartItemsID}")
+    ApiResponse<String> deleteOneItemInCart(Integer cartItemsID){
+        cartItemsService.deleteOneItemInCart(cartItemsID);
+        return new ApiResponse<String>(9999, "Delete successfully");
+    }
+
+    @PutMapping("change-quantity")
+    ApiResponse<String> changeQuantityByCartItemsID(@RequestBody @Valid CartChangeQuantityRequest request){
+        cartItemsService.changeQuantity(request.getCartItemsID(), request.getQuantity());
+        return new ApiResponse<String>(9999,"Change quantity successfully");
+    }
 }
