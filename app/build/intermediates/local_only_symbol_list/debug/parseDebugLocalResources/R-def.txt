@@ -20,6 +20,7 @@ drawable baseline_circle_notifications_24
 drawable baseline_home_24
 drawable baseline_location_on_24
 drawable button_confirm_background
+drawable circle_background
 drawable ic_apple
 drawable ic_cart
 drawable ic_facebook
@@ -44,7 +45,10 @@ id bottom_bar
 id btnDelete
 id btnEdit
 id btn_add_to_cart
+id btn_back
+id btn_cart
 id btn_confirm_add
+id btn_continue_shopping
 id btn_minus
 id btn_plus
 id cartBadge
@@ -55,6 +59,7 @@ id createAccountButton
 id drawer_layout
 id emailOrPhoneEditText
 id emailOrPhoneInputLayout
+id empty_state
 id etEmail
 id etName
 id etRole
@@ -63,6 +68,7 @@ id facebookLoginButton
 id forgotPasswordTextView
 id frame_layout
 id googleLoginButton
+id header_layout
 id home
 id homeFragment
 id imageProduct
@@ -78,7 +84,11 @@ id passwordInputLayout
 id productRecyclerView
 id recyclerEmployees
 id recycler_cart
+id registerConfirmPasswordEditText
+id registerEmailOrPhoneEditText
 id registerForm
+id registerFullNameEditText
+id registerPasswordEditText
 id scroll_view
 id searchEditText
 id signUpButton
@@ -96,6 +106,7 @@ id text_product_name
 id text_quantity
 id text_total_price
 id toolbar
+id total_section
 id tvEmail
 id tvName
 id tvRole

@@ -13,7 +13,7 @@ public interface AuthService {
     @POST("users/auth/token")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("users/register")
+    @POST("users/create")
     Call<RegisterResponse> register(@Body RegisterRequest request);
 }
 

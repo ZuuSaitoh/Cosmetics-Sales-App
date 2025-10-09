@@ -14,12 +14,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image_product"
+            <!-- Product Image Container (RelativeLayout for overlay) -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_apple" />
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/image_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_apple" />
+
+                <!-- Back Button Overlay -->
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="16dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="@drawable/circle_background"
+                    android:contentDescription="Back"
+                    android:elevation="4dp" />
+
+                <!-- Cart Button Overlay -->
+                <ImageButton
+                    android:id="@+id/btn_cart"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_cart"
+                    android:background="@drawable/circle_background"
+                    android:contentDescription="Cart"
+                    android:elevation="4dp" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_name"

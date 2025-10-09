@@ -3020,6 +3020,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_confirm_background
+drawable circle_background
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
@@ -3242,7 +3243,10 @@ id bounceStart
 id btnDelete
 id btnEdit
 id btn_add_to_cart
+id btn_back
+id btn_cart
 id btn_confirm_add
+id btn_continue_shopping
 id btn_minus
 id btn_plus
 id buttonPanel
@@ -3332,6 +3336,7 @@ id elastic
 id emailOrPhoneEditText
 id emailOrPhoneInputLayout
 id embed
+id empty_state
 id end
 id endToStart
 id enterAlways
@@ -3373,6 +3378,7 @@ id graph_wrap
 id group_divider
 id grouping
 id groups
+id header_layout
 id header_title
 id hide_graphics_layer_in_inspector_tag
 id hide_ime_id
@@ -3543,7 +3549,11 @@ id ratio
 id rectangles
 id recyclerEmployees
 id recycler_cart
+id registerConfirmPasswordEditText
+id registerEmailOrPhoneEditText
 id registerForm
+id registerFullNameEditText
+id registerPasswordEditText
 id report_drawn
 id reverseSawtooth
 id right
@@ -3669,6 +3679,7 @@ id toggle
 id toolbar
 id top
 id topPanel
+id total_section
 id touch_outside
 id transitionToEnd
 id transitionToStart

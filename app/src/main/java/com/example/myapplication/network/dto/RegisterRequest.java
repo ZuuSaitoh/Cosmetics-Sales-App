@@ -1,22 +1,25 @@
 package com.example.myapplication.network.dto;
 
 public class RegisterRequest {
-    private final String fullName;
-    private final String emailOrPhone;
+    private final String username;
     private final String password;
-    private final String birthDate; // ISO-8601 (yyyy-MM-dd) or empty
+    private final String confirm_password;
+    private final String email;
+    private final String role;
 
-    public RegisterRequest(String fullName, String emailOrPhone, String password, String birthDate) {
-        this.fullName = fullName;
-        this.emailOrPhone = emailOrPhone;
+    public RegisterRequest(String username, String password, String confirmPassword, String email) {
+        this.username = username;
         this.password = password;
-        this.birthDate = birthDate;
+        this.confirm_password = confirmPassword;
+        this.email = email;
+        this.role = "User";
     }
 
-    public String getFullName() { return fullName; }
-    public String getEmailOrPhone() { return emailOrPhone; }
+    public String getUsername() { return username; }
     public String getPassword() { return password; }
-    public String getBirthDate() { return birthDate; }
+    public String getConfirm_password() { return confirm_password; }
+    public String getEmail() { return email; }
+    public String getRole() { return role; }
 }
 
 

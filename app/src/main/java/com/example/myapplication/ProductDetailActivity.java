@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageView imageProduct;
     private TextView textName, textPrice, textDescription;
     private Button btnAddToCart;
+    private ImageButton btnBack;
+    private ImageButton btnCart;
 
     private String productName;
     private String productPrice;
@@ -37,6 +40,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         displayProductData();
 
         btnAddToCart.setOnClickListener(v -> showQuantityPopup());
+        btnBack.setOnClickListener(v -> finish());
+        btnCart.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductDetailActivity.this, com.example.myapplication.cart.CartActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initViews() {
@@ -45,6 +53,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         textPrice = findViewById(R.id.text_price);
         textDescription = findViewById(R.id.text_description);
         btnAddToCart = findViewById(R.id.btn_add_to_cart);
+        btnBack = findViewById(R.id.btn_back);
+        btnCart = findViewById(R.id.btn_cart);
     }
 
     private void getProductDataFromIntent() {

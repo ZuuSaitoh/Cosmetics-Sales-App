@@ -219,27 +219,28 @@ public class LoginScreen extends AppCompatActivity {
 
     private void handleRegisterClick() {
         // Cố gắng lấy các trường theo ID; nếu không có thì báo lỗi thân thiện
-        TextInputEditText fullNameEt = safeFindEditText(R.id.registerFullNameEditText);
-        TextInputEditText emailPhoneEt = safeFindEditText(R.id.registerEmailOrPhoneEditText);
+        TextInputEditText usernameEt = safeFindEditText(R.id.registerFullNameEditText);
+        TextInputEditText emailEt = safeFindEditText(R.id.registerEmailOrPhoneEditText);
         TextInputEditText passwordEt = safeFindEditText(R.id.registerPasswordEditText);
-        TextInputEditText birthDateEt = safeFindEditText(R.id.registerBirthDateEditText);
+        TextInputEditText confirmPasswordEt = safeFindEditText(R.id.registerConfirmPasswordEditText);
 
-        if (fullNameEt == null || emailPhoneEt == null || passwordEt == null) {
+        if (usernameEt == null || emailEt == null || passwordEt == null || confirmPasswordEt == null) {
             Toast.makeText(this, "Thiếu trường đăng ký trong layout", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String fullName = valueOf(fullNameEt);
-        String emailOrPhone = valueOf(emailPhoneEt);
+        String username = valueOf(usernameEt);
+        String email = valueOf(emailEt);
         String password = valueOf(passwordEt);
-        String birthDate = birthDateEt != null ? valueOf(birthDateEt) : "";
+        String confirmPassword = valueOf(confirmPasswordEt);
 
-        if (fullName.isEmpty()) { Toast.makeText(this, "Vui lòng nhập họ tên", Toast.LENGTH_SHORT).show(); return; }
-        if (emailOrPhone.isEmpty()) { Toast.makeText(this, "Vui lòng nhập Email/SĐT", Toast.LENGTH_SHORT).show(); return; }
+        if (username.isEmpty()) { Toast.makeText(this, "Vui lòng nhập username", Toast.LENGTH_SHORT).show(); return; }
+        if (email.isEmpty()) { Toast.makeText(this, "Vui lòng nhập Email", Toast.LENGTH_SHORT).show(); return; }
         if (password.isEmpty()) { Toast.makeText(this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show(); return; }
+        if (!password.equals(confirmPassword)) { Toast.makeText(this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show(); return; }
 
         createAccountButton.setEnabled(false);
-        Call<RegisterResponse> call = authService.register(new RegisterRequest(fullName, emailOrPhone, password, birthDate));
+        Call<RegisterResponse> call = authService.register(new RegisterRequest(username, password, confirmPassword, email));
         call.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
