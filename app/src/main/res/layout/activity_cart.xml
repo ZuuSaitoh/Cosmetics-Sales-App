@@ -102,6 +102,18 @@
                 android:textSize="18sp"/>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tiến hành đặt hàng"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/holo_orange_dark"
+            android:padding="16dp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

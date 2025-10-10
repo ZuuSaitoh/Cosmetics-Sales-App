@@ -8,6 +8,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\anim\\slide_in.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/layout_item_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/item_cart.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
@@ -28,12 +32,12 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_search.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xxxhdpi\\ic_launcher.webp"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_product_detail.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_product_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_app_icon.png.flat",
@@ -144,6 +148,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/layout_activity_login.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/activity_login.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
@@ -184,6 +192,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\item_product.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/drawable_circle_background.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/drawable/circle_background.xml"
+    },
+    {
         "merged": "com.example.myapplication.app-debug-61:/drawable_ic_cart.xml.flat",
         "source": "com.example.myapplication.app-main-63:/drawable/ic_cart.xml"
     },
@@ -210,6 +222,10 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_admin_dashboard.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_admin_dashboard.xml"
+    },
+    {
+        "merged": "com.example.myapplication.app-debug-61:/layout_activity_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/activity_cart.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_banner_product.xml.flat",

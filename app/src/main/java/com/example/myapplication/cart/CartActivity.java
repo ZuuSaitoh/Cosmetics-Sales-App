@@ -25,6 +25,7 @@ public class CartActivity extends AppCompatActivity {
     private TextView textGrandTotal;
     private ImageButton btnBack;
     private Button btnContinueShopping;
+    private Button btnOrder;
     private LinearLayout emptyState;
     private LinearLayout totalSection;
 
@@ -43,6 +44,7 @@ public class CartActivity extends AppCompatActivity {
         textGrandTotal = findViewById(R.id.text_grand_total);
         btnBack = findViewById(R.id.btn_back);
         btnContinueShopping = findViewById(R.id.btn_continue_shopping);
+        btnOrder = findViewById(R.id.btn_order);
         emptyState = findViewById(R.id.empty_state);
         totalSection = findViewById(R.id.total_section);
 
@@ -57,6 +59,7 @@ public class CartActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        btnOrder.setOnClickListener(v -> proceedOrder());
     }
 
     private void updateCartDisplay() {
@@ -73,7 +76,9 @@ public class CartActivity extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             totalSection.setVisibility(View.VISIBLE);
             
-            recyclerView.setAdapter(new CartAdapter(items));
+            CartAdapter adapter = new CartAdapter(items);
+            adapter.setOnCartChangedListener(this::updateGrandTotal);
+            recyclerView.setAdapter(adapter);
             updateGrandTotal();
         }
     }
@@ -81,6 +86,15 @@ public class CartActivity extends AppCompatActivity {
     private void updateGrandTotal() {
         double total = CartManager.getInstance().getGrandTotal();
         textGrandTotal.setText(String.format("$%.2f", total));
+        btnOrder.setEnabled(total > 0);
+    }
+
+    private void proceedOrder() {
+        // For now, just navigate to main or show a toast; hook checkout later
+        // startActivity(new Intent(this, CheckoutActivity.class));
+        // Placeholder: clear cart and go home
+        CartManager.getInstance().clear();
+        updateCartDisplay();
     }
 
     @Override

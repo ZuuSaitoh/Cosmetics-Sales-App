@@ -3247,7 +3247,9 @@ int id btn_cart 0x7f08006f
 int id btn_confirm_add 0x7f080070
 int id btn_continue_shopping 0x7f080071
 int id btn_minus 0x7f080072
+int id btn_order 0x7f08024b
 int id btn_plus 0x7f080073
+int id btn_remove 0x7f08024c
 int id buttonPanel 0x7f080074
 int id cache_measures 0x7f080075
 int id callMeasure 0x7f080076

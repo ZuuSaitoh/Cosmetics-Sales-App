@@ -3248,7 +3248,9 @@ id btn_cart
 id btn_confirm_add
 id btn_continue_shopping
 id btn_minus
+id btn_order
 id btn_plus
+id btn_remove
 id buttonPanel
 id cache_measures
 id callMeasure

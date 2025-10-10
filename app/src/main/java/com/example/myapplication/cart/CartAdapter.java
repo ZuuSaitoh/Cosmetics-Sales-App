@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.CartManager;
 import com.example.myapplication.model.CartItem;
 
 import java.util.List;
@@ -36,6 +37,33 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         h.price.setText(String.format("$%.2f", item.getProduct().getPrice()));
         h.total.setText(String.format("$%.2f", item.getItemTotal()));
         h.image.setImageResource(item.getProduct().getImageResId());
+
+        h.btnPlus.setOnClickListener(v -> {
+            CartManager.getInstance().updateQuantity(item.getProduct(), item.getQuantity() + 1);
+            refreshBinding(h.getAdapterPosition());
+        });
+
+        h.btnMinus.setOnClickListener(v -> {
+            int newQty = Math.max(1, item.getQuantity() - 1);
+            CartManager.getInstance().updateQuantity(item.getProduct(), newQty);
+            refreshBinding(h.getAdapterPosition());
+        });
+
+        h.btnRemove.setOnClickListener(v -> {
+            CartManager.getInstance().remove(item.getProduct());
+            int idx = h.getAdapterPosition();
+            if (idx != RecyclerView.NO_POSITION) {
+                items.remove(idx);
+                notifyItemRemoved(idx);
+            }
+            if (onCartChangedListener != null) onCartChangedListener.onChanged();
+        });
+    }
+
+    private void refreshBinding(int position) {
+        if (position == RecyclerView.NO_POSITION) return;
+        notifyItemChanged(position);
+        if (onCartChangedListener != null) onCartChangedListener.onChanged();
     }
 
     @Override
@@ -49,6 +77,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         final TextView quantity;
         final TextView price;
         final TextView total;
+        final TextView btnPlus;
+        final TextView btnMinus;
+        final TextView btnRemove;
 
         VH(@NonNull View itemView) {
             super(itemView);
@@ -57,7 +88,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             quantity = itemView.findViewById(R.id.textQty);
             price = itemView.findViewById(R.id.textPrice);
             total = itemView.findViewById(R.id.textTotal);
+            btnPlus = itemView.findViewById(R.id.btn_plus);
+            btnMinus = itemView.findViewById(R.id.btn_minus);
+            btnRemove = itemView.findViewById(R.id.btn_remove);
         }
+    }
+
+    public interface OnCartChangedListener {
+        void onChanged();
+    }
+
+    private OnCartChangedListener onCartChangedListener;
+
+    public void setOnCartChangedListener(OnCartChangedListener listener) {
+        this.onCartChangedListener = listener;
     }
 }
 
