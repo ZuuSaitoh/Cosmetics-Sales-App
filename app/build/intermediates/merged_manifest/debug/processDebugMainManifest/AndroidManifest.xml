@@ -90,7 +90,7 @@
 
         <!-- Nếu bạn có thêm MapsActivity -->
         <activity
-            android:name="com.example.myapplication.MapsActivity"
+            android:name="com.example.myapplication.map.MapsActivity"
             android:exported="false"
             android:label="Bản đồ"
             android:theme="@style/Theme.MyApplication" />

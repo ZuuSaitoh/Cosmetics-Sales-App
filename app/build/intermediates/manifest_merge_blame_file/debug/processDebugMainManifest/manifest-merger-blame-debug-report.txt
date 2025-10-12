@@ -66,105 +66,105 @@
 40-->[com.github.vietmap-company:maps-sdk-android:2.0.4] C:\Users\HP\.gradle\caches\8.13\transforms\e3005df145b3916cb1522f3f9060cdf1\transformed\maps-sdk-android-2.0.4\AndroidManifest.xml:18:22-73
 41
 42    <application
-42-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:11:5-67:19
+42-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:5-68:19
 43        android:allowBackup="true"
-43-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:9-35
+43-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:13:9-35
 44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 44-->[androidx.core:core:1.17.0] C:\Users\HP\.gradle\caches\8.13\transforms\0007c718b4c5564e1925aea9d58f0b13\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
 45        android:dataExtractionRules="@xml/data_extraction_rules"
-45-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:13:9-65
+45-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:14:9-65
 46        android:debuggable="true"
 47        android:extractNativeLibs="false"
 48        android:fullBackupContent="@xml/backup_rules"
-48-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:14:9-54
+48-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:15:9-54
 49        android:icon="@mipmap/ic_launcher"
-49-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:15:9-43
+49-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:16:9-43
 50        android:label="@string/app_name"
-50-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:16:9-41
+50-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:17:9-41
 51        android:roundIcon="@mipmap/ic_launcher_round"
-51-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:17:9-54
+51-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:18:9-54
 52        android:supportsRtl="true"
-52-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:18:9-35
+52-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:19:9-35
 53        android:testOnly="true"
 54        android:theme="@style/Theme.MyApplication"
-54-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:19:9-51
+54-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:20:9-51
 55        android:usesCleartextTraffic="true" >
-55-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:20:9-44
+55-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:21:9-44
 56
 57        <!-- Activity khởi chạy chính -->
 58        <activity
-58-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:24:9-32:20
+58-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:9-33:20
 59            android:name="com.example.myapplication.Main"
-59-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:25:13-33
+59-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:26:13-33
 60            android:exported="true"
-60-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:26:13-36
+60-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:27:13-36
 61            android:theme="@style/Theme.MyApplication" >
-61-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:27:13-55
+61-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:28:13-55
 62            <intent-filter>
-62-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:28:13-31:29
+62-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:29:13-32:29
 63                <action android:name="android.intent.action.MAIN" />
-63-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:29:17-69
-63-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:29:25-66
+63-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:17-69
+63-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:25-66
 64
 65                <category android:name="android.intent.category.LAUNCHER" />
-65-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:17-77
-65-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:30:27-74
+65-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:17-77
+65-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:31:27-74
 66            </intent-filter>
 67        </activity>
 68
 69        <!-- Các Activity khác -->
 70        <activity
-70-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:36:9-40:58
+70-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:9-41:58
 71            android:name="com.example.myapplication.LoginScreen"
-71-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:37:13-40
+71-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:38:13-40
 72            android:exported="false"
-72-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:38:13-37
+72-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:39:13-37
 73            android:label="@string/app_name"
-73-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:39:13-45
+73-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-45
 74            android:theme="@style/Theme.MyApplication" />
-74-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:40:13-55
+74-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:41:13-55
 75        <activity
-75-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:42:9-46:58
+75-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:9-47:58
 76            android:name="com.example.myapplication.AdminDashboardActivity"
-76-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:43:13-51
+76-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:44:13-51
 77            android:exported="false"
-77-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:44:13-37
+77-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-37
 78            android:label="Quản lý nhân viên"
-78-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-46
+78-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-46
 79            android:theme="@style/Theme.MyApplication" />
-79-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:46:13-55
+79-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:47:13-55
 80        <activity
-80-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:48:9-52:58
+80-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:49:9-53:58
 81            android:name="com.example.myapplication.CartActivity"
-81-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:49:13-41
+81-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:50:13-41
 82            android:exported="false"
-82-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:50:13-37
+82-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:13-37
 83            android:label="Giỏ hàng"
-83-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:13-37
+83-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-37
 84            android:theme="@style/Theme.MyApplication" />
-84-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-55
+84-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:53:13-55
 85        <activity
-85-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:54:9-58:58
+85-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:55:9-59:58
 86            android:name="com.example.myapplication.ProductDetailActivity"
-86-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:55:13-50
+86-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:56:13-50
 87            android:exported="false"
-87-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:56:13-37
+87-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:57:13-37
 88            android:label="Chi tiết sản phẩm"
-88-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:57:13-46
+88-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:58:13-46
 89            android:theme="@style/Theme.MyApplication" />
-89-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:58:13-55
+89-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:59:13-55
 90
 91        <!-- Nếu bạn có thêm MapsActivity -->
 92        <activity
-92-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:61:9-65:58
-93            android:name="com.example.myapplication.MapsActivity"
-93-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:62:13-41
+92-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:62:9-66:58
+93            android:name="com.example.myapplication.map.MapsActivity"
+93-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:63:13-45
 94            android:exported="false"
-94-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:63:13-37
+94-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:64:13-37
 95            android:label="Bản đồ"
-95-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:64:13-35
+95-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:65:13-35
 96            android:theme="@style/Theme.MyApplication" />
-96-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:65:13-55
+96-->D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:66:13-55
 97        <activity
 97-->[androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\HP\.gradle\caches\8.13\transforms\d4a5f70d578f2d286fc723c795c79a26\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
 98            android:name="androidx.compose.ui.tooling.PreviewActivity"

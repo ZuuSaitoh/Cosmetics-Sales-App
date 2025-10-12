@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
+import com.example.myapplication.map.MapsActivity;
 import com.example.myapplication.model.Banner;
 import com.example.myapplication.model.Product;
 
