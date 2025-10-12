@@ -1364,6 +1364,7 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color background_color
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -1434,6 +1435,7 @@ color gray_600
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color lavender
+color lavender_light
 color m3_appbar_overlay_color
 color m3_assist_chip_icon_tint_color
 color m3_assist_chip_stroke_color
@@ -3020,6 +3022,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_confirm_background
+drawable category_icon_background
 drawable circle_background
 drawable design_fab_background
 drawable design_ic_visibility
@@ -3028,6 +3031,8 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_apple
 drawable ic_arrow_back_black_24
+drawable ic_arrow_forward
+drawable ic_body
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -3037,9 +3042,13 @@ drawable ic_call_decline_low
 drawable ic_cart
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
+drawable ic_eye
+drawable ic_face
 drawable ic_facebook
 drawable ic_google
+drawable ic_hair
 drawable ic_keyboard_black_24dp
+drawable ic_lips
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3048,9 +3057,12 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_nail
+drawable ic_perfume
 drawable ic_plus
 drawable ic_search
 drawable ic_search_black_24
+drawable ic_tools
 drawable img_app_icon
 drawable img_no_product
 drawable indeterminate_static
@@ -3258,7 +3270,11 @@ id cancel_button
 id carryVelocity
 id cartBadge
 id cartIcon
+id categoriesRecyclerView
 id category
+id categoryDescription
+id categoryIcon
+id categoryName
 id center
 id centerCrop
 id centerInside
@@ -3543,6 +3559,7 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id productCount
 id productRecyclerView
 id progress_circular
 id progress_horizontal
@@ -3656,7 +3673,10 @@ id textStart
 id textTitle
 id textTop
 id textTotal
+id text_brand
+id text_category
 id text_description
+id text_full_description
 id text_grand_total
 id text_input_end_icon
 id text_input_error_icon
@@ -3666,6 +3686,7 @@ id text_popup_title
 id text_price
 id text_product_name
 id text_quantity
+id text_stock
 id text_total_price
 id textinput_counter
 id textinput_error
@@ -3868,6 +3889,7 @@ layout fragment_subscriptions
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_cart
+layout item_category
 layout item_employee
 layout item_product
 layout m3_alert_dialog
