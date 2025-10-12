@@ -112,10 +112,12 @@ id total_section
 id tvEmail
 id tvName
 id tvRole
+id vmMapView
 layout activity_admin_dashboard
 layout activity_cart
 layout activity_login
 layout activity_product_detail
+layout activity_vietmapview
 layout banner_product
 layout bottom_sheet_quantity
 layout dialog_employee_form
@@ -133,9 +135,7 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
 string close_nav
-string hello_blank_fragment
 string open_nav
-style DialogAnimation
 style Theme.MyApplication
 xml backup_rules
 xml data_extraction_rules

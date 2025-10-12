@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     private EditText searchEditText;
     private ImageView cartIcon;
     private TextView cartBadge;
+    private ImageView locationIcon;
     private int cartItemCount = 0;
 
     private Handler autoScrollHandler = new Handler();
@@ -52,14 +53,29 @@ public class HomeFragment extends Fragment {
         searchEditText = view.findViewById(R.id.searchEditText);
         cartIcon = view.findViewById(R.id.cartIcon);
         cartBadge = view.findViewById(R.id.cartBadge);
+        locationIcon = view.findViewById(R.id.locationIcon);
         
         setupSearch();
         setupCart();
         setupBannerList();
         setupProductList();
         startAutoScroll();
+        setupLocation();
         
         return view;
+    }
+
+    private void setupLocation() {
+        locationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Context ctx = getContext();
+                if (ctx != null) {
+                    android.content.Intent i = new android.content.Intent(ctx, MapsActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
     }
 
     private void setupSearch() {
