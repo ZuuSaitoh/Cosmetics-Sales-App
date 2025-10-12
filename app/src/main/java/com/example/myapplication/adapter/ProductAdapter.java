@@ -31,6 +31,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.originalProducts = new ArrayList<>(products);
         this.filteredProducts = new ArrayList<>(products);
     }
+    
+    public void updateProducts(List<Product> newProducts) {
+        this.originalProducts.clear();
+        this.originalProducts.addAll(newProducts);
+        this.filteredProducts.clear();
+        this.filteredProducts.addAll(newProducts);
+        notifyDataSetChanged();
+    }
 
 
 
@@ -45,7 +53,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = filteredProducts.get(position);
         holder.titleText.setText(product.getName());
-        holder.priceText.setText(String.format("$%.2f", product.getPrice()));
+        
+        // Format price as VND
+        String formattedPrice = String.format("%,.0f VND", product.getPrice());
+        holder.priceText.setText(formattedPrice);
+        
         holder.imageView.setImageResource(product.getImageResId());
 
 
