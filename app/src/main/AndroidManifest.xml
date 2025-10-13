@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -34,6 +34,7 @@
 
 
         <!-- Các Activity khác -->
+
         <activity
             android:name=".LoginScreen"
             android:exported="false"
@@ -47,7 +48,7 @@
             android:theme="@style/Theme.MyApplication" />
 
         <activity
-            android:name=".CartActivity"
+            android:name=".cart.CartActivity"
             android:exported="false"
             android:label="Giỏ hàng"
             android:theme="@style/Theme.MyApplication" />
@@ -64,6 +65,17 @@
             android:exported="false"
             android:label="Bản đồ"
             android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".map.MapsNavigationActivity"
+            android:exported="false"
+            android:label="Bản đồ"
+            android:theme="@style/Theme.MyApplication" />
+
+        <service
+            android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
 
     </application>
 

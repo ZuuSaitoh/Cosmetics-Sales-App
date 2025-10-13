@@ -85,6 +85,27 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
+    //Map Navigation
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1,0,0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.jakewharton:butterknife:10.2.3")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("com.github.vietmap-company:maps-sdk-android:2.6.0")
+    implementation("com.github.vietmap-company:maps-sdk-navigation-ui-android:2.3.2")
+    implementation("com.github.vietmap-company:maps-sdk-navigation-android:2.3.3")
+    implementation("com.github.vietmap-company:vietmap-services-core:1.0.0")
+    implementation("com.github.vietmap-company:vietmap-services-directions-models:1.0.1")
+    implementation("com.github.vietmap-company:vietmap-services-turf-android:1.0.2")
+    implementation("com.github.vietmap-company:vietmap-services-android:1.1.2")
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.github.vietmap-company:vietmap-services-geojson-android:1.0.0")
+    implementation(group = "com.squareup.okhttp3", name = "okhttp", version = "3.2.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.0.0-beta4")
+
 
     // --- Google Play Services ---
     implementation("com.google.android.gms:play-services-maps:18.1.0")

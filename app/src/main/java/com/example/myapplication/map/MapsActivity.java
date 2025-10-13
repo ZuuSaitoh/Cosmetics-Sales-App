@@ -5,6 +5,8 @@ import static com.example.myapplication.BuildConfig.VIETMAP_API_KEY;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.myapplication.R;
+import com.mapbox.geojson.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import vn.vietmap.vietmapsdk.Vietmap;
@@ -21,31 +23,34 @@ import vn.vietmap.vietmapsdk.annotations.Polygon;
 import vn.vietmap.vietmapsdk.annotations.Polyline;
 import vn.vietmap.vietmapsdk.annotations.PolylineOptions;
 import vn.vietmap.vietmapsdk.geometry.LatLng;
+import vn.vietmap.vietmapsdk.location.permissions.PermissionsManager;
 import vn.vietmap.vietmapsdk.maps.MapView;
+import vn.vietmap.vietmapsdk.maps.OnMapReadyCallback;
 import vn.vietmap.vietmapsdk.maps.Style;
 import vn.vietmap.vietmapsdk.maps.VietMapGL;
-import vn.vietmap.vietmapsdk.maps.OnMapReadyCallback;
 
-public class MapsActivity extends AppCompatActivity implements VietMapGL.OnMapClickListener {
+public class MapsActivity extends AppCompatActivity {
 
     private MapView mapView;
     private VietMapGL vietMapGL;
     private MapsManager mapsManager;
+    private MapsNavigationManager mapsNavigationManager;
 
+    private PermissionsManager permissionsManager;
+    private TextToSpeech textToSpeech;
     private List<Polyline> polylines = null;
-    private ArrayList<PolylineOptions> polylineOptions = new ArrayList<>();
     private Polygon polygon = null;
 
+    private LatLng userLatLng; // ⚠️ Lưu vị trí người dùng để dùng khi nhấn nút
     private static final LatLng STORE_LOCATION = new LatLng(10.976238345142892, 106.61804099635049);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initialize Vietmap SDK
         Vietmap.getInstance(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vietmapview);
 
+        Button button = findViewById(R.id.pushToNavigationScreen);
         mapView = findViewById(R.id.vmMapView);
         mapView.onCreate(savedInstanceState);
 
@@ -60,9 +65,12 @@ public class MapsActivity extends AppCompatActivity implements VietMapGL.OnMapCl
                         new Style.OnStyleLoaded() {
                             @Override
                             public void onStyleLoaded(Style style) {
-                                mapsManager = new MapsManager(MapsActivity.this, vietMapGL);
 
-                                // ⚠️ Kiểm tra quyền trước khi bật location
+                                // ✅ Khởi tạo các manager
+                                mapsManager = new MapsManager(MapsActivity.this, vietMapGL);
+                                mapsNavigationManager = new MapsNavigationManager(MapsActivity.this, vietMapGL);
+
+                                // ⚠️ Kiểm tra quyền vị trí
                                 if (!checkPermission()) {
                                     ActivityCompat.requestPermissions(
                                             MapsActivity.this,
@@ -75,50 +83,54 @@ public class MapsActivity extends AppCompatActivity implements VietMapGL.OnMapCl
                                     return;
                                 }
 
-                                // ✅ Khi có quyền
+                                // ✅ Bật vị trí
                                 mapsManager.initLocationEngine();
                                 mapsManager.enableLocationComponent(style);
 
                                 // 📍 Thêm marker cửa hàng
                                 mapsManager.addMarker(STORE_LOCATION);
 
-                                // ✅ Lấy vị trí người dùng và zoom vừa cả user + store
+                                // ✅ Lấy vị trí người dùng và hiển thị camera
                                 mapsManager.getUserLocation(location -> {
                                     if (location != null) {
-                                        LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                                        // Tạo vùng bao gồm user + store
+                                        // Hiển thị vùng chứa user + store
                                         vn.vietmap.vietmapsdk.geometry.LatLngBounds bounds =
                                                 new vn.vietmap.vietmapsdk.geometry.LatLngBounds.Builder()
                                                         .include(userLatLng)
                                                         .include(STORE_LOCATION)
                                                         .build();
 
-                                        // Di chuyển camera sao cho thấy cả hai điểm
                                         vietMapGL.animateCamera(
                                                 vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngBounds(bounds, 100)
                                         );
                                     } else {
-                                        // Nếu chưa lấy được GPS, chỉ hiển thị store
                                         vietMapGL.moveCamera(
                                                 vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORE_LOCATION, 13.0)
                                         );
+                                        Toast.makeText(MapsActivity.this, "Không thể lấy vị trí người dùng", Toast.LENGTH_SHORT).show();
                                     }
+                                });
+
+                                // ✅ Khi người dùng nhấn nút Navigation
+                                button.setOnClickListener(v -> {
+                                    if (userLatLng == null) {
+                                        Toast.makeText(MapsActivity.this, "Chưa có vị trí người dùng!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    mapsNavigationManager.drawShortestRoute(
+                                            mapView,
+                                            Point.fromLngLat(STORE_LOCATION.getLongitude(), STORE_LOCATION.getLatitude()),
+                                            Point.fromLngLat(userLatLng.getLongitude(), userLatLng.getLatitude())
+                                    );
                                 });
                             }
                         }
                 );
             }
         });
-    }
-
-    // ✅ Xử lý khi người dùng click vào bản đồ
-    @Override
-    public boolean onMapClick(LatLng latLng) {
-        if (mapsManager != null) {
-            mapsManager.addMarker(latLng);
-        }
-        return false;
     }
 
     // ⚠️ Check quyền truy cập vị trí
@@ -134,7 +146,6 @@ public class MapsActivity extends AppCompatActivity implements VietMapGL.OnMapCl
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            // Khi người dùng cấp quyền, bật lại LocationComponent
             if (vietMapGL != null) {
                 vietMapGL.getStyle(style -> {
                     mapsManager.initLocationEngine();

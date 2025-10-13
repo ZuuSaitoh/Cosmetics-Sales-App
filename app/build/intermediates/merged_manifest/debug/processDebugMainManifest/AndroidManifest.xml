@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <!-- Include required permissions for Google Maps API to run. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -67,6 +68,7 @@
         </activity>
 
         <!-- Các Activity khác -->
+
         <activity
             android:name="com.example.myapplication.LoginScreen"
             android:exported="false"
@@ -78,7 +80,7 @@
             android:label="Quản lý nhân viên"
             android:theme="@style/Theme.MyApplication" />
         <activity
-            android:name="com.example.myapplication.CartActivity"
+            android:name="com.example.myapplication.cart.CartActivity"
             android:exported="false"
             android:label="Giỏ hàng"
             android:theme="@style/Theme.MyApplication" />
@@ -94,6 +96,18 @@
             android:exported="false"
             android:label="Bản đồ"
             android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name="com.example.myapplication.map.MapsNavigationActivity"
+            android:exported="false"
+            android:label="Bản đồ"
+            android:theme="@style/Theme.MyApplication" />
+
+        <service
+            android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
         <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />
@@ -158,6 +172,8 @@
                 <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
             </intent-filter>
         </receiver>
+
+        <activity android:name="vn.vietmap.services.android.navigation.ui.v5.VietmapNavigationActivity" />
     </application>
 
 </manifest>

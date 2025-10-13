@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myapplication.app-mergeDebugResources-72:/values-pl/values-pl.xml",
+            "outputFile": "com.example.myapplication.app-mergeDebugResources-75:/values-pl/values-pl.xml",
             "map": [
                 {
                     "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\c9e0e590ae7f2138eaab016ad9341835\\transformed\\ui-release\\res\\values-pl\\values-pl.xml",
@@ -52,6 +52,23 @@
                         "startOffsets": "19252,19340",
                         "endColumns": "87,87",
                         "endOffsets": "19335,19423"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\1bf01d8e029de79074613a27908e8e16\\transformed\\maps-sdk-android-2.6.0\\res\\values-pl\\values-pl.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,208,298,421,532,745,866",
+                        "endColumns": "152,89,122,110,212,120,129",
+                        "endOffsets": "203,293,416,527,740,861,991"
+                    },
+                    "to": {
+                        "startLines": "203,204,205,206,207,208,209",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "19428,19581,19671,19794,19905,20118,20239",
+                        "endColumns": "152,89,122,110,212,120,129",
+                        "endOffsets": "19576,19666,19789,19900,20113,20234,20364"
                     }
                 },
                 {
@@ -156,23 +173,6 @@
                         "startOffsets": "17852,17960",
                         "endColumns": "107,116",
                         "endOffsets": "17955,18072"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\e3005df145b3916cb1522f3f9060cdf1\\transformed\\maps-sdk-android-2.0.4\\res\\values-pl\\values-pl.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,208,298,421,532,745,866",
-                        "endColumns": "152,89,122,110,212,120,129",
-                        "endOffsets": "203,293,416,527,740,861,991"
-                    },
-                    "to": {
-                        "startLines": "203,204,205,206,207,208,209",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "19428,19581,19671,19794,19905,20118,20239",
-                        "endColumns": "152,89,122,110,212,120,129",
-                        "endOffsets": "19576,19666,19789,19900,20113,20234,20364"
                     }
                 }
             ]

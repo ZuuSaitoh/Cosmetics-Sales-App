@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myapplication.app-mergeDebugResources-72:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.example.myapplication.app-mergeDebugResources-75:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\ed636a1864da0983cf1d8211059446b2\\transformed\\navigation-ui-2.9.5\\res\\values-zh-rTW\\values-zh-rTW.xml",
@@ -72,6 +72,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\1bf01d8e029de79074613a27908e8e16\\transformed\\maps-sdk-android-2.6.0\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,137,226,332,414,509,595",
+                        "endColumns": "81,88,105,81,94,85,114",
+                        "endOffsets": "132,221,327,409,504,590,705"
+                    },
+                    "to": {
+                        "startLines": "201,202,203,204,205,206,207",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "17108,17190,17279,17385,17467,17562,17648",
+                        "endColumns": "81,88,105,81,94,85,114",
+                        "endOffsets": "17185,17274,17380,17462,17557,17643,17758"
+                    }
+                },
+                {
                     "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\afc5cec324eab974146de0be3fc44bd1\\transformed\\appcompat-1.6.1\\res\\values-zh-rTW\\values-zh-rTW.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
@@ -120,23 +137,6 @@
                         "startOffsets": "4291,4392,4520,4635,4737,4844,4960,5060,5258,5368,5469,5598,5713,5815,5923,5979,6036",
                         "endColumns": "100,127,114,101,106,115,99,94,109,100,128,114,101,107,55,56,73",
                         "endOffsets": "4387,4515,4630,4732,4839,4955,5055,5150,5363,5464,5593,5708,5810,5918,5974,6031,6105"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\HP\\.gradle\\caches\\8.13\\transforms\\e3005df145b3916cb1522f3f9060cdf1\\transformed\\maps-sdk-android-2.0.4\\res\\values-zh-rTW\\values-zh-rTW.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,137,226,332,414,509,595",
-                        "endColumns": "81,88,105,81,94,85,114",
-                        "endOffsets": "132,221,327,409,504,590,705"
-                    },
-                    "to": {
-                        "startLines": "201,202,203,204,205,206,207",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "17108,17190,17279,17385,17467,17562,17648",
-                        "endColumns": "81,88,105,81,94,85,114",
-                        "endOffsets": "17185,17274,17380,17462,17557,17643,17758"
                     }
                 },
                 {
