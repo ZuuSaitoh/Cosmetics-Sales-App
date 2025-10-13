@@ -61,7 +61,15 @@ public enum ErrorCode {
     PRODUCT_ALREADY_IN_CART(1056, "You have already add this product to cart!"),
     PRODUCT_NOT_IN_CART(1057,"The product is not existed in your cart"),
     LOCATION_NOT_EXISTED(1058,"Store location is not existed!"),
-    ;
+    CART_ITEM_NOT_EXISTED(1059,"Cart item is not existed!"),
+    ORDER_EXISTED(1061,"Order existed!"),
+    INVALID_ORDER_STATUS(1062,"Order status is not valid!"),
+    PAYMENT_METHOD_NOT_VALID(1063,"Payment method is not valid!"),
+    BILLING_ADDRESS_NOT_VALID(1064,"Billing address is not valid!"),
+    OUT_OF_STOCK(1065,"Out of stock!"),
+    PAYMENT_METHOD_NOT_SUPPORTED(1066,"Payment method not supported! Only support COD, Momo, ZaloPay"),
+    CART_ALREADY_CHECKED_OUT(1067,"Cart already checked out!"),
+    STATUS_NOT_VALID(1068,"Status is not valid! Order's status must be \"Processing\", \"Shipped\", \"Delivered\", \"Cancelled\""),;
 
     ErrorCode(int code, String message) {
         this.code = code;

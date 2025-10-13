@@ -106,8 +106,6 @@ public class CartItemsService {
             cartItemsRepository.save(cartItems);
         }
     }
-    //thieu lenh update quantity(dieu chinh gia totalPrice)
-    //thieu lenh xoa tung san pham khoi gio hang
     //thieu lenh check lai current quantity khi load gio hang
 
 

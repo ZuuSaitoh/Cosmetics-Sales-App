@@ -63,7 +63,7 @@ public class AuthenticationService {
                 .subject(username)
                 .issuer("swp391.com")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .expirationTime(new Date(Instant.now().plus(240, ChronoUnit.HOURS).toEpochMilli()))
                 .claim("userId", userID)
                 .claim("role", user.get().getRole())
                 .claim("mail", user.get().getEmail())
