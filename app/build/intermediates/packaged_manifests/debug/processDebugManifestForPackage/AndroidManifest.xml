@@ -8,6 +8,8 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="36" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <permission
         android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -25,8 +27,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:testOnly="true"
-        android:theme="@style/Theme.MyApplication" >
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.example.myapplication.LoginScreen"
             android:exported="true" > <!-- Hoặc false tùy theo nhu cầu -->
@@ -38,13 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.myapplication.MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MyApplication" >
-        </activity>
-        <activity
-            android:name="com.example.myapplication.HomeScreen"
+            android:name="com.example.myapplication.Main"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication" />
@@ -54,9 +50,14 @@
             android:label="Quản lý nhân viên"
             android:theme="@style/Theme.MyApplication" />
         <activity
-            android:name="com.example.myapplication.CustomerProfileActivity"
+            android:name="com.example.myapplication.cart.CartActivity"
             android:exported="false"
-            android:label="Thông Tin Khách Hàng"
+            android:label="Giỏ hàng"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name="com.example.myapplication.ProductDetailActivity"
+            android:exported="false"
+            android:label="Chi tiết sản phẩm"
             android:theme="@style/Theme.MyApplication" />
         <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"

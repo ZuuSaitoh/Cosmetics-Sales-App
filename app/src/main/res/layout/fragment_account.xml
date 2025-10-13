@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Header thông tin -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:background="@drawable/bg_card">
+
+            <ImageView
+                android:src="@drawable/ic_user"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_circle"
+                android:padding="8dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:text="C. Nhi"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:text="0868877813"
+                    android:textSize="14sp"
+                    android:textColor="#666" />
+            </LinearLayout>
+
+            <ImageView
+                android:src="@drawable/ic_next"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+        </LinearLayout>
+
+        <!-- Các mục chức năng -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:text="Tài khoản"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDD" />
+
+            <!-- Thông tin cá nhân -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:src="@drawable/ic_user"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:text="Thông tin cá nhân"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"
+                    android:textColor="#000" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:src="@drawable/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+            <!-- Chat với Hasaki -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:src="@drawable/ic_chat"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:text="Chat với Hasaki"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"
+                    android:textColor="#000" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:src="@drawable/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+            <!-- Địa chỉ giao hàng -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:src="@drawable/ic_location"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:text="Địa chỉ giao hàng"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"
+                    android:textColor="#000" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:src="@drawable/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+            <!-- Đăng xuất -->
+            <LinearLayout
+                android:id="@+id/layoutLogout"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:src="@drawable/ic_logout"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:text="Đăng xuất"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"
+                    android:textColor="#000" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:src="@drawable/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
