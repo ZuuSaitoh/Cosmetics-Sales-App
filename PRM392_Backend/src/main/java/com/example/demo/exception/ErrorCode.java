@@ -69,7 +69,8 @@ public enum ErrorCode {
     OUT_OF_STOCK(1065,"Out of stock!"),
     PAYMENT_METHOD_NOT_SUPPORTED(1066,"Payment method not supported! Only support COD, Momo, ZaloPay"),
     CART_ALREADY_CHECKED_OUT(1067,"Cart already checked out!"),
-    STATUS_NOT_VALID(1068,"Status is not valid! Order's status must be \"Processing\", \"Shipped\", \"Delivered\", \"Cancelled\""),;
+    STATUS_NOT_VALID(1068,"Status is not valid! Order's status must be \"Processing\", \"Shipped\", \"Delivered\", \"Cancelled\""),
+    CART_IS_EMPTY(1069,"Cart is empty!"),;
 
     ErrorCode(int code, String message) {
         this.code = code;

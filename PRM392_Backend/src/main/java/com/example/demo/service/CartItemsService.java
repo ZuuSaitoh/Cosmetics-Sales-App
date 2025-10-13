@@ -53,9 +53,28 @@ public class CartItemsService {
         return cartItemsRepository.save(new CartItems(cart, products, quantity, price));
     }
 
+    //view all cart items in 1 cart by cartID
     public List<CartItems> viewAllItemInCart(Integer cartID) {
-        return cartItemsRepository.findByCart_CartID(cartID)
-                .orElseThrow(() -> new AppException(ErrorCode.CART_HAVE_NOTHING));
+        List<CartItems> cartItems = cartItemsRepository.findByCart_CartID(cartID)
+                .orElseThrow(() -> new AppException(ErrorCode.CART_IS_EMPTY));
+        Cart cart = cartItems.get(0).getCart();
+        boolean updated = false;
+
+        for (CartItems item : cartItems) {
+            Products product = item.getProducts();
+
+            if (item.getQuantity() > product.getInstockQuantity()) {
+                // Nếu kho còn ít hơn số lượng trong giỏ
+                changeQuantity(item.getCartItemID(), product.getInstockQuantity());
+                updated = true;
+            }
+
+            if (product.getInstockQuantity() == 0) {
+                // Nếu hết hàng, có thể chọn xoá item khỏi giỏ
+                deleteOneItemInCart(item.getCartItemID());
+            }
+        }
+        return cartItems;
     }
 
     @Transactional
@@ -66,6 +85,7 @@ public class CartItemsService {
         cartItemsRepository.deleteByCart_CartID(cartID);
     }
 
+    //view 1 cart item
     public CartItems findByCartItemsID(Integer cartItemsID){
         return cartItemsRepository.findById(cartItemsID)
                 .orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_IN_CART));
@@ -107,15 +127,6 @@ public class CartItemsService {
         }
     }
     //thieu lenh check lai current quantity khi load gio hang
-
-
-
-
-
-
-
-
-
 
 
 }
