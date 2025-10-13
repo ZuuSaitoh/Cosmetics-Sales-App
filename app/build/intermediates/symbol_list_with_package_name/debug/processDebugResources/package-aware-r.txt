@@ -3542,6 +3542,9 @@ drawable quantity_selector_background
 drawable rounded_corners
 drawable search_background
 drawable sound_chip_background
+drawable store1
+drawable store2
+drawable store3
 drawable sub_banner_background
 drawable test_level_drawable
 drawable tooltip_frame_dark
@@ -3685,6 +3688,7 @@ id bounceEnd
 id bounceStart
 id btnDelete
 id btnEdit
+id btnNavigate
 id btnOverview
 id btnRecenter
 id btnStartNavigation
@@ -3856,6 +3860,7 @@ id image
 id imageProduct
 id image_product
 id imgBanner
+id imgStore
 id immediateStop
 id included
 id indeterminate
@@ -4010,12 +4015,13 @@ id pressed
 id productRecyclerView
 id progress_circular
 id progress_horizontal
-id pushToNavigationScreen
 id radio
+id ratingBar
 id ratio
 id recenterBtn
 id rectangles
 id recyclerEmployees
+id recyclerImages
 id recycler_cart
 id registerConfirmPasswordEditText
 id registerEmailOrPhoneEditText
@@ -4204,6 +4210,12 @@ id turnLaneView
 id tvEmail
 id tvName
 id tvRole
+id txtDistance
+id txtReviewCount
+id txtStoreAddress
+id txtStoreName
+id txtStoreOpenHours
+id txtStorePhone
 id unchecked
 id uniform
 id unlabeled
@@ -4378,6 +4390,7 @@ layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout dialog_employee_form
+layout dialog_store_info
 layout exit_sign_view_left
 layout exit_sign_view_right
 layout expanded_navigation_notification_layout
@@ -4397,6 +4410,7 @@ layout instruction_viewholder_layout
 layout item_cart
 layout item_employee
 layout item_product
+layout item_store_image
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title

@@ -7,11 +7,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.mapbox.geojson.Point;
@@ -19,6 +22,7 @@ import com.mapbox.geojson.Point;
 import java.util.List;
 
 import vn.vietmap.vietmapsdk.Vietmap;
+import vn.vietmap.vietmapsdk.annotations.Marker;
 import vn.vietmap.vietmapsdk.annotations.Polygon;
 import vn.vietmap.vietmapsdk.annotations.Polyline;
 import vn.vietmap.vietmapsdk.annotations.PolylineOptions;
@@ -28,6 +32,9 @@ import vn.vietmap.vietmapsdk.maps.MapView;
 import vn.vietmap.vietmapsdk.maps.OnMapReadyCallback;
 import vn.vietmap.vietmapsdk.maps.Style;
 import vn.vietmap.vietmapsdk.maps.VietMapGL;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.example.myapplication.map.MapsManager;
 
 public class MapsActivity extends AppCompatActivity {
 
@@ -40,6 +47,8 @@ public class MapsActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private List<Polyline> polylines = null;
     private Polygon polygon = null;
+    private double distance; // Lưu giá trị khoảng cách thực tế (mét)
+
 
     private LatLng userLatLng; // ⚠️ Lưu vị trí người dùng để dùng khi nhấn nút
     private static final LatLng STORE_LOCATION = new LatLng(10.976238345142892, 106.61804099635049);
@@ -50,7 +59,6 @@ public class MapsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vietmapview);
 
-        Button button = findViewById(R.id.pushToNavigationScreen);
         mapView = findViewById(R.id.vmMapView);
         mapView.onCreate(savedInstanceState);
 
@@ -88,7 +96,7 @@ public class MapsActivity extends AppCompatActivity {
                                 mapsManager.enableLocationComponent(style);
 
                                 // 📍 Thêm marker cửa hàng
-                                mapsManager.addMarker(STORE_LOCATION);
+                                Marker storeMarker = mapsManager.addMarker(STORE_LOCATION);
 
                                 // ✅ Lấy vị trí người dùng và hiển thị camera
                                 mapsManager.getUserLocation(location -> {
@@ -112,19 +120,12 @@ public class MapsActivity extends AppCompatActivity {
                                         Toast.makeText(MapsActivity.this, "Không thể lấy vị trí người dùng", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
-                                // ✅ Khi người dùng nhấn nút Navigation
-                                button.setOnClickListener(v -> {
-                                    if (userLatLng == null) {
-                                        Toast.makeText(MapsActivity.this, "Chưa có vị trí người dùng!", Toast.LENGTH_SHORT).show();
-                                        return;
+                                vietMapGL.setOnMarkerClickListener(marker -> {
+                                    if (marker.equals(storeMarker)) {
+                                        showStoreBottomSheet();
+                                        return true;
                                     }
-
-                                    mapsNavigationManager.drawShortestRoute(
-                                            mapView,
-                                            Point.fromLngLat(STORE_LOCATION.getLongitude(), STORE_LOCATION.getLatitude()),
-                                            Point.fromLngLat(userLatLng.getLongitude(), userLatLng.getLatitude())
-                                    );
+                                    return false;
                                 });
                             }
                         }
@@ -156,6 +157,96 @@ public class MapsActivity extends AppCompatActivity {
             Toast.makeText(this, "Cần cấp quyền vị trí để hiển thị vị trí của bạn", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+    private void showStoreBottomSheet() {
+        // --- Tạo BottomSheetDialog ---
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.dialog_store_info);
+
+        // --- Ánh xạ view ---
+        TextView txtDistance = bottomSheetDialog.findViewById(R.id.txtDistance);
+        TextView txtStoreAddress = bottomSheetDialog.findViewById(R.id.txtStoreAddress);
+        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.recyclerImages);
+        Button btnNavigate = bottomSheetDialog.findViewById(R.id.btnNavigate);
+
+        // --- Gán thông tin cửa hàng ---
+        if (txtStoreAddress != null) {
+            txtStoreAddress.setText("Hòa Phú, Củ Chi, Hồ Chí Minh, Việt Nam");
+        }
+
+        // --- Danh sách ảnh cửa hàng ---
+        int[] imageRes = {R.drawable.store1, R.drawable.store2, R.drawable.store3};
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(
+                    new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            );
+            recyclerView.setAdapter(new StoreImageAdapter(imageRes));
+        }
+
+        // ✅ Khi popup mở ra, tính trước khoảng cách thực tế
+        if (userLatLng != null && txtDistance != null) {
+            txtDistance.setText("Đang tính khoảng cách...");
+
+            mapsNavigationManager.drawShortestRoute(
+                    mapView,
+                    com.mapbox.geojson.Point.fromLngLat(
+                            userLatLng.getLongitude(),
+                            userLatLng.getLatitude()
+                    ),
+                    com.mapbox.geojson.Point.fromLngLat(
+                            STORE_LOCATION.getLongitude(),
+                            STORE_LOCATION.getLatitude()
+                    ),
+                    distanceMeters -> runOnUiThread(() -> {
+                        distance = distanceMeters; // ✅ lưu lại giá trị
+                        String distanceText;
+                        if (distanceMeters >= 1000) {
+                            distanceText = String.format("%.2f km", distanceMeters / 1000);
+                        } else {
+                            distanceText = String.format("%.0f m", distanceMeters);
+                        }
+                        txtDistance.setText("Khoảng cách: " + distanceText);
+                    })
+            );
+        } else if (txtDistance != null) {
+            txtDistance.setText("Không thể xác định vị trí người dùng");
+        }
+
+
+        // --- Nút chỉ đường (vẽ tuyến đường thật) ---
+        if (btnNavigate != null) {
+            btnNavigate.setOnClickListener(v -> {
+                if (userLatLng == null) {
+                    Toast.makeText(this, "Chưa có vị trí người dùng!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // ✅ Gọi lại hàm để vẽ tuyến đường thật trên bản đồ
+                mapsNavigationManager.drawShortestRoute(
+                        mapView,
+                        com.mapbox.geojson.Point.fromLngLat(
+                                userLatLng.getLongitude(),
+                                userLatLng.getLatitude()
+                        ),
+                        com.mapbox.geojson.Point.fromLngLat(
+                                STORE_LOCATION.getLongitude(),
+                                STORE_LOCATION.getLatitude()
+                        ),
+                        null // không cần callback nữa
+                );
+            });
+        }
+
+        // --- Hiển thị popup ---
+        bottomSheetDialog.show();
+    }
+
+
+
+
+
 
     // ✅ Lifecycle MapView
     @Override
@@ -200,3 +291,6 @@ public class MapsActivity extends AppCompatActivity {
         mapView.onSaveInstanceState(outState);
     }
 }
+
+
+

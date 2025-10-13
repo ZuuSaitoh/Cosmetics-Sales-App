@@ -34,6 +34,9 @@ drawable outline_account_circle_24
 drawable outline_category_24
 drawable quantity_selector_background
 drawable search_background
+drawable store1
+drawable store2
+drawable store3
 id account
 id appBarLayout
 id appleLoginButton
@@ -44,6 +47,7 @@ id bottomNavigationView
 id bottom_bar
 id btnDelete
 id btnEdit
+id btnNavigate
 id btnOverview
 id btnRecenter
 id btnStartNavigation
@@ -80,6 +84,7 @@ id homeFragment
 id imageProduct
 id image_product
 id imgBanner
+id imgStore
 id ktMapView
 id locationIcon
 id loginButton
@@ -89,8 +94,9 @@ id notification
 id passwordEditText
 id passwordInputLayout
 id productRecyclerView
-id pushToNavigationScreen
+id ratingBar
 id recyclerEmployees
+id recyclerImages
 id recycler_cart
 id registerConfirmPasswordEditText
 id registerEmailOrPhoneEditText
@@ -118,6 +124,12 @@ id total_section
 id tvEmail
 id tvName
 id tvRole
+id txtDistance
+id txtReviewCount
+id txtStoreAddress
+id txtStoreName
+id txtStoreOpenHours
+id txtStorePhone
 id vmMapView
 layout activity_admin_dashboard
 layout activity_cart
@@ -128,6 +140,7 @@ layout activity_vietmapview
 layout banner_product
 layout bottom_sheet_quantity
 layout dialog_employee_form
+layout dialog_store_info
 layout fragment_category
 layout fragment_home
 layout fragment_library
@@ -136,6 +149,7 @@ layout fragment_subscriptions
 layout item_cart
 layout item_employee
 layout item_product
+layout item_store_image
 layout main
 menu bottom_menu
 mipmap ic_launcher

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:background="@android:color/white"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Tên cửa hàng -->
+        <TextView
+            android:id="@+id/txtStoreName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AURORA Store Skincare"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Hàng chứa sao và số lượt đánh giá -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4.5"
+                android:isIndicator="true"
+                android:stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/txtReviewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(120 lượt đánh giá)"
+                android:textSize="14sp"
+                android:layout_marginStart="6dp" />
+        </LinearLayout>
+
+        <!-- Danh sách hình ảnh -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerImages"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Địa chỉ -->
+        <TextView
+            android:id="@+id/txtStoreAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123 Đường ABC, Quận XYZ, Tokyo"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Giờ mở cửa -->
+        <TextView
+            android:id="@+id/txtStoreOpenHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mở cửa: 9:00 - 20:00"
+            android:textSize="14sp"
+            android:textColor="#4CAF50"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Số điện thoại -->
+        <TextView
+            android:id="@+id/txtStorePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SĐT: 090-1234-5678"
+            android:textSize="14sp"
+            android:autoLink="phone"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Khoảng cách -->
+        <TextView
+            android:id="@+id/txtDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cách bạn 2.4 km"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Hàng chứa các nút -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+
+            <Button
+                android:id="@+id/btnNavigate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="Chỉ đường" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

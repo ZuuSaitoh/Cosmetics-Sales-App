@@ -2,6 +2,7 @@ package com.example.myapplication.map;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.example.myapplication.R;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -35,15 +36,20 @@ public class MapsNavigationManager {
     private DirectionsRoute currentRoute;
     private List<DirectionsRoute> directionsRoutes;
 
+    // ✅ Interface callback để trả về khoảng cách
+    public interface OnRouteDistanceListener {
+        void onDistanceCalculated(double distanceMeters);
+    }
+
     public MapsNavigationManager(Context context, VietMapGL vietMapGL) {
         this.context = context;
         this.vietMapGL = vietMapGL;
     }
 
     /**
-     * Gọi API Vietmap Directions để vẽ đường ngắn nhất giữa 2 điểm.
+     * ✅ Hàm vẽ đường đi và tính khoảng cách thực tế giữa 2 điểm
      */
-    public void drawShortestRoute(MapView mapView, Point origin, Point destination) {
+    public void drawShortestRoute(MapView mapView, Point origin, Point destination, OnRouteDistanceListener listener) {
         if (origin == null || destination == null || vietMapGL == null) return;
 
         NavigationRoute.builder(context)
@@ -55,34 +61,31 @@ public class MapsNavigationManager {
                     @Override
                     public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
                         if (response.body() == null || response.body().routes() == null) return;
-
                         directionsRoutes = response.body().routes();
                         if (directionsRoutes.isEmpty()) return;
 
                         currentRoute = directionsRoutes.get(0);
 
-                        // Xóa route cũ nếu có
+                        // Xóa route cũ
                         if (navigationMapRoute != null) {
                             navigationMapRoute.removeRoute();
                         }
 
-                        // Vẽ tuyến mới
+                        // Vẽ route mới
                         navigationMapRoute = new NavigationMapRoute(mapView, vietMapGL, "boundary_province");
+                        navigationMapRoute.addRoute(currentRoute);
 
-                        if (directionsRoutes.size() > 1) {
-                            navigationMapRoute.addRoutes(directionsRoutes);
-                        } else {
-                            navigationMapRoute.addRoute(currentRoute);
+                        // ✅ Tính khoảng cách thực tế
+                        double distanceMeters = currentRoute.distance();
+                        Log.d("Distance", "Khoảng cách thực tế: " + distanceMeters + "m");
+
+                        // ✅ Gửi kết quả về callback
+                        if (listener != null) {
+                            listener.onDistanceCalculated(distanceMeters);
                         }
 
-                        // Zoom camera để hiển thị toàn tuyến
+                        // Zoom toàn tuyến
                         animateCameraToRoute(currentRoute);
-
-                        // Khi chọn tuyến khác
-                        navigationMapRoute.setOnRouteSelectionChangeListener(route -> {
-                            currentRoute = route;
-                            animateCameraToRoute(route);
-                        });
                     }
 
                     @Override
@@ -92,12 +95,8 @@ public class MapsNavigationManager {
                 });
     }
 
-    /**
-     * Zoom camera để hiển thị toàn tuyến đường.
-     */
     private void animateCameraToRoute(DirectionsRoute route) {
         if (route == null || route.routeOptions() == null) return;
-
         List<Point> routePoints = route.routeOptions().coordinates();
         if (routePoints == null || routePoints.size() <= 1) return;
 
@@ -111,9 +110,6 @@ public class MapsNavigationManager {
         vietMapGL.animateCamera(cameraUpdate, 2000);
     }
 
-    /**
-     * Thêm marker vào vị trí cụ thể.
-     */
     public void addMarker(LatLng position) {
         vietMapGL.addMarker(
                 new MarkerOptions()

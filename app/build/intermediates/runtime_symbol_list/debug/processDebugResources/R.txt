@@ -3541,6 +3541,9 @@ int drawable quantity_selector_background 0x7f070196
 int drawable rounded_corners 0x7f070197
 int drawable search_background 0x7f070198
 int drawable sound_chip_background 0x7f070199
+int drawable store1 0x7f0701b5
+int drawable store2 0x7f0701b6
+int drawable store3 0x7f0701b7
 int drawable sub_banner_background 0x7f07019a
 int drawable test_level_drawable 0x7f07019b
 int drawable tooltip_frame_dark 0x7f07019c
@@ -3684,6 +3687,7 @@ int id bounceEnd 0x7f080070
 int id bounceStart 0x7f080071
 int id btnDelete 0x7f080072
 int id btnEdit 0x7f080073
+int id btnNavigate 0x7f08029c
 int id btnOverview 0x7f080074
 int id btnRecenter 0x7f080075
 int id btnStartNavigation 0x7f080076
@@ -3855,6 +3859,7 @@ int id image 0x7f08011c
 int id imageProduct 0x7f08011d
 int id image_product 0x7f08011e
 int id imgBanner 0x7f08011f
+int id imgStore 0x7f08029d
 int id immediateStop 0x7f080120
 int id included 0x7f080121
 int id indeterminate 0x7f080122
@@ -4009,12 +4014,13 @@ int id pressed 0x7f0801b6
 int id productRecyclerView 0x7f0801b7
 int id progress_circular 0x7f0801b8
 int id progress_horizontal 0x7f0801b9
-int id pushToNavigationScreen 0x7f0801ba
 int id radio 0x7f0801bb
+int id ratingBar 0x7f08029e
 int id ratio 0x7f0801bc
 int id recenterBtn 0x7f0801bd
 int id rectangles 0x7f0801be
 int id recyclerEmployees 0x7f0801bf
+int id recyclerImages 0x7f08029f
 int id recycler_cart 0x7f0801c0
 int id registerConfirmPasswordEditText 0x7f0801c1
 int id registerEmailOrPhoneEditText 0x7f0801c2
@@ -4203,6 +4209,12 @@ int id turnLaneView 0x7f08027a
 int id tvEmail 0x7f08027b
 int id tvName 0x7f08027c
 int id tvRole 0x7f08027d
+int id txtDistance 0x7f0802a0
+int id txtReviewCount 0x7f0802a1
+int id txtStoreAddress 0x7f0802a2
+int id txtStoreName 0x7f0802a3
+int id txtStoreOpenHours 0x7f0802a4
+int id txtStorePhone 0x7f0802a5
 int id unchecked 0x7f08027e
 int id uniform 0x7f08027f
 int id unlabeled 0x7f080280
@@ -4377,6 +4389,7 @@ int layout design_navigation_menu_item 0x7f0b0034
 int layout design_text_input_end_icon 0x7f0b0035
 int layout design_text_input_start_icon 0x7f0b0036
 int layout dialog_employee_form 0x7f0b0037
+int layout dialog_store_info 0x7f0b0097
 int layout exit_sign_view_left 0x7f0b0038
 int layout exit_sign_view_right 0x7f0b0039
 int layout expanded_navigation_notification_layout 0x7f0b003a
@@ -4396,6 +4409,7 @@ int layout instruction_viewholder_layout 0x7f0b0047
 int layout item_cart 0x7f0b0048
 int layout item_employee 0x7f0b0049
 int layout item_product 0x7f0b004a
+int layout item_store_image 0x7f0b0098
 int layout m3_alert_dialog 0x7f0b004b
 int layout m3_alert_dialog_actions 0x7f0b004c
 int layout m3_alert_dialog_title 0x7f0b004d
