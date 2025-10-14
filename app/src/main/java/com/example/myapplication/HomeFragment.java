@@ -19,15 +19,9 @@ import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
 import com.example.myapplication.model.Banner;
 import com.example.myapplication.model.Product;
-import com.example.myapplication.network.ApiClient;
-import com.example.myapplication.network.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private RecyclerView bannerRecyclerView;
@@ -49,83 +43,58 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
-            View view = inflater.inflate(R.layout.fragment_home, container, false);
-            
-            bannerRecyclerView = view.findViewById(R.id.bannerRecyclerView);
-            productRecyclerView = view.findViewById(R.id.productRecyclerView);
-            
-            // Initialize search and cart
-            searchEditText = view.findViewById(R.id.searchEditText);
-            cartIcon = view.findViewById(R.id.cartIcon);
-            cartBadge = view.findViewById(R.id.cartBadge);
-            
-            setupSearch();
-            setupCart();
-            setupBannerList();
-            setupProductList();
-            startAutoScroll();
-            
-            return view;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return inflater.inflate(R.layout.fragment_home, container, false);
-        }
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        
+        bannerRecyclerView = view.findViewById(R.id.bannerRecyclerView);
+        productRecyclerView = view.findViewById(R.id.productRecyclerView);
+        
+        // Initialize search and cart
+        searchEditText = view.findViewById(R.id.searchEditText);
+        cartIcon = view.findViewById(R.id.cartIcon);
+        cartBadge = view.findViewById(R.id.cartBadge);
+        
+        setupSearch();
+        setupCart();
+        setupBannerList();
+        setupProductList();
+        startAutoScroll();
+        
+        return view;
     }
 
     private void setupSearch() {
-        try {
-            if (searchEditText == null) return;
-            
-            searchEditText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    try {
-                        if (productAdapter != null) {
-                            productAdapter.getFilter().filter(s);
-                        }
-                        boolean hasQuery = s != null && s.length() > 0;
-                        if (bannerRecyclerView != null) {
-                            bannerRecyclerView.setVisibility(hasQuery ? View.GONE : View.VISIBLE);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (productAdapter != null) {
+                    productAdapter.getFilter().filter(s);
                 }
+                boolean hasQuery = s != null && s.length() > 0;
+                if (bannerRecyclerView != null) {
+                    bannerRecyclerView.setVisibility(hasQuery ? View.GONE : View.VISIBLE);
+                }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     private void setupCart() {
-        try {
-            updateCartBadge();
-            if (cartIcon != null) {
-                cartIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            android.content.Context ctx = getContext();
-                            if (ctx != null) {
-                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.cart.CartActivity.class);
-                                startActivity(i);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+        updateCartBadge();
+        cartIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Context ctx = getContext();
+                if (ctx != null) {
+                    android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.cart.CartActivity.class);
+                    startActivity(i);
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     // filter handled by adapter's Filterable implementation
@@ -169,88 +138,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupProductList() {
-        try {
-            if (getContext() == null || productRecyclerView == null) return;
-            
-            productRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-            
-            // Initialize with empty list
-            List<Product> products = new ArrayList<>();
-            productAdapter = new ProductAdapter(getContext(), products);
-            productRecyclerView.setAdapter(productAdapter);
-            
-            // Load products from API
-            loadProductsFromAPI();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private void loadProductsFromAPI() {
-        try {
-            if (getContext() == null) {
-                loadFallbackProducts();
-                return;
-            }
-            
-            ProductService productService = ApiClient.getRetrofit(getContext()).create(ProductService.class);
-            
-            productService.fetchAllProducts().enqueue(new Callback<com.example.myapplication.network.dto.ApiResponse<List<Product>>>() {
-                @Override
-                public void onResponse(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, Response<com.example.myapplication.network.dto.ApiResponse<List<Product>>> response) {
-                    try {
-                        if (getContext() == null) return;
-                        
-                        if (response.isSuccessful() && response.body() != null) {
-                            com.example.myapplication.network.dto.ApiResponse<List<Product>> apiResponse = response.body();
-                            if (apiResponse.getCode() == 9999 && apiResponse.getResult() != null) {
-                                List<Product> products = apiResponse.getResult();
-                                if (productAdapter != null) {
-                                    productAdapter.updateProducts(products);
-                                }
-                                // Toast.makeText(getContext(), "Đã tải " + products.size() + " sản phẩm", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), "Lỗi API: " + (apiResponse.getMessage() != null ? apiResponse.getMessage() : "Unknown error"), Toast.LENGTH_SHORT).show();
-                                loadFallbackProducts();
-                            }
-                        } else {
-                            Toast.makeText(getContext(), "Lỗi tải sản phẩm: " + response.code(), Toast.LENGTH_SHORT).show();
-                            loadFallbackProducts();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        loadFallbackProducts();
-                    }
-                }
+        productRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-                @Override
-                public void onFailure(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, Throwable t) {
-                    try {
-                        if (getContext() != null) {
-                            Toast.makeText(getContext(), "Lỗi kết nối: " + (t.getMessage() != null ? t.getMessage() : "Unknown error"), Toast.LENGTH_SHORT).show();
-                        }
-                        loadFallbackProducts();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            loadFallbackProducts();
-        }
-    }
-    
-    private void loadFallbackProducts() {
-        List<Product> fallbackProducts = new ArrayList<>();
-        fallbackProducts.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner));
+        List<Product> products = new ArrayList<>();
+
+        products.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner));
+        products.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner));
+        products.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner));
+        products.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner));
+        products.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner));
+        products.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner));
         
-        productAdapter.updateProducts(fallbackProducts);
+        productAdapter = new ProductAdapter(getContext(), products);
+        productRecyclerView.setAdapter(productAdapter);
     }
 
     private void startAutoScroll() {

@@ -8,20 +8,16 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\anim\\slide_in.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_outline_account_circle_24.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\outline_account_circle_24.xml"
+        "merged": "com.example.myapplication.app-debug-61:/layout_item_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/item_cart.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_hair.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_hair.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_body.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_body.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_outline_account_circle_24.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\outline_account_circle_24.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_cart.xml.flat",
@@ -30,14 +26,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_circle_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\circle_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_category_icon_background.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\category_icon_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_lips.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_lips.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_search.xml.flat",
@@ -64,12 +52,12 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_apple.png"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_main.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\main.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_bottom_sheet_quantity.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\bottom_sheet_quantity.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_main.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\main.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
@@ -84,16 +72,8 @@
         "source": "com.example.myapplication.app-main-63:/layout/activity_product_detail.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_arrow_forward.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_arrow_forward.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\menu_bottom_menu.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\menu\\bottom_menu.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_eye.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_eye.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_fragment_subscriptions.xml.flat",
@@ -106,10 +86,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_button_confirm_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\button_confirm_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_nail.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_nail.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_item_employee.xml.flat",
@@ -172,6 +148,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/layout_activity_login.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/activity_login.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
@@ -200,10 +180,6 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\dialog_employee_form.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_item_category.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\item_category.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_circle_notifications_24.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_circle_notifications_24.xml"
     },
@@ -216,8 +192,12 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\item_product.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_perfume.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_perfume.xml"
+        "merged": "com.example.myapplication.app-debug-61:/drawable_circle_background.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/drawable/circle_background.xml"
+    },
+    {
+        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/drawable/ic_cart.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_fragment_home.xml.flat",
@@ -244,20 +224,16 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_admin_dashboard.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-61:/layout_activity_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/activity_cart.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_banner_product.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\banner_product.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_face.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_face.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_fragment_shorts.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\fragment_shorts.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_tools.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_tools.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_facebook.png.flat",

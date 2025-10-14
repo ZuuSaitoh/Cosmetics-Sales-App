@@ -75,45 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product description here..."
-                android:layout_marginTop="12dp" />
-
-            <!-- Full Description -->
-            <TextView
-                android:id="@+id/text_full_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Full product description here..."
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray" />
-
-            <!-- Brand -->
-            <TextView
-                android:id="@+id/text_brand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thương hiệu: Unknown"
                 android:layout_marginTop="12dp"
-                android:textSize="14sp" />
-
-            <!-- Category -->
-            <TextView
-                android:id="@+id/text_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Danh mục: Unknown"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp" />
-
-            <!-- Stock -->
-            <TextView
-                android:id="@+id/text_stock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Còn lại: 0 sản phẩm"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp"
-                android:textColor="@color/lavender" />
+                android:layout_marginBottom="16dp" />
 
         </LinearLayout>
     </ScrollView>
