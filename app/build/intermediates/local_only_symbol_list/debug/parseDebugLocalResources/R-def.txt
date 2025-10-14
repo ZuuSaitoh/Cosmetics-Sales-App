@@ -21,15 +21,20 @@ drawable baseline_home_24
 drawable baseline_location_on_24
 drawable button_confirm_background
 drawable circle_background
+drawable circular_white_background
+drawable curved_top_background
 drawable ic_apple
+drawable ic_arrow_back
 drawable ic_cart
 drawable ic_facebook
 drawable ic_google
+drawable ic_lock
 drawable ic_minus
 drawable ic_plus
 drawable ic_search
 drawable img_app_icon
 drawable img_no_product
+drawable leaves_background
 drawable outline_account_circle_24
 drawable outline_category_24
 drawable quantity_selector_background
@@ -37,6 +42,7 @@ drawable search_background
 drawable store1
 drawable store2
 drawable store3
+drawable text_input_background
 id account
 id appBarLayout
 id appleLoginButton
@@ -158,5 +164,6 @@ string app_name
 string close_nav
 string open_nav
 style Theme.MyApplication
+style Widget.App.TextInputLayout
 xml backup_rules
 xml data_extraction_rules

@@ -3270,6 +3270,7 @@ drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_confirm_background
 drawable circle_background
+drawable circular_white_background
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -3289,6 +3290,7 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
+drawable curved_top_background
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
@@ -3353,6 +3355,7 @@ drawable googleg_standard_color_18
 drawable gradient_shadow_down
 drawable gradient_shadow_up
 drawable ic_apple
+drawable ic_arrow_back
 drawable ic_arrow_back_black_24
 drawable ic_arrow_head
 drawable ic_arrow_head_casing
@@ -3388,6 +3391,7 @@ drawable ic_lane_straight
 drawable ic_lane_straight_only
 drawable ic_lane_uturn
 drawable ic_list
+drawable ic_lock
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3461,6 +3465,7 @@ drawable lane_right_only
 drawable lane_straight
 drawable lane_straight_only_right
 drawable lane_uturn
+drawable leaves_background
 drawable m3_appbar_background
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3547,6 +3552,7 @@ drawable store2
 drawable store3
 drawable sub_banner_background
 drawable test_level_drawable
+drawable text_input_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable turn_lane_background
@@ -5528,6 +5534,7 @@ style ThemeOverlay_MaterialComponents_TimePicker_Display_TextInputEditText
 style ThemeOverlay_MaterialComponents_Toolbar_Popup_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Surface
+style Widget_App_TextInputLayout
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar

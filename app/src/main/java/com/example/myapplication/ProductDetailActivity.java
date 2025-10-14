@@ -4,20 +4,21 @@ import static java.lang.Integer.parseInt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.myapplication.R;
+
 import com.example.myapplication.model.Product;
+import com.example.myapplication.auth.AuthManager;
+import com.example.myapplication.CartManager;
 
 public class ProductDetailActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_LOGIN = 1001; // Hằng số cho startActivityForResult
 
     private ImageView imageProduct;
     private TextView textName, textPrice, textDescription;
@@ -42,7 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart.setOnClickListener(v -> showQuantityPopup());
         btnBack.setOnClickListener(v -> finish());
         btnCart.setOnClickListener(v -> {
-            Intent intent = new Intent(ProductDetailActivity.this, com.example.myapplication.cart.CartActivity.class);
+            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
             startActivity(intent);
         });
     }
@@ -100,17 +101,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
 
-        // Set bottom sheet behavior after showing
-        bottomSheetDialog.setOnShowListener(dialog -> {
-            View bottomSheetView = bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
-            if (bottomSheetView != null) {
-                BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheetView);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                //behavior.setPeekHeight(800); // Increased height to show all content
-                behavior.setSkipCollapsed(true); // Allow full expansion
-            }
-        });
-
         final int[] quantity = {1};
         textQuantity.setText(String.valueOf(quantity[0]));
         
@@ -138,14 +128,30 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         btnConfirm.setOnClickListener(v -> {
-            // Add to cart
-            com.example.myapplication.data.CartManager.getInstance().add(product, quantity[0]);
-            Toast.makeText(ProductDetailActivity.this,
-                    "Đã thêm " + quantity[0] + " sản phẩm vào giỏ hàng!",
-                    Toast.LENGTH_SHORT).show();
             bottomSheetDialog.dismiss();
+
+            // 1. Kiểm tra trạng thái đăng nhập
+            if (new AuthManager(this).isLoggedIn()) {
+                // ĐÃ đăng nhập: Tiến hành thêm vào giỏ hàng
+                CartManager.getInstance(). addToCart(product, quantity[0]);
+
+            } else {
+                // CHƯA đăng nhập: Chuyển hướng đến màn hình LoginScreen
+                Toast.makeText(ProductDetailActivity.this, "Vui lòng đăng nhập để thêm sản phẩm.", Toast.LENGTH_SHORT).show();
+
+                Intent loginIntent = new Intent(ProductDetailActivity.this, LoginScreen.class);
+
+                // Truyền thông tin sản phẩm và số lượng để xử lý sau khi đăng nhập
+                loginIntent.putExtra("pending_product", product);
+                loginIntent.putExtra("pending_quantity", quantity[0]);
+
+                // Dùng startActivityForResult để đợi kết quả đăng nhập
+                startActivityForResult(loginIntent, REQUEST_CODE_LOGIN);
+            }
         });
 
         bottomSheetDialog.show();
     }
+
+
 }

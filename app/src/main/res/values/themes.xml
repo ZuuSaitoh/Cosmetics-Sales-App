@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Theme chính cho toàn app -->
     <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Màu sắc cơ bản -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Màu status bar -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <!-- Overlay Material -->
         <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="android:background">@drawable/text_input_background</item>
+
+        <item name="startIconTint">@android:color/darker_gray</item>
+        <item name="hintTextColor">@android:color/darker_gray</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
 
 </resources>

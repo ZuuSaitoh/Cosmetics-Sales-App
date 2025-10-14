@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 android.content.Context ctx = getContext();
                 if (ctx != null) {
-                    android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.cart.CartActivity.class);
+                    android.content.Intent i = new android.content.Intent(ctx, CartActivity.class);
                     startActivity(i);
                 }
             }
@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateCartBadge() {
-        int total = com.example.myapplication.data.CartManager.getInstance().getTotalQuantity();
+        int total = CartManager.getInstance().getTotalQuantity();
         if (total > 0) {
             cartBadge.setText(String.valueOf(total));
             cartBadge.setVisibility(View.VISIBLE);

@@ -255,7 +255,7 @@ ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:48:13-55
 	android:name
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:45:13-51
-activity#com.example.myapplication.cart.CartActivity
+activity#com.example.myapplication.CartActivity
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:50:9-54:58
 	android:label
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:53:13-37
@@ -264,7 +264,7 @@ ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.
 	android:theme
 		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:54:13-55
 	android:name
-		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:13-46
+		ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:51:13-41
 activity#com.example.myapplication.ProductDetailActivity
 ADDED from D:\ALL SEASON (FPT)\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:56:9-60:58
 	android:label

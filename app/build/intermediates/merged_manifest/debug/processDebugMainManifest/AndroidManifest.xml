@@ -80,7 +80,7 @@
             android:label="Quản lý nhân viên"
             android:theme="@style/Theme.MyApplication" />
         <activity
-            android:name="com.example.myapplication.cart.CartActivity"
+            android:name="com.example.myapplication.CartActivity"
             android:exported="false"
             android:label="Giỏ hàng"
             android:theme="@style/Theme.MyApplication" />
