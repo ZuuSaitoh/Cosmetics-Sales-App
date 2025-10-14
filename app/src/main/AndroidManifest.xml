@@ -26,11 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false"
-            android:label="Quên Mật Khẩu"
-            android:theme="@style/Theme.MyApplication"/>
 
 
 
