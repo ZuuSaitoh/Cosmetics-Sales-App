@@ -3271,6 +3271,7 @@ drawable btn_radio_on_to_off_mtrl_animation
 drawable button_confirm_background
 drawable circle_background
 drawable circular_white_background
+drawable circular_white_background_transparent
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -3290,6 +3291,8 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
+drawable cosme02_background
+drawable cosme_background
 drawable curved_top_background
 drawable design_fab_background
 drawable design_ic_visibility
@@ -3350,13 +3353,16 @@ drawable direction_turn_slight_right
 drawable direction_uturn
 drawable feedback_bottomsheet_background
 drawable feedback_progress_drawable
+drawable frosted_texture
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable gradient_scrim
 drawable gradient_shadow_down
 drawable gradient_shadow_up
 drawable ic_apple
 drawable ic_arrow_back
 drawable ic_arrow_back_black_24
+drawable ic_arrow_forward
 drawable ic_arrow_head
 drawable ic_arrow_head_casing
 drawable ic_arrow_head_casting
@@ -3371,6 +3377,7 @@ drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_cart
+drawable ic_check_circle
 drawable ic_circle
 drawable ic_clear
 drawable ic_clear_black_24
@@ -3379,6 +3386,7 @@ drawable ic_close
 drawable ic_confusing_directions
 drawable ic_confusing_directions_filled
 drawable ic_confusing_directions_unfilled
+drawable ic_email
 drawable ic_exit_arrow_left
 drawable ic_exit_arrow_right
 drawable ic_facebook
@@ -3390,6 +3398,7 @@ drawable ic_lane_slight_right
 drawable ic_lane_straight
 drawable ic_lane_straight_only
 drawable ic_lane_uturn
+drawable ic_leaf
 drawable ic_list
 drawable ic_lock
 drawable ic_m3_chip_check
@@ -3543,6 +3552,8 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable outline_account_circle_24
 drawable outline_category_24
+drawable page_indicator_active
+drawable page_indicator_inactive
 drawable quantity_selector_background
 drawable rounded_corners
 drawable search_background
@@ -3553,6 +3564,7 @@ drawable store3
 drawable sub_banner_background
 drawable test_level_drawable
 drawable text_input_background
+drawable textured_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable turn_lane_background
@@ -3578,6 +3590,7 @@ drawable vietmap_user_icon_stale
 drawable vietmap_user_puck_icon
 drawable vietmap_user_stroke_icon
 drawable wayname_text_background
+drawable your_woman_image
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3676,7 +3689,9 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id backButton
 id backToLoginText
+id background_image
 id bannerRecyclerView
 id barrier
 id baseline
@@ -3688,6 +3703,7 @@ id bottom
 id bottomAppBar
 id bottomNavigationView
 id bottom_bar
+id bottom_scrim
 id bounce
 id bounceBoth
 id bounceEnd
@@ -3734,6 +3750,7 @@ id clear_text
 id clip_horizontal
 id clip_vertical
 id clockwise
+id closeButton
 id closest
 id collapseActionView
 id compose_view_saveable_id_tag
@@ -3744,6 +3761,7 @@ id consume_window_insets_tag
 id container
 id content
 id contentPanel
+id content_container
 id contiguous
 id continuousVelocity
 id coordinator
@@ -3778,6 +3796,7 @@ id disableScroll
 id disjoint
 id distanceRemainingText
 id divider
+id dividerText
 id dot
 id dragAnticlockwise
 id dragClockwise
@@ -3797,6 +3816,8 @@ id edge
 id edit_query
 id edit_text_id
 id elastic
+id emailEditText
+id emailInputLayout
 id emailOrPhoneEditText
 id emailOrPhoneInputLayout
 id embed
@@ -3833,7 +3854,10 @@ id forgotPasswordTextView
 id fragment_container_view_tag
 id frame_layout
 id frost
+id fullNameEditText
+id fullNameInputLayout
 id fullscreen_header
+id getStartedButton
 id ghost_view
 id ghost_view_holder
 id gone
@@ -3844,6 +3868,7 @@ id group_divider
 id grouping
 id groups
 id guideline
+id header_image
 id header_layout
 id header_title
 id hide_graphics_layer_in_inspector_tag
@@ -3890,6 +3915,7 @@ id jumpToStart
 id ktMapView
 id labeled
 id layout
+id leaf_decoration
 id left
 id leftToRight
 id legacy
@@ -3903,6 +3929,7 @@ id locale
 id locationIcon
 id loginButton
 id loginForm
+id loginText
 id ltr
 id m3_side_sheet
 id main
@@ -4001,6 +4028,7 @@ id outline
 id outward
 id overshoot
 id packed
+id page_indicator_layout
 id parallax
 id parent
 id parentPanel
@@ -4029,12 +4057,16 @@ id rectangles
 id recyclerEmployees
 id recyclerImages
 id recycler_cart
+id registerButton
 id registerConfirmPasswordEditText
 id registerEmailOrPhoneEditText
 id registerForm
 id registerFullNameEditText
 id registerPasswordEditText
+id register_subtitle
+id register_title
 id relativeLayout
+id rememberMeCheckBox
 id report_drawn
 id rerouteLayout
 id rerouteProgressBar
@@ -4099,6 +4131,7 @@ id showCustom
 id showHome
 id showTitle
 id signUpButton
+id signUpText
 id sin
 id skipCollapsed
 id skipped
@@ -4109,6 +4142,7 @@ id snackbar_action
 id snackbar_text
 id snap
 id snapMargins
+id socialLoginLayout
 id soundFab
 id soundLayout
 id soundText
@@ -4192,6 +4226,7 @@ id textinput_helper_text
 id textinput_placeholder
 id textinput_prefix_text
 id textinput_suffix_text
+id texture_overlay
 id time
 id timeRemainingText
 id title
@@ -4228,6 +4263,7 @@ id unlabeled
 id up
 id useLogo
 id vertical_only
+id vertical_text
 id view
 id view_offset_helper
 id view_transition
@@ -4241,7 +4277,10 @@ id visible_removing_fragment_view_tag
 id vmMapView
 id wayNameView
 id waynameText
+id welcome_subtitle
+id welcome_title
 id west
+id white_overlay
 id wide
 id withText
 id with_icon
@@ -4371,10 +4410,13 @@ layout abc_tooltip
 layout activity_admin_dashboard
 layout activity_cart
 layout activity_login
+layout activity_login00000
 layout activity_navigation
 layout activity_product_detail
+layout activity_signup00000
 layout activity_vietmapnavigation
 layout activity_vietmapview
+layout activity_welcome
 layout alert_view_layout
 layout banner_product
 layout bottom_sheet_quantity

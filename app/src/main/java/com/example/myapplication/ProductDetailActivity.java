@@ -139,7 +139,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 // CHƯA đăng nhập: Chuyển hướng đến màn hình LoginScreen
                 Toast.makeText(ProductDetailActivity.this, "Vui lòng đăng nhập để thêm sản phẩm.", Toast.LENGTH_SHORT).show();
 
-                Intent loginIntent = new Intent(ProductDetailActivity.this, LoginScreen.class);
+                Intent loginIntent = new Intent(ProductDetailActivity.this, ActivityLogin.class);
 
                 // Truyền thông tin sản phẩm và số lượng để xử lý sau khi đăng nhập
                 loginIntent.putExtra("pending_product", product);
