@@ -3264,7 +3264,9 @@ int id bounceStart 0x7f08006a
 int id btnCancel 0x7f08006b
 int id btnDelete 0x7f08006c
 int id btnEdit 0x7f08006d
+int id btnHotline 0x7f08025f
 int id btnSave 0x7f08006e
+int id btnWorkingHours 0x7f080260
 int id btn_add_to_cart 0x7f08006f
 int id btn_back 0x7f080070
 int id btn_cart 0x7f080071
@@ -3661,6 +3663,7 @@ int id stretch 0x7f0801f7
 int id submenuarrow 0x7f0801f8
 int id submit_area 0x7f0801f9
 int id supportScrollUp 0x7f0801fa
+int id switchNotifications 0x7f080261
 int id tabMode 0x7f0801fb
 int id tag_accessibility_actions 0x7f0801fc
 int id tag_accessibility_clickable_spans 0x7f0801fd
@@ -3732,8 +3735,11 @@ int id transition_scene_layoutid_cache 0x7f08023e
 int id transition_transform 0x7f08023f
 int id triangle 0x7f080240
 int id tvEmail 0x7f080241
+int id tvFullName 0x7f08025d
 int id tvName 0x7f080242
+int id tvPhone 0x7f08025e
 int id tvRole 0x7f080243
+int id tvSeeAllBranches 0x7f080262
 int id unchecked 0x7f080244
 int id uniform 0x7f080245
 int id unlabeled 0x7f080246

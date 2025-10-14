@@ -67,7 +67,9 @@ id bottom_bar
 id btnCancel
 id btnDelete
 id btnEdit
+id btnHotline
 id btnSave
+id btnWorkingHours
 id btn_add_to_cart
 id btn_back
 id btn_cart
@@ -128,6 +130,7 @@ id registerPasswordEditText
 id scroll_view
 id searchEditText
 id signUpButton
+id switchNotifications
 id textPrice
 id textQty
 id textSold
@@ -148,8 +151,11 @@ id text_total_price
 id toolbar
 id total_section
 id tvEmail
+id tvFullName
 id tvName
+id tvPhone
 id tvRole
+id tvSeeAllBranches
 layout activity_admin_dashboard
 layout activity_cart
 layout activity_customer_profile

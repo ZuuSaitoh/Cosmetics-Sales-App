@@ -34,15 +34,21 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tvFullName"
                     android:text="C. Nhi"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/tvPhone"
                     android:text="0868877813"
                     android:textSize="14sp"
-                    android:textColor="#666" />
+                    android:textColor="#666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <ImageView
@@ -63,7 +69,9 @@
                 android:text="Tài khoản"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -89,7 +97,9 @@
                     android:text="Thông tin cá nhân"
                     android:layout_marginStart="12dp"
                     android:textSize="15sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="0dp"
@@ -121,7 +131,9 @@
                     android:text="Chat với Hasaki"
                     android:layout_marginStart="12dp"
                     android:textSize="15sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="0dp"
@@ -153,7 +165,9 @@
                     android:text="Địa chỉ giao hàng"
                     android:layout_marginStart="12dp"
                     android:textSize="15sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="0dp"
@@ -186,7 +200,9 @@
                     android:text="Đăng xuất"
                     android:layout_marginStart="12dp"
                     android:textSize="15sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="0dp"
@@ -198,6 +214,110 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
             </LinearLayout>
+        </LinearLayout>
+
+        <!-- Hotline & Giờ hoạt động -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:layout_marginTop="16dp"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/btnWorkingHours"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="8:00 - 22:00"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#2E7D32"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="0dp"/>
+
+                <TextView
+                    android:id="@+id/btnHotline"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="1800 6324 (Miễn phí)"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#F57C00"/>
+            </LinearLayout>
+
+            <!-- Danh sách chi nhánh -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CN 1: 71 Hoàng Hoa Thám, P.13, Q.Tân Bình, TP.HCM"
+                android:textColor="#000"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CN 2: 555 Đường 3 Tháng 2, P.8, Q.10, TP.HCM"
+                android:textColor="#000"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CN 3: 176 Phan Đăng Lưu, P.3, Q.Phú Nhuận, TP.HCM"
+                android:textColor="#000"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CN 4: 94 Lê Văn Việt, P.Hiệp Phú, Q.9, TP.HCM"
+                android:textColor="#9E9E9E"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvSeeAllBranches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem 288 chi nhánh"
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- Cho phép nhận thông báo -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cho phép nhận thông báo"
+                android:textColor="#000"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchNotifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </LinearLayout>

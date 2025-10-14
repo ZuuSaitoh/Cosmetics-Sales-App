@@ -199,6 +199,9 @@ public class LoginScreen extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
                     authManager.saveAuth(body.getToken(), body.getRole());
+                    if (body.getUserId() != null) {
+                        authManager.saveUserId(body.getUserId());
+                    }
                     Intent intent = new Intent(LoginScreen.this, Main.class);
                     intent.putExtra("username", username);
                     startActivity(intent);

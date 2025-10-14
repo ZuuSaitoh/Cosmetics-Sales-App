@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_fragment_account.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\fragment_account.xml"
+    },
+    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_hair.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_hair.xml"
     },
@@ -8,20 +12,16 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_body.xml"
     },
     {
-        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_circle_notifications_24.xml.flat",
-        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_circle_notifications_24.xml"
-    },
-    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_no_product.png.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\img_no_product.png"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/layout_fragment_account.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/layout/fragment_account.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_circle_notifications_24.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_circle_notifications_24.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_next.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/ic_next.xml"
+        "merged": "com.example.myapplication.app-debug-61:/layout_fragment_account.xml.flat",
+        "source": "com.example.myapplication.app-main-63:/layout/fragment_account.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\anim_slide_in.xml.flat",
@@ -40,12 +40,12 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\quantity_selector_background.xml"
     },
     {
-        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_main.xml.flat",
-        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\main.xml"
-    },
-    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_minus.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_minus.xml"
+    },
+    {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_main.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\main.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_edit.xml.flat",
@@ -108,14 +108,6 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\fragment_subscriptions.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_bg_circle.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/bg_circle.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_location.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/ic_location.xml"
-    },
-    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_img_app_icon.png.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\img_app_icon.png"
     },
@@ -132,10 +124,6 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_bg_card.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/bg_card.xml"
-    },
-    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_cart.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_cart.xml"
     },
@@ -148,24 +136,32 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\item_cart.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_logout.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/ic_logout.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_chat.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_chat.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_logout.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_logout.xml"
+    },
+    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_admin_dashboard.xml.flat",
-        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_admin_dashboard.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_location.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_location.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_arrow_right.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/ic_arrow_right.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_arrow_right.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_arrow_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_admin_dashboard.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_admin_dashboard.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\xml_backup_rules.xml.flat",
@@ -178,6 +174,10 @@
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_fragment_category.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\fragment_category.xml"
+    },
+    {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_bg_circle.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\bg_circle.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_badge_background.xml.flat",
@@ -232,6 +232,10 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_ic_next.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\ic_next.xml"
+    },
+    {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_baseline_location_on_24.xml.flat",
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\baseline_location_on_24.xml"
     },
@@ -240,12 +244,12 @@
         "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_cart.xml.flat",
-        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_cart.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_bg_card.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\drawable\\bg_card.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-61:/drawable_ic_chat.xml.flat",
-        "source": "com.example.myapplication.app-main-63:/drawable/ic_chat.xml"
+        "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\layout_activity_cart.xml.flat",
+        "source": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-63:\\layout\\activity_cart.xml"
     },
     {
         "merged": "C:\\Users\\jinie\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-61:\\drawable_search_background.xml.flat",
