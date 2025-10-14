@@ -49,4 +49,10 @@ public class ProductsController {
         return new ApiResponse<Products>(9996, "Product's quantity has been upadated!",
                 productsService.updateQuantity(id, request));
     }
+
+    @GetMapping("/by-category/{categoryId}")
+    ApiResponse<List<Products>> getProductsByCategoryId(@PathVariable Integer categoryId){
+        return new ApiResponse<List<Products>>(9995, "List of products by categoryId",
+                productsService.getProductsByCategoryID(categoryId));
+    }
 }

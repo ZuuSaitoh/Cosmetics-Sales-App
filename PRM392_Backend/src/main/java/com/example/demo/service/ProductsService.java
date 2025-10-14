@@ -85,5 +85,12 @@ public class ProductsService {
         }
     }
 
+    public List<Products> getProductsByCategoryID(int categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new AppException(ErrorCode.CATEGORY_NOT_EXISTED);
+        }
+        return productsRepository.findByCategoryID_CategoryID(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+    }
 
 }
