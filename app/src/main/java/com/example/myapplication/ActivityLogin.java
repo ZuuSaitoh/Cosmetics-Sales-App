@@ -129,19 +129,56 @@ public class ActivityLogin extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
 
+                    // Debug: Log toàn bộ response
+                    android.util.Log.d("ActivityLogin", "=== FULL LOGIN RESPONSE ===");
+                    android.util.Log.d("ActivityLogin", "Response Code: " + response.code());
+                    android.util.Log.d("ActivityLogin", "Response Body: " + body.toString());
+                    android.util.Log.d("ActivityLogin", "Result Object: " + (body.getResult() != null ? body.getResult().toString() : "null"));
+
                     String token = null;
                     String role = null;
+                    Long userId = null;
 
-                    // 1. Lấy token/role từ đối tượng "result"
+                    // 1. Lấy token/role/userID từ đối tượng "result"
                     if (body.getResult() != null) {
                         token = body.getResult().getToken();
                         role = body.getResult().getRole();
+                        userId = body.getResult().getUserID();
+                        
+                        // Debug logging
+                        android.util.Log.d("ActivityLogin", "Login Response - Token: " + (token != null ? "exists" : "null"));
+                        android.util.Log.d("ActivityLogin", "Login Response - Role: " + role);
+                        android.util.Log.d("ActivityLogin", "Login Response - UserID: " + userId);
+                    } else {
+                        android.util.Log.w("ActivityLogin", "Result object is null!");
+                    }
+                    
+                    // Thử lấy userID từ các nơi khác nếu không có trong result
+                    if (userId == null) {
+                        android.util.Log.d("ActivityLogin", "Trying to get userId from other fields...");
+                        // Thử lấy từ LoginResponse trực tiếp
+                        String userIdStr = body.getUserId();
+                        if (userIdStr != null && !userIdStr.isEmpty()) {
+                            try {
+                                userId = Long.parseLong(userIdStr);
+                                android.util.Log.d("ActivityLogin", "Found userId in LoginResponse: " + userId);
+                            } catch (NumberFormatException e) {
+                                android.util.Log.w("ActivityLogin", "Cannot parse userId: " + userIdStr);
+                            }
+                        }
+                        
+                        // Nếu vẫn không có userId, thử decode từ JWT token
+                        if (userId == null && token != null && !token.isEmpty()) {
+                            android.util.Log.d("ActivityLogin", "Trying to decode userId from JWT token");
+                            userId = com.example.myapplication.auth.JwtDecoder.getUserIdFromToken(token);
+                            android.util.Log.d("ActivityLogin", "Decoded userId from JWT: " + userId);
+                        }
                     }
 
                     // 2. Chỉ tiếp tục khi token hợp lệ (không null, không rỗng)
                     if (token != null && !token.isEmpty()) {
                         // Token hợp lệ, lưu lại
-                        authManager.saveAuth(token, role);
+                        authManager.saveAuth(token, role, userId);
 
                         // Trường hợp 1: Quay về ProductDetail
                         Intent resultIntent = new Intent();

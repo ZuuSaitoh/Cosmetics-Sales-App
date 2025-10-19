@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-93:12
-INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-93:12
-INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-93:12
-INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-93:12
+ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-99:12
+INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-99:12
+INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-99:12
+INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-99:12
 MERGED from [androidx.databinding:viewbinding:8.13.0] C:\Users\Admin\.gradle\caches\8.13\transforms\ee0c40a97eceea853ebadd6d6a995f76\transformed\viewbinding-8.13.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-runtime-android:2.9.5] C:\Users\Admin\.gradle\caches\8.13\transforms\b80f41123f0853ae67f53a4384246724\transformed\navigation-runtime-release\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-android:2.9.5] C:\Users\Admin\.gradle\caches\8.13\transforms\2cc28e745caf385265a02e1314ff6f94\transformed\navigation-common-release\AndroidManifest.xml:17:1-22:12
@@ -149,8 +149,8 @@ ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\Andr
 	android:name
 		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:10:22-83
 application
-ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:5-91:19
-INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:5-91:19
+ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:5-97:19
+INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:12:5-97:19
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\Admin\.gradle\caches\8.13\transforms\d80b0ff94186c0380f4e9baddf94cbb2\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\Admin\.gradle\caches\8.13\transforms\d80b0ff94186c0380f4e9baddf94cbb2\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Admin\.gradle\caches\8.13\transforms\898122d3052f5dd500d040544fae1a9b\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -315,18 +315,28 @@ ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\Andr
 		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:83:13-55
 	android:name
 		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:80:13-55
+activity#com.example.myapplication.ActivityUpdateProfile
+ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:85:9-89:58
+	android:label
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:88:13-48
+	android:exported
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:87:13-37
+	android:theme
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:89:13-55
+	android:name
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:86:13-50
 service#vn.vietmap.services.android.navigation.v5.navigation.NavigationService
-ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:85:9-89:56
+ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:91:9-95:56
 MERGED from [com.github.vietmap-company:maps-sdk-navigation-android:2.3.3] C:\Users\Admin\.gradle\caches\8.13\transforms\bcd78d88f653133f4927ad30685b2f23\transformed\maps-sdk-navigation-android-2.3.3\AndroidManifest.xml:14:9-106
 MERGED from [com.github.vietmap-company:maps-sdk-navigation-android:2.3.3] C:\Users\Admin\.gradle\caches\8.13\transforms\bcd78d88f653133f4927ad30685b2f23\transformed\maps-sdk-navigation-android-2.3.3\AndroidManifest.xml:14:9-106
 	android:enabled
-		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:87:13-35
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:93:13-35
 	android:exported
-		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:88:13-37
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:94:13-37
 	android:foregroundServiceType
-		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:89:13-53
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:95:13-53
 	android:name
-		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:86:13-98
+		ADDED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:92:13-98
 uses-sdk
 INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Admin\Documents\GitHub\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml

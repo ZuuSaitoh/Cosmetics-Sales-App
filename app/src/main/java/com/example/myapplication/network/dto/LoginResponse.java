@@ -33,6 +33,17 @@ public class LoginResponse {
     public String getRole() {
         return role;
     }
+    
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "code=" + code +
+                ", result=" + result +
+                ", token='" + token + '\'' +
+                ", userId='" + userId + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }
 
 

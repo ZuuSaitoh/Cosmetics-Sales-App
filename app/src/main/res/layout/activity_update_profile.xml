@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".ActivityUpdateProfile">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header với gradient -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/header_background"
+            android:padding="20dp">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_back_white"
+                android:background="@drawable/back_button_background"
+                android:padding="12dp"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chỉnh sửa thông tin"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"/>
+
+        </LinearLayout>
+
+        <!-- Profile Card với shadow -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Email"
+                    app:startIconDrawable="@drawable/ic_email_gradient"
+                    app:boxStrokeColor="@color/lavender"
+                    app:hintTextColor="@color/lavender"
+                    app:boxStrokeWidth="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxBackgroundColor="#F8F9FA">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="#999999"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Phone -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Số điện thoại"
+                    app:startIconDrawable="@drawable/ic_phone_gradient"
+                    app:boxStrokeColor="@color/lavender"
+                    app:hintTextColor="@color/lavender"
+                    app:boxStrokeWidth="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxBackgroundColor="#F8F9FA">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="#999999"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Address -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Địa chỉ"
+                    app:startIconDrawable="@drawable/ic_location_gradient"
+                    app:boxStrokeColor="@color/lavender"
+                    app:hintTextColor="@color/lavender"
+                    app:boxStrokeWidth="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxBackgroundColor="#F8F9FA">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/addressEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPostalAddress"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="#999999"
+                        android:minLines="2"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Action Buttons với gradient -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Hủy"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/cancel_button_gradient"
+                android:layout_marginEnd="12dp"
+                android:elevation="4dp"
+                android:stateListAnimator="@null"/>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Lưu"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/save_button_gradient"
+                android:layout_marginStart="12dp"
+                android:elevation="4dp"
+                android:stateListAnimator="@null"/>
+
+        </LinearLayout>
+
+        <!-- Loading indicator -->
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="24dp"
+            android:indeterminateTint="@color/lavender"/>
+
+    </LinearLayout>
+
+</ScrollView>
