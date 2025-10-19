@@ -3279,6 +3279,7 @@ drawable cancel_button_background
 drawable cancel_button_gradient
 drawable category_icon_background
 drawable circle_background
+drawable circular_avatar_background
 drawable circular_white_background
 drawable circular_white_background_transparent
 drawable common_full_open_on_phone
@@ -3475,6 +3476,7 @@ drawable ic_not_allowed
 drawable ic_not_allowed_filled
 drawable ic_not_allowed_unfilled
 drawable ic_perfume
+drawable ic_person
 drawable ic_phone
 drawable ic_phone_gradient
 drawable ic_plus
@@ -3581,6 +3583,7 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable outline_account_circle_24
 drawable outline_category_24
+drawable outline_email_24
 drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
@@ -3696,6 +3699,7 @@ id actions
 id activity_chooser_view_content
 id add
 id addressEditText
+id addressInputLayout
 id addressTextView
 id adjust_height
 id adjust_width
@@ -3757,6 +3761,7 @@ id btn_order
 id btn_plus
 id btn_remove
 id buttonPanel
+id button_container
 id cache_measures
 id callMeasure
 id cancelBtn
@@ -3885,6 +3890,7 @@ id flip
 id floating
 id forever
 id forgotPasswordTextView
+id form_card
 id fragment_container_view_tag
 id frame_layout
 id frost
@@ -4076,6 +4082,7 @@ id pathRelative
 id peekHeight
 id percent
 id phoneEditText
+id phoneInputLayout
 id phoneTextView
 id pin
 id pooling_container_listener_holder_tag
@@ -4084,6 +4091,7 @@ id postLayout
 id pressed
 id productCount
 id productRecyclerView
+id profile_card
 id progress_circular
 id progress_horizontal
 id radio

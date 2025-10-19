@@ -30,6 +30,7 @@ drawable cancel_button_background
 drawable cancel_button_gradient
 drawable category_icon_background
 drawable circle_background
+drawable circular_avatar_background
 drawable circular_white_background
 drawable circular_white_background_transparent
 drawable cosme02_background
@@ -62,6 +63,7 @@ drawable ic_lock
 drawable ic_minus
 drawable ic_nail
 drawable ic_perfume
+drawable ic_person
 drawable ic_phone
 drawable ic_phone_gradient
 drawable ic_plus
@@ -75,6 +77,7 @@ drawable leaves_background
 drawable logout_button_background
 drawable outline_account_circle_24
 drawable outline_category_24
+drawable outline_email_24
 drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
@@ -90,6 +93,7 @@ drawable textured_background
 drawable your_woman_image
 id account
 id addressEditText
+id addressInputLayout
 id addressTextView
 id avatarImageView
 id backButton
@@ -115,6 +119,7 @@ id btn_minus
 id btn_order
 id btn_plus
 id btn_remove
+id button_container
 id cancelButton
 id cartBadge
 id cartIcon
@@ -137,6 +142,7 @@ id etName
 id etRole
 id fabAdd
 id forgotPasswordTextView
+id form_card
 id frame_layout
 id fullNameEditText
 id fullNameInputLayout
@@ -162,9 +168,11 @@ id page_indicator_layout
 id passwordEditText
 id passwordInputLayout
 id phoneEditText
+id phoneInputLayout
 id phoneTextView
 id productCount
 id productRecyclerView
+id profile_card
 id ratingBar
 id recyclerEmployees
 id recyclerImages

@@ -1,19 +1,23 @@
 [
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_search_background.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\search_background.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_location.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_location.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_tools.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_tools.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_search_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\search_background.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_header_background.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/header_background.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_gradient_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\gradient_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_email_gradient.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_email_gradient.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_tools.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_tools.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\layout_item_store_image.xml.flat",
@@ -28,6 +32,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_phone_gradient.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_phone_gradient.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\mipmap-mdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\mipmap-mdpi\\ic_launcher.webp"
     },
@@ -36,8 +44,8 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_arrow_back.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-77:/layout_activity_update_profile.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/layout/activity_update_profile.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_location_gradient.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_location_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\layout_fragment_library.xml.flat",
@@ -48,16 +56,16 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\layout\\activity_signup00000.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-77:/drawable_outline_email_24.xml.flat",
+        "source": "com.example.myapplication.app-main-79:/drawable/outline_email_24.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_lips.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_lips.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_minus.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_minus.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_ic_email_gradient.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/ic_email_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_eye.xml.flat",
@@ -80,6 +88,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\img_no_product.png"
     },
     {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_save_button_gradient.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\save_button_gradient.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
@@ -94,6 +106,10 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\anim_slide_in.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\anim\\slide_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_header_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\header_background.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\layout_dialog_store_info.xml.flat",
@@ -112,8 +128,8 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_gradient_background.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/gradient_background.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_cancel_button_gradient.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\cancel_button_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
@@ -142,10 +158,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_store1.jpg.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\store1.jpg"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_ic_phone_gradient.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/ic_phone_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\layout_fragment_home.xml.flat",
@@ -180,8 +192,8 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\layout\\banner_product.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_save_button_gradient.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/save_button_gradient.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_back_button_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\back_button_background.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_avatar_background.xml.flat",
@@ -198,6 +210,10 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_nail.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_nail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_person.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_person.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\xml_backup_rules.xml.flat",
@@ -218,10 +234,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\mipmap-hdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\mipmap-hdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_ic_arrow_back_white.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/ic_arrow_back_white.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_page_indicator_inactive.xml.flat",
@@ -264,6 +276,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\layout\\activity_update_profile.xml"
     },
     {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_circular_avatar_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\circular_avatar_background.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_curved_top_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\curved_top_background.xml"
     },
@@ -274,10 +290,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\layout_item_cart.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\layout\\item_cart.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_cancel_button_gradient.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/cancel_button_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_img_app_icon.png.flat",
@@ -318,6 +330,10 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_category_icon_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\category_icon_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_ic_arrow_back_white.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\ic_arrow_back_white.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_baseline_home_24.xml.flat",
@@ -380,10 +396,6 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\layout\\activity_welcome.xml"
     },
     {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_back_button_background.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/back_button_background.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_baseline_chat_24.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\baseline_chat_24.xml"
     },
@@ -414,10 +426,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_rounded_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-79:\\drawable\\rounded_background.xml"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-77:/drawable_ic_location_gradient.xml.flat",
-        "source": "com.example.myapplication.app-main-79:/drawable/ic_location_gradient.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-77:\\drawable_refresh_button_background.xml.flat",
