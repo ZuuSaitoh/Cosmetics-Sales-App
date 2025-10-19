@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Override button colors to prevent theme interference -->
-        <item name="colorPrimary">#FF6D00</item>
-        <item name="colorPrimaryVariant">#FF6D00</item>
+    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Disable button theme override -->
-        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents</item>
     </style>
 
-    <!-- Dialog Animation Style -->
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in</item>
-        <item name="android:windowExitAnimation">@anim/slide_out</item>
-    </style>
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
 
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="android:background">@drawable/text_input_background</item>
+
+        <item name="startIconTint">@android:color/darker_gray</item>
+        <item name="hintTextColor">@android:color/darker_gray</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
 
 </resources>

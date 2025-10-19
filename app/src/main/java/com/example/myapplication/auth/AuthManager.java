@@ -3,6 +3,8 @@ package com.example.myapplication.auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.mapbox.core.utils.TextUtils;
+
 public class AuthManager {
     private static final String PREFS_NAME = "auth_prefs";
     private static final String KEY_TOKEN = "auth_token";
@@ -31,6 +33,13 @@ public class AuthManager {
 
     public void clear() {
         sharedPreferences.edit().clear().apply();
+    }
+
+    /**
+     * Kiểm tra trạng thái đăng nhập dựa trên sự tồn tại của token.
+     */
+    public boolean isLoggedIn() {
+        return !TextUtils.isEmpty(getToken());
     }
 }
 
