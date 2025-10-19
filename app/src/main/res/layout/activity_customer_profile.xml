@@ -221,6 +221,19 @@
                 android:textAllCaps="true"
                 android:textColor="#FF6D00"
                 app:strokeColor="#FF6D00"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Nút quay lại -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="QUAY LẠI"
+                android:textAllCaps="true"
+                android:textColor="#666666"
+                app:strokeColor="#666666"
                 app:cornerRadius="12dp" />
 
         </LinearLayout>

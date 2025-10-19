@@ -3263,6 +3263,7 @@ int id bounce 0x7f080068
 int id bounceBoth 0x7f080069
 int id bounceEnd 0x7f08006a
 int id bounceStart 0x7f08006b
+int id btnBack 0x7f08026b
 int id btnChangePassword 0x7f08006c
 int id btnDelete 0x7f08006d
 int id btnEdit 0x7f08006e

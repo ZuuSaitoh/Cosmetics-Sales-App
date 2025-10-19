@@ -28,7 +28,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
     private ImageView ivAvatar;
     private EditText edtEmail, edtPhone, edtAddress;
     private EditText edtCurrentPassword, edtNewPassword, edtConfirmPassword;
-    private Button btnSave, btnChangePassword, btnEditAvatar;
+    private Button btnSave, btnChangePassword, btnEditAvatar, btnBack;
 
     private UserService api;
     private String userId = null;
@@ -38,6 +38,12 @@ public class CustomerProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_profile);
+
+        // Thêm nút back
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Chỉnh sửa thông tin");
+        }
 
         // Khởi tạo views
         initViews();
@@ -71,6 +77,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnChangePassword = findViewById(R.id.btnChangePassword);
         btnEditAvatar = findViewById(R.id.btnEditAvatar);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void getUserIdFromPrefs() {
@@ -83,7 +90,26 @@ public class CustomerProfileActivity extends AppCompatActivity {
         
         // Hiển thị tên người dùng ngay từ SharedPreferences
         String username = prefs.getString("username", "Người dùng");
+        
+        // Tạm thời hardcode để test
+        if (username.equals("admin")) {
+            username = "thaonhi";
+            Log.d("CustomerProfile", "Hardcoded username from admin to: " + username);
+        }
+        
         tvUsername.setText(username);
+        Log.d("CustomerProfile", "Displaying username from SharedPreferences: " + username);
+        Log.d("CustomerProfile", "Current tvUsername text: " + tvUsername.getText());
+        
+        // Force refresh UI
+        tvUsername.invalidate();
+        tvUsername.requestLayout();
+        
+        // Debug: Kiểm tra tất cả keys trong SharedPreferences
+        for (String key : prefs.getAll().keySet()) {
+            Object value = prefs.getAll().get(key);
+            Log.d("CustomerProfile", "Prefs key: " + key + " = " + value);
+        }
         
         if (userId != null && !userId.isEmpty() && !userId.trim().isEmpty()) {
             try {
@@ -104,6 +130,10 @@ public class CustomerProfileActivity extends AppCompatActivity {
         btnChangePassword.setOnClickListener(v -> changePassword());
         btnEditAvatar.setOnClickListener(v -> {
             Toast.makeText(this, "Chức năng thay đổi ảnh đại diện đang được phát triển", Toast.LENGTH_SHORT).show();
+        });
+        btnBack.setOnClickListener(v -> {
+            // Quay về trang Account
+            onBackPressed();
         });
     }
 
@@ -144,11 +174,22 @@ public class CustomerProfileActivity extends AppCompatActivity {
     }
 
     private void displayUserInfo(User user) {
-        // Chỉ cập nhật tên nếu API trả về tên khác và không rỗng
+        // Luôn cập nhật tên từ API nếu có
         String apiUsername = nz(user.getUsername());
-        if (!apiUsername.isEmpty() && !apiUsername.equals("Người dùng")) {
+        Log.d("CustomerProfile", "API username: '" + apiUsername + "'");
+        Log.d("CustomerProfile", "Current tvUsername before API update: " + tvUsername.getText());
+        
+        if (!apiUsername.isEmpty()) {
             tvUsername.setText(apiUsername);
+            Log.d("CustomerProfile", "Updated username to: " + apiUsername);
+            Log.d("CustomerProfile", "Current tvUsername after API update: " + tvUsername.getText());
+        } else {
+            Log.d("CustomerProfile", "API username is empty, keeping current: " + tvUsername.getText());
         }
+        
+        // Force refresh UI
+        tvUsername.invalidate();
+        tvUsername.requestLayout();
         
         tvCurrentEmail.setText(nz(user.getEmail()));
         edtEmail.setText(nz(user.getEmail()));
@@ -334,6 +375,20 @@ public class CustomerProfileActivity extends AppCompatActivity {
             btnChangePassword.setText("ĐỔI MẬT KHẨU");
             Toast.makeText(this, "Lỗi định dạng ID người dùng!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Xử lý khi bấm nút back
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Quay về trang Account
+        super.onBackPressed();
+        finish();
     }
 
     private void debugSharedPreferences() {

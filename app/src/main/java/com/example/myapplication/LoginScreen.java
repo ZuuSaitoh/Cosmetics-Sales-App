@@ -210,6 +210,7 @@ public class LoginScreen extends AppCompatActivity {
                     
                     // Debug log
                     Log.d("LoginScreen", "API returned userId: " + userId);
+                    Log.d("LoginScreen", "Input username: " + username);
                     
                     // Nếu userId từ API null hoặc rỗng, thử lấy từ token hoặc sử dụng username
                     if (userId == null || userId.trim().isEmpty()) {
@@ -220,9 +221,10 @@ public class LoginScreen extends AppCompatActivity {
                     }
                     
                     prefs.edit()
-                            .putString("username", username)
+                            .putString("username", username) // Lưu username từ input
                             .putString("userID", userId.trim())
                             .apply();
+                    Log.d("LoginScreen", "Saved username: " + username);
                     Log.d("LoginScreen", "Saved userId: " + userId.trim());
 
                     // Chuyển sang màn hình chính

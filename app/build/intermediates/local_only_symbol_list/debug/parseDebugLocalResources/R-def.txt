@@ -66,6 +66,7 @@ id bannerRecyclerView
 id bottomAppBar
 id bottomNavigationView
 id bottom_bar
+id btnBack
 id btnChangePassword
 id btnDelete
 id btnEdit
