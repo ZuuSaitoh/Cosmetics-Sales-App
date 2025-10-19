@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -11,17 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.auth.AuthManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Main extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-
+    private AuthManager authManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // Khởi tạo AuthManager
+        authManager = new AuthManager(this);
+
+        // Kiểm tra trạng thái đăng nhập
+        checkAuthentication();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit();
@@ -56,5 +63,16 @@ public class Main extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    /**
+     * Kiểm tra trạng thái đăng nhập và chuyển hướng đến login nếu cần
+     */
+    private void checkAuthentication() {
+        if (!authManager.isLoggedIn()) {
+            // Người dùng chưa đăng nhập, chuyển đến ActivityLogin
+            Intent intent = new Intent(Main.this, ActivityLogin.class);
+            startActivity(intent);
+            finish(); // Đóng MainActivity để không thể quay lại
+        }
+    }
 
 }

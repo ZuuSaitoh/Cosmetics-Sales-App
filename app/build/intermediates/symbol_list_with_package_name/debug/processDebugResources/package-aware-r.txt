@@ -3270,6 +3270,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable button_background
 drawable button_confirm_background
 drawable category_icon_background
 drawable circle_background
@@ -3566,6 +3567,7 @@ drawable outline_category_24
 drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
+drawable rounded_background
 drawable rounded_corners
 drawable search_background
 drawable sound_chip_background
@@ -3936,6 +3938,7 @@ id locale
 id locationIcon
 id loginButton
 id loginText
+id logoutButton
 id ltr
 id m3_side_sheet
 id main
@@ -4268,6 +4271,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id userInfoTextView
 id vertical_only
 id vertical_text
 id view

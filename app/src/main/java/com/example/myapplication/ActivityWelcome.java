@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.myapplication.auth.AuthManager;
 import com.google.android.material.button.MaterialButton;
 
 public class ActivityWelcome extends AppCompatActivity {
@@ -18,12 +19,19 @@ public class ActivityWelcome extends AppCompatActivity {
     private MaterialButton getStartedButton;
     private ImageButton backButton;
     private ImageButton closeButton;
+    private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_welcome);
+
+        // Khởi tạo AuthManager
+        authManager = new AuthManager(this);
+
+        // Kiểm tra trạng thái đăng nhập
+        checkLoginStatus();
 
         // Ánh xạ các view
         getStartedButton = findViewById(R.id.getStartedButton);
@@ -39,6 +47,18 @@ public class ActivityWelcome extends AppCompatActivity {
 
         // Thiết lập sự kiện click
         setupClickListeners();
+    }
+
+    /**
+     * Kiểm tra trạng thái đăng nhập khi app khởi động
+     */
+    private void checkLoginStatus() {
+        if (authManager.isLoggedIn()) {
+            // Người dùng đã đăng nhập, chuyển thẳng đến Main
+            Intent intent = new Intent(ActivityWelcome.this, Main.class);
+            startActivity(intent);
+            finish(); // Đóng ActivityWelcome để không thể quay lại
+        }
     }
 
     private void setupClickListeners() {

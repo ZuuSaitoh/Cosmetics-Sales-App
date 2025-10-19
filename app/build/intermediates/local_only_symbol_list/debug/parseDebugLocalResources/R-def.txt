@@ -21,6 +21,7 @@ drawable baseline_chat_24
 drawable baseline_circle_notifications_24
 drawable baseline_home_24
 drawable baseline_location_on_24
+drawable button_background
 drawable button_confirm_background
 drawable category_icon_background
 drawable circle_background
@@ -60,6 +61,7 @@ drawable outline_category_24
 drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
+drawable rounded_background
 drawable search_background
 drawable store1
 drawable store2
@@ -128,6 +130,7 @@ id leaf_decoration
 id locationIcon
 id loginButton
 id loginText
+id logoutButton
 id main
 id notification
 id page_indicator_layout
@@ -177,6 +180,7 @@ id txtStoreAddress
 id txtStoreName
 id txtStoreOpenHours
 id txtStorePhone
+id userInfoTextView
 id vertical_text
 id vmMapView
 id welcome_subtitle
