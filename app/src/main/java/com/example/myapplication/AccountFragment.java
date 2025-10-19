@@ -1,72 +1,100 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Color;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.myapplication.R;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.model.User;
+import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.UserService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AccountFragment extends Fragment {
+    private TextView tvFullName, tvPhone;
+    private LinearLayout layoutLogout, layoutProfileHeader;
+    private String userId = null; // sẽ lấy từ SharedPreferences
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        try {
-            View view = inflater.inflate(R.layout.fragment_account, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_account, container, false);
 
-            LinearLayout layoutLogout = view.findViewById(R.id.layoutLogout);
-            TextView tvFullName = view.findViewById(R.id.tvFullName);
-            TextView tvPhone = view.findViewById(R.id.tvPhone);
+        tvFullName = v.findViewById(R.id.tvFullName);
+        tvPhone = v.findViewById(R.id.tvPhone);
+        layoutLogout = v.findViewById(R.id.layoutLogout);
+        layoutProfileHeader = v.findViewById(R.id.layoutProfileHeader);
 
-            // Fetch user profile
+        // ✅ Lấy userID từ SharedPreferences (được lưu khi login)
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        userId = prefs.getString("userID", null);
+        String username = prefs.getString("username", "Người dùng");
+
+        // Hiển thị tạm tên user nếu chưa gọi API
+        tvFullName.setText(username);
+
+        // ✅ Gọi API để load thêm thông tin user (email, phone,...)
+        if (userId != null && !userId.isEmpty()) {
             try {
-                com.example.myapplication.auth.AuthManager authManager = new com.example.myapplication.auth.AuthManager(requireContext());
-                String userId = authManager.getUserId();
-                if (userId != null && !userId.isEmpty()) {
-                    com.example.myapplication.network.UserService userService = com.example.myapplication.network.ApiClient.getRetrofit(requireContext()).create(com.example.myapplication.network.UserService.class);
-                    userService.getUserById(userId).enqueue(new retrofit2.Callback<com.example.myapplication.network.dto.User>() {
-                        @Override
-                        public void onResponse(retrofit2.Call<com.example.myapplication.network.dto.User> call, retrofit2.Response<com.example.myapplication.network.dto.User> response) {
-                            if (!isAdded()) return;
-                            if (response.isSuccessful() && response.body() != null) {
-                                com.example.myapplication.network.dto.User u = response.body();
-                                if (tvFullName != null && u.getFullName() != null) tvFullName.setText(u.getFullName());
-                                if (tvPhone != null && u.getPhone() != null) tvPhone.setText(u.getPhone());
-                            }
-                        }
+                int userIdInt = Integer.parseInt(userId);
+                loadUserInfo(userIdInt);
+            } catch (NumberFormatException e) {
+                Log.e("AccountFragment", "userID không phải là số: " + userId);
+                Toast.makeText(requireContext(), "Lỗi định dạng ID người dùng!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(requireContext(), "Không tìm thấy thông tin người dùng!", Toast.LENGTH_SHORT).show();
+        }
 
-                        @Override
-                        public void onFailure(retrofit2.Call<com.example.myapplication.network.dto.User> call, Throwable t) {
-                            // ignore for now
-                        }
-                    });
+        // Khi click vào header → chuyển sang trang chỉnh sửa hồ sơ
+        layoutProfileHeader.setOnClickListener(vv -> {
+            Intent i = new Intent(requireContext(), CustomerProfileActivity.class);
+            startActivity(i);
+        });
+
+        // Đăng xuất
+        layoutLogout.setOnClickListener(vv -> {
+            prefs.edit().clear().apply();
+            Toast.makeText(requireContext(), "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(requireContext(), LoginScreen.class));
+            requireActivity().finish();
+        });
+
+        return v;
+    }
+
+    private void loadUserInfo(int userId) {
+        UserService api = ApiClient.getRetrofit(requireContext()).create(UserService.class);
+        api.getUserById(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> res) {
+                if (res.isSuccessful() && res.body() != null) {
+                    User user = res.body();
+                    tvFullName.setText(user.getUsername());
+                    tvPhone.setText(user.getPhoneNumber());
+                } else {
+                    Log.e("AccountFragment", "Không thể load thông tin user!");
                 }
-            } catch (Exception ignored) {}
-            if (layoutLogout != null) {
-                layoutLogout.setOnClickListener(v -> {
-                    android.content.Context ctx = getContext();
-                    if (ctx != null) {
-                        Toast.makeText(ctx, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
-                    }
-                    // TODO: thêm code chuyển về trang đăng nhập nếu có
-                });
             }
 
-            return view;
-        } catch (Exception e) {
-            Log.e("AccountFragment", "Failed to inflate fragment_account", e);
-            // Fallback simple view to avoid crash and make the issue visible
-            android.content.Context ctx = inflater.getContext();
-            LinearLayout fallback = new LinearLayout(ctx);
-            fallback.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            fallback.setBackgroundColor(Color.WHITE);
-            return fallback;
-        }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("AccountFragment", "Lỗi API: " + t.getMessage());
+            }
+        });
     }
 }

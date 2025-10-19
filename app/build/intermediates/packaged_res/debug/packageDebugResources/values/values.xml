@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="http://schemas.android.com/tools">
     <color name="background_color">#F8F9FF</color>
     <color name="black">#FF000000</color>
     <color name="gray_500">#9E9E9E</color>
@@ -21,12 +21,19 @@
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
-    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         
         <item name="colorPrimary">#FF6D00</item>
-        <item name="colorPrimaryVariant">#FF6D00</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">#FF9100</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="android:statusBarColor" ns1:targetApi="l">?attr/colorPrimary</item>
+
         
-        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
+        <item name="android:buttonStyle">@style/Widget.Material3.Button</item>
+
+        
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
     </style>
 </resources>

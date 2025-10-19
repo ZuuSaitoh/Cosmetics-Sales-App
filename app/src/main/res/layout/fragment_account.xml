@@ -12,14 +12,18 @@
 
         <!-- Header thông tin -->
         <LinearLayout
+            android:id="@+id/layoutProfileHeader"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="12dp"
-            android:background="@drawable/bg_card">
+            android:background="@drawable/bg_card"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:id="@+id/avatarImageView"
                 android:src="@drawable/ic_user"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
@@ -57,130 +61,15 @@
                 android:layout_height="24dp" />
         </LinearLayout>
 
-        <!-- Các mục chức năng -->
+        <!-- Chỉ giữ lại nút Đăng xuất -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_card"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:padding="8dp">
 
-            <TextView
-                android:text="Tài khoản"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:padding="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDD" />
-
-            <!-- Thông tin cá nhân -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:src="@drawable/ic_user"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:text="Thông tin cá nhân"
-                    android:layout_marginStart="12dp"
-                    android:textSize="15sp"
-                    android:textColor="#000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:src="@drawable/ic_arrow_right"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </LinearLayout>
-
-            <!-- Chat với Hasaki -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:src="@drawable/ic_chat"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:text="Chat với Hasaki"
-                    android:layout_marginStart="12dp"
-                    android:textSize="15sp"
-                    android:textColor="#000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:src="@drawable/ic_arrow_right"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </LinearLayout>
-
-            <!-- Địa chỉ giao hàng -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:src="@drawable/ic_location"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:text="Địa chỉ giao hàng"
-                    android:layout_marginStart="12dp"
-                    android:textSize="15sp"
-                    android:textColor="#000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:src="@drawable/ic_arrow_right"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </LinearLayout>
-
-            <!-- Đăng xuất -->
             <LinearLayout
                 android:id="@+id/layoutLogout"
                 android:orientation="horizontal"

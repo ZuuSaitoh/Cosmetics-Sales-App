@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-62:12
+ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:2:1-68:12
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\jinie\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\jinie\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\jinie\.gradle\caches\8.13\transforms\9ae2788559f27bdf173529f0617805ab\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -95,8 +95,8 @@ ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManife
 	android:name
 		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-57:15
-INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-57:15
+ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-63:15
+INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:7:5-63:15
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\jinie\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\jinie\.gradle\caches\8.13\transforms\edaecbb0fd4eb5964ba51a63e81aece1\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\jinie\.gradle\caches\8.13\transforms\a6edcd718e1d4318d45032f01cec4c84\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -197,6 +197,16 @@ ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManife
 		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:55:13-55
 	android:name
 		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:52:13-50
+activity#com.example.myapplication.CustomerProfileActivity
+ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:57:9-61:57
+	android:label
+		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:60:13-45
+	android:exported
+		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:59:13-37
+	android:theme
+		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:61:13-55
+	android:name
+		ADDED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml:58:13-52
 uses-sdk
 INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\FPTEDU\K17 FALL2025\Cosmetics-Sales-App\app\src\main\AndroidManifest.xml

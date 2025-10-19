@@ -61,6 +61,11 @@
             android:label="Chi tiết sản phẩm"
             android:theme="@style/Theme.MyApplication" />
         <activity
+            android:name="com.example.myapplication.CustomerProfileActivity"
+            android:exported="false"
+            android:label="Hồ sơ khách hàng"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />
         <activity

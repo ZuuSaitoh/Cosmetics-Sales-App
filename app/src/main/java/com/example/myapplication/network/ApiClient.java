@@ -46,6 +46,9 @@ public final class ApiClient {
         }
         return retrofitInstance;
     }
+
+    // Thêm hàm helper cho dễ gọi
+    public static <T> T createService(Context context, Class<T> serviceClass) {
+        return getRetrofit(context).create(serviceClass);
+    }
 }
-
-

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Override button colors to prevent theme interference -->
+    <!-- Theme chính của app -->
+    <style name="Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Màu chủ đạo -->
         <item name="colorPrimary">#FF6D00</item>
-        <item name="colorPrimaryVariant">#FF6D00</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Disable button theme override -->
-        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">#FF9100</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
+        <!-- Nút bấm mặc định -->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
+        <item name="android:buttonStyle">@style/Widget.Material3.Button</item>
+
+        <!-- TextInputLayout hỗ trợ outlined -->
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
     </style>
 
     <!-- Dialog Animation Style -->
@@ -15,6 +23,5 @@
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
-
 
 </resources>
