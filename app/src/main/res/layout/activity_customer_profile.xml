@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -213,7 +214,7 @@
             <!-- Nút đổi mật khẩu -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnChangePassword"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="ĐỔI MẬT KHẨU"
@@ -227,7 +228,7 @@
         <!-- Spacing cuối -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="100dp" />
 
     </LinearLayout>
 </ScrollView>

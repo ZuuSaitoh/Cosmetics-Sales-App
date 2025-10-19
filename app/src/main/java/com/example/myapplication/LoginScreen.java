@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -192,6 +193,12 @@ public class LoginScreen extends AppCompatActivity {
                 loginButton.setEnabled(true);
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
+                    
+                    // Debug log để xem response
+                    Log.d("LoginScreen", "Login response: token=" + body.getToken() + ", userId=" + body.getUserId() + ", role=" + body.getRole());
+                    Log.d("LoginScreen", "userID (Integer) from response: " + body.getUserID());
+                    Log.d("LoginScreen", "userIdInt from response: " + body.getUserIdInt());
+                    
                     authManager.saveAuth(body.getToken(), body.getRole());
                     if (body.getUserId() != null) {
                         authManager.saveUserId(body.getUserId());
@@ -199,10 +206,24 @@ public class LoginScreen extends AppCompatActivity {
 
                     // ✅ Lưu thông tin user vào SharedPreferences
                     SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                    String userId = body.getUserId();
+                    
+                    // Debug log
+                    Log.d("LoginScreen", "API returned userId: " + userId);
+                    
+                    // Nếu userId từ API null hoặc rỗng, thử lấy từ token hoặc sử dụng username
+                    if (userId == null || userId.trim().isEmpty()) {
+                        Log.w("LoginScreen", "userId is null/empty from API, using fallback");
+                        // Fallback: sử dụng username hoặc tạo ID tạm thời
+                        userId = username; // Hoặc có thể là "1" cho demo
+                        Log.d("LoginScreen", "Using fallback userId: " + userId);
+                    }
+                    
                     prefs.edit()
                             .putString("username", username)
-                            .putString("userID", body.getUserId() != null ? body.getUserId() : "")
+                            .putString("userID", userId.trim())
                             .apply();
+                    Log.d("LoginScreen", "Saved userId: " + userId.trim());
 
                     // Chuyển sang màn hình chính
                     Intent intent = new Intent(LoginScreen.this, Main.class);
