@@ -13,7 +13,8 @@ public class AuthManager {
     private final SharedPreferences sharedPreferences;
 
     public AuthManager(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        // Dùng getApplicationContext() để đảm bảo SharedPreferences dùng 1 bản duy nhất toàn app
+        this.sharedPreferences = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public void saveAuth(String token, String role) {
@@ -39,7 +40,8 @@ public class AuthManager {
      * Kiểm tra trạng thái đăng nhập dựa trên sự tồn tại của token.
      */
     public boolean isLoggedIn() {
-        return !TextUtils.isEmpty(getToken());
+        String token = sharedPreferences.getString(KEY_TOKEN, null);
+        return token != null && !token.isEmpty();
     }
 }
 

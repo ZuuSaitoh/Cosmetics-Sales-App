@@ -113,7 +113,7 @@ public class CategoryFragment extends Fragment {
                         try {
                             android.content.Context ctx = getContext();
                             if (ctx != null) {
-                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.cart.CartActivity.class);
+                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.CartActivity.class);
                                 startActivity(i);
                             }
                         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void updateCartBadge() {
-        int total = com.example.myapplication.data.CartManager.getInstance().getTotalQuantity();
+        int total = com.example.myapplication.CartManager.getInstance().getTotalQuantity();
         if (total > 0) {
             cartBadge.setText(String.valueOf(total));
             cartBadge.setVisibility(View.VISIBLE);

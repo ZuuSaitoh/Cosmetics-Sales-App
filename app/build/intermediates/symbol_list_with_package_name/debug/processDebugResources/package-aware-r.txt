@@ -1579,6 +1579,7 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color background_color
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -1660,6 +1661,7 @@ color gray_600
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color lavender
+color lavender_light
 color m3_appbar_overlay_color
 color m3_assist_chip_icon_tint_color
 color m3_assist_chip_stroke_color
@@ -3269,6 +3271,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_confirm_background
+drawable category_icon_background
 drawable circle_background
 drawable circular_white_background
 drawable circular_white_background_transparent
@@ -3370,6 +3373,7 @@ drawable ic_arrow_up
 drawable ic_bad_route
 drawable ic_bad_route_filled
 drawable ic_bad_route_unfilled
+drawable ic_body
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -3389,8 +3393,11 @@ drawable ic_confusing_directions_unfilled
 drawable ic_email
 drawable ic_exit_arrow_left
 drawable ic_exit_arrow_right
+drawable ic_eye
+drawable ic_face
 drawable ic_facebook
 drawable ic_google
+drawable ic_hair
 drawable ic_keyboard_black_24dp
 drawable ic_lane_right
 drawable ic_lane_right_only
@@ -3399,6 +3406,7 @@ drawable ic_lane_straight
 drawable ic_lane_straight_only
 drawable ic_lane_uturn
 drawable ic_leaf
+drawable ic_lips
 drawable ic_list
 drawable ic_lock
 drawable ic_m3_chip_check
@@ -3447,11 +3455,13 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_nail
 drawable ic_navigation
 drawable ic_no_turn_allowed
 drawable ic_not_allowed
 drawable ic_not_allowed_filled
 drawable ic_not_allowed_unfilled
+drawable ic_perfume
 drawable ic_plus
 drawable ic_road_closed
 drawable ic_road_closed_filled
@@ -3464,6 +3474,7 @@ drawable ic_search
 drawable ic_search_black_24
 drawable ic_sound_off
 drawable ic_sound_on
+drawable ic_tools
 drawable ic_traffic
 drawable ic_wrong_directions
 drawable img_app_icon
@@ -3679,8 +3690,6 @@ id animateToEnd
 id animateToStart
 id antiClockwise
 id anticipate
-id appBarLayout
-id appleLoginButton
 id arc
 id arrivalTimeText
 id asConfigured
@@ -3690,7 +3699,6 @@ id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
 id backButton
-id backToLoginText
 id background_image
 id bannerRecyclerView
 id barrier
@@ -3732,7 +3740,11 @@ id cancel_button
 id carryVelocity
 id cartBadge
 id cartIcon
+id categoriesRecyclerView
 id category
+id categoryDescription
+id categoryIcon
+id categoryName
 id center
 id centerCrop
 id centerInside
@@ -3768,7 +3780,6 @@ id coordinator
 id cos
 id counterclockwise
 id cradle
-id createAccountButton
 id currentState
 id custom
 id customPanel
@@ -3818,8 +3829,6 @@ id edit_text_id
 id elastic
 id emailEditText
 id emailInputLayout
-id emailOrPhoneEditText
-id emailOrPhoneInputLayout
 id embed
 id empty_state
 id end
@@ -3835,7 +3844,6 @@ id expand_activities_button
 id expanded_menu
 id extraInstructionContentLayout
 id fabAdd
-id facebookLoginButton
 id fade
 id fill
 id fill_horizontal
@@ -3861,7 +3869,6 @@ id getStartedButton
 id ghost_view
 id ghost_view_holder
 id gone
-id googleLoginButton
 id graph
 id graph_wrap
 id group_divider
@@ -3928,7 +3935,6 @@ id list_item
 id locale
 id locationIcon
 id loginButton
-id loginForm
 id loginText
 id ltr
 id m3_side_sheet
@@ -4046,6 +4052,7 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id productCount
 id productRecyclerView
 id progress_circular
 id progress_horizontal
@@ -4058,11 +4065,7 @@ id recyclerEmployees
 id recyclerImages
 id recycler_cart
 id registerButton
-id registerConfirmPasswordEditText
-id registerEmailOrPhoneEditText
-id registerForm
 id registerFullNameEditText
-id registerPasswordEditText
 id register_subtitle
 id register_title
 id relativeLayout
@@ -4130,7 +4133,6 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
-id signUpButton
 id signUpText
 id sin
 id skipCollapsed
@@ -4209,7 +4211,10 @@ id textStart
 id textTitle
 id textTop
 id textTotal
+id text_brand
+id text_category
 id text_description
+id text_full_description
 id text_grand_total
 id text_input_end_icon
 id text_input_error_icon
@@ -4219,6 +4224,7 @@ id text_popup_title
 id text_price
 id text_product_name
 id text_quantity
+id text_stock
 id text_total_price
 id textinput_counter
 id textinput_error
@@ -4409,7 +4415,6 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_admin_dashboard
 layout activity_cart
-layout activity_login
 layout activity_login00000
 layout activity_navigation
 layout activity_product_detail
@@ -4456,6 +4461,7 @@ layout instruction_list_layout
 layout instruction_view_layout
 layout instruction_viewholder_layout
 layout item_cart
+layout item_category
 layout item_employee
 layout item_product
 layout item_store_image
