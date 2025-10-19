@@ -46,32 +46,27 @@ public class ActivityLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        // Set the content view to your new login XML file
         setContentView(R.layout.activity_login00000);
 
         // Initialize services
         authService = ApiClient.getRetrofit(this).create(AuthService.class);
         authManager = new AuthManager(this);
 
-        // Initialize Views using the new IDs from your XML
+        // Initialize Views
         initializeViews();
 
-        // Handle window insets for edge-to-edge display
+        // Handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Set up click listeners for the interactive elements
         setupClickListeners();
     }
 
     private void initializeViews() {
-        // IMPORTANT: IDs are taken from your 'activity_login00000.xml'
         fullNameInputLayout = findViewById(R.id.fullNameInputLayout);
-        // Note: The ID 'registerFullNameEditText' is a bit confusing in a login screen,
-        // you might consider renaming it to 'loginFullNameEditText' for clarity.
         fullNameEditText = findViewById(R.id.registerFullNameEditText);
         passwordInputLayout = findViewById(R.id.passwordInputLayout);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -82,35 +77,29 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        // Login button action
         loginButton.setOnClickListener(v -> {
-            String fullName = fullNameEditText.getText().toString().trim();
+            String userName = fullNameEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
-            if (!validateInput(fullName, password)) {
-                return; // Stop if validation fails
+            if (!validateInput(userName, password)) {
+                return;
             }
-            performLogin(fullName, password);
+            performLogin(userName, password);
         });
 
-        // "Sign up" text action: Navigate to the new SignUp screen
         signUpTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityLogin.this, ActivitySignUp.class); // Assumes you have a SignUpScreen.java
+            Intent intent = new Intent(ActivityLogin.this, ActivitySignUp.class);
             startActivity(intent);
         });
 
-        // Back button action
         backButton.setOnClickListener(v -> onBackPressed());
 
-        // Forgot password action
         forgotPasswordTextView.setOnClickListener(v -> {
             Toast.makeText(ActivityLogin.this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
-            // TODO: Navigate to your Forgot Password activity
         });
     }
 
     private boolean validateInput(String fullName, String password) {
-        // Reset errors
         fullNameInputLayout.setError(null);
         passwordInputLayout.setError(null);
 
@@ -128,30 +117,62 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void performLogin(String username, String password) {
-        loginButton.setEnabled(false); // Disable button to prevent multiple clicks
+        loginButton.setEnabled(false);
         Call<LoginResponse> call = authService.login(new LoginRequest(username, password));
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                loginButton.setEnabled(true); // Re-enable button
+                loginButton.setEnabled(true);
+
+                // --- SỬA LOGIC KIỂM TRA TOKEN ---
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
-                    authManager.saveAuth(body.getToken(), body.getRole());
 
-                    // Navigate to the main part of the app
-                    Intent intent = new Intent(ActivityLogin.this, Main.class); // Change MainActivity.class to your main activity
-                    intent.putExtra("username", username);
-                    startActivity(intent);
-                    finish(); // Finish LoginScreen so user can't go back to it
+                    String token = null;
+                    String role = null;
+
+                    // 1. Lấy token/role từ đối tượng "result"
+                    if (body.getResult() != null) {
+                        token = body.getResult().getToken();
+                        role = body.getResult().getRole();
+                    }
+
+                    // 2. Chỉ tiếp tục khi token hợp lệ (không null, không rỗng)
+                    if (token != null && !token.isEmpty()) {
+                        // Token hợp lệ, lưu lại
+                        authManager.saveAuth(token, role);
+
+                        // Trường hợp 1: Quay về ProductDetail
+                        Intent resultIntent = new Intent();
+                        if (getIntent() != null && getIntent().hasExtra("pending_product")) {
+                            resultIntent.putExtra("pending_product", getIntent().getSerializableExtra("pending_product"));
+                            resultIntent.putExtra("pending_quantity", getIntent().getIntExtra("pending_quantity", 1));
+                            setResult(RESULT_OK, resultIntent);
+                            finish(); // Quay về ProductDetailActivity
+                            return;
+                        }
+
+                        // Trường hợp 2: Login thông thường, vào Main
+                        setResult(RESULT_OK);
+                        Intent intent = new Intent(ActivityLogin.this, Main.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        // Token rỗng hoặc null -> Login thất bại
+                        Toast.makeText(ActivityLogin.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
+                        // KHÔNG GỌI setResult(RESULT_OK)
+                    }
                 } else {
+                    // Response không thành công (401, 404, 500...)
                     Toast.makeText(ActivityLogin.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                loginButton.setEnabled(true); // Re-enable button
+                loginButton.setEnabled(true);
                 Toast.makeText(ActivityLogin.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
