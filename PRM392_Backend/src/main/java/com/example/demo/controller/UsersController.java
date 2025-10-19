@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.UserCreationRequest;
 import com.example.demo.dto.request.UserUpdatePasswordRequest;
 import com.example.demo.dto.request.UserUpdateRequest;
+import com.example.demo.dto.request.UsersUpdatePasswordByMailRequest;
 import com.example.demo.dto.response.ApiResponse;
 import com.example.demo.entity.Users;
 import com.example.demo.service.UsersService;
@@ -51,5 +52,11 @@ public class UsersController {
     ApiResponse<String> updatePasswordById(@PathVariable int id, @RequestBody UserUpdatePasswordRequest request){
         usersService.updatePassword(id, request);
         return new ApiResponse<String>(2222,"Update Password Successfully!");
+    }
+
+    @PutMapping("forgot-password")
+    ApiResponse<String> forgotPassword(@RequestBody @Valid UsersUpdatePasswordByMailRequest request){
+        usersService.updateUserPasswordByEmail(request.getMail(), request.getNewPassword());
+        return new ApiResponse<String>(3333,"Password reset successfully!");
     }
 }

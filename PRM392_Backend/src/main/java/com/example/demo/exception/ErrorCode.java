@@ -70,7 +70,8 @@ public enum ErrorCode {
     PAYMENT_METHOD_NOT_SUPPORTED(1066,"Payment method not supported! Only support COD, Momo, ZaloPay"),
     CART_ALREADY_CHECKED_OUT(1067,"Cart already checked out!"),
     STATUS_NOT_VALID(1068,"Status is not valid! Order's status must be \"Processing\", \"Shipped\", \"Delivered\", \"Cancelled\""),
-    CART_IS_EMPTY(1069,"Cart is empty!"),;
+    CART_IS_EMPTY(1069,"Cart is empty!"),
+    INVALID_OLD_PASSWORD(1070,"Old password is incorrect!"),;
 
     ErrorCode(int code, String message) {
         this.code = code;

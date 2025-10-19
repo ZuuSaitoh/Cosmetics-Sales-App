@@ -13,13 +13,9 @@ import lombok.experimental.FieldDefaults;
 public class UserUpdatePasswordRequest {
     @NotBlank(message = "ENTER_ALL_FIELDS")
     @Size(min = 8, message = "INVALID_PASSWORD")
-    String password;
+    String oldPassword;
+    @NotBlank(message = "ENTER_ALL_FIELDS")
+    @Size(min = 8, message = "INVALID_PASSWORD")
+    String newPassword;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

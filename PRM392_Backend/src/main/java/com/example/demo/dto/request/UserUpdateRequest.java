@@ -1,5 +1,6 @@
 package com.example.demo.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -19,6 +20,7 @@ public class UserUpdateRequest {
     String phoneNumber;
     String address;
     String role;
+    @Email(message = "INVALID_EMAIL")
     String email;
 
     public String getAddress() {

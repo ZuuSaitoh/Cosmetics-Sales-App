@@ -81,7 +81,21 @@ public class UsersService {
     public Users updatePassword(int userID, UserUpdatePasswordRequest request){
         Users users = getUserByID(userID);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        users.setPasswordHash(passwordEncoder.encode(request.getPassword()));
+        if(!passwordEncoder.matches(request.getOldPassword(), users.getPasswordHash())){
+            throw new AppException(ErrorCode.INVALID_OLD_PASSWORD);
+        }
+        users.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        return usersRepository.save(users);
+    }
+
+    public boolean checkUserExistsByEmail(String email){
+        return usersRepository.existsByEmail(email);
+    }
+
+    public Users updateUserPasswordByEmail(String email, String newPassword){
+        Users users = usersRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        users.setPasswordHash(passwordEncoder.encode(newPassword));
         return usersRepository.save(users);
     }
 }
