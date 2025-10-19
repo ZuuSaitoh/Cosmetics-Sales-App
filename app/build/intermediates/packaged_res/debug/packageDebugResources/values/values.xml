@@ -16,6 +16,8 @@
     <string name="app_name">aurora</string>
     <string name="close_nav">Close navigation drawer</string>
     <string name="open_nav">Open navigation drawer</string>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#D3D3D3</item> <item name="colorControlActivated">#FFC107</item> </style>
     <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

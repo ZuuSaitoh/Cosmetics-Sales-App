@@ -3360,6 +3360,7 @@ drawable feedback_progress_drawable
 drawable frosted_texture
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable gradient_button_background
 drawable gradient_scrim
 drawable gradient_shadow_down
 drawable gradient_shadow_up
@@ -3478,6 +3479,7 @@ drawable ic_sound_on
 drawable ic_tools
 drawable ic_traffic
 drawable ic_wrong_directions
+drawable icon_background_circle
 drawable img_app_icon
 drawable img_no_product
 drawable instruction_background
@@ -3570,10 +3572,12 @@ drawable quantity_selector_background
 drawable rounded_background
 drawable rounded_corners
 drawable search_background
+drawable shadow_top
 drawable sound_chip_background
 drawable store1
 drawable store2
 drawable store3
+drawable straight_corners_background
 drawable sub_banner_background
 drawable test_level_drawable
 drawable text_input_background
@@ -3603,6 +3607,7 @@ drawable vietmap_user_icon_stale
 drawable vietmap_user_puck_icon
 drawable vietmap_user_stroke_icon
 drawable wayname_text_background
+drawable white_frosted_glass_texture
 drawable your_woman_image
 id ALT
 id BOTTOM_END
@@ -3710,9 +3715,7 @@ id beginning
 id bestChoice
 id blocking
 id bottom
-id bottomAppBar
 id bottomNavigationView
-id bottom_bar
 id bottom_scrim
 id bounce
 id bounceBoth
@@ -3742,6 +3745,7 @@ id cancel_button
 id carryVelocity
 id cartBadge
 id cartIcon
+id cart_badge
 id categoriesRecyclerView
 id category
 id categoryDescription
@@ -3788,6 +3792,7 @@ id customPanel
 id cut
 id dark
 id date_picker_actions
+id dealsTitleText
 id decelerate
 id decelerateAndComplete
 id decor_content_parent
@@ -3859,6 +3864,7 @@ id fitXY
 id fixed
 id flip
 id floating
+id forYouTitleText
 id forever
 id forgotPasswordTextView
 id fragment_container_view_tag
@@ -4109,6 +4115,7 @@ id search_button
 id search_close_btn
 id search_edit_frame
 id search_go_btn
+id search_icon_image
 id search_mag_icon
 id search_plate
 id search_src_text
@@ -5176,6 +5183,7 @@ style Platform_V21_AppCompat_Light
 style Platform_V25_AppCompat
 style Platform_V25_AppCompat_Light
 style Platform_Widget_AppCompat_Spinner
+style RatingBar
 style RtlOverlay_DialogWindowTitle_AppCompat
 style RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
 style RtlOverlay_Widget_AppCompat_DialogTitle_Icon

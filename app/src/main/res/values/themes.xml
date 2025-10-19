@@ -24,5 +24,6 @@
         <item name="hintTextColor">@android:color/darker_gray</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
-
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#D3D3D3</item> <item name="colorControlActivated">#FFC107</item> </style>
 </resources>

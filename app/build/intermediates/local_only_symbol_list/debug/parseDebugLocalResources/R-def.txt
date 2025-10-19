@@ -31,6 +31,7 @@ drawable cosme02_background
 drawable cosme_background
 drawable curved_top_background
 drawable frosted_texture
+drawable gradient_button_background
 drawable gradient_scrim
 drawable ic_apple
 drawable ic_arrow_back
@@ -53,6 +54,7 @@ drawable ic_perfume
 drawable ic_plus
 drawable ic_search
 drawable ic_tools
+drawable icon_background_circle
 drawable img_app_icon
 drawable img_no_product
 drawable leaves_background
@@ -63,19 +65,20 @@ drawable page_indicator_inactive
 drawable quantity_selector_background
 drawable rounded_background
 drawable search_background
+drawable shadow_top
 drawable store1
 drawable store2
 drawable store3
+drawable straight_corners_background
 drawable text_input_background
 drawable textured_background
+drawable white_frosted_glass_texture
 drawable your_woman_image
 id account
 id backButton
 id background_image
 id bannerRecyclerView
-id bottomAppBar
 id bottomNavigationView
-id bottom_bar
 id bottom_scrim
 id btnDelete
 id btnEdit
@@ -95,6 +98,7 @@ id btn_plus
 id btn_remove
 id cartBadge
 id cartIcon
+id cart_badge
 id categoriesRecyclerView
 id category
 id categoryDescription
@@ -103,6 +107,7 @@ id categoryName
 id chat
 id closeButton
 id content_container
+id dealsTitleText
 id dividerText
 id drawer_layout
 id emailEditText
@@ -112,6 +117,7 @@ id etEmail
 id etName
 id etRole
 id fabAdd
+id forYouTitleText
 id forgotPasswordTextView
 id frame_layout
 id fullNameEditText
@@ -149,6 +155,7 @@ id register_title
 id rememberMeCheckBox
 id scroll_view
 id searchEditText
+id search_icon_image
 id signUpText
 id socialLoginLayout
 id textPrice
@@ -215,6 +222,7 @@ mipmap ic_launcher_round
 string app_name
 string close_nav
 string open_nav
+style RatingBar
 style Theme.MyApplication
 style Widget.App.TextInputLayout
 xml backup_rules
