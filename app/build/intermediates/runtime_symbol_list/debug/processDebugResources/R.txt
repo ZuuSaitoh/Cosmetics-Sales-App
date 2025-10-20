@@ -3715,6 +3715,7 @@ int id bestChoice 0x7f080067
 int id blocking 0x7f080068
 int id bottom 0x7f080069
 int id bottomNavigationView 0x7f08006a
+int id bottom_nav_container 0x7f0802bb
 int id bottom_scrim 0x7f08006b
 int id bounce 0x7f08006c
 int id bounceBoth 0x7f08006d

@@ -3716,6 +3716,7 @@ id bestChoice
 id blocking
 id bottom
 id bottomNavigationView
+id bottom_nav_container
 id bottom_scrim
 id bounce
 id bounceBoth

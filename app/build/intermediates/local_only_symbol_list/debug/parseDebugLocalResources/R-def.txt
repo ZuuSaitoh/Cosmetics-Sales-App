@@ -79,6 +79,7 @@ id backButton
 id background_image
 id bannerRecyclerView
 id bottomNavigationView
+id bottom_nav_container
 id bottom_scrim
 id btnDelete
 id btnEdit
