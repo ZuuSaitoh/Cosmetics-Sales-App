@@ -122,16 +122,21 @@
 
     </LinearLayout>
 
-    <!-- Add to Cart Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_confirm_add"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="56dp"
-        android:text="Thêm vào giỏ hàng"
-        android:background="@drawable/button_confirm_background"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/gradient_button_background"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_cart"
+        app:iconGravity="textStart"
+        app:iconPadding="12dp"
+        app:iconTint="@android:color/white"/>
 
 
 </LinearLayout>

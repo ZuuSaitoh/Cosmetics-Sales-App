@@ -31,7 +31,7 @@ public class ActivityWelcome extends AppCompatActivity {
         authManager = new AuthManager(this);
 
         // Kiểm tra trạng thái đăng nhập
-        checkLoginStatus();
+    checkLoginStatus();
 
         // Ánh xạ các view
         getStartedButton = findViewById(R.id.getStartedButton);

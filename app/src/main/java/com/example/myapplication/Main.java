@@ -28,7 +28,7 @@ public class Main extends AppCompatActivity {
         authManager = new AuthManager(this);
 
         // Kiểm tra trạng thái đăng nhập
-        checkAuthentication();
+        //checkAuthentication();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit();
@@ -66,13 +66,13 @@ public class Main extends AppCompatActivity {
     /**
      * Kiểm tra trạng thái đăng nhập và chuyển hướng đến login nếu cần
      */
-    private void checkAuthentication() {
-        if (!authManager.isLoggedIn()) {
-            // Người dùng chưa đăng nhập, chuyển đến ActivityLogin
-            Intent intent = new Intent(Main.this, ActivityLogin.class);
-            startActivity(intent);
-            finish(); // Đóng MainActivity để không thể quay lại
-        }
-    }
+//    private void checkAuthentication() {
+//        if (!authManager.isLoggedIn()) {
+//            // Người dùng chưa đăng nhập, chuyển đến ActivityLogin
+//            Intent intent = new Intent(Main.this, ActivityLogin.class);
+//            startActivity(intent);
+//            finish(); // Đóng MainActivity để không thể quay lại
+//        }
+//    }
 
 }

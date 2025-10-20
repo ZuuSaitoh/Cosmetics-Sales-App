@@ -1,9 +1,11 @@
+import org.gradle.kotlin.dsl.implementation
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 // ✅ Đọc API key từ local.properties
@@ -81,6 +83,10 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
     //navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
@@ -110,6 +116,8 @@ dependencies {
     // --- Google Play Services ---
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+
 
 
 

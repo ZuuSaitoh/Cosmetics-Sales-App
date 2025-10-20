@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setupCart() {
+    public void setupCart() {
         try {
             updateCartBadge();
             if (cartIcon != null) {
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateCartBadge() {
+    public void updateCartBadge() {
         int total = CartManager.getInstance().getTotalQuantity();
         if (total > 0) {
             cartBadge.setText(String.valueOf(total));

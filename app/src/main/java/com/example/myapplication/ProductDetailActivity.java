@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.ProductService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewStructure;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,6 +40,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Product product;
     private Long productId;
     private AuthManager authManager;
+    private TextView cartBadge;
+    private ImageView cartIcon;
+
 
     // --- SỬA: XÓA 2 BIẾN PENDING ---
     // private Product pendingProductFromLogin = null;
@@ -50,6 +56,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         initViews();
         getProductDataFromIntent();
+        setupCart();
 
         if (productId != null) {
             loadProductDetailFromAPI();
@@ -62,7 +69,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart.setOnClickListener(v -> {
             authManager = new AuthManager(getApplicationContext()); // Luôn refresh authManager
 
-            if ( authManager.isLoggedIn()) {
+            if (authManager.isLoggedIn()) {
                 // Đã login -> Mở popup
                 showQuantityPopup();
             } else {
@@ -75,10 +82,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(v -> finish());
-        btnCart.setOnClickListener(v -> {
-            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-            startActivity(intent);
-        });
+
     }
 
     // ... (Hàm initViews(), getProductDataFromIntent(), loadProductDetailFromAPI(),
@@ -97,6 +101,35 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btn_add_to_cart);
         btnBack = findViewById(R.id.btn_back);
         btnCart = findViewById(R.id.btn_cart);
+        cartBadge = findViewById(R.id.cart_badge);
+
+    }
+
+    public void setupCart() {
+        updateCartBadge(); // Cập nhật badge lần đầu
+        if (btnCart != null) {
+            btnCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(ProductDetailActivity.this, CartActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
+    }
+    public void updateCartBadge() {
+        // Thêm kiểm tra null an toàn
+        if (cartBadge == null) {
+            return;
+        }
+
+        int total = CartManager.getInstance().getTotalQuantity();
+        if (total > 0) {
+            cartBadge.setText(String.valueOf(total));
+            cartBadge.setVisibility(View.VISIBLE);
+        } else {
+            cartBadge.setVisibility(View.GONE);
+        }
     }
 
     private void getProductDataFromIntent() {
@@ -125,6 +158,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     displayProductData(); // Fallback
                 }
             }
+
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
                 displayProductData(); // Fallback
@@ -215,8 +249,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             // Chỉ cần thêm vào giỏ hàng, vì hàm này giờ chỉ được gọi khi đã login
             CartManager.getInstance().addToCart(product, quantity[0]);
             Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-
-            // XÓA KHỐI "ELSE { ... ĐI LOGIN ... }" Ở ĐÂY
+            updateCartBadge();
         });
 
         bottomSheetDialog.show();

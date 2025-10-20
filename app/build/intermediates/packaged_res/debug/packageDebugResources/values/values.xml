@@ -15,7 +15,15 @@
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">aurora</string>
     <string name="close_nav">Close navigation drawer</string>
+    <string name="gcm_defaultSenderId" translatable="false">1045499335771</string>
+    <string name="google_api_key" translatable="false">AIzaSyArgwx-7_xdk1Q_tu8CBCzZCvevKx9_JL0</string>
+    <string name="google_app_id" translatable="false">1:1045499335771:android:0f72d04e3cedc701041b7e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyArgwx-7_xdk1Q_tu8CBCzZCvevKx9_JL0</string>
+    <string name="google_storage_bucket" translatable="false">cosmetics-6433a.firebasestorage.app</string>
     <string name="open_nav">Open navigation drawer</string>
+    <string name="project_id" translatable="false">cosmetics-6433a</string>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#D3D3D3</item> <item name="colorControlActivated">#FFC107</item> </style>
     <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
