@@ -42,4 +42,3 @@ public class StoreImageAdapter extends RecyclerView.Adapter<StoreImageAdapter.Vi
         }
     }
 }
-
