@@ -38,7 +38,7 @@
                 android:background="@color/white"
                 app:menu="@menu/bottom_menu"
 
-                app:labelVisibilityMode="selected"
+
 
                 app:itemIconTint="#00695C"
                 app:itemTextColor="#00695C" />
