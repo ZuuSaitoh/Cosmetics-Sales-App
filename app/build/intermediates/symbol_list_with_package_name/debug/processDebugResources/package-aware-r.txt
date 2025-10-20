@@ -3253,9 +3253,12 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable account_header_background
 drawable alert_progress_drawable
+drawable avatar_background
 drawable avd_hide_password
 drawable avd_show_password
+drawable back_button_background
 drawable badge_background
 drawable banner
 drawable baseline_chat_24
@@ -3272,8 +3275,11 @@ drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_background
 drawable button_confirm_background
+drawable cancel_button_background
+drawable cancel_button_gradient
 drawable category_icon_background
 drawable circle_background
+drawable circular_avatar_background
 drawable circular_white_background
 drawable circular_white_background_transparent
 drawable common_full_open_on_phone
@@ -3360,13 +3366,17 @@ drawable feedback_progress_drawable
 drawable frosted_texture
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable gradient_background
 drawable gradient_button_background
 drawable gradient_scrim
 drawable gradient_shadow_down
 drawable gradient_shadow_up
+drawable header_background
+drawable ic_account_circle
 drawable ic_apple
 drawable ic_arrow_back
 drawable ic_arrow_back_black_24
+drawable ic_arrow_back_white
 drawable ic_arrow_forward
 drawable ic_arrow_head
 drawable ic_arrow_head_casing
@@ -3393,6 +3403,7 @@ drawable ic_confusing_directions
 drawable ic_confusing_directions_filled
 drawable ic_confusing_directions_unfilled
 drawable ic_email
+drawable ic_email_gradient
 drawable ic_exit_arrow_left
 drawable ic_exit_arrow_right
 drawable ic_eye
@@ -3410,6 +3421,8 @@ drawable ic_lane_uturn
 drawable ic_leaf
 drawable ic_lips
 drawable ic_list
+drawable ic_location
+drawable ic_location_gradient
 drawable ic_lock
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
@@ -3464,6 +3477,9 @@ drawable ic_not_allowed
 drawable ic_not_allowed_filled
 drawable ic_not_allowed_unfilled
 drawable ic_perfume
+drawable ic_person
+drawable ic_phone
+drawable ic_phone_gradient
 drawable ic_plus
 drawable ic_road_closed
 drawable ic_road_closed_filled
@@ -3480,8 +3496,10 @@ drawable ic_tools
 drawable ic_traffic
 drawable ic_wrong_directions
 drawable icon_background_circle
+drawable icon_button_background
 drawable img_app_icon
 drawable img_no_product
+drawable info_card_background
 drawable instruction_background
 drawable lane_right
 drawable lane_right_only
@@ -3489,6 +3507,7 @@ drawable lane_straight
 drawable lane_straight_only_right
 drawable lane_uturn
 drawable leaves_background
+drawable logout_button_background
 drawable m3_appbar_background
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3566,11 +3585,14 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable outline_account_circle_24
 drawable outline_category_24
+drawable outline_email_24
 drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
 drawable rounded_background
 drawable rounded_corners
+drawable save_button_background
+drawable save_button_gradient
 drawable search_background
 drawable shadow_top
 drawable sound_chip_background
@@ -3681,6 +3703,9 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id addressEditText
+id addressInputLayout
+id addressTextView
 id adjust_height
 id adjust_width
 id alertProgressBar
@@ -3701,10 +3726,12 @@ id arc
 id arrivalTimeText
 id asConfigured
 id async
+id authButtonsContainer
 id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id avatarImageView
 id backButton
 id background_image
 id bannerRecyclerView
@@ -3739,9 +3766,11 @@ id btn_order
 id btn_plus
 id btn_remove
 id buttonPanel
+id button_container
 id cache_measures
 id callMeasure
 id cancelBtn
+id cancelButton
 id cancel_button
 id carryVelocity
 id cartBadge
@@ -3837,6 +3866,7 @@ id edit_text_id
 id elastic
 id emailEditText
 id emailInputLayout
+id emailTextView
 id embed
 id empty_state
 id end
@@ -3868,6 +3898,7 @@ id floating
 id forYouTitleText
 id forever
 id forgotPasswordTextView
+id form_card
 id fragment_container_view_tag
 id frame_layout
 id frost
@@ -3941,6 +3972,7 @@ id line3
 id linear
 id listMode
 id list_item
+id loadingProgressBar
 id locale
 id locationIcon
 id loginButton
@@ -4057,6 +4089,9 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id phoneEditText
+id phoneInputLayout
+id phoneTextView
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -4064,6 +4099,7 @@ id postLayout
 id pressed
 id productCount
 id productRecyclerView
+id profile_card
 id progress_circular
 id progress_horizontal
 id radio
@@ -4088,6 +4124,7 @@ id right
 id rightToLeft
 id right_icon
 id right_side
+id roleTextView
 id rounded
 id routeInfoBottomSheetView
 id routeOverviewBtn
@@ -4096,6 +4133,7 @@ id rtl
 id rvInstructions
 id rvTurnLanes
 id satellite
+id saveButton
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -4279,7 +4317,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
-id userInfoTextView
+id usernameTextView
 id vertical_only
 id vertical_text
 id view
@@ -4431,6 +4469,7 @@ layout activity_login00000
 layout activity_navigation
 layout activity_product_detail
 layout activity_signup00000
+layout activity_update_profile
 layout activity_vietmapnavigation
 layout activity_vietmapview
 layout activity_welcome

@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
 
 import androidx.fragment.app.Fragment;
 
@@ -35,8 +38,12 @@ public class AccountFragment extends Fragment {
     private TextView emailTextView;
     private TextView phoneTextView;
     private TextView addressTextView;
-    private Button logoutButton;
+    private MaterialButton logoutButton;
+    private MaterialButton loginButton;
+    private MaterialButton registerButton;
+    private LinearLayout authButtonsContainer;
     private ProgressBar loadingProgressBar;
+    private View profileCard;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,10 +59,23 @@ public class AccountFragment extends Fragment {
         
         // Thiết lập sự kiện đăng xuất và avatar click
         setupLogout();
+        setupLoginRegister();
         setupAvatarClick();
         
-        // Load thông tin người dùng từ API
-        loadUserInfo();
+        // Cập nhật giao diện dựa trên trạng thái đăng nhập
+        updateUIForAuthState();
+        
+        // Load thông tin người dùng từ API chỉ khi đã đăng nhập
+        String token = authManager.getToken();
+        if (token != null && !token.isEmpty()) {
+            loadUserInfo();
+        } else {
+            // Khi chưa đăng nhập, chỉ hiển thị thông tin fallback và ẩn loading
+            if (loadingProgressBar != null) {
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+            showFallbackInfo();
+        }
         
         return view;
     }
@@ -68,12 +88,18 @@ public class AccountFragment extends Fragment {
         phoneTextView = view.findViewById(R.id.phoneTextView);
         addressTextView = view.findViewById(R.id.addressTextView);
         logoutButton = view.findViewById(R.id.logoutButton);
+        loginButton = view.findViewById(R.id.loginButton);
+        registerButton = view.findViewById(R.id.registerButton);
+        authButtonsContainer = view.findViewById(R.id.authButtonsContainer);
         loadingProgressBar = view.findViewById(R.id.loadingProgressBar);
+        profileCard = view.findViewById(R.id.profile_card);
     }
     
     private void loadUserInfo() {
         // Hiển thị loading
-        loadingProgressBar.setVisibility(View.VISIBLE);
+        if (loadingProgressBar != null) {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        }
         
         // Force refresh userId từ token để đảm bảo có userId mới nhất
         Log.d("AccountFragment", "Force refreshing userId from token");
@@ -106,9 +132,11 @@ public class AccountFragment extends Fragment {
             
             if (userId == null) {
                 Log.w("AccountFragment", "All fallback methods failed, showing fallback info");
-                loadingProgressBar.setVisibility(View.GONE);
+                if (loadingProgressBar != null) {
+                    loadingProgressBar.setVisibility(View.GONE);
+                }
                 showFallbackInfo();
-                Toast.makeText(getContext(), "Không thể xác định ID người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getContext(), "Không thể xác định ID người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -120,7 +148,9 @@ public class AccountFragment extends Fragment {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                loadingProgressBar.setVisibility(View.GONE);
+                if (loadingProgressBar != null) {
+                    loadingProgressBar.setVisibility(View.GONE);
+                }
                 
                 Log.d("AccountFragment", "=== API RESPONSE ===");
                 Log.d("AccountFragment", "API Response - Code: " + response.code() + ", Success: " + response.isSuccessful());
@@ -144,17 +174,19 @@ public class AccountFragment extends Fragment {
                     Log.e("AccountFragment", "API call failed - Code: " + response.code() + ", Message: " + response.message());
                     // Fallback: hiển thị thông tin từ AuthManager
                     showFallbackInfo();
-                    Toast.makeText(getContext(), "Không thể tải thông tin người dùng (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "Không thể tải thông tin người dùng (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
                 }
             }
             
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                loadingProgressBar.setVisibility(View.GONE);
+                if (loadingProgressBar != null) {
+                    loadingProgressBar.setVisibility(View.GONE);
+                }
                 Log.e("AccountFragment", "API call failed", t);
                 // Fallback: hiển thị thông tin từ AuthManager
                 showFallbackInfo();
-                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -177,11 +209,11 @@ public class AccountFragment extends Fragment {
     }
     
     private void updateUserInfo(User user) {
-        usernameTextView.setText(user.getUsername());
-        roleTextView.setText(user.getRole());
-        emailTextView.setText(user.getEmail());
-        phoneTextView.setText(user.getPhoneNumber());
-        addressTextView.setText(user.getAddress());
+        if (usernameTextView != null) usernameTextView.setText(user.getUsername());
+        if (roleTextView != null) roleTextView.setText(user.getRole());
+        if (emailTextView != null) emailTextView.setText(user.getEmail());
+        if (phoneTextView != null) phoneTextView.setText(user.getPhoneNumber());
+        if (addressTextView != null) addressTextView.setText(user.getAddress());
     }
     
     private void showFallbackInfo() {
@@ -189,46 +221,102 @@ public class AccountFragment extends Fragment {
         String role = authManager.getRole();
         
         if (token != null && !token.isEmpty()) {
-            usernameTextView.setText("Người dùng");
-            roleTextView.setText(role != null ? role : "User");
-            emailTextView.setText("Không có thông tin");
-            phoneTextView.setText("Không có thông tin");
-            addressTextView.setText("Không có thông tin");
+            if (usernameTextView != null) usernameTextView.setText("Người dùng");
+            if (roleTextView != null) roleTextView.setText(role != null ? role : "User");
+            if (emailTextView != null) emailTextView.setText("Không có thông tin");
+            if (phoneTextView != null) phoneTextView.setText("Không có thông tin");
+            if (addressTextView != null) addressTextView.setText("Không có thông tin");
         } else {
-            usernameTextView.setText("Chưa đăng nhập");
-            roleTextView.setText("Guest");
-            emailTextView.setText("Chưa đăng nhập");
-            phoneTextView.setText("Chưa đăng nhập");
-            addressTextView.setText("Chưa đăng nhập");
+            if (usernameTextView != null) usernameTextView.setText("Chưa đăng nhập");
+            if (roleTextView != null) roleTextView.setText("Guest");
+            if (emailTextView != null) emailTextView.setText("Chưa đăng nhập");
+            if (phoneTextView != null) phoneTextView.setText("Chưa đăng nhập");
+            if (addressTextView != null) addressTextView.setText("Chưa đăng nhập");
         }
     }
     
     private void setupLogout() {
-        logoutButton.setOnClickListener(v -> {
-            // Xóa token và thông tin đăng nhập
-            authManager.clear();
-            
-            // Hiển thị thông báo
-            Toast.makeText(getContext(), "Đã đăng xuất thành công", Toast.LENGTH_SHORT).show();
-            
-            // Chuyển về ActivityWelcome
-            Intent intent = new Intent(getContext(), ActivityWelcome.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            
-            // Đóng MainActivity
-            if (getActivity() != null) {
-                getActivity().finish();
+        if (logoutButton != null) {
+            logoutButton.setOnClickListener(v -> {
+                // Xóa token và thông tin đăng nhập
+                authManager.clear();
+                
+                // Hiển thị thông báo
+                Toast.makeText(getContext(), "Đã đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                
+                // Cập nhật giao diện
+                updateUIForAuthState();
+                
+                // Chuyển về ActivityWelcome
+                Intent intent = new Intent(getContext(), ActivityWelcome.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                
+                // Đóng MainActivity
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
+            });
+        }
+    }
+    
+    private void setupLoginRegister() {
+        if (loginButton != null) {
+            loginButton.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), ActivityLogin.class);
+                startActivityForResult(intent, 1002); // Request code để nhận kết quả
+            });
+        }
+        
+        if (registerButton != null) {
+            registerButton.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), ActivitySignUp.class);
+                startActivityForResult(intent, 1003); // Request code để nhận kết quả
+            });
+        }
+    }
+    
+    private void updateUIForAuthState() {
+        String token = authManager.getToken();
+        boolean isLoggedIn = token != null && !token.isEmpty();
+        
+        if (isLoggedIn) {
+            // Đã đăng nhập: hiển thị khung thông tin người dùng và nút logout, ẩn nút đăng nhập/đăng ký
+            if (profileCard != null) {
+                profileCard.setVisibility(View.VISIBLE);
             }
-        });
+            if (logoutButton != null) {
+                logoutButton.setVisibility(View.VISIBLE);
+            }
+            if (authButtonsContainer != null) {
+                authButtonsContainer.setVisibility(View.GONE);
+            }
+        } else {
+            // Chưa đăng nhập: ẩn khung thông tin người dùng và nút logout, hiển thị nút đăng nhập/đăng ký
+            if (profileCard != null) {
+                profileCard.setVisibility(View.GONE);
+            }
+            if (logoutButton != null) {
+                logoutButton.setVisibility(View.GONE);
+            }
+            if (authButtonsContainer != null) {
+                authButtonsContainer.setVisibility(View.VISIBLE);
+            }
+            // Đảm bảo ẩn loading khi chưa đăng nhập
+            if (loadingProgressBar != null) {
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+        }
     }
     
     private void setupAvatarClick() {
-        avatarImageView.setOnClickListener(v -> {
-            Log.d("AccountFragment", "Avatar clicked, opening update profile");
-            Intent intent = new Intent(getContext(), ActivityUpdateProfile.class);
-            startActivityForResult(intent, 1001); // Request code để nhận kết quả
-        });
+        if (avatarImageView != null) {
+            avatarImageView.setOnClickListener(v -> {
+                Log.d("AccountFragment", "Avatar clicked, opening update profile");
+                Intent intent = new Intent(getContext(), ActivityUpdateProfile.class);
+                startActivityForResult(intent, 1001); // Request code để nhận kết quả
+            });
+        }
     }
     
     @Override
@@ -238,6 +326,10 @@ public class AccountFragment extends Fragment {
         if (requestCode == 1001 && resultCode == getActivity().RESULT_OK) {
             // User đã update thành công, reload thông tin
             Log.d("AccountFragment", "User updated, reloading info");
+            loadUserInfo();
+        } else if ((requestCode == 1002 || requestCode == 1003) && resultCode == getActivity().RESULT_OK) {
+            // Đăng nhập hoặc đăng ký thành công, reload thông tin
+            Log.d("AccountFragment", "Login/Register successful, reloading info");
             loadUserInfo();
         }
     }

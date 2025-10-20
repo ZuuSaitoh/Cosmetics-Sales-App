@@ -206,6 +206,50 @@
 
         </androidx.cardview.widget.CardView>
 
+        <!-- Login/Register Buttons Container -->
+        <LinearLayout
+            android:id="@+id/authButtonsContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcome_subtitle">
+
+            <!-- Login Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Đăng nhập"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:backgroundTint="#00695C"
+                app:cornerRadius="30dp" />
+
+            <!-- Register Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registerButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Đăng ký"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:backgroundTint="#FF6B6B"
+                app:cornerRadius="30dp" />
+
+        </LinearLayout>
+
         <!-- Logout Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logoutButton"
@@ -214,10 +258,11 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-            android:text="Logout"
+            android:text="Đăng xuất"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="18sp"
+            android:visibility="gone"
             app:backgroundTint="#FF6B6B"
             app:cornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="@id/profile_card"
@@ -233,7 +278,7 @@
             android:indeterminateTint="#00695C"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logoutButton" />
+            app:layout_constraintTop_toBottomOf="@id/profile_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
