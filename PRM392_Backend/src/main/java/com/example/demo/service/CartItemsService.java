@@ -57,6 +57,9 @@ public class CartItemsService {
     public List<CartItems> viewAllItemInCart(Integer cartID) {
         List<CartItems> cartItems = cartItemsRepository.findByCart_CartID(cartID)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_IS_EMPTY));
+        if (cartItems.isEmpty()) {
+            throw new AppException(ErrorCode.CART_HAVE_NOTHING);
+        }
         Cart cart = cartItems.get(0).getCart();
         boolean updated = false;
 
