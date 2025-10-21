@@ -3,6 +3,7 @@ package com.example.myapplication.network;
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.AddCartItemRequest;
+import com.example.myapplication.network.dto.ChangeQuantityRequest;
 import okhttp3.ResponseBody;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
@@ -15,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AuthService {
@@ -35,6 +37,9 @@ public interface AuthService {
 
     @POST("cart-items/add-products")
     Call<ResponseBody> addProductToCart(@Body AddCartItemRequest request);
+
+    @PUT("cart-items/change-quantity")
+    Call<ResponseBody> changeQuantity(@Body ChangeQuantityRequest request);
 
     @DELETE("cart-items/delete/{cartID}")
     Call<Void> deleteAllCartItems(@Path("cartID") Long cartID);

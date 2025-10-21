@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class CartItem implements Serializable {
+    @SerializedName("cartItemID")
+    private Long cartItemID;
+    
     // Fix: Changed from @SerializedName("product") to @SerializedName("products")
     @SerializedName("products")
     private Product product;
@@ -17,6 +20,10 @@ public class CartItem implements Serializable {
 
     public Product getProduct() {
         return product;
+    }
+
+    public Long getCartItemID() {
+        return cartItemID;
     }
 
     public int getQuantity() {

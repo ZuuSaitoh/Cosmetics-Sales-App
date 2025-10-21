@@ -26,6 +26,7 @@ import com.example.myapplication.model.CartItem;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.dto.CartItemsResponse;
+import com.example.myapplication.network.dto.ChangeQuantityRequest;
 import com.example.myapplication.network.dto.CreateCartRequest;
 
 import java.text.NumberFormat;
@@ -220,10 +221,35 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
     @Override
     public void onQuantityChanged(CartItem item, int newQuantity) {
-        // Here you would make an API call to update the quantity in the backend
-        // For now, we'll just show a toast and reload the cart data
-        Toast.makeText(this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
-        loadCartData();
+        if (item.getCartItemID() == null) {
+            Toast.makeText(this, "Không thể cập nhật số lượng sản phẩm này", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Log for debugging
+        android.util.Log.d("CartActivity", "Changing quantity for cart item ID: " + item.getCartItemID() + " to: " + newQuantity);
+        
+        ChangeQuantityRequest request = new ChangeQuantityRequest(item.getCartItemID(), newQuantity);
+        
+        authService.changeQuantity(request).enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                android.util.Log.d("CartActivity", "Change quantity response code: " + response.code());
+                if (response.isSuccessful()) {
+                    Toast.makeText(CartActivity.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
+                    loadCartData(); // Reload to update the cart
+                } else {
+                    android.util.Log.e("CartActivity", "Change quantity failed with code: " + response.code());
+                    Toast.makeText(CartActivity.this, "Không thể cập nhật số lượng (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                android.util.Log.e("CartActivity", "Change quantity request failed", t);
+                Toast.makeText(CartActivity.this, "Lỗi khi cập nhật số lượng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
