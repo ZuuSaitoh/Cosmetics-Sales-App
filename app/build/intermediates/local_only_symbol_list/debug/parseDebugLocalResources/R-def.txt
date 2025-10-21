@@ -33,6 +33,7 @@ drawable circle_background
 drawable circular_avatar_background
 drawable circular_white_background
 drawable circular_white_background_transparent
+drawable circular_white_background_with_stroke
 drawable cosme02_background
 drawable cosme_background
 drawable curved_top_background
@@ -42,6 +43,7 @@ drawable gradient_button_background
 drawable gradient_scrim
 drawable header_background
 drawable ic_account_circle
+drawable ic_add
 drawable ic_apple
 drawable ic_arrow_back
 drawable ic_arrow_back_white
@@ -49,6 +51,7 @@ drawable ic_arrow_forward
 drawable ic_body
 drawable ic_cart
 drawable ic_check_circle
+drawable ic_delete
 drawable ic_email
 drawable ic_email_gradient
 drawable ic_eye
@@ -68,6 +71,7 @@ drawable ic_person
 drawable ic_phone
 drawable ic_phone_gradient
 drawable ic_plus
+drawable ic_remove
 drawable ic_search
 drawable ic_tools
 drawable icon_background_circle
@@ -84,6 +88,8 @@ drawable page_indicator_active
 drawable page_indicator_inactive
 drawable quantity_selector_background
 drawable rounded_background
+drawable rounded_image_background
+drawable rounded_white_background
 drawable save_button_background
 drawable save_button_gradient
 drawable search_background
@@ -129,6 +135,7 @@ id cancelButton
 id cartBadge
 id cartIcon
 id cart_badge
+id cart_title
 id categoriesRecyclerView
 id category
 id categoryDescription
@@ -156,7 +163,6 @@ id fullNameEditText
 id fullNameInputLayout
 id getStartedButton
 id header_image
-id header_layout
 id home
 id homeFragment
 id imageProduct

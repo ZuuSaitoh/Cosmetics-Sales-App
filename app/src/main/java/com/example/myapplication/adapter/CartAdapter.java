@@ -12,14 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.CartManager;
 import com.example.myapplication.model.CartItem;
+import com.google.android.material.button.MaterialButton;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     private final List<CartItem> items;
+    private final NumberFormat numberFormat;
 
     public CartAdapter(List<CartItem> items) {
         this.items = items;
+        this.numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+    }
+
+    private String formatPrice(double price) {
+        return numberFormat.format((long) price) + " VND";
     }
 
     @NonNull
@@ -34,8 +44,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         CartItem item = items.get(position);
         h.title.setText(item.getProduct().getName());
         h.quantity.setText("x" + item.getQuantity());
-        h.price.setText(String.format("$%.2f", item.getProduct().getPrice()));
-        h.total.setText(String.format("$%.2f", item.getItemTotal()));
+        h.price.setText(formatPrice(item.getProduct().getPrice()));
+        h.total.setText(formatPrice(item.getItemTotal()));
         h.image.setImageResource(item.getProduct().getImageResId());
 
         h.btnPlus.setOnClickListener(v -> {
@@ -77,9 +87,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         final TextView quantity;
         final TextView price;
         final TextView total;
-        final TextView btnPlus;
-        final TextView btnMinus;
-        final TextView btnRemove;
+        final MaterialButton btnPlus;
+        final MaterialButton btnMinus;
+        final MaterialButton btnRemove;
 
         VH(@NonNull View itemView) {
             super(itemView);

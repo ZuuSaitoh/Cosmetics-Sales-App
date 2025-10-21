@@ -10,13 +10,19 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.model.CartItem;
+import androidx.activity.EdgeToEdge;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -26,11 +32,20 @@ public class CartActivity extends AppCompatActivity {
     private Button btnOrder;
     private LinearLayout emptyState;
     private LinearLayout totalSection;
+    private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cart);
+
+        // Handle window insets
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         initViews();
         setupClickListeners();
@@ -83,7 +98,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void updateGrandTotal() {
         double total = CartManager.getInstance().getGrandTotal();
-        textGrandTotal.setText(String.format("$%.2f", total));
+        textGrandTotal.setText(numberFormat.format((long) total) + " VND");
         btnOrder.setEnabled(total > 0);
     }
 

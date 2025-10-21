@@ -3282,6 +3282,7 @@ drawable circle_background
 drawable circular_avatar_background
 drawable circular_white_background
 drawable circular_white_background_transparent
+drawable circular_white_background_with_stroke
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -3373,6 +3374,7 @@ drawable gradient_shadow_down
 drawable gradient_shadow_up
 drawable header_background
 drawable ic_account_circle
+drawable ic_add
 drawable ic_apple
 drawable ic_arrow_back
 drawable ic_arrow_back_black_24
@@ -3402,6 +3404,7 @@ drawable ic_close
 drawable ic_confusing_directions
 drawable ic_confusing_directions_filled
 drawable ic_confusing_directions_unfilled
+drawable ic_delete
 drawable ic_email
 drawable ic_email_gradient
 drawable ic_exit_arrow_left
@@ -3481,6 +3484,7 @@ drawable ic_person
 drawable ic_phone
 drawable ic_phone_gradient
 drawable ic_plus
+drawable ic_remove
 drawable ic_road_closed
 drawable ic_road_closed_filled
 drawable ic_road_closed_unfilled
@@ -3591,6 +3595,8 @@ drawable page_indicator_inactive
 drawable quantity_selector_background
 drawable rounded_background
 drawable rounded_corners
+drawable rounded_image_background
+drawable rounded_white_background
 drawable save_button_background
 drawable save_button_gradient
 drawable search_background
@@ -3776,6 +3782,7 @@ id carryVelocity
 id cartBadge
 id cartIcon
 id cart_badge
+id cart_title
 id categoriesRecyclerView
 id category
 id categoryDescription
@@ -3916,7 +3923,6 @@ id grouping
 id groups
 id guideline
 id header_image
-id header_layout
 id header_title
 id hide_graphics_layer_in_inspector_tag
 id hide_ime_id
