@@ -14,7 +14,8 @@ public class ResultData {
     // Yêu cầu backend trả "role" trong này
     @SerializedName("role")
     private String role;
-
+    @SerializedName("userId")
+    private String userId;
     // --- Getters ---
     public String getToken() {
         return token;
@@ -26,5 +27,9 @@ public class ResultData {
 
     public String getRole() {
         return role;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

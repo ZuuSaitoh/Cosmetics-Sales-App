@@ -24,6 +24,10 @@ import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.CartManager;
 import com.example.myapplication.auth.AuthManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import android.widget.ImageView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,15 +69,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         displayProductData();
 
-        // --- SỬA: ĐƠN GIẢN HÓA LOGIC CLICK ---
+
         btnAddToCart.setOnClickListener(v -> {
             authManager = new AuthManager(getApplicationContext()); // Luôn refresh authManager
 
             if (authManager.isLoggedIn()) {
-                // Đã login -> Mở popup
                 showQuantityPopup();
             } else {
-                // Chưa login -> Đi login
                 Intent loginIntent = new Intent(ProductDetailActivity.this, ActivityLogin.class);
                 loginIntent.putExtra("pending_product", product);
                 loginIntent.putExtra("pending_quantity", 1); // Gửi số lượng 1
@@ -84,10 +86,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
     }
-
-    // ... (Hàm initViews(), getProductDataFromIntent(), loadProductDetailFromAPI(),
-    //      displayProductData(), loadProductImage() GIỮ NGUYÊN NHƯ FILE CỦA BẠN) ...
-    // ... (Copy/paste 5 hàm đó vào đây) ...
 
     private void initViews() {
         imageProduct = findViewById(R.id.image_product);
@@ -193,16 +191,25 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void loadProductImage() {
         try {
-            if (product.getImageURL() != null && !product.getImageURL().isEmpty()) {
-                // TODO: Load image from URL using Glide or Picasso
-                imageProduct.setImageResource(R.drawable.img_no_product);
+            String imageUrl = product.getImageURL();
+
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.img_no_product) // ảnh tạm khi đang load
+                        .error(R.drawable.img_no_product)       // ảnh khi lỗi
+                        .into(imageProduct);
             } else {
-                imageProduct.setImageResource(product.getImageResId());
+                imageProduct.setImageResource(R.drawable.img_no_product);
             }
+
         } catch (Exception e) {
             imageProduct.setImageResource(R.drawable.img_no_product);
+            e.printStackTrace();
         }
     }
+
 
 
     private void showQuantityPopup() {
@@ -255,7 +262,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
-    // --- SỬA: THAY ĐỔI HOÀN TOÀN LOGIC onActivityResult ---
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

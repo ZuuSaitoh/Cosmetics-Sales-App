@@ -131,17 +131,20 @@ public class ActivityLogin extends AppCompatActivity {
 
                     String token = null;
                     String role = null;
+                    String userId = null;
+
 
                     // 1. Lấy token/role từ đối tượng "result"
                     if (body.getResult() != null) {
                         token = body.getResult().getToken();
                         role = body.getResult().getRole();
+                        userId = body.getResult().getUserId();
                     }
 
                     // 2. Chỉ tiếp tục khi token hợp lệ (không null, không rỗng)
                     if (token != null && !token.isEmpty()) {
                         // Token hợp lệ, lưu lại
-                        authManager.saveAuth(token, role);
+                        authManager.saveAuth(token, role, userId);
 
                         // Trường hợp 1: Quay về ProductDetail
                         Intent resultIntent = new Intent();

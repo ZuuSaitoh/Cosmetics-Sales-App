@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myapplication.app-mergeDebugResources-83:/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "com.example.myapplication.app-mergeDebugResources-78:/values-en-rIN/values-en-rIN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\hi\\.gradle\\caches\\8.13\\transforms\\bb938e88129cc7c9fb2b52d5e50af779\\transformed\\foundation-release\\res\\values-en-rIN\\values-en-rIN.xml",
@@ -18,23 +18,6 @@
                         "startOffsets": "11515,11601",
                         "endColumns": "85,84",
                         "endOffsets": "11596,11681"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\hi\\.gradle\\caches\\8.13\\transforms\\a78a6684905dc4ac08888d398cc42d3e\\transformed\\navigation-ui-2.9.5\\res\\values-en-rIN\\values-en-rIN.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,161",
-                        "endColumns": "105,116",
-                        "endOffsets": "156,273"
-                    },
-                    "to": {
-                        "startLines": "100,101",
-                        "startColumns": "4,4",
-                        "startOffsets": "10220,10326",
-                        "endColumns": "105,116",
-                        "endOffsets": "10321,10438"
                     }
                 },
                 {
@@ -86,6 +69,23 @@
                         "startOffsets": "4106,4224,4340,4451,4565,4664,4759,4871,5007,5123,5259,5343,5442,5533,5630,5749,5874,5978,6105,6228,6356,6517,6638,6754,6877,7002,7094,7192,7309,7433,7530,7632,7734,7864,8003,8109,8208,8286,8382,8476,8581,8668,8755,8857,8939,9023,9124,9225,9325,9424,9512,9618,9719,9823,9943,10025,10125",
                         "endColumns": "117,115,110,113,98,94,111,135,115,135,83,98,90,96,118,124,103,126,122,127,160,120,115,122,124,91,97,116,123,96,101,101,129,138,105,98,77,95,93,104,86,86,101,81,83,100,100,99,98,87,105,100,103,119,81,99,94",
                         "endOffsets": "4219,4335,4446,4560,4659,4754,4866,5002,5118,5254,5338,5437,5528,5625,5744,5869,5973,6100,6223,6351,6512,6633,6749,6872,6997,7089,7187,7304,7428,7525,7627,7729,7859,7998,8104,8203,8281,8377,8471,8576,8663,8750,8852,8934,9018,9119,9220,9320,9419,9507,9613,9714,9818,9938,10020,10120,10215"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\hi\\.gradle\\caches\\8.13\\transforms\\10fbbf42f7f82b6f17f6473b2422bed2\\transformed\\navigation-ui-2.7.7\\res\\values-en-rIN\\values-en-rIN.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,161",
+                        "endColumns": "105,116",
+                        "endOffsets": "156,273"
+                    },
+                    "to": {
+                        "startLines": "100,101",
+                        "startColumns": "4,4",
+                        "startOffsets": "10220,10326",
+                        "endColumns": "105,116",
+                        "endOffsets": "10321,10438"
                     }
                 },
                 {

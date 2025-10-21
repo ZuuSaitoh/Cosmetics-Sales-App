@@ -3,24 +3,24 @@ package com.example.myapplication.auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.mapbox.core.utils.TextUtils;
-
 public class AuthManager {
     private static final String PREFS_NAME = "auth_prefs";
     private static final String KEY_TOKEN = "auth_token";
     private static final String KEY_ROLE = "user_role";
+    private static final String KEY_USER_ID = "user_id";
 
     private final SharedPreferences sharedPreferences;
 
     public AuthManager(Context context) {
-        // Dùng getApplicationContext() để đảm bảo SharedPreferences dùng 1 bản duy nhất toàn app
-        this.sharedPreferences = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        this.sharedPreferences = context.getApplicationContext()
+                .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void saveAuth(String token, String role) {
+    public void saveAuth(String token, String role, String userId) {
         sharedPreferences.edit()
                 .putString(KEY_TOKEN, token)
                 .putString(KEY_ROLE, role)
+                .putString(KEY_USER_ID, userId)
                 .apply();
     }
 
@@ -32,19 +32,16 @@ public class AuthManager {
         return sharedPreferences.getString(KEY_ROLE, null);
     }
 
+    public String getUserId() {
+        return sharedPreferences.getString(KEY_USER_ID, null);
+    }
+
     public void clear() {
         sharedPreferences.edit().clear().apply();
     }
 
-    /**
-     * Kiểm tra trạng thái đăng nhập dựa trên sự tồn tại của token.
-     */
     public boolean isLoggedIn() {
         String token = sharedPreferences.getString(KEY_TOKEN, null);
         return token != null && !token.isEmpty();
     }
 }
-
-
-
-
