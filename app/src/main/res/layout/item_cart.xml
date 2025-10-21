@@ -52,14 +52,6 @@
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/textPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 VND"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
 
         <LinearLayout
