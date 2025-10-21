@@ -125,84 +125,53 @@ public class ActivityLogin extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 loginButton.setEnabled(true);
 
-                // --- SỬA LOGIC KIỂM TRA TOKEN ---
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
-
-                    // Debug: Log toàn bộ response
-                    android.util.Log.d("ActivityLogin", "=== FULL LOGIN RESPONSE ===");
-                    android.util.Log.d("ActivityLogin", "Response Code: " + response.code());
-                    android.util.Log.d("ActivityLogin", "Response Body: " + body.toString());
-                    android.util.Log.d("ActivityLogin", "Result Object: " + (body.getResult() != null ? body.getResult().toString() : "null"));
 
                     String token = null;
                     String role = null;
                     Long userId = null;
 
-                    // 1. Lấy token/role/userID từ đối tượng "result"
                     if (body.getResult() != null) {
                         token = body.getResult().getToken();
                         role = body.getResult().getRole();
                         userId = body.getResult().getUserID();
-                        
-                        // Debug logging
-                        android.util.Log.d("ActivityLogin", "Login Response - Token: " + (token != null ? "exists" : "null"));
-                        android.util.Log.d("ActivityLogin", "Login Response - Role: " + role);
-                        android.util.Log.d("ActivityLogin", "Login Response - UserID: " + userId);
-                    } else {
-                        android.util.Log.w("ActivityLogin", "Result object is null!");
-                    }
-                    
-                    // Thử lấy userID từ các nơi khác nếu không có trong result
-                    if (userId == null) {
-                        android.util.Log.d("ActivityLogin", "Trying to get userId from other fields...");
-                        // Thử lấy từ LoginResponse trực tiếp
-                        String userIdStr = body.getUserId();
-                        if (userIdStr != null && !userIdStr.isEmpty()) {
-                            try {
-                                userId = Long.parseLong(userIdStr);
-                                android.util.Log.d("ActivityLogin", "Found userId in LoginResponse: " + userId);
-                            } catch (NumberFormatException e) {
-                                android.util.Log.w("ActivityLogin", "Cannot parse userId: " + userIdStr);
-                            }
-                        }
-                        
-                        // Nếu vẫn không có userId, thử decode từ JWT token
-                        if (userId == null && token != null && !token.isEmpty()) {
-                            android.util.Log.d("ActivityLogin", "Trying to decode userId from JWT token");
-                            userId = com.example.myapplication.auth.JwtDecoder.getUserIdFromToken(token);
-                            android.util.Log.d("ActivityLogin", "Decoded userId from JWT: " + userId);
-                        }
                     }
 
-                    // 2. Chỉ tiếp tục khi token hợp lệ (không null, không rỗng)
+                    if (userId == null && token != null && !token.isEmpty()) {
+                        userId = com.example.myapplication.auth.JwtDecoder.getUserIdFromToken(token);
+                        // If we decode the token for userId, we should also decode it for the role.
+                        role = com.example.myapplication.auth.JwtDecoder.getRoleFromToken(token);
+                    }
+
                     if (token != null && !token.isEmpty()) {
-                        // Token hợp lệ, lưu lại
                         authManager.saveAuth(token, role, userId);
 
-                        // Trường hợp 1: Quay về ProductDetail
-                        Intent resultIntent = new Intent();
+                        // Case 1: Return to ProductDetail if there's a pending product
                         if (getIntent() != null && getIntent().hasExtra("pending_product")) {
+                            Intent resultIntent = new Intent();
                             resultIntent.putExtra("pending_product", getIntent().getSerializableExtra("pending_product"));
                             resultIntent.putExtra("pending_quantity", getIntent().getIntExtra("pending_quantity", 1));
                             setResult(RESULT_OK, resultIntent);
-                            finish(); // Quay về ProductDetailActivity
-                            return;
+                            finish(); // Finish LoginActivity and return to ProductDetailActivity
+                            return; // Important: Stop further execution
                         }
 
-                        // Trường hợp 2: Login thông thường, vào Main
+                        // Case 2: Normal login, redirect based on role
                         setResult(RESULT_OK);
-                        Intent intent = new Intent(ActivityLogin.this, Main.class);
+                        Intent intent;
+                        if ("Admin".equals(role)) {
+                            intent = new Intent(ActivityLogin.this, AdminActivity.class);
+                        } else {
+                            intent = new Intent(ActivityLogin.this, Main.class);
+                        }
                         startActivity(intent);
-                        finish();
+                        finish(); // Finish LoginActivity after redirection
 
                     } else {
-                        // Token rỗng hoặc null -> Login thất bại
                         Toast.makeText(ActivityLogin.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
-                        // KHÔNG GỌI setResult(RESULT_OK)
                     }
                 } else {
-                    // Response không thành công (401, 404, 500...)
                     Toast.makeText(ActivityLogin.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
                 }
             }

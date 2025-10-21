@@ -232,6 +232,7 @@ id vmMapView
 id welcome_subtitle
 id welcome_title
 id white_overlay
+layout activity_admin
 layout activity_admin_dashboard
 layout activity_cart
 layout activity_login00000
