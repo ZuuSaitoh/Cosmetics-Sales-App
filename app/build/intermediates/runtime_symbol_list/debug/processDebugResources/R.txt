@@ -3763,9 +3763,12 @@ int id btnStartNavigation 0x7f08007b
 int id btnStopNavigation 0x7f08007c
 int id btn_add_to_cart 0x7f08007d
 int id btn_back 0x7f08007e
+int id btn_cancel 0x7f0802cd
 int id btn_cart 0x7f08007f
 int id btn_confirm_add 0x7f080080
+int id btn_confirm_delete 0x7f0802ce
 int id btn_continue_shopping 0x7f080081
+int id btn_delete_all 0x7f0802cc
 int id btn_minus 0x7f080082
 int id btn_order 0x7f080083
 int id btn_plus 0x7f080084
@@ -4482,6 +4485,7 @@ int layout alert_view_layout 0x7f0b0026
 int layout banner_product 0x7f0b0027
 int layout bottom_sheet_quantity 0x7f0b0028
 int layout collapsed_navigation_notification_layout 0x7f0b0029
+int layout custom_delete_confirmation_dialog 0x7f0b009d
 int layout custom_dialog 0x7f0b002a
 int layout design_bottom_navigation_item 0x7f0b002b
 int layout design_bottom_sheet_dialog 0x7f0b002c
