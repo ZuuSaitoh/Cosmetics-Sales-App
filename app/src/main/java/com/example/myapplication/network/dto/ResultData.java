@@ -14,8 +14,11 @@ public class ResultData {
     // Yêu cầu backend trả "role" trong này
     @SerializedName("role")
     private String role;
+
+    // Thêm userID từ login response
     @SerializedName("userId")
-    private String userId;
+    private Long userID;
+
     // --- Getters ---
     public String getToken() {
         return token;
@@ -29,7 +32,17 @@ public class ResultData {
         return role;
     }
 
-    public String getUserId() {
-        return userId;
+    public Long getUserID() {
+        return userID;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultData{" +
+                "token='" + token + '\'' +
+                ", authenticated=" + authenticated +
+                ", role='" + role + '\'' +
+                ", userID=" + userID +
+                '}';
     }
 }

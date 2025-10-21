@@ -99,6 +99,9 @@ drawable your_woman_image
 id account
 id addressEditText
 id addressInputLayout
+id addressTextView
+id authButtonsContainer
+id avatarImageView
 id backButton
 id background_image
 id bannerRecyclerView
@@ -139,6 +142,7 @@ id dividerText
 id drawer_layout
 id emailEditText
 id emailInputLayout
+id emailTextView
 id empty_state
 id etEmail
 id etName
@@ -173,8 +177,10 @@ id passwordEditText
 id passwordInputLayout
 id phoneEditText
 id phoneInputLayout
+id phoneTextView
 id productCount
 id productRecyclerView
+id profile_card
 id ratingBar
 id recyclerEmployees
 id recyclerImages
@@ -184,6 +190,7 @@ id registerFullNameEditText
 id register_subtitle
 id register_title
 id rememberMeCheckBox
+id roleTextView
 id saveButton
 id scroll_view
 id searchEditText
@@ -219,7 +226,7 @@ id txtStoreAddress
 id txtStoreName
 id txtStoreOpenHours
 id txtStorePhone
-id userInfoTextView
+id usernameTextView
 id vertical_text
 id vmMapView
 id welcome_subtitle

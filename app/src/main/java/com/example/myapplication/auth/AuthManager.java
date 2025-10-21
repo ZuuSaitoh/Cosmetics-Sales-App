@@ -16,12 +16,23 @@ public class AuthManager {
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void saveAuth(String token, String role, String userId) {
+    public void saveAuth(String token, String role, Long userId) {
+        android.util.Log.d("AuthManager", "Saving auth - Token: " + (token != null ? "exists" : "null"));
+        android.util.Log.d("AuthManager", "Saving auth - Role: " + role);
+        android.util.Log.d("AuthManager", "Saving auth - UserID: " + userId);
+
         sharedPreferences.edit()
                 .putString(KEY_TOKEN, token)
                 .putString(KEY_ROLE, role)
-                .putString(KEY_USER_ID, userId)
+                .putLong(KEY_USER_ID, userId != null ? userId : -1L)
                 .apply();
+
+        android.util.Log.d("AuthManager", "Auth saved successfully");
+    }
+
+    // Overload method để backward compatibility
+    public void saveAuth(String token, String role) {
+        saveAuth(token, role, null);
     }
 
     public String getToken() {
@@ -32,12 +43,54 @@ public class AuthManager {
         return sharedPreferences.getString(KEY_ROLE, null);
     }
 
-    public String getUserId() {
-        return sharedPreferences.getString(KEY_USER_ID, null);
+    public Long getUserId() {
+        long userId = sharedPreferences.getLong(KEY_USER_ID, -1L);
+        Long result = userId == -1L ? null : userId;
+        android.util.Log.d("AuthManager", "Getting UserID from SharedPreferences: " + result);
+
+        // Nếu không có userId trong SharedPreferences, thử decode từ token
+        if (result == null) {
+            String token = getToken();
+            if (token != null && !token.isEmpty()) {
+                android.util.Log.d("AuthManager", "Trying to decode userId from JWT token");
+                result = JwtDecoder.getUserIdFromToken(token);
+                android.util.Log.d("AuthManager", "Decoded UserID from JWT: " + result);
+
+                // Lưu userId đã decode vào SharedPreferences để lần sau không cần decode lại
+                if (result != null) {
+                    sharedPreferences.edit()
+                            .putLong(KEY_USER_ID, result)
+                            .apply();
+                    android.util.Log.d("AuthManager", "Saved decoded userId to SharedPreferences");
+                }
+            }
+        }
+
+        return result;
     }
 
     public void clear() {
         sharedPreferences.edit().clear().apply();
+        android.util.Log.d("AuthManager", "Cleared all auth data");
+    }
+
+    /**
+     * Clear chỉ userId để force decode lại từ token
+     */
+    public void clearUserId() {
+        sharedPreferences.edit()
+                .remove(KEY_USER_ID)
+                .apply();
+        android.util.Log.d("AuthManager", "Cleared userId, will decode from token next time");
+    }
+
+    /**
+     * Force refresh userId từ token
+     */
+    public Long refreshUserId() {
+        android.util.Log.d("AuthManager", "Force refreshing userId from token");
+        clearUserId();
+        return getUserId();
     }
 
     public boolean isLoggedIn() {

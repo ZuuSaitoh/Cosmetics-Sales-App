@@ -3705,6 +3705,7 @@ id activity_chooser_view_content
 id add
 id addressEditText
 id addressInputLayout
+id addressTextView
 id adjust_height
 id adjust_width
 id alertProgressBar
@@ -3725,10 +3726,12 @@ id arc
 id arrivalTimeText
 id asConfigured
 id async
+id authButtonsContainer
 id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id avatarImageView
 id backButton
 id background_image
 id bannerRecyclerView
@@ -3863,6 +3866,7 @@ id edit_text_id
 id elastic
 id emailEditText
 id emailInputLayout
+id emailTextView
 id embed
 id empty_state
 id end
@@ -4088,6 +4092,7 @@ id peekHeight
 id percent
 id phoneEditText
 id phoneInputLayout
+id phoneTextView
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -4095,6 +4100,7 @@ id postLayout
 id pressed
 id productCount
 id productRecyclerView
+id profile_card
 id progress_circular
 id progress_horizontal
 id radio
@@ -4119,6 +4125,7 @@ id right
 id rightToLeft
 id right_icon
 id right_side
+id roleTextView
 id rounded
 id routeInfoBottomSheetView
 id routeOverviewBtn
@@ -4311,7 +4318,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
-id userInfoTextView
+id usernameTextView
 id vertical_only
 id vertical_text
 id view

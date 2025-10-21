@@ -82,6 +82,12 @@
             android:label="Bản đồ"
             android:theme="@style/Theme.MyApplication" />
 
+        <activity
+            android:name=".ActivityUpdateProfile"
+            android:exported="false"
+            android:label="Chỉnh sửa thông tin"
+            android:theme="@style/Theme.MyApplication" />
+
         <service
             android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
             android:enabled="true"
