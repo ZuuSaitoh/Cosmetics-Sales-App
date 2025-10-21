@@ -136,6 +136,10 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\ic_phone.xml"
     },
     {
+        "merged": "com.example.myapplication.app-debug-85:/layout_item_product.xml.flat",
+        "source": "com.example.myapplication.app-main-87:/layout/item_product.xml"
+    },
+    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_quantity_selector_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\quantity_selector_background.xml"
     },
@@ -178,10 +182,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_ic_leaf.png.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\ic_leaf.png"
-    },
-    {
-        "merged": "com.example.myapplication.app-debug-85:/layout_activity_cart.xml.flat",
-        "source": "com.example.myapplication.app-main-87:/layout/activity_cart.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_ic_lips.xml.flat",
@@ -242,6 +242,10 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_circular_white_background.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\circular_white_background.xml"
+    },
+    {
+        "merged": "com.example.myapplication.app-debug-85:/layout_item_cart.xml.flat",
+        "source": "com.example.myapplication.app-main-87:/layout/item_cart.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_page_indicator_active.xml.flat",
@@ -432,12 +436,12 @@
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\ic_location_gradient.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\layout_fragment_category.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\layout\\fragment_category.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\drawable_ic_hair.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\drawable\\ic_hair.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\layout_fragment_category.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-main-87:\\layout\\fragment_category.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.13\\com.example.myapplication.app-debug-85:\\layout_activity_login00000.xml.flat",
