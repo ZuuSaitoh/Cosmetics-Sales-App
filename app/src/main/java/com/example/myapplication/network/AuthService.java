@@ -2,6 +2,8 @@ package com.example.myapplication.network;
 
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.network.dto.CartItemsResponse;
+import com.example.myapplication.network.dto.AddCartItemRequest;
+import okhttp3.ResponseBody;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
 import com.example.myapplication.network.dto.LoginResponse;
@@ -29,4 +31,7 @@ public interface AuthService {
 
     @GET("cart-items/fetchAll/{cartID}")
     Call<CartItemsResponse> getCartItems(@Path("cartID") Long cartID);
+
+    @POST("cart-items/add-products")
+    Call<ResponseBody> addProductToCart(@Body AddCartItemRequest request);
 }
