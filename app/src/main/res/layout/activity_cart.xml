@@ -114,7 +114,7 @@
             android:layout_marginBottom="16dp"
             android:padding="16dp"
             android:background="@drawable/rounded_white_background"
-            app:layout_constraintBottom_toTopOf="@id/btn_order"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -137,22 +137,45 @@
                 android:textSize="20sp"/>
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_order"
+        <!-- Button container for order and delete buttons -->
+        <LinearLayout
+            android:id="@+id/button_container"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:text="Tiến hành đặt hàng"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:backgroundTint="#00695C"
-            app:cornerRadius="30dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_delete_all"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/circular_white_background_with_stroke"
+                android:contentDescription="Xóa toàn bộ giỏ hàng"
+                android:src="@drawable/ic_delete"
+                android:padding="12dp"
+                app:tint="#DE0000" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_order"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Tiến hành đặt hàng"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:backgroundTint="#00695C"
+                app:cornerRadius="30dp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

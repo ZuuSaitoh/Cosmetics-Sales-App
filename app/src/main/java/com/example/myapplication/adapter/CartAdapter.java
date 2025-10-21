@@ -10,26 +10,44 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.CartManager;
 import com.example.myapplication.model.CartItem;
 import com.google.android.material.button.MaterialButton;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
-    private final List<CartItem> items;
-    private final NumberFormat numberFormat;
+    private List<CartItem> items;
+    private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+
+    // Listeners for item interactions
+    private OnItemQuantityChangedListener quantityChangedListener;
+    private OnItemRemovedListener itemRemovedListener;
+
+    public interface OnItemQuantityChangedListener {
+        void onQuantityChanged(CartItem item, int newQuantity);
+    }
+
+    public interface OnItemRemovedListener {
+        void onItemRemoved(CartItem item);
+    }
 
     public CartAdapter(List<CartItem> items) {
         this.items = items;
-        this.numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
     }
 
-    private String formatPrice(double price) {
-        return numberFormat.format((long) price) + " VND";
+    public void updateItems(List<CartItem> newItems) {
+        this.items = newItems;
+        notifyDataSetChanged();
+    }
+
+    public void setOnItemQuantityChangedListener(OnItemQuantityChangedListener listener) {
+        this.quantityChangedListener = listener;
+    }
+
+    public void setOnItemRemovedListener(OnItemRemovedListener listener) {
+        this.itemRemovedListener = listener;
     }
 
     @NonNull
@@ -44,75 +62,52 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         CartItem item = items.get(position);
         h.title.setText(item.getProduct().getName());
         h.quantity.setText("x" + item.getQuantity());
-        h.price.setText(formatPrice(item.getProduct().getPrice()));
         h.total.setText(formatPrice(item.getItemTotal()));
-        h.image.setImageResource(item.getProduct().getImageResId());
+        // TODO: Update to use Glide or Picasso if image URLs are provided by the API
+        // h.image.setImageResource(item.getProduct().getImageResId());
 
         h.btnPlus.setOnClickListener(v -> {
-            CartManager.getInstance().updateQuantity(item.getProduct(), item.getQuantity() + 1);
-            refreshBinding(h.getAdapterPosition());
+            if (quantityChangedListener != null) {
+                quantityChangedListener.onQuantityChanged(item, item.getQuantity() + 1);
+            }
         });
 
         h.btnMinus.setOnClickListener(v -> {
-            int newQty = Math.max(1, item.getQuantity() - 1);
-            CartManager.getInstance().updateQuantity(item.getProduct(), newQty);
-            refreshBinding(h.getAdapterPosition());
+            if (quantityChangedListener != null && item.getQuantity() > 1) {
+                quantityChangedListener.onQuantityChanged(item, item.getQuantity() - 1);
+            }
         });
 
         h.btnRemove.setOnClickListener(v -> {
-            CartManager.getInstance().remove(item.getProduct());
-            int idx = h.getAdapterPosition();
-            if (idx != RecyclerView.NO_POSITION) {
-                items.remove(idx);
-                notifyItemRemoved(idx);
+            if (itemRemovedListener != null) {
+                itemRemovedListener.onItemRemoved(item);
             }
-            if (onCartChangedListener != null) onCartChangedListener.onChanged();
         });
-    }
-
-    private void refreshBinding(int position) {
-        if (position == RecyclerView.NO_POSITION) return;
-        notifyItemChanged(position);
-        if (onCartChangedListener != null) onCartChangedListener.onChanged();
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items != null ? items.size() : 0;
+    }
+
+    private String formatPrice(double price) {
+        return numberFormat.format((long) price) + " VND";
     }
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title;
-        final TextView quantity;
-        final TextView price;
-        final TextView total;
-        final MaterialButton btnPlus;
-        final MaterialButton btnMinus;
-        final MaterialButton btnRemove;
+        final TextView title, quantity, total;
+        final MaterialButton btnPlus, btnMinus, btnRemove;
 
         VH(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageProduct);
             title = itemView.findViewById(R.id.textTitle);
             quantity = itemView.findViewById(R.id.textQty);
-            price = itemView.findViewById(R.id.textPrice);
             total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnRemove = itemView.findViewById(R.id.btn_remove);
         }
     }
-
-    public interface OnCartChangedListener {
-        void onChanged();
-    }
-
-    private OnCartChangedListener onCartChangedListener;
-
-    public void setOnCartChangedListener(OnCartChangedListener listener) {
-        this.onCartChangedListener = listener;
-    }
 }
-
-
