@@ -62,7 +62,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         CartItem item = items.get(position);
         h.title.setText(item.getProduct().getName());
         h.quantity.setText("x" + item.getQuantity());
-        h.price.setText(formatPrice(item.getProduct().getPrice()));
         h.total.setText(formatPrice(item.getItemTotal()));
         // TODO: Update to use Glide or Picasso if image URLs are provided by the API
         // h.image.setImageResource(item.getProduct().getImageResId());
@@ -97,7 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title, quantity, price, total;
+        final TextView title, quantity, total;
         final MaterialButton btnPlus, btnMinus, btnRemove;
 
         VH(@NonNull View itemView) {
@@ -105,7 +104,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             image = itemView.findViewById(R.id.imageProduct);
             title = itemView.findViewById(R.id.textTitle);
             quantity = itemView.findViewById(R.id.textQty);
-            price = itemView.findViewById(R.id.textPrice);
             total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
