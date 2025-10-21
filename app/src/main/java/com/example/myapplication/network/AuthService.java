@@ -43,4 +43,7 @@ public interface AuthService {
 
     @DELETE("cart-items/delete/{cartID}")
     Call<Void> deleteAllCartItems(@Path("cartID") Long cartID);
+
+    @DELETE("cart-items/delete/item/{cartItemID}")
+    Call<Void> deleteCartItem(@Path("cartItemID") Long cartItemID);
 }

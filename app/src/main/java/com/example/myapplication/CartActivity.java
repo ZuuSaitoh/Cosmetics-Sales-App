@@ -254,10 +254,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
     @Override
     public void onItemRemoved(CartItem item) {
-        // Here you would make an API call to remove the item from the cart
-        // For now, we'll just show a toast and reload the cart data
-        Toast.makeText(this, "Đã xóa " + item.getProduct().getName() + " khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
-        loadCartData();
+        if (item.getCartItemID() == null) {
+            Toast.makeText(this, "Không thể xóa sản phẩm này", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Log for debugging
+        android.util.Log.d("CartActivity", "Removing cart item ID: " + item.getCartItemID());
+        
+        // Call API to delete the item from cart
+        deleteCartItem(item.getCartItemID());
     }
 
     private void showDeleteAllConfirmation() {
@@ -276,6 +282,30 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         dialog.setContentView(dialogView);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
+    }
+
+    private void deleteCartItem(Long cartItemId) {
+        if (cartItemId == null) {
+            Toast.makeText(this, "Không thể xóa sản phẩm này", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        authService.deleteCartItem(cartItemId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+                    loadCartData(); // Reload to update the cart
+                } else {
+                    Toast.makeText(CartActivity.this, "Không thể xóa sản phẩm (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(CartActivity.this, "Lỗi khi xóa sản phẩm: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void deleteAllCartItems() {
