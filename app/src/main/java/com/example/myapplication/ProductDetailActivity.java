@@ -28,6 +28,10 @@ import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.AddCartItemRequest;
 import com.example.myapplication.model.Cart;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import android.widget.ImageView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,10 +95,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
     }
-
-    // ... (Hàm initViews(), getProductDataFromIntent(), loadProductDetailFromAPI(),
-    //      displayProductData(), loadProductImage() GIỮ NGUYÊN NHƯ FILE CỦA BẠN) ...
-    // ... (Copy/paste 5 hàm đó vào đây) ...
 
     private void initViews() {
         imageProduct = findViewById(R.id.image_product);
@@ -200,16 +200,25 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void loadProductImage() {
         try {
-            if (product.getImageURL() != null && !product.getImageURL().isEmpty()) {
-                // TODO: Load image from URL using Glide or Picasso
-                imageProduct.setImageResource(R.drawable.img_no_product);
+            String imageUrl = product.getImageURL();
+
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.img_no_product) // ảnh tạm khi đang load
+                        .error(R.drawable.img_no_product)       // ảnh khi lỗi
+                        .into(imageProduct);
             } else {
-                imageProduct.setImageResource(product.getImageResId());
+                imageProduct.setImageResource(R.drawable.img_no_product);
             }
+
         } catch (Exception e) {
             imageProduct.setImageResource(R.drawable.img_no_product);
+            e.printStackTrace();
         }
     }
+
 
 
     private void showQuantityPopup() {
