@@ -88,7 +88,7 @@ public class ActivityUpdateProfile extends AppCompatActivity {
     private void loadCurrentUserInfo() {
         loadingProgressBar.setVisibility(View.VISIBLE);
         
-        userId = authManager.getUserId();
+        userId = Long.valueOf(authManager.getUserId());
         if (userId == null) {
             Log.e("ActivityUpdateProfile", "No userId found");
             Toast.makeText(this, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();

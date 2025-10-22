@@ -139,12 +139,13 @@ public class ActivityLogin extends AppCompatActivity {
                     String role = null;
                     Long userId = null;
 
+
                     // 1. Lấy token/role/userID từ đối tượng "result"
                     if (body.getResult() != null) {
                         token = body.getResult().getToken();
                         role = body.getResult().getRole();
                         userId = body.getResult().getUserID();
-                        
+
                         // Debug logging
                         android.util.Log.d("ActivityLogin", "Login Response - Token: " + (token != null ? "exists" : "null"));
                         android.util.Log.d("ActivityLogin", "Login Response - Role: " + role);
@@ -152,7 +153,7 @@ public class ActivityLogin extends AppCompatActivity {
                     } else {
                         android.util.Log.w("ActivityLogin", "Result object is null!");
                     }
-                    
+
                     // Thử lấy userID từ các nơi khác nếu không có trong result
                     if (userId == null) {
                         android.util.Log.d("ActivityLogin", "Trying to get userId from other fields...");
@@ -166,7 +167,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 android.util.Log.w("ActivityLogin", "Cannot parse userId: " + userIdStr);
                             }
                         }
-                        
+
                         // Nếu vẫn không có userId, thử decode từ JWT token
                         if (userId == null && token != null && !token.isEmpty()) {
                             android.util.Log.d("ActivityLogin", "Trying to decode userId from JWT token");

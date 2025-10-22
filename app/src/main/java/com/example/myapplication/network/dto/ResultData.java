@@ -35,7 +35,7 @@ public class ResultData {
     public Long getUserID() {
         return userID;
     }
-    
+
     @Override
     public String toString() {
         return "ResultData{" +
