@@ -294,6 +294,13 @@ public class AccountFragment extends Fragment {
     private void setupAvatarClick() {
         if (avatarImageView != null) {
             avatarImageView.setOnClickListener(v -> {
+                // Kiểm tra xem user đã đăng nhập chưa
+                String token = authManager.getToken();
+                if (token == null || token.isEmpty()) {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập để cập nhật thông tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
                 Log.d("AccountFragment", "Avatar clicked, opening update profile");
                 Intent intent = new Intent(getContext(), ActivityUpdateProfile.class);
                 startActivityForResult(intent, 1001); // Request code để nhận kết quả
