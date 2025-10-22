@@ -236,6 +236,7 @@ public class MapsActivity extends AppCompatActivity {
                         ),
                         null // không cần callback nữa
                 );
+                bottomSheetDialog.dismiss();
             });
         }
 

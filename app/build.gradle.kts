@@ -74,6 +74,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     // --- Jetpack Compose ---
     implementation(platform(libs.androidx.compose.bom))
@@ -83,11 +84,16 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
 
+<<<<<<< Updated upstream
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     //navigation
+=======
+
+    // Navigation
+>>>>>>> Stashed changes
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
