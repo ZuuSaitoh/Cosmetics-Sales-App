@@ -1,0 +1,77 @@
+[33mab62a8c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mYuuSaitoh[m[33m, [m[1;31morigin/YuuSaitoh[m[33m)[m Merge remote-tracking branch 'origin/firebase' into YuuSaitoh
+[33m2189a80[m Add Delete cart item
+[33m71bdf4e[m Add Api update quantiry
+[33m8fa836e[m Add Delete all item cart
+[33m0cc4e47[m Change Cart Adapter
+[33m1bf6a82[m Update item_cart.xml
+[33m4b188a7[m add api add cart
+[33m15115e0[m Api show cart Added
+[33mef790d1[m[33m ([m[1;31morigin/firebase[m[33m)[m fix confict
+[33m17e495f[m completed upload image fromfirebase
+[33mc552da3[m UI Cart
+[33m9df6e03[m da setup nhung dang con loi domain
+[33m51a25e0[m[33m ([m[1;31morigin/fix/design-layout[m[33m)[m fix login layout
+[33mb1398b8[m Fix UI Account
+[33m1446f9c[m Merge branch 'map' into YuuSaitoh
+[33m31ff9af[m[33m ([m[1;31morigin/map[m[33m, [m[1;32mmap[m[33m)[m fix map to show store marker
+[33m1b84567[m fix nav bar main
+[33m413c413[m fix again flow
+[33ma02d939[m home+ productDetail
+[33m6aa088b[m Fix
+[33m2e42ce7[m fixx
+[33m6764f9d[m user
+[33mc612545[m[33m ([m[1;31morigin/LoginRedirectFlow[m[33m, [m[1;32mLoginRedirectFlow[m[33m)[m Add Token save login and logouy button
+[33mb582355[m Merge branch 'LoginRedirectFlow' into YuuSaitoh
+[33m0a1f33a[m Update local.properties
+[33m3286eb7[m Update local.properties
+[33m6de471e[m Completed login redirect flow
+[33me34f939[m Merge branch 'LoginRedirectFlow' into YuuSaitoh
+[33m3ca8800[m Add Api sản phẩm và Category
+[33m2048269[m Revert "Add Api sản phẩm và Category"
+[33m8b0483b[m Revert "add Forgot password"
+[33mda0c56b[m add Forgot password
+[33m8371fe3[m[33m ([m[1;31morigin/khanh484[m[33m)[m fix login access
+[33m62d4ec0[m Revert "Add Api sản phẩm và Category"
+[33m6fc4d5e[m Revert "add Forgot password"
+[33m3ba6f9a[m add Forgot password
+[33m580ec54[m Design again Login & SignUp & create welcomepage
+[33mc8f8bd0[m Completed login/register flow
+[33m2550227[m Completed Map Function
+[33m64b0468[m Map_completed direction routes
+[33m3edf35e[m Add Api sản phẩm và Category
+[33m5253b30[m Showing location of USER and STORE
+[33m31d9e36[m Show the origin map with no function
+[33m143af82[m show the origin map
+[33mb92f2dd[m CRUD Item in Cart
+[33m511646c[m add back button in productActivity and Cart
+[33m4dfe8aa[m add register
+[33mc14d988[m fix skd
+[33md0b5e9d[m add api login
+[33me40f2a2[m fix sdk
+[33mf46beb5[m app build
+[33m1386fce[m Completed cart
+[33m1187712[m Calculate total price on bottom_sheet_quantity
+[33m25ab2de[m Create product detail page when click into product
+[33md47934d[m Completed search function
+[33m44e4bed[m after editing the bottom_nav
+[33ma18127f[m create toobber, bottomnavbar search , cart DEMO
+[33m6fd7f09[m resolve conflic 04/October
+[33m99da647[m design list product
+[33m8f4ef7a[m Fix merge conflicts 01
+[33mb7e06ec[m create banner & list product by recyclerview
+[33m3fcf960[m Merge pull request #4 from ZuuSaitoh/YuuSaitoh
+[33m9ed91b6[m Merge branch 'YuuSaitoh' into Frontend
+[33m12e7956[m Delete the back button
+[33m27a5a9b[m commit
+[33m2879c91[m Update deploymentTargetSelector.xml
+[33m2de6b4f[m Merge branch 'YuuSaitoh' into Frontend
+[33m35db376[m Commit 2
+[33m81095c8[m fix application
+[33m0ae98dd[m Merge pull request #2 from ZuuSaitoh/YuuSaitoh
+[33me75a53d[m Merge pull request #1 from ZuuSaitoh/Frontend
+[33mbab620d[m 2nd Commit
+[33mc1bff58[m First Commit
+[33m712b10b[m Delete modules.xml
+[33mc8efc07[m Update misc.xml
+[33mbfd438b[m Test
+[33m36cb52f[m Test
