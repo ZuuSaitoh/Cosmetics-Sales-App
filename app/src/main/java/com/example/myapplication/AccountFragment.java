@@ -34,16 +34,12 @@ public class AccountFragment extends Fragment {
     // Views
     private ImageView avatarImageView;
     private TextView usernameTextView;
-    private TextView roleTextView;
     private TextView emailTextView;
-    private TextView phoneTextView;
-    private TextView addressTextView;
     private MaterialButton logoutButton;
     private MaterialButton loginButton;
     private MaterialButton registerButton;
     private LinearLayout authButtonsContainer;
     private ProgressBar loadingProgressBar;
-    private View profileCard;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,16 +79,17 @@ public class AccountFragment extends Fragment {
     private void initializeViews(View view) {
         avatarImageView = view.findViewById(R.id.avatarImageView);
         usernameTextView = view.findViewById(R.id.usernameTextView);
-        roleTextView = view.findViewById(R.id.roleTextView);
         emailTextView = view.findViewById(R.id.emailTextView);
-        phoneTextView = view.findViewById(R.id.phoneTextView);
-        addressTextView = view.findViewById(R.id.addressTextView);
         logoutButton = view.findViewById(R.id.logoutButton);
         loginButton = view.findViewById(R.id.loginButton);
         registerButton = view.findViewById(R.id.registerButton);
         authButtonsContainer = view.findViewById(R.id.authButtonsContainer);
         loadingProgressBar = view.findViewById(R.id.loadingProgressBar);
-        profileCard = view.findViewById(R.id.profile_card);
+        
+        // Setup click listeners for new sections
+        setupOrderSectionClickListeners(view);
+        setupPurchasedProductsClickListeners(view);
+        setupAccountOptionsClickListeners(view);
     }
     
     private void loadUserInfo() {
@@ -210,10 +207,7 @@ public class AccountFragment extends Fragment {
     
     private void updateUserInfo(User user) {
         if (usernameTextView != null) usernameTextView.setText(user.getUsername());
-        if (roleTextView != null) roleTextView.setText(user.getRole());
         if (emailTextView != null) emailTextView.setText(user.getEmail());
-        if (phoneTextView != null) phoneTextView.setText(user.getPhoneNumber());
-        if (addressTextView != null) addressTextView.setText(user.getAddress());
     }
     
     private void showFallbackInfo() {
@@ -222,16 +216,10 @@ public class AccountFragment extends Fragment {
         
         if (token != null && !token.isEmpty()) {
             if (usernameTextView != null) usernameTextView.setText("Người dùng");
-            if (roleTextView != null) roleTextView.setText(role != null ? role : "User");
             if (emailTextView != null) emailTextView.setText("Không có thông tin");
-            if (phoneTextView != null) phoneTextView.setText("Không có thông tin");
-            if (addressTextView != null) addressTextView.setText("Không có thông tin");
         } else {
             if (usernameTextView != null) usernameTextView.setText("Chưa đăng nhập");
-            if (roleTextView != null) roleTextView.setText("Guest");
             if (emailTextView != null) emailTextView.setText("Chưa đăng nhập");
-            if (phoneTextView != null) phoneTextView.setText("Chưa đăng nhập");
-            if (addressTextView != null) addressTextView.setText("Chưa đăng nhập");
         }
     }
     
@@ -281,10 +269,7 @@ public class AccountFragment extends Fragment {
         boolean isLoggedIn = token != null && !token.isEmpty();
         
         if (isLoggedIn) {
-            // Đã đăng nhập: hiển thị khung thông tin người dùng và nút logout, ẩn nút đăng nhập/đăng ký
-            if (profileCard != null) {
-                profileCard.setVisibility(View.VISIBLE);
-            }
+            // Đã đăng nhập: hiển thị thông tin người dùng và nút logout, ẩn nút đăng nhập/đăng ký
             if (logoutButton != null) {
                 logoutButton.setVisibility(View.VISIBLE);
             }
@@ -292,10 +277,7 @@ public class AccountFragment extends Fragment {
                 authButtonsContainer.setVisibility(View.GONE);
             }
         } else {
-            // Chưa đăng nhập: ẩn khung thông tin người dùng và nút logout, hiển thị nút đăng nhập/đăng ký
-            if (profileCard != null) {
-                profileCard.setVisibility(View.GONE);
-            }
+            // Chưa đăng nhập: ẩn nút logout, hiển thị nút đăng nhập/đăng ký
             if (logoutButton != null) {
                 logoutButton.setVisibility(View.GONE);
             }
@@ -332,5 +314,71 @@ public class AccountFragment extends Fragment {
             Log.d("AccountFragment", "Login/Register successful, reloading info");
             loadUserInfo();
         }
+    }
+    
+    private void setupOrderSectionClickListeners(View view) {
+        // "Xem tất cả đơn hàng" click listener
+        View orderSection = view.findViewById(R.id.orders_section);
+        if (orderSection != null) {
+            orderSection.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Tính năng xem đơn hàng đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+        
+        // Individual order status click listeners
+        setupOrderStatusClickListener(view, "new_order", "Mới đặt");
+        setupOrderStatusClickListener(view, "processing", "Đang xử lý");
+        setupOrderStatusClickListener(view, "successful", "Thành công");
+        setupOrderStatusClickListener(view, "cancelled", "Đã hủy");
+    }
+    
+    private void setupOrderStatusClickListener(View view, String status, String statusName) {
+        // This would be implemented with actual order status filtering
+        // For now, just show a toast when clicked
+        // Note: Individual order status buttons would need specific IDs to implement this properly
+    }
+    
+    private void setupPurchasedProductsClickListeners(View view) {
+        // "Xem tất cả" click listener
+        View purchasedSection = view.findViewById(R.id.purchased_products_section);
+        if (purchasedSection != null) {
+            purchasedSection.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Tính năng xem sản phẩm đã mua đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+        
+        // Individual product interaction click listeners
+        setupProductInteractionClickListener(view, "viewed", "Đã xem");
+        setupProductInteractionClickListener(view, "liked", "Yêu thích");
+        setupProductInteractionClickListener(view, "rated", "Đánh giá");
+        setupProductInteractionClickListener(view, "redeem", "Đổi quà");
+    }
+    
+    private void setupProductInteractionClickListener(View view, String interaction, String interactionName) {
+        // This would be implemented with actual product interaction filtering
+        // For now, just show a toast when clicked
+        // Note: Individual product interaction buttons would need specific IDs to implement this properly
+    }
+    
+    private void setupAccountOptionsClickListeners(View view) {
+        // Account management options click listeners
+        setupAccountOptionClickListener(view, "personal", "Cá nhân");
+        setupAccountOptionClickListener(view, "address_book", "Sổ địa chỉ");
+        setupAccountOptionClickListener(view, "qa", "Hỏi đáp");
+        setupAccountOptionClickListener(view, "brands", "Thương hiệu");
+        setupAccountOptionClickListener(view, "new_arrivals", "Sản phẩm mới về");
+        setupAccountOptionClickListener(view, "best_sellers", "Sản phẩm bán chạy");
+        setupAccountOptionClickListener(view, "chat", "CSKH");
+        setupAccountOptionClickListener(view, "loyalty", "Tri ân");
+        setupAccountOptionClickListener(view, "regulations", "Quy định");
+        setupAccountOptionClickListener(view, "support", "Hỗ trợ");
+        setupAccountOptionClickListener(view, "recruitment", "Tuyển dụng");
+        setupAccountOptionClickListener(view, "voucher", "Voucher trải nghiệm");
+    }
+    
+    private void setupAccountOptionClickListener(View view, String option, String optionName) {
+        // This would be implemented with actual navigation to specific features
+        // For now, just show a toast when clicked
+        // Note: Individual account option buttons would need specific IDs to implement this properly
     }
 }
