@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +34,8 @@ import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.ChangeQuantityRequest;
 import com.example.myapplication.network.dto.CreateCartRequest;
+import com.example.myapplication.notification.BootReceiver;
+import com.example.myapplication.notification.NotificationHelper;
 
 import java.text.NumberFormat;
 import java.util.Collections;
@@ -52,6 +60,21 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     private AuthService authService;
     private AuthManager authManager;
     private CartAdapter cartAdapter;
+    
+    // Notification helper
+    private NotificationHelper notificationHelper;
+    private int currentCartItemCount = 0;
+    
+    // Permission launcher for notification (Android 13+)
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission granted - notification sẽ được show khi cần
+                } else {
+                    // Permission denied - có thể show explanation dialog
+                    Toast.makeText(this, "Bạn cần cấp quyền thông báo để nhận cập nhật về giỏ hàng", Toast.LENGTH_LONG).show();
+                }
+            });
 
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 
@@ -62,15 +85,35 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
         authService = ApiClient.getRetrofit(this).create(AuthService.class);
         authManager = new AuthManager(this);
+        notificationHelper = new NotificationHelper(this);
 
         initViews();
         setupClickListeners();
+        
+        // Request notification permission if needed (Android 13+)
+        requestNotificationPermission();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // Clear cart notification khi user vào cart activity
+        notificationHelper.clearCartNotification();
         loadCartData();
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Show notification nếu còn items trong cart khi rời khỏi activity
+        showCartNotificationIfNeeded();
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Save cart state để restore sau khi device restart
+        saveCartState();
     }
 
     private void initViews() {
@@ -169,6 +212,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
     private void updateCartUI(List<CartItem> items) {
         boolean isLoggedIn = authManager.getUserId() != null;
+        
+        // Calculate total item count
+        currentCartItemCount = 0;
+        if (items != null) {
+            for (CartItem item : items) {
+                currentCartItemCount += item.getQuantity();
+            }
+        }
         
         if (items == null || items.isEmpty()) {
             emptyState.setVisibility(View.VISIBLE);
@@ -330,5 +381,60 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 Toast.makeText(CartActivity.this, "Lỗi khi xóa giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    
+    // ============ NOTIFICATION METHODS ============
+    
+    /**
+     * Request notification permission (Android 13+)
+     */
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Should we show an explanation?
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    // Show explanation dialog
+                    new AlertDialog.Builder(this)
+                            .setTitle("Cho phép thông báo")
+                            .setMessage("Ứng dụng cần quyền thông báo để cập nhật bạn về giỏ hàng và đơn hàng của bạn.")
+                            .setPositiveButton("Cho phép", (dialog, which) -> 
+                                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS))
+                            .setNegativeButton("Không", (dialog, which) -> dialog.dismiss())
+                            .show();
+                } else {
+                    // No explanation needed, request permission
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Show cart notification nếu còn items và app đang chuyển sang background
+     */
+    private void showCartNotificationIfNeeded() {
+        Long userId = authManager.getUserId();
+        
+        // Chỉ show notification nếu:
+        // 1. User đã login
+        // 2. Có items trong cart
+        // 3. Notification permission đã được granted (hoặc không cần trên Android < 13)
+        if (userId != null && currentCartItemCount > 0) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU || 
+                notificationHelper.areNotificationsEnabled()) {
+                notificationHelper.showCartBadgeNotification(String.valueOf(userId), currentCartItemCount);
+            }
+        }
+    }
+    
+    /**
+     * Save cart state để restore sau khi device restart
+     */
+    private void saveCartState() {
+        Long userId = authManager.getUserId();
+        if (userId != null) {
+            BootReceiver.saveCartState(this, String.valueOf(userId), currentCartItemCount);
+        }
     }
 }
