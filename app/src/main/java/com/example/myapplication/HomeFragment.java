@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
+import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.map.MapsActivity;
 import com.example.myapplication.model.Banner;
 import com.example.myapplication.model.Product;
@@ -144,6 +145,10 @@ public class HomeFragment extends Fragment {
 
     public void addToCart() {
         updateCartBadge();
+        
+        // Chạy animation bay vào giỏ hàng với hình ảnh sản phẩm mặc định
+        runCartAnimationWithProduct();
+        
         Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
@@ -295,5 +300,52 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopAutoScroll();
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng với hình ảnh sản phẩm
+     */
+    private void runCartAnimationWithProduct() {
+        if (getView() != null && cartIcon != null && cartBadge != null) {
+            // Tìm một view để làm source (có thể là search box hoặc banner)
+            View sourceView = getView().findViewById(R.id.searchEditText);
+            if (sourceView == null) {
+                sourceView = getView().findViewById(R.id.bannerRecyclerView);
+            }
+            
+            if (sourceView != null) {
+                // Sử dụng hình ảnh sản phẩm mặc định
+                CartAnimation.flyToCartWithDrawable(sourceView, cartIcon, getContext(), R.drawable.img_no_product, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - làm rung cart icon
+                        if (cartIcon != null) {
+                            cartIcon.animate()
+                                .scaleX(1.2f)
+                                .scaleY(1.2f)
+                                .setDuration(150)
+                                .withEndAction(() -> {
+                                    cartIcon.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(150);
+                                });
+                        }
+                    }
+                });
+            }
+        }
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng (backward compatibility)
+     */
+    private void runCartAnimation() {
+        runCartAnimationWithProduct();
     }
 }

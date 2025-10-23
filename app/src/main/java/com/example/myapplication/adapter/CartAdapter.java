@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.CartItem;
 import com.google.android.material.button.MaterialButton;
+import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -63,8 +64,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         h.title.setText(item.getProduct().getName());
         h.quantity.setText("x" + item.getQuantity());
         h.total.setText(formatPrice(item.getItemTotal()));
-        // TODO: Update to use Glide or Picasso if image URLs are provided by the API
-        // h.image.setImageResource(item.getProduct().getImageResId());
+        
+        // Cập nhật hình ảnh sản phẩm
+        if (item.getProduct().getImageURL() != null && !item.getProduct().getImageURL().isEmpty()) {
+            // Sử dụng Glide để load hình ảnh từ URL
+            Glide.with(h.image.getContext())
+                .load(item.getProduct().getImageURL().trim())
+                .placeholder(R.drawable.img_no_product)
+                .error(R.drawable.img_no_product)
+                .into(h.image);
+        } else {
+            // Fallback: sử dụng hình ảnh mặc định
+            h.image.setImageResource(R.drawable.img_no_product);
+        }
 
         h.btnPlus.setOnClickListener(v -> {
             if (quantityChangedListener != null) {
