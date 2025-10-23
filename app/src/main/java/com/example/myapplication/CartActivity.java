@@ -282,8 +282,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             return;
         }
 
+
+
         Intent intent = new Intent(this, ActivityCheckout.class);
         intent.putExtra("totalAmount", total);
+        if (currentCartId != null) {
+            intent.putExtra("cartId", currentCartId);
+        }
         startActivity(intent);
     }
 
