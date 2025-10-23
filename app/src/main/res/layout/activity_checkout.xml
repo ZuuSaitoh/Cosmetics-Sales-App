@@ -90,7 +90,7 @@
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:contentDescription="Địa chỉ"
-                        android:src="@drawable/ic_location_on"
+                        android:src="@drawable/ic_location"
                         app:tint="#00695C" />
 
                     <LinearLayout
@@ -161,10 +161,10 @@
                         android:layout_height="80dp"
                         android:contentDescription="Hình sản phẩm"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_product_placeholder"
+                        android:src="@drawable/img_no_product"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/RoundedImageView" />
+                         />
 
                     <TextView
                         android:id="@+id/tvProductName"

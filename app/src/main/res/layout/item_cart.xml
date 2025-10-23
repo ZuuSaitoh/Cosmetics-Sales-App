@@ -1,98 +1,152 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp">
-
-    <ImageView
-        android:id="@+id/imageProduct"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_apple"/>
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_marginStart="12dp">
+        android:padding="12dp"
+        android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sản phẩm"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textQty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="x1"/>
-
-        <TextView
-            android:id="@+id/textPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$0.00"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="end">
-
-        <TextView
-            android:id="@+id/textTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$0.00"
-            android:textStyle="bold"/>
-
+        <!-- Top Section: Checkbox + Image + Product Info -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:gravity="top">
 
-            <TextView
-                android:id="@+id/btn_minus"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="-"
-                android:textSize="18sp"
-                android:background="@android:color/darker_gray"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/btn_plus"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:text="+"
-                android:textSize="18sp"
-                android:background="@android:color/holo_green_dark"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/btn_remove"
+            <CheckBox
+                android:id="@+id/checkbox_select"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginStart="12dp"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="Xóa"
-                android:textSize="14sp"
-                android:background="@android:color/holo_red_dark"
-                android:textColor="@android:color/white" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:checked="true" />
+
+            <ImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_apple"
+                android:background="@drawable/rounded_image_background" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sản phẩm"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="2dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/textTotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="₫50.000"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="#00897B"/>
+
+                    <TextView
+                        android:id="@+id/btn_remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xóa"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                </LinearLayout>
+
+                <!-- Quantity Control -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/quantity_border">
+
+                    <ImageButton
+                        android:id="@+id/btn_minus"
+                        android:layout_width="28dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_remove"
+                        android:background="?attr/selectableItemBackground"
+                        android:scaleType="centerInside"
+                        android:padding="6dp"
+                        android:contentDescription="Giảm số lượng"
+                        app:tint="#757575" />
+
+                    <TextView
+                        android:id="@+id/textQty"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:text="1"
+                        android:textSize="14sp"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:background="@android:color/white"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_plus"
+                        android:layout_width="28dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_add"
+                        android:background="?attr/selectableItemBackground"
+                        android:scaleType="centerInside"
+                        android:padding="6dp"
+                        android:contentDescription="Tăng số lượng"
+                        app:tint="#00897B" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F5F5"
+            android:layout_marginTop="12dp"/>
+
     </LinearLayout>
 
-</LinearLayout>
-
-
+</androidx.cardview.widget.CardView>

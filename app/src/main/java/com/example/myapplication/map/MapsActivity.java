@@ -78,8 +78,10 @@ public class MapsActivity extends AppCompatActivity {
                                 mapsManager = new MapsManager(MapsActivity.this, vietMapGL);
                                 mapsNavigationManager = new MapsNavigationManager(MapsActivity.this, vietMapGL);
 
-                                // ⚠️ Kiểm tra quyền vị trí
+                                // ⚠️ SỬA LỖI 2: Logic xử lý quyền
+                                // Kiểm tra quyền vị trí
                                 if (!checkPermission()) {
+                                    // Nếu chưa có quyền, yêu cầu quyền và dừng lại
                                     ActivityCompat.requestPermissions(
                                             MapsActivity.this,
                                             new String[]{
@@ -91,48 +93,64 @@ public class MapsActivity extends AppCompatActivity {
                                     return;
                                 }
 
-                                // ✅ Bật vị trí
-                                mapsManager.initLocationEngine();
-                                mapsManager.enableLocationComponent(style);
-
-                                // 📍 Thêm marker cửa hàng
-                                Marker storeMarker = mapsManager.addMarker(STORE_LOCATION);
-
-                                // ✅ Lấy vị trí người dùng và hiển thị camera
-                                mapsManager.getUserLocation(location -> {
-                                    if (location != null) {
-                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                                        // Hiển thị vùng chứa user + store
-                                        vn.vietmap.vietmapsdk.geometry.LatLngBounds bounds =
-                                                new vn.vietmap.vietmapsdk.geometry.LatLngBounds.Builder()
-                                                        .include(userLatLng)
-                                                        .include(STORE_LOCATION)
-                                                        .build();
-
-                                        vietMapGL.animateCamera(
-                                                vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngBounds(bounds, 100)
-                                        );
-                                    } else {
-                                        vietMapGL.moveCamera(
-                                                vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORE_LOCATION, 13.0)
-                                        );
-                                        Toast.makeText(MapsActivity.this, "Không thể lấy vị trí người dùng", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                vietMapGL.setOnMarkerClickListener(marker -> {
-                                    if (marker.equals(storeMarker)) {
-                                        showStoreBottomSheet();
-                                        return true;
-                                    }
-                                    return false;
-                                });
+                                // ✅ Nếu đã có quyền, chạy setup map
+                                setupMapAndLocation(style);
                             }
                         }
                 );
             }
         });
     }
+
+    /**
+     * ✅ SỬA LỖI 2: Tách logic setup ra hàm riêng
+     * Hàm này chứa toàn bộ code setup map (thêm marker, bật vị trí, zoom camera)
+     * Nó sẽ được gọi ở 2 nơi:
+     * 1. onStyleLoaded: Nếu đã có quyền từ trước.
+     * 2. onRequestPermissionsResult: Nếu vừa mới được cấp quyền.
+     */
+    private void setupMapAndLocation(Style style) {
+        // ✅ Bật vị trí
+        mapsManager.initLocationEngine();
+        mapsManager.enableLocationComponent(style);
+
+        // 📍 Thêm marker cửa hàng
+        Marker storeMarker = mapsManager.addMarker(STORE_LOCATION);
+
+        // ✅ Lấy vị trí người dùng và hiển thị camera
+        mapsManager.getUserLocation(location -> {
+            if (location != null) {
+                userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                // Hiển thị vùng chứa user + store
+                vn.vietmap.vietmapsdk.geometry.LatLngBounds bounds =
+                        new vn.vietmap.vietmapsdk.geometry.LatLngBounds.Builder()
+                                .include(userLatLng)
+                                .include(STORE_LOCATION)
+                                .build();
+
+                vietMapGL.animateCamera(
+                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngBounds(bounds, 100)
+                );
+            } else {
+                vietMapGL.moveCamera(
+                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORE_LOCATION, 13.0)
+                );
+                Toast.makeText(MapsActivity.this, "Không thể lấy vị trí người dùng", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // ✅ Gán listener click (phải nằm trong này để đảm bảo storeMarker đã được tạo)
+        vietMapGL.setOnMarkerClickListener(marker -> {
+            // Thêm kiểm tra marker != null để an toàn
+            if (marker != null && marker.equals(storeMarker)) {
+                showStoreBottomSheet();
+                return true;
+            }
+            return false;
+        });
+    }
+
 
     // ⚠️ Check quyền truy cập vị trí
     private boolean checkPermission() {
@@ -148,16 +166,22 @@ public class MapsActivity extends AppCompatActivity {
 
         if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (vietMapGL != null) {
+                // ✅ SỬA LỖI 2: Gọi hàm setup chính tại đây
+                // Sau khi người dùng cấp quyền, chúng ta phải chạy lại toàn bộ logic setup
                 vietMapGL.getStyle(style -> {
-                    mapsManager.initLocationEngine();
-                    mapsManager.enableLocationComponent(style);
+                    setupMapAndLocation(style);
                 });
             }
         } else {
             Toast.makeText(this, "Cần cấp quyền vị trí để hiển thị vị trí của bạn", Toast.LENGTH_SHORT).show();
+            // Cân nhắc: Nếu không có quyền, có thể zoom vào cửa hàng
+            // if(vietMapGL != null) {
+            //     vietMapGL.moveCamera(
+            //         vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORE_LOCATION, 13.0)
+            //     );
+            // }
         }
     }
-
 
 
     private void showStoreBottomSheet() {
@@ -245,10 +269,6 @@ public class MapsActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     // ✅ Lifecycle MapView
     @Override
     protected void onStart() {
@@ -292,6 +312,3 @@ public class MapsActivity extends AppCompatActivity {
         mapView.onSaveInstanceState(outState);
     }
 }
-
-
-

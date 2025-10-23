@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    >
+    tools:context=".ActivitySignUp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_container"
@@ -15,7 +15,6 @@
         android:background="@drawable/cosme02_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.95"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
@@ -24,12 +23,12 @@
             android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/circle_background"
+            android:background="@drawable/circular_white_background"
             android:contentDescription="Back"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/black" />
+            app:tint="@android:color/white" />
 
         <TextView
             android:id="@+id/register_title"
@@ -43,8 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backButton" />
-
-
 
         <TextView
             android:id="@+id/register_subtitle"
@@ -177,40 +174,72 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dividerText">
 
-            <ImageButton
+            <androidx.cardview.widget.CardView
+                android:id="@+id/facebookLoginButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_facebook"
-                android:src="@drawable/ic_facebook"
-                android:contentDescription="Facebook Login"/>
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="#1877F2">
 
-            <ImageButton
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/ic_google"
-                android:src="@drawable/ic_google"
-                android:contentDescription="Google Login"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_facebook"
+                    android:contentDescription="Facebook Login" />
 
-            <ImageButton
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/googleLoginButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_apple"
-                android:src="@drawable/ic_apple"
-                android:contentDescription="Apple Login"/>
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@android:color/white">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_google"
+                    android:contentDescription="Google Login" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/appleLoginButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@android:color/black">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_apple"
+                    android:tint="@android:color/white"
+                    android:contentDescription="Apple Login" />
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/socialLoginLayout"
-            app:layout_constraintVertical_bias="0.8">
+            app:layout_constraintTop_toBottomOf="@id/socialLoginLayout">
 
             <TextView
                 android:layout_width="wrap_content"

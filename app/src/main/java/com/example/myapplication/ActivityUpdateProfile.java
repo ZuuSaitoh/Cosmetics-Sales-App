@@ -86,16 +86,28 @@ public class ActivityUpdateProfile extends AppCompatActivity {
     }
 
     private void loadCurrentUserInfo() {
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        
-        userId = authManager.getUserId();
-        if (userId == null) {
-            Log.e("ActivityUpdateProfile", "No userId found");
-            Toast.makeText(this, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
+        // Kiểm tra xem user đã đăng nhập chưa
+        String token = authManager.getToken();
+        if (token == null || token.isEmpty()) {
+            Log.e("ActivityUpdateProfile", "User not logged in");
+            Toast.makeText(this, "Vui lòng đăng nhập để cập nhật thông tin", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        
+        // Force refresh userId từ token
+        Long userId = authManager.refreshUserId();
+        if (userId == null) {
+            Log.e("ActivityUpdateProfile", "No userId found");
+            loadingProgressBar.setVisibility(View.GONE);
+            Toast.makeText(this, "Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        this.userId = userId;
         Log.d("ActivityUpdateProfile", "Loading user info for userId: " + userId);
 
         Call<User> call = userService.getUserById(userId);

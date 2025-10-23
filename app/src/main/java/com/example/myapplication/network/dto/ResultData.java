@@ -15,6 +15,10 @@ public class ResultData {
     @SerializedName("role")
     private String role;
 
+    // Thêm userID từ login response
+    @SerializedName("userId")
+    private Long userID;
+
     // --- Getters ---
     public String getToken() {
         return token;
@@ -26,5 +30,19 @@ public class ResultData {
 
     public String getRole() {
         return role;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultData{" +
+                "token='" + token + '\'' +
+                ", authenticated=" + authenticated +
+                ", role='" + role + '\'' +
+                ", userID=" + userID +
+                '}';
     }
 }

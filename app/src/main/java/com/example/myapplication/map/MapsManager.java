@@ -120,7 +120,7 @@ public class MapsManager {
                     Location location = result.getLastLocation();
                     if (location != null) {
                         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                        vietMapGL.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16.0));
+            //        vietMapGL.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16.0));
 
                         // Debug: in ra vị trí hiện tại
                         Toast.makeText(context, "Vị trí hiện tại: "

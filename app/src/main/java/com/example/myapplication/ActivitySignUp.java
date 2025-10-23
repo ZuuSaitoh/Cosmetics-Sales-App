@@ -1,6 +1,7 @@
 package com.example.myapplication; // Đảm bảo tên package này khớp với package của bạn
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class ActivitySignUp extends AppCompatActivity {
     private TextView loginTextView;
     private ImageButton backButton;
     // Social login buttons (optional functionality)
-    private ImageButton facebookLoginButton, googleLoginButton, appleLoginButton;
+    private View facebookLoginButton, googleLoginButton, appleLoginButton;
 
 
     // --- SERVICES ---
@@ -78,9 +79,10 @@ public class ActivitySignUp extends AppCompatActivity {
         loginTextView = findViewById(R.id.loginText);
         backButton = findViewById(R.id.backButton);
 
-        // Tìm các nút social login bằng cách truy cập vào LinearLayout cha
-        // Lưu ý: Các nút này không có ID, nên chúng ta không gán sự kiện click trực tiếp ở đây.
-        // Nếu cần, bạn nên thêm ID cho chúng trong file XML.
+        // Ánh xạ các nút social login
+        facebookLoginButton = findViewById(R.id.facebookLoginButton);
+        googleLoginButton = findViewById(R.id.googleLoginButton);
+        appleLoginButton = findViewById(R.id.appleLoginButton);
     }
 
     /**
@@ -95,6 +97,25 @@ public class ActivitySignUp extends AppCompatActivity {
 
         // Sự kiện click cho chữ "Login"
         loginTextView.setOnClickListener(v -> finish()); // Đóng màn hình hiện tại và quay lại LoginScreen
+
+        // Sự kiện click cho các nút social login
+        if (facebookLoginButton != null) {
+            facebookLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Facebook đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (googleLoginButton != null) {
+            googleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Google đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (appleLoginButton != null) {
+            appleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Apple đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     /**

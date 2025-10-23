@@ -22,7 +22,15 @@ import android.widget.Toast;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.CartManager;
-import com.example.myapplication.auth.AuthManager;
+import com.example.myapplication.network.AuthService;
+import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.dto.CreateCartRequest;
+import com.example.myapplication.network.dto.AddCartItemRequest;
+import com.example.myapplication.model.Cart;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import android.widget.ImageView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Product product;
     private Long productId;
     private AuthManager authManager;
+    private AuthService authService;
     private TextView cartBadge;
     private ImageView cartIcon;
 
@@ -53,6 +62,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         authManager = new AuthManager(getApplicationContext());
+        // Initialize cart-related API service
+        authService = ApiClient.getRetrofit(this).create(AuthService.class);
 
         initViews();
         getProductDataFromIntent();
@@ -84,10 +95,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
     }
-
-    // ... (Hàm initViews(), getProductDataFromIntent(), loadProductDetailFromAPI(),
-    //      displayProductData(), loadProductImage() GIỮ NGUYÊN NHƯ FILE CỦA BẠN) ...
-    // ... (Copy/paste 5 hàm đó vào đây) ...
 
     private void initViews() {
         imageProduct = findViewById(R.id.image_product);
@@ -193,16 +200,25 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void loadProductImage() {
         try {
-            if (product.getImageURL() != null && !product.getImageURL().isEmpty()) {
-                // TODO: Load image from URL using Glide or Picasso
-                imageProduct.setImageResource(R.drawable.img_no_product);
+            String imageUrl = product.getImageURL();
+
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.img_no_product) // ảnh tạm khi đang load
+                        .error(R.drawable.img_no_product)       // ảnh khi lỗi
+                        .into(imageProduct);
             } else {
-                imageProduct.setImageResource(product.getImageResId());
+                imageProduct.setImageResource(R.drawable.img_no_product);
             }
+
         } catch (Exception e) {
             imageProduct.setImageResource(R.drawable.img_no_product);
+            e.printStackTrace();
         }
     }
+
 
 
     private void showQuantityPopup() {
@@ -242,17 +258,84 @@ public class ProductDetailActivity extends AppCompatActivity {
             textTotalPrice.setText(String.format("%,.0f VND", totalPricePlus));
         });
 
-        // --- SỬA: XÓA LOGIC KIỂM TRA LOGIN BÊN TRONG POPUP ---
+        // Confirm add -> call backend add-to-cart API
         btnConfirm.setOnClickListener(v -> {
             bottomSheetDialog.dismiss();
-
-            // Chỉ cần thêm vào giỏ hàng, vì hàm này giờ chỉ được gọi khi đã login
-            CartManager.getInstance().addToCart(product, quantity[0]);
-            Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-            updateCartBadge();
+            ensureCartThenAdd(quantity[0]);
         });
 
         bottomSheetDialog.show();
+    }
+
+    private void ensureCartThenAdd(int quantity) {
+        if (product == null) {
+            Toast.makeText(this, "Không có sản phẩm để thêm.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Long userId = authManager != null ? authManager.getUserId() : null;
+        if (userId == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập trước khi thêm giỏ hàng.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 1) Get cart by user, if not exists -> create, then add
+        authService.getCartByUserId(userId).enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Long cartId = response.body().getCartID();
+                    callAddProduct(cartId, product.getProductID(), quantity);
+                } else {
+                    // Create cart then add
+                    authService.createCart(new CreateCartRequest(userId)).enqueue(new Callback<Cart>() {
+                        @Override
+                        public void onResponse(Call<Cart> call2, Response<Cart> resp2) {
+                            if (resp2.isSuccessful() && resp2.body() != null) {
+                                Long newCartId = resp2.body().getCartID();
+                                callAddProduct(newCartId, product.getProductID(), quantity);
+                            } else {
+                                Toast.makeText(ProductDetailActivity.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Cart> call2, Throwable t) {
+                            Toast.makeText(ProductDetailActivity.this, "Lỗi tạo giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi khi lấy giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void callAddProduct(Long cartId, Long productId, int quantity) {
+        if (cartId == null || productId == null) {
+            Toast.makeText(this, "Thiếu thông tin giỏ hàng hoặc sản phẩm.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        authService.addProductToCart(new AddCartItemRequest(cartId, productId, quantity)).enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    updateCartBadge();
+                } else {
+                    String msg = "Thêm vào giỏ hàng thất bại (" + response.code() + ")";
+                    Toast.makeText(ProductDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi mạng khi thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // --- SỬA: THAY ĐỔI HOÀN TOÀN LOGIC onActivityResult ---
