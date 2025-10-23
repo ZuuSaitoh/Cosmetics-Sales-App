@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,6 +89,80 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         cartAdapter.setOnItemQuantityChangedListener(this);
         cartAdapter.setOnItemRemovedListener(this);
         recyclerView.setAdapter(cartAdapter);
+        
+        // Thêm swipe-to-delete functionality
+        setupSwipeToDelete();
+    }
+
+    private void setupSwipeToDelete() {
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false; // Không hỗ trợ drag & drop
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (position >= 0 && position < cartAdapter.getItemCount()) {
+                    CartItem itemToDelete = cartAdapter.getItemAt(position);
+                    
+                    // Hiển thị dialog xác nhận xóa
+                    showDeleteConfirmDialog(itemToDelete, position);
+                }
+            }
+            
+            @Override
+            public void onChildDraw(android.graphics.Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, 
+                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+                    
+                    // Vẽ background đỏ khi swipe
+                    if (dX < 0) { // Swipe left
+                        android.graphics.Paint paint = new android.graphics.Paint();
+                        paint.setColor(0xFFF44336); // Màu đỏ
+                        c.drawRect(itemView.getRight() + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom(), paint);
+                        
+                        // Vẽ icon delete
+                        android.graphics.drawable.Drawable deleteIcon = getResources().getDrawable(android.R.drawable.ic_menu_delete);
+                        int iconSize = 48;
+                        int iconMargin = (itemView.getHeight() - iconSize) / 2;
+                        deleteIcon.setBounds(
+                            (int)(itemView.getRight() - iconSize - iconMargin),
+                            itemView.getTop() + iconMargin,
+                            (int)(itemView.getRight() - iconMargin),
+                            itemView.getTop() + iconMargin + iconSize
+                        );
+                        deleteIcon.setColorFilter(android.graphics.Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+                        deleteIcon.draw(c);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+    
+    private void showDeleteConfirmDialog(CartItem itemToDelete, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận xóa");
+        builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm \"" + itemToDelete.getProduct().getName() + "\" khỏi giỏ hàng?");
+        
+        builder.setPositiveButton("Xóa", (dialog, which) -> {
+            // Thực hiện xóa item
+            deleteCartItem(itemToDelete.getCartItemID(), itemToDelete);
+        });
+        
+        builder.setNegativeButton("Hủy", (dialog, which) -> {
+            // Khôi phục item trong adapter
+            cartAdapter.notifyItemChanged(position);
+        });
+        
+        builder.setCancelable(false);
+        builder.show();
     }
 
     private void setupClickListeners() {
