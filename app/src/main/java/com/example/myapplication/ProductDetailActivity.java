@@ -5,6 +5,8 @@ import static java.lang.Integer.parseInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.ProductService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -285,7 +287,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Long cartId = response.body().getCartID();
-                    callAddProduct(cartId, product.getProductID(), quantity);
+                    // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+                    checkAndAddProduct(cartId, product.getProductID(), quantity);
                 } else {
                     // Create cart then add
                     authService.createCart(new CreateCartRequest(userId)).enqueue(new Callback<Cart>() {
@@ -293,7 +296,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         public void onResponse(Call<Cart> call2, Response<Cart> resp2) {
                             if (resp2.isSuccessful() && resp2.body() != null) {
                                 Long newCartId = resp2.body().getCartID();
-                                callAddProduct(newCartId, product.getProductID(), quantity);
+                                // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+                                checkAndAddProduct(newCartId, product.getProductID(), quantity);
                             } else {
                                 Toast.makeText(ProductDetailActivity.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
                             }
@@ -314,6 +318,73 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void checkAndAddProduct(Long cartId, Long productId, int quantity) {
+        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+        authService.getCartItems(cartId).enqueue(new Callback<com.example.myapplication.network.dto.CartItemsResponse>() {
+            @Override
+            public void onResponse(Call<com.example.myapplication.network.dto.CartItemsResponse> call, Response<com.example.myapplication.network.dto.CartItemsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    com.example.myapplication.network.dto.CartItemsResponse cartItemsResponse = response.body();
+                    List<com.example.myapplication.model.CartItem> existingItems = cartItemsResponse.getCartItems();
+                    
+                    // Tìm sản phẩm đã tồn tại
+                    com.example.myapplication.model.CartItem existingItem = null;
+                    if (existingItems != null) {
+                        for (com.example.myapplication.model.CartItem item : existingItems) {
+                            if (item.getProduct().getProductID().equals(productId)) {
+                                existingItem = item;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (existingItem != null) {
+                        // Sản phẩm đã tồn tại -> cập nhật số lượng
+                        int newQuantity = existingItem.getQuantity() + quantity;
+                        updateExistingProductQuantity(existingItem.getCartItemID(), newQuantity, quantity);
+                    } else {
+                        // Sản phẩm chưa tồn tại -> thêm mới
+                        callAddProduct(cartId, productId, quantity);
+                    }
+                } else {
+                    // Nếu không lấy được cart items, thử thêm mới
+                    callAddProduct(cartId, productId, quantity);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.example.myapplication.network.dto.CartItemsResponse> call, Throwable t) {
+                // Nếu có lỗi khi lấy cart items, thử thêm mới
+                callAddProduct(cartId, productId, quantity);
+            }
+        });
+    }
+
+    private void updateExistingProductQuantity(Long cartItemId, int newQuantity, int quantityToAdd) {
+        com.example.myapplication.network.dto.ChangeQuantityRequest request = 
+            new com.example.myapplication.network.dto.ChangeQuantityRequest(cartItemId, newQuantity);
+        
+        authService.changeQuantity(request).enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().addToCart(product, quantityToAdd);
+                    Toast.makeText(ProductDetailActivity.this, "Đã cập nhật số lượng sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                    updateCartBadge();
+                } else {
+                    String msg = "Cập nhật số lượng thất bại (" + response.code() + ")";
+                    Toast.makeText(ProductDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi mạng khi cập nhật số lượng", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void callAddProduct(Long cartId, Long productId, int quantity) {
         if (cartId == null || productId == null) {
             Toast.makeText(this, "Thiếu thông tin giỏ hàng hoặc sản phẩm.", Toast.LENGTH_SHORT).show();
@@ -323,6 +394,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().addToCart(product, quantity);
                     Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     updateCartBadge();
                 } else {
