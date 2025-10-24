@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -40,28 +39,24 @@ public class AccountFragment extends Fragment {
     private MaterialButton registerButton;
     private LinearLayout authButtonsContainer;
     private ProgressBar loadingProgressBar;
+    private TextView wach_list_orders;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_library, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
         
         // Khởi tạo services
         authManager = new AuthManager(getContext());
         userService = ApiClient.getRetrofit(getContext()).create(UserService.class);
         
-        // Ánh xạ views
+
         initializeViews(view);
-        
-        // Thiết lập sự kiện đăng xuất và avatar click
+        setupWatchListOrdersClick();
         setupLogout();
         setupLoginRegister();
         setupAvatarClick();
-        
-        // Cập nhật giao diện dựa trên trạng thái đăng nhập
         updateUIForAuthState();
-        
-        // Load thông tin người dùng từ API chỉ khi đã đăng nhập
         String token = authManager.getToken();
         if (token != null && !token.isEmpty()) {
             loadUserInfo();
@@ -85,6 +80,7 @@ public class AccountFragment extends Fragment {
         registerButton = view.findViewById(R.id.registerButton);
         authButtonsContainer = view.findViewById(R.id.authButtonsContainer);
         loadingProgressBar = view.findViewById(R.id.loadingProgressBar);
+        wach_list_orders = view.findViewById(R.id.wach_list_orders);
         
         // Setup click listeners for new sections
         setupOrderSectionClickListeners(view);
@@ -338,7 +334,17 @@ public class AccountFragment extends Fragment {
         setupOrderStatusClickListener(view, "successful", "Thành công");
         setupOrderStatusClickListener(view, "cancelled", "Đã hủy");
     }
-    
+
+    private void setupWatchListOrdersClick() {
+        if (wach_list_orders != null) {
+            wach_list_orders.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), ActivityOrderHistory.class);
+                startActivity(intent);
+            });
+        }
+    }
+
+
     private void setupOrderStatusClickListener(View view, String status, String statusName) {
         // This would be implemented with actual order status filtering
         // For now, just show a toast when clicked

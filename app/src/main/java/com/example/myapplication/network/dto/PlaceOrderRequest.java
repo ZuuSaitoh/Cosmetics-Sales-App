@@ -7,11 +7,11 @@ import java.util.List;
 public class PlaceOrderRequest {
 
 
-    @SerializedName("userId")
+    @SerializedName("userID")
     private Long userId;
 
 
-    @SerializedName("cartId")
+    @SerializedName("cartID")
     private Long cartId;
 
 

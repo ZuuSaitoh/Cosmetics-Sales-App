@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Thanh tiêu đề -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarOrderHistory"
         android:layout_width="match_parent"
@@ -18,16 +17,12 @@
         app:navigationIconTint="@android:color/white"
         app:titleCentered="true" />
 
-
-
-    <!-- Kéo để làm mới -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp">
 
-        <!-- RecyclerView hiển thị danh sách đơn hàng -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOrders"
             android:layout_width="match_parent"
@@ -37,7 +32,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- Giao diện rỗng -->
     <LinearLayout
         android:id="@+id/emptyLayout"
         android:layout_width="match_parent"

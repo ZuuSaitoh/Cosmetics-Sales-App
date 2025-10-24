@@ -56,6 +56,21 @@ android {
         buildConfig = true
         viewBinding = true
     }
+
+
+    packaging {
+        resources {
+            excludes.add("META-INF/INDEX.LIST")
+            excludes.add("META-INF/io.netty.versions.properties")
+            excludes.add("META-INF/DEPENDENCIES")
+            excludes.add("META-INF/NOTICE")
+            excludes.add("META-INF/LICENSE")
+            excludes.add("META-INF/LICENSE.txt")
+            excludes.add("META-INF/NOTICE.txt")
+        }
+    }
+
+
 }
 
 dependencies {
@@ -80,13 +95,12 @@ dependencies {
 
     // Glide (runtime) + kapt compiler
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.firebase.appdistribution.gradle)
     kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
     implementation("com.google.firebase:firebase-analytics")
-
-
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
@@ -115,7 +129,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
     // Utilities
-   // implementation("com.squareup.picasso:picasso:2.8")
+    // implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.jakewharton:butterknife:10.2.3")
 
     // Play services

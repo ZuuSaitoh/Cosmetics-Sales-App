@@ -2,6 +2,7 @@ package com.example.myapplication.network;
 
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.Order;
+import com.example.myapplication.model.User;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.AddCartItemRequest;
 import com.example.myapplication.network.dto.ChangeQuantityRequest;
@@ -9,6 +10,7 @@ import okhttp3.ResponseBody;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
 import com.example.myapplication.network.dto.LoginResponse;
+import com.example.myapplication.network.dto.PlaceOrderResponse;
 import com.example.myapplication.network.dto.RegisterRequest;
 import com.example.myapplication.network.dto.RegisterResponse;
 import com.example.myapplication.network.dto.PlaceOrderRequest;
@@ -27,6 +29,8 @@ public interface AuthService {
 
     @POST("users/create")
     Call<RegisterResponse> register(@Body RegisterRequest request);
+    @GET("users/{id}")
+    Call<User> getUserProfile(@Path("id") Long userID);
 
     @GET("carts/get-by-userID/{userID}")
     Call<Cart> getCartByUserId(@Path("userID") Long userID);
@@ -49,6 +53,7 @@ public interface AuthService {
     @DELETE("cart-items/delete/item/{cartItemID}")
     Call<Void> deleteCartItem(@Path("cartItemID") Long cartItemID);
 
-    @POST("orders/place-new-orders")
-    Call<Order> placeNewOrder(@Body PlaceOrderRequest request);
+
+
+
 }

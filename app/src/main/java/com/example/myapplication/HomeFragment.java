@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment {
                         try {
                             android.content.Context ctx = getContext();
                             if (ctx != null) {
-                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.CartActivity.class);
+                                android.content.Intent i = new android.content.Intent(ctx, ActivityCart.class);
                                 startActivity(i);
                             }
                         } catch (Exception e) {

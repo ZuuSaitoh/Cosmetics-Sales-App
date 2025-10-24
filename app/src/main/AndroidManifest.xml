@@ -21,7 +21,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <!-- Activity khởi chạy chính .Main-->
+        <!-- Activity khởi chạy chính -->
         <activity
             android:name=".ActivityWelcome"
             android:exported="true"
@@ -46,6 +46,19 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication" />
+
+        <activity
+            android:name=".ActivityOrderHistory"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyApplication" />
+
+        <activity
+            android:name=".ActivityOrderSuccess"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+
+
         <activity
             android:name=".ActivityLogin"
             android:exported="false"
@@ -64,7 +77,7 @@
             android:theme="@style/Theme.MyApplication" />
 
         <activity
-            android:name=".CartActivity"
+            android:name=".ActivityCart"
             android:exported="false"
             android:label="Giỏ hàng"
             android:theme="@style/Theme.MyApplication" />

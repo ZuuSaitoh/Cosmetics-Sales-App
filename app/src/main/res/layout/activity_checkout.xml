@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA">
 
-    <!-- Header (Fixed) -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -54,7 +53,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Main Content (Scrollable) -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,7 +65,6 @@
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
-            <!-- 1. Thông tin người nhận hàng -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardDeliveryInfo"
                 android:layout_width="match_parent"
@@ -104,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-medium"
-                            android:text="Nguyễn Văn A"
+                            android:text="Đang tải..."
                             android:textColor="#212121"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -115,7 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="sans-serif"
-                            android:text="0123 456 789"
+                            android:text="Đang tải..."
                             android:textColor="#757575"
                             android:textSize="14sp" />
 
@@ -126,7 +123,7 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="sans-serif"
                             android:lineSpacingExtra="2dp"
-                            android:text="123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh"
+                            android:text="Đang tải..."
                             android:textColor="#424242"
                             android:textSize="14sp" />
 
@@ -136,84 +133,27 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- 2. Thông tin sản phẩm -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardProductInfo"
+            <TextView
+                android:id="@+id/tvProductHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sản phẩm"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCheckoutItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="12dp"
-                android:elevation="2dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivProductImage"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:contentDescription="Hình sản phẩm"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_no_product"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                         />
-
-                    <TextView
-                        android:id="@+id/tvProductName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif-medium"
-                        android:maxLines="2"
-                        android:text="Áo thun nam cổ tròn basic form rộng"
-                        android:textColor="#212121"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/ivProductImage"
-                        app:layout_constraintTop_toTopOf="@id/ivProductImage" />
-
-                    <TextView
-                        android:id="@+id/tvProductQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="sans-serif"
-                        android:text="x2"
-                        android:textColor="#757575"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@id/ivProductImage"
-                        app:layout_constraintTop_toBottomOf="@id/tvProductName" />
-
-                    <TextView
-                        android:id="@+id/tvProductPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="500.000đ"
-                        android:textColor="#00695C"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@id/ivProductImage"
-                        app:layout_constraintTop_toBottomOf="@id/tvProductQuantity" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- 3. Phương thức thanh toán -->
+                android:background="#FFFFFF"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardPaymentMethod"
                 android:layout_width="match_parent"
@@ -286,7 +226,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <!-- 4. Footer (Fixed at bottom) -->
     <LinearLayout
         android:id="@+id/layoutFooter"
         android:layout_width="match_parent"

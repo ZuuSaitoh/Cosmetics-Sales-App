@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewStructure;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,16 +20,13 @@ import android.widget.Toast;
 
 import com.example.myapplication.model.Product;
 import com.example.myapplication.auth.AuthManager;
-import com.example.myapplication.CartManager;
 import com.example.myapplication.network.AuthService;
-import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.AddCartItemRequest;
 import com.example.myapplication.model.Cart;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import android.widget.ImageView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,7 +114,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             btnCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(ProductDetailActivity.this, CartActivity.class);
+                    Intent i = new Intent(ProductDetailActivity.this, ActivityCart.class);
                     startActivity(i);
                 }
             });

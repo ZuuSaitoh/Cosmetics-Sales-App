@@ -1,11 +1,9 @@
 package com.example.myapplication;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -40,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartActivity extends AppCompatActivity implements CartAdapter.OnItemQuantityChangedListener, CartAdapter.OnItemRemovedListener, CartAdapter.OnItemSelectionChangedListener {
+public class ActivityCart extends AppCompatActivity implements CartAdapter.OnItemQuantityChangedListener, CartAdapter.OnItemRemovedListener, CartAdapter.OnItemSelectionChangedListener {
     private RecyclerView recyclerView;
     private TextView textGrandTotal;
     private ImageButton btnBack;
@@ -131,7 +130,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> finish());
         btnContinueShopping.setOnClickListener(v -> {
-            Intent intent = new Intent(CartActivity.this, Main.class);
+            Intent intent = new Intent(ActivityCart.this, Main.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -162,7 +161,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-                Toast.makeText(CartActivity.this, "Lỗi khi lấy giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi lấy giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -176,13 +175,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                     // Cart created, but it's empty, so just show the empty state
                     updateCartUI(Collections.emptyList());
                 } else {
-                    Toast.makeText(CartActivity.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-                Toast.makeText(CartActivity.this, "Lỗi khi tạo giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi tạo giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -200,7 +199,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
             @Override
             public void onFailure(Call<CartItemsResponse> call, Throwable t) {
-                Toast.makeText(CartActivity.this, "Lỗi khi tải giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi tải giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -271,9 +270,11 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         saveSelectedItems();
         
         double total = 0;
+        ArrayList<CartItem> selectedItemsList = new ArrayList<>();
         for (CartItem item : cartAdapter.getItems()) {
             if (selectedItems.contains(item.getCartItemID())) {
                 total += item.getItemTotal();
+                selectedItemsList.add(item);
             }
         }
 
@@ -286,6 +287,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
         Intent intent = new Intent(this, ActivityCheckout.class);
         intent.putExtra("totalAmount", total);
+        intent.putExtra("selectedProducts", selectedItemsList);
         if (currentCartId != null) {
             intent.putExtra("cartId", currentCartId);
         }
@@ -310,18 +312,18 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 android.util.Log.d("CartActivity", "Change quantity response code: " + response.code());
                 if (response.isSuccessful()) {
-                    Toast.makeText(CartActivity.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
                     android.util.Log.e("CartActivity", "Change quantity failed with code: " + response.code());
-                    Toast.makeText(CartActivity.this, "Không thể cập nhật số lượng (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Không thể cập nhật số lượng (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
                 android.util.Log.e("CartActivity", "Change quantity request failed", t);
-                Toast.makeText(CartActivity.this, "Lỗi khi cập nhật số lượng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi cập nhật số lượng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -385,16 +387,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
-                    Toast.makeText(CartActivity.this, "Không thể xóa sản phẩm (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Không thể xóa sản phẩm (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(CartActivity.this, "Lỗi khi xóa sản phẩm: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi xóa sản phẩm: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -409,16 +411,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(CartActivity.this, "Đã xóa toàn bộ sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Đã xóa toàn bộ sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to show empty state
                 } else {
-                    Toast.makeText(CartActivity.this, "Không thể xóa giỏ hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCart.this, "Không thể xóa giỏ hàng", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(CartActivity.this, "Lỗi khi xóa giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityCart.this, "Lỗi khi xóa giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
