@@ -191,7 +191,15 @@ public class ActivityLogin extends AppCompatActivity {
                             return;
                         }
 
-                        // Trường hợp 2: Login thông thường, vào Main
+                        // Trường hợp 2: Redirect về chat sau khi login
+                        if (getIntent() != null && getIntent().getBooleanExtra("redirect_to_chat", false)) {
+                            Intent intent = new Intent(ActivityLogin.this, ChatActivity.class);
+                            startActivity(intent);
+                            finish();
+                            return;
+                        }
+
+                        // Trường hợp 3: Login thông thường, vào Main
                         setResult(RESULT_OK);
                         Intent intent = new Intent(ActivityLogin.this, Main.class);
                         startActivity(intent);

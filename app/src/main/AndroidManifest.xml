@@ -8,8 +8,23 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    
+    <!-- ============ NOTIFICATION PERMISSIONS ============ -->
+    <!-- Permission để hiển thị notification (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <!-- Permission để notification rung -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <!-- Permission để nhận broadcast khi device khởi động lại -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    <!-- Permission để hiển thị badge trên app icon (một số devices) -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -111,12 +126,53 @@
             android:exported="false"
             android:label="Trang quản trị"
             android:theme="@style/Theme.MyApplication" />
+        
+        <activity
+            android:name=".notification.NotificationListActivity"
+            android:exported="false"
+            android:label="Thông báo"
+            android:theme="@style/Theme.MyApplication" />
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:label="Chat Support"
+            android:theme="@style/Theme.MyApplication" />
+
+        <activity
+            android:name=".CategoryProductsActivity"
+            android:exported="false"
+            android:label="Sản phẩm theo danh mục"
+            android:theme="@style/Theme.MyApplication" />
 
         <service
             android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location" />
+
+        <!-- ============ NOTIFICATION COMPONENTS ============ -->
+        <!-- BroadcastReceiver để xử lý notification actions -->
+        <receiver
+            android:name=".notification.NotificationReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.myapplication.NOTIFICATION_DISMISSED" />
+                <action android:name="com.example.myapplication.NOTIFICATION_CLICKED" />
+                <action android:name="com.example.myapplication.VIEW_CART" />
+            </intent-filter>
+        </receiver>
+
+        <!-- BroadcastReceiver để restore notification sau khi restart device -->
+        <receiver
+            android:name=".notification.BootReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

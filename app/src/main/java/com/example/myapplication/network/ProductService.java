@@ -15,4 +15,7 @@ public interface ProductService {
     
     @GET("products/{id}")
     Call<Product> getProductById(@Path("id") Long productId);
+    
+    @GET("products/by-category/{categoryId}")
+    Call<ApiResponse<List<Product>>> getProductsByCategory(@Path("categoryId") Long categoryId);
 }

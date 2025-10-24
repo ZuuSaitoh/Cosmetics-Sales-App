@@ -5,6 +5,9 @@ import static java.lang.Integer.parseInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
+import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.ProductService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -226,10 +229,37 @@ public class ProductDetailActivity extends AppCompatActivity {
         ImageButton btnMinus = bottomSheetDialog.findViewById(R.id.btn_minus);
         ImageButton btnPlus = bottomSheetDialog.findViewById(R.id.btn_plus);
         Button btnConfirm = bottomSheetDialog.findViewById(R.id.btn_confirm_add);
+        
+        // Thêm các view để hiển thị thông tin sản phẩm
+        ImageView imageProductPopup = bottomSheetDialog.findViewById(R.id.image_product);
+        TextView textProductName = bottomSheetDialog.findViewById(R.id.text_product_name);
 
         if (textQuantity == null || btnMinus == null || btnPlus == null || btnConfirm == null) {
             Toast.makeText(this, "Lỗi: Không tìm thấy layout popup!", Toast.LENGTH_SHORT).show();
             return;
+        }
+        
+        // Cập nhật thông tin sản phẩm trong popup
+        if (product != null) {
+            // Cập nhật tên sản phẩm
+            if (textProductName != null) {
+                textProductName.setText(product.getName());
+            }
+            
+            // Cập nhật hình ảnh sản phẩm
+            if (imageProductPopup != null) {
+                if (product.getImageURL() != null && !product.getImageURL().isEmpty()) {
+                    // Sử dụng Glide để load hình ảnh từ URL
+                    com.bumptech.glide.Glide.with(this)
+                        .load(product.getImageURL().trim())
+                        .placeholder(R.drawable.img_no_product)
+                        .error(R.drawable.img_no_product)
+                        .into(imageProductPopup);
+                } else {
+                    // Fallback: sử dụng hình ảnh mặc định
+                    imageProductPopup.setImageResource(R.drawable.img_no_product);
+                }
+            }
         }
 
         final int[] quantity = {1};
@@ -281,7 +311,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Long cartId = response.body().getCartID();
-                    callAddProduct(cartId, product.getProductID(), quantity);
+                    // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+                    checkAndAddProduct(cartId, product.getProductID(), quantity);
                 } else {
                     // Create cart then add
                     authService.createCart(new CreateCartRequest(userId)).enqueue(new Callback<Cart>() {
@@ -289,7 +320,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         public void onResponse(Call<Cart> call2, Response<Cart> resp2) {
                             if (resp2.isSuccessful() && resp2.body() != null) {
                                 Long newCartId = resp2.body().getCartID();
-                                callAddProduct(newCartId, product.getProductID(), quantity);
+                                // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+                                checkAndAddProduct(newCartId, product.getProductID(), quantity);
                             } else {
                                 Toast.makeText(ProductDetailActivity.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
                             }
@@ -310,6 +342,77 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void checkAndAddProduct(Long cartId, Long productId, int quantity) {
+        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+        authService.getCartItems(cartId).enqueue(new Callback<com.example.myapplication.network.dto.CartItemsResponse>() {
+            @Override
+            public void onResponse(Call<com.example.myapplication.network.dto.CartItemsResponse> call, Response<com.example.myapplication.network.dto.CartItemsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    com.example.myapplication.network.dto.CartItemsResponse cartItemsResponse = response.body();
+                    List<com.example.myapplication.model.CartItem> existingItems = cartItemsResponse.getCartItems();
+                    
+                    // Tìm sản phẩm đã tồn tại
+                    com.example.myapplication.model.CartItem existingItem = null;
+                    if (existingItems != null) {
+                        for (com.example.myapplication.model.CartItem item : existingItems) {
+                            if (item.getProduct().getProductID().equals(productId)) {
+                                existingItem = item;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (existingItem != null) {
+                        // Sản phẩm đã tồn tại -> cập nhật số lượng
+                        int newQuantity = existingItem.getQuantity() + quantity;
+                        updateExistingProductQuantity(existingItem.getCartItemID(), newQuantity, quantity);
+                    } else {
+                        // Sản phẩm chưa tồn tại -> thêm mới
+                        callAddProduct(cartId, productId, quantity);
+                    }
+                } else {
+                    // Nếu không lấy được cart items, thử thêm mới
+                    callAddProduct(cartId, productId, quantity);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.example.myapplication.network.dto.CartItemsResponse> call, Throwable t) {
+                // Nếu có lỗi khi lấy cart items, thử thêm mới
+                callAddProduct(cartId, productId, quantity);
+            }
+        });
+    }
+
+    private void updateExistingProductQuantity(Long cartItemId, int newQuantity, int quantityToAdd) {
+        com.example.myapplication.network.dto.ChangeQuantityRequest request = 
+            new com.example.myapplication.network.dto.ChangeQuantityRequest(cartItemId, newQuantity);
+        
+        authService.changeQuantity(request).enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().addToCart(product, quantityToAdd);
+                    
+                    // Chạy animation bay vào giỏ hàng
+                    runCartAnimation();
+                    
+                    Toast.makeText(ProductDetailActivity.this, "Đã cập nhật số lượng sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                    updateCartBadge();
+                } else {
+                    String msg = "Cập nhật số lượng thất bại (" + response.code() + ")";
+                    Toast.makeText(ProductDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi mạng khi cập nhật số lượng", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void callAddProduct(Long cartId, Long productId, int quantity) {
         if (cartId == null || productId == null) {
             Toast.makeText(this, "Thiếu thông tin giỏ hàng hoặc sản phẩm.", Toast.LENGTH_SHORT).show();
@@ -319,6 +422,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().addToCart(product, quantity);
+                    
+                    // Chạy animation bay vào giỏ hàng
+                    runCartAnimation();
+                    
                     Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     updateCartBadge();
                 } else {
@@ -354,6 +463,93 @@ public class ProductDetailActivity extends AppCompatActivity {
             } else {
                 // Login thất bại (vì token null) hoặc user bấm back (hủy)
                 Toast.makeText(this, "Chưa đăng nhập.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng
+     */
+    private void runCartAnimation() {
+        if (btnAddToCart != null && btnCart != null) {
+            // Sử dụng hình ảnh sản phẩm từ ImageView nếu có
+            if (imageProduct != null && imageProduct.getDrawable() != null) {
+                CartAnimation.flyToCartWithProduct(btnAddToCart, btnCart, imageProduct, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - có thể thêm hiệu ứng khác ở đây
+                        // Ví dụ: làm rung cart icon hoặc thay đổi màu
+                        if (btnCart != null) {
+                            btnCart.animate()
+                                .scaleX(1.1f)
+                                .scaleY(1.1f)
+                                .setDuration(100)
+                                .withEndAction(() -> {
+                                    btnCart.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(100);
+                                });
+                        }
+                    }
+                });
+            } else if (product != null) {
+                // Sử dụng Product object để tạo animation
+                CartAnimation.flyToCartWithProduct(btnAddToCart, btnCart, this, product, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - có thể thêm hiệu ứng khác ở đây
+                        // Ví dụ: làm rung cart icon hoặc thay đổi màu
+                        if (btnCart != null) {
+                            btnCart.animate()
+                                .scaleX(1.1f)
+                                .scaleY(1.1f)
+                                .setDuration(100)
+                                .withEndAction(() -> {
+                                    btnCart.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(100);
+                                });
+                        }
+                    }
+                });
+            } else {
+                // Fallback: sử dụng hình ảnh mặc định
+                CartAnimation.flyToCartWithDrawable(btnAddToCart, btnCart, this, R.drawable.img_no_product, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - có thể thêm hiệu ứng khác ở đây
+                        // Ví dụ: làm rung cart icon hoặc thay đổi màu
+                        if (btnCart != null) {
+                            btnCart.animate()
+                                .scaleX(1.1f)
+                                .scaleY(1.1f)
+                                .setDuration(100)
+                                .withEndAction(() -> {
+                                    btnCart.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(100);
+                                });
+                        }
+                    }
+                });
             }
         }
     }

@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +37,8 @@ import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.ChangeQuantityRequest;
 import com.example.myapplication.network.dto.CreateCartRequest;
+import com.example.myapplication.notification.BootReceiver;
+import com.example.myapplication.notification.NotificationHelper;
 
 import java.text.NumberFormat;
 import java.util.Collections;
@@ -58,6 +68,21 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
     private static final String PREFS_NAME = "cart_selection";
     private static final String SELECTED_ITEMS_KEY = "selected_items";
 
+    // Notification helper
+    private NotificationHelper notificationHelper;
+    private int currentCartItemCount = 0;
+
+    // Permission launcher for notification (Android 13+)
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission granted - notification sẽ được show khi cần
+                } else {
+                    // Permission denied - có thể show explanation dialog
+                    Toast.makeText(this, "Bạn cần cấp quyền thông báo để nhận cập nhật về giỏ hàng", Toast.LENGTH_LONG).show();
+                }
+            });
+
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 
     @Override
@@ -68,16 +93,22 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         authService = ApiClient.getRetrofit(this).create(AuthService.class);
         authManager = new AuthManager(this);
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        notificationHelper = new NotificationHelper(this);
 
         initViews();
         setupClickListeners();
         loadSelectedItems();
+
+        // Request notification permission if needed (Android 13+)
+        requestNotificationPermission();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadSelectedItems();
+        // Clear cart notification khi user vào cart activity
+        notificationHelper.clearCartNotification();
         loadCartData();
     }
 
@@ -109,6 +140,20 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
                 .apply();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Show notification nếu còn items trong cart khi rời khỏi activity
+        showCartNotificationIfNeeded();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Save cart state để restore sau khi device restart
+        saveCartState();
+    }
+
     private void initViews() {
         recyclerView = findViewById(R.id.recycler_cart);
         textGrandTotal = findViewById(R.id.text_grand_total);
@@ -125,6 +170,80 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         cartAdapter.setOnItemRemovedListener(this);
         cartAdapter.setOnItemSelectionChangedListener(this);
         recyclerView.setAdapter(cartAdapter);
+
+        // Thêm swipe-to-delete functionality
+        setupSwipeToDelete();
+    }
+
+    private void setupSwipeToDelete() {
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false; // Không hỗ trợ drag & drop
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (position >= 0 && position < cartAdapter.getItemCount()) {
+                    CartItem itemToDelete = cartAdapter.getItemAt(position);
+
+                    // Hiển thị dialog xác nhận xóa
+                    showDeleteConfirmDialog(itemToDelete, position);
+                }
+            }
+
+            @Override
+            public void onChildDraw(android.graphics.Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+
+                    // Vẽ background đỏ khi swipe
+                    if (dX < 0) { // Swipe left
+                        android.graphics.Paint paint = new android.graphics.Paint();
+                        paint.setColor(0xFFF44336); // Màu đỏ
+                        c.drawRect(itemView.getRight() + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom(), paint);
+
+                        // Vẽ icon delete
+                        android.graphics.drawable.Drawable deleteIcon = getResources().getDrawable(android.R.drawable.ic_menu_delete);
+                        int iconSize = 48;
+                        int iconMargin = (itemView.getHeight() - iconSize) / 2;
+                        deleteIcon.setBounds(
+                            (int)(itemView.getRight() - iconSize - iconMargin),
+                            itemView.getTop() + iconMargin,
+                            (int)(itemView.getRight() - iconMargin),
+                            itemView.getTop() + iconMargin + iconSize
+                        );
+                        deleteIcon.setColorFilter(android.graphics.Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+                        deleteIcon.draw(c);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void showDeleteConfirmDialog(CartItem itemToDelete, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận xóa");
+        builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm \"" + itemToDelete.getProduct().getName() + "\" khỏi giỏ hàng?");
+
+        builder.setPositiveButton("Xóa", (dialog, which) -> {
+            // Thực hiện xóa item
+            deleteCartItem(itemToDelete.getCartItemID(), itemToDelete);
+        });
+
+        builder.setNegativeButton("Hủy", (dialog, which) -> {
+            // Khôi phục item trong adapter
+            cartAdapter.notifyItemChanged(position);
+        });
+
+        builder.setCancelable(false);
+        builder.show();
     }
 
     private void setupClickListeners() {
@@ -207,6 +326,17 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
     private void updateCartUI(List<CartItem> items) {
         boolean isLoggedIn = authManager.getUserId() != null;
         
+        // Calculate total item count
+        currentCartItemCount = 0;
+        if (items != null) {
+            for (CartItem item : items) {
+                currentCartItemCount += item.getQuantity();
+            }
+        }
+
+        // Đồng bộ CartManager với API cart data
+        syncCartManagerWithAPI(items);
+
         if (items == null || items.isEmpty()) {
             emptyState.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -217,7 +347,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
             emptyState.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             totalSection.setVisibility(View.VISIBLE);
-            
+
             // Only add new items to selected if they're not already selected
             // This ensures we don't override user's previous selections
             for (CartItem item : items) {
@@ -228,7 +358,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
                     }
                 }
             }
-            
+
             cartAdapter.updateItems(items);
             cartAdapter.setSelectedItems(selectedItems);
         }
@@ -251,6 +381,18 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         }
     }
 
+    private void syncCartManagerWithAPI(List<CartItem> items) {
+        // Clear CartManager trước
+        CartManager.getInstance().clear();
+
+        // Thêm tất cả items từ API vào CartManager
+        if (items != null) {
+            for (CartItem item : items) {
+                CartManager.getInstance().addToCart(item.getProduct(), item.getQuantity());
+            }
+        }
+    }
+
     private void updateGrandTotal(List<CartItem> items) {
         double total = 0;
         if (items != null) {
@@ -268,7 +410,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
     private void proceedOrder() {
         // Save current selection before proceeding to checkout
         saveSelectedItems();
-        
+
         double total = 0;
         ArrayList<CartItem> selectedItemsList = new ArrayList<>();
         for (CartItem item : cartAdapter.getItems()) {
@@ -312,6 +454,8 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 android.util.Log.d("CartActivity", "Change quantity response code: " + response.code());
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().updateQuantity(item.getProduct(), newQuantity);
                     Toast.makeText(ActivityCart.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
@@ -339,22 +483,22 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         android.util.Log.d("CartActivity", "Removing cart item ID: " + item.getCartItemID());
         
         // Call API to delete the item from cart
-        deleteCartItem(item.getCartItemID());
+        deleteCartItem(item.getCartItemID(), item);
     }
 
     @Override
     public void onSelectionChanged(CartItem item, boolean isSelected) {
         if (item.getCartItemID() == null) return;
-        
+
         if (isSelected) {
             selectedItems.add(item.getCartItemID());
         } else {
             selectedItems.remove(item.getCartItemID());
         }
-        
+
         // Save selection state
         saveSelectedItems();
-        
+
         // Update total with current cart items
         updateGrandTotal(cartAdapter.getItems());
     }
@@ -377,7 +521,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         dialog.show();
     }
 
-    private void deleteCartItem(Long cartItemId) {
+    private void deleteCartItem(Long cartItemId, CartItem item) {
         if (cartItemId == null) {
             Toast.makeText(this, "Không thể xóa sản phẩm này", Toast.LENGTH_SHORT).show();
             return;
@@ -423,5 +567,60 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
                 Toast.makeText(ActivityCart.this, "Lỗi khi xóa giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // ============ NOTIFICATION METHODS ============
+
+    /**
+     * Request notification permission (Android 13+)
+     */
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Should we show an explanation?
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    // Show explanation dialog
+                    new AlertDialog.Builder(this)
+                            .setTitle("Cho phép thông báo")
+                            .setMessage("Ứng dụng cần quyền thông báo để cập nhật bạn về giỏ hàng và đơn hàng của bạn.")
+                            .setPositiveButton("Cho phép", (dialog, which) ->
+                                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS))
+                            .setNegativeButton("Không", (dialog, which) -> dialog.dismiss())
+                            .show();
+                } else {
+                    // No explanation needed, request permission
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+                }
+            }
+        }
+    }
+
+    /**
+     * Show cart notification nếu còn items và app đang chuyển sang background
+     */
+    private void showCartNotificationIfNeeded() {
+        Long userId = authManager.getUserId();
+
+        // Chỉ show notification nếu:
+        // 1. User đã login
+        // 2. Có items trong cart
+        // 3. Notification permission đã được granted (hoặc không cần trên Android < 13)
+        if (userId != null && currentCartItemCount > 0) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                notificationHelper.areNotificationsEnabled()) {
+                notificationHelper.showCartBadgeNotification(String.valueOf(userId), currentCartItemCount);
+            }
+        }
+    }
+
+    /**
+     * Save cart state để restore sau khi device restart
+     */
+    private void saveCartState() {
+        Long userId = authManager.getUserId();
+        if (userId != null) {
+            BootReceiver.saveCartState(this, String.valueOf(userId), currentCartItemCount);
+        }
     }
 }

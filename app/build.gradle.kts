@@ -105,7 +105,7 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-
+ 
     // Map & others (giữ các dependency bạn cần; cân nhắc cleanup duplicate)
     implementation("com.github.vietmap-company:maps-sdk-android:2.6.0")
     implementation("com.github.vietmap-company:maps-sdk-navigation-ui-android:2.3.2")
@@ -135,6 +135,23 @@ dependencies {
     // Play services
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    // ============ NOTIFICATION FEATURE DEPENDENCIES ============
+    // Room Database - để lưu trữ Notification history
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    
+    // WorkManager - để schedule notifications (optional)
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    
+    // Notification & Badge Support
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("me.leolin:ShortcutBadger:1.1.22") // Badge cho app icon
+    
+    // LiveData & ViewModel (nếu chưa có)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 
     // Testing
     testImplementation(libs.junit)

@@ -3,136 +3,121 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="0dp"
-    android:layout_marginEnd="0dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="0dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
     app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:background="@android:color/white">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-        <!-- Top Section: Checkbox + Image + Product Info -->
+        <CheckBox
+            android:id="@+id/checkSelect"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:buttonTint="#00695C" />
+
+        <ImageView
+            android:id="@+id/imageProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_apple"
+            android:background="@drawable/rounded_image_background" />
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="top">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp">
 
-            <CheckBox
-                android:id="@+id/checkbox_select"
+            <TextView
+                android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="4dp"
-                android:checked="true" />
+                android:text="Sản phẩm"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#00695C"
+                android:layout_marginBottom="8dp"/>
 
-            <ImageView
-                android:id="@+id/imageProduct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_apple"
-                android:background="@drawable/rounded_image_background" />
-
+            <!-- Row chứa giá và quantity selector -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <!-- Giá niêm yết -->
                 <TextView
-                    android:id="@+id/textTitle"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textPrice"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sản phẩm"
-                    android:textSize="14sp"
-                    android:textColor="#000000"
-                    android:layout_marginBottom="8dp"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="2dp"/>
+                    android:text="0 VND"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#DE0000"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
+                <!-- Spacer -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
 
-                    <TextView
-                        android:id="@+id/textTotal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="₫50.000"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="#00897B"/>
-
-                    <TextView
-                        android:id="@+id/btn_remove"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Xóa"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"/>
-
-                </LinearLayout>
-
-                <!-- Quantity Control -->
+                <!-- Quantity Selector nhỏ giống Shopee -->
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:background="@drawable/quantity_border">
+                    android:background="@drawable/quantity_selector_background"
+                    android:padding="2dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_minus"
-                        android:layout_width="28dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_remove"
-                        android:background="?attr/selectableItemBackground"
-                        android:scaleType="centerInside"
-                        android:padding="6dp"
-                        android:contentDescription="Giảm số lượng"
-                        app:tint="#757575" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="-"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white"
+                        app:backgroundTint="#9E9E9E"
+                        app:cornerRadius="12dp"
+                        style="@style/Widget.Material3.Button.IconButton" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/textQty"
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:text="1"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
+                        android:layout_width="32dp"
+                        android:layout_height="24dp"
+                        android:background="@android:color/transparent"
+                        android:inputType="number"
                         android:gravity="center"
-                        android:background="@android:color/white"/>
+                        android:text="1"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:maxLength="2"/>
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_plus"
-                        android:layout_width="28dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_add"
-                        android:background="?attr/selectableItemBackground"
-                        android:scaleType="centerInside"
-                        android:padding="6dp"
-                        android:contentDescription="Tăng số lượng"
-                        app:tint="#00897B" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:text="+"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white"
+                        app:backgroundTint="#00695C"
+                        app:cornerRadius="12dp"
+                        style="@style/Widget.Material3.Button.IconButton" />
 
                 </LinearLayout>
 
@@ -140,12 +125,24 @@
 
         </LinearLayout>
 
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F5F5F5"
-            android:layout_marginTop="12dp"/>
+        <!-- Delete button (hidden by default) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:text="Xóa"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:backgroundTint="#F44336"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_delete"
+            app:iconSize="14dp"
+            app:iconTint="@android:color/white"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:visibility="gone" />
 
     </LinearLayout>
 
