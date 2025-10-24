@@ -94,6 +94,12 @@
             android:label="Trang quản trị"
             android:theme="@style/Theme.MyApplication" />
 
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:label="Chat Support"
+            android:theme="@style/Theme.MyApplication" />
+
         <service
             android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
             android:enabled="true"

@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,6 +89,80 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         cartAdapter.setOnItemQuantityChangedListener(this);
         cartAdapter.setOnItemRemovedListener(this);
         recyclerView.setAdapter(cartAdapter);
+        
+        // Thêm swipe-to-delete functionality
+        setupSwipeToDelete();
+    }
+
+    private void setupSwipeToDelete() {
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false; // Không hỗ trợ drag & drop
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (position >= 0 && position < cartAdapter.getItemCount()) {
+                    CartItem itemToDelete = cartAdapter.getItemAt(position);
+                    
+                    // Hiển thị dialog xác nhận xóa
+                    showDeleteConfirmDialog(itemToDelete, position);
+                }
+            }
+            
+            @Override
+            public void onChildDraw(android.graphics.Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, 
+                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+                    
+                    // Vẽ background đỏ khi swipe
+                    if (dX < 0) { // Swipe left
+                        android.graphics.Paint paint = new android.graphics.Paint();
+                        paint.setColor(0xFFF44336); // Màu đỏ
+                        c.drawRect(itemView.getRight() + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom(), paint);
+                        
+                        // Vẽ icon delete
+                        android.graphics.drawable.Drawable deleteIcon = getResources().getDrawable(android.R.drawable.ic_menu_delete);
+                        int iconSize = 48;
+                        int iconMargin = (itemView.getHeight() - iconSize) / 2;
+                        deleteIcon.setBounds(
+                            (int)(itemView.getRight() - iconSize - iconMargin),
+                            itemView.getTop() + iconMargin,
+                            (int)(itemView.getRight() - iconMargin),
+                            itemView.getTop() + iconMargin + iconSize
+                        );
+                        deleteIcon.setColorFilter(android.graphics.Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+                        deleteIcon.draw(c);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+    
+    private void showDeleteConfirmDialog(CartItem itemToDelete, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận xóa");
+        builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm \"" + itemToDelete.getProduct().getName() + "\" khỏi giỏ hàng?");
+        
+        builder.setPositiveButton("Xóa", (dialog, which) -> {
+            // Thực hiện xóa item
+            deleteCartItem(itemToDelete.getCartItemID(), itemToDelete);
+        });
+        
+        builder.setNegativeButton("Hủy", (dialog, which) -> {
+            // Khôi phục item trong adapter
+            cartAdapter.notifyItemChanged(position);
+        });
+        
+        builder.setCancelable(false);
+        builder.show();
     }
 
     private void setupClickListeners() {
@@ -170,6 +245,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     private void updateCartUI(List<CartItem> items) {
         boolean isLoggedIn = authManager.getUserId() != null;
         
+        // Đồng bộ CartManager với API cart data
+        syncCartManagerWithAPI(items);
+        
         if (items == null || items.isEmpty()) {
             emptyState.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -197,6 +275,18 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) totalSection.getLayoutParams();
             params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
             totalSection.setLayoutParams(params);
+        }
+    }
+
+    private void syncCartManagerWithAPI(List<CartItem> items) {
+        // Clear CartManager trước
+        CartManager.getInstance().clear();
+        
+        // Thêm tất cả items từ API vào CartManager
+        if (items != null) {
+            for (CartItem item : items) {
+                CartManager.getInstance().addToCart(item.getProduct(), item.getQuantity());
+            }
         }
     }
 
@@ -236,6 +326,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 android.util.Log.d("CartActivity", "Change quantity response code: " + response.code());
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().updateQuantity(item.getProduct(), newQuantity);
                     Toast.makeText(CartActivity.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
@@ -263,7 +355,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         android.util.Log.d("CartActivity", "Removing cart item ID: " + item.getCartItemID());
         
         // Call API to delete the item from cart
-        deleteCartItem(item.getCartItemID());
+        deleteCartItem(item.getCartItemID(), item);
     }
 
     private void showDeleteAllConfirmation() {
@@ -284,7 +376,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         dialog.show();
     }
 
-    private void deleteCartItem(Long cartItemId) {
+    private void deleteCartItem(Long cartItemId, CartItem item) {
         if (cartItemId == null) {
             Toast.makeText(this, "Không thể xóa sản phẩm này", Toast.LENGTH_SHORT).show();
             return;
@@ -294,6 +386,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().remove(item.getProduct());
                     Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
@@ -318,6 +412,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
+                    // Cập nhật CartManager để badge hiển thị đúng
+                    CartManager.getInstance().clear();
                     Toast.makeText(CartActivity.this, "Đã xóa toàn bộ sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to show empty state
                 } else {

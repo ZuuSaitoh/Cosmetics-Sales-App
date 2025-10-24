@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.CategoryAdapter;
+import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.CategoryService;
@@ -298,5 +299,41 @@ public class CategoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateCartBadge();
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng
+     */
+    private void runCartAnimation() {
+        if (getView() != null && cartIcon != null && cartBadge != null) {
+            // Tìm search box để làm source
+            View sourceView = getView().findViewById(R.id.searchEditText);
+            
+            if (sourceView != null) {
+                CartAnimation.simpleFlyToCart(sourceView, cartIcon, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - làm rung cart icon
+                        if (cartIcon != null) {
+                            cartIcon.animate()
+                                .scaleX(1.2f)
+                                .scaleY(1.2f)
+                                .setDuration(150)
+                                .withEndAction(() -> {
+                                    cartIcon.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(150);
+                                });
+                        }
+                    }
+                });
+            }
+        }
     }
 }

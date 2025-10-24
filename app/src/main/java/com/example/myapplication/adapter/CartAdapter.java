@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.CartItem;
 import com.google.android.material.button.MaterialButton;
+import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -49,6 +50,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     public void setOnItemRemovedListener(OnItemRemovedListener listener) {
         this.itemRemovedListener = listener;
     }
+    
+    public CartItem getItemAt(int position) {
+        if (position >= 0 && position < items.size()) {
+            return items.get(position);
+        }
+        return null;
+    }
 
     @NonNull
     @Override
@@ -61,10 +69,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int position) {
         CartItem item = items.get(position);
         h.title.setText(item.getProduct().getName());
-        h.quantity.setText("x" + item.getQuantity());
-        h.total.setText(formatPrice(item.getItemTotal()));
-        // TODO: Update to use Glide or Picasso if image URLs are provided by the API
-        // h.image.setImageResource(item.getProduct().getImageResId());
+        // Hiển thị giá niêm yết (không phải total)
+        h.price.setText(formatPrice(item.getProduct().getPrice()));
+        h.quantity.setText(String.valueOf(item.getQuantity()));
+        
+        // Cập nhật hình ảnh sản phẩm
+        if (item.getProduct().getImageURL() != null && !item.getProduct().getImageURL().isEmpty()) {
+            // Sử dụng Glide để load hình ảnh từ URL
+            Glide.with(h.image.getContext())
+                .load(item.getProduct().getImageURL().trim())
+                .placeholder(R.drawable.img_no_product)
+                .error(R.drawable.img_no_product)
+                .into(h.image);
+        } else {
+            // Fallback: sử dụng hình ảnh mặc định
+            h.image.setImageResource(R.drawable.img_no_product);
+        }
 
         h.btnPlus.setOnClickListener(v -> {
             if (quantityChangedListener != null) {
@@ -83,6 +103,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
                 itemRemovedListener.onItemRemoved(item);
             }
         });
+
+        // Cho phép nhập số trực tiếp
+        h.quantity.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                try {
+                    int newQty = Integer.parseInt(h.quantity.getText().toString().trim());
+                    newQty = Math.max(1, newQty);
+                    if (quantityChangedListener != null && newQty != item.getQuantity()) {
+                        quantityChangedListener.onQuantityChanged(item, newQty);
+                    }
+                } catch (Exception ignored) { }
+                h.quantity.setText(String.valueOf(item.getQuantity()));
+            }
+        });
     }
 
     @Override
@@ -96,18 +130,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title, quantity, total;
+        final TextView title, price;
+        final android.widget.EditText quantity;
+        final android.widget.CheckBox checkSelect;
         final MaterialButton btnPlus, btnMinus, btnRemove;
 
         VH(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageProduct);
             title = itemView.findViewById(R.id.textTitle);
+            price = itemView.findViewById(R.id.textPrice);
             quantity = itemView.findViewById(R.id.textQty);
-            total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnRemove = itemView.findViewById(R.id.btn_remove);
+            checkSelect = itemView.findViewById(R.id.checkSelect);
         }
     }
 }
