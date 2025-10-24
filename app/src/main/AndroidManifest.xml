@@ -121,6 +121,12 @@
             android:label="Chat Support"
             android:theme="@style/Theme.MyApplication" />
 
+        <activity
+            android:name=".CategoryProductsActivity"
+            android:exported="false"
+            android:label="Sản phẩm theo danh mục"
+            android:theme="@style/Theme.MyApplication" />
+
         <service
             android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
             android:enabled="true"

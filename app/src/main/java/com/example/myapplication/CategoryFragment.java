@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.CategoryAdapter;
@@ -279,16 +280,17 @@ public class CategoryFragment extends Fragment {
                 public void onCategoryClick(Category category) {
                     try {
                         if (getContext() != null) {
-                            Toast.makeText(getContext(), "Đã chọn: " + category.getName(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
+                            intent.putExtra("category", category);
+                            startActivity(intent);
                         }
-                        // TODO: Navigate to products in this category
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
             
-            categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             categoriesRecyclerView.setAdapter(categoryAdapter);
         } catch (Exception e) {
             e.printStackTrace();

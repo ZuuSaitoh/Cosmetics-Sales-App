@@ -34,12 +34,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final Context context;
     private final List<Product> originalProducts;
     private final List<Product> filteredProducts;
+    private OnProductClickListener listener;
 
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
 
     public ProductAdapter(Context context, List<Product> products) {
         this.context = context;
         this.originalProducts = new ArrayList<>(products);
         this.filteredProducts = new ArrayList<>(products);
+    }
+
+    public void setOnProductClickListener(OnProductClickListener listener) {
+        this.listener = listener;
     }
     
     public void updateProducts(List<Product> newProducts) {
@@ -81,9 +89,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("product", product);
-            context.startActivity(intent);
+            if (listener != null) {
+                listener.onProductClick(product);
+            }
         });
     }
 

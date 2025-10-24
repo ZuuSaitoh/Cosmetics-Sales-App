@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -31,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
     private RecyclerView bannerRecyclerView;
     private RecyclerView productRecyclerView;
     private BannerAdapter bannerAdapter;
@@ -194,6 +195,7 @@ public class HomeFragment extends Fragment {
             // Initialize with empty list
             List<Product> products = new ArrayList<>();
             productAdapter = new ProductAdapter(getContext(), products);
+            productAdapter.setOnProductClickListener(this);
             productRecyclerView.setAdapter(productAdapter);
 
             // Load products from API
@@ -347,5 +349,12 @@ public class HomeFragment extends Fragment {
      */
     private void runCartAnimation() {
         runCartAnimationWithProduct();
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+        intent.putExtra("product", product);
+        startActivity(intent);
     }
 }
