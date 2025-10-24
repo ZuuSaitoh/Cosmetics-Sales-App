@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.CategoryAdapter;
 import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.model.Category;
+import com.example.myapplication.model.Product;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.CategoryService;
+import com.example.myapplication.network.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,6 +191,9 @@ public class CategoryFragment extends Fragment {
                                 // Set default icons and descriptions for categories
                                 setDefaultIconsAndDescriptions(categories);
                                 
+                                // Load product counts for each category
+                                loadProductCountsForCategories(categories);
+                                
                                 filteredCategories.clear();
                                 filteredCategories.addAll(categories);
                                 if (categoryAdapter != null) {
@@ -337,5 +342,55 @@ public class CategoryFragment extends Fragment {
                 });
             }
         }
+    }
+    
+    /**
+     * Load product counts for each category by fetching all products once
+     */
+    private void loadProductCountsForCategories(List<Category> categories) {
+        if (getContext() == null) return;
+        
+        ProductService productService = ApiClient.getRetrofit(getContext()).create(ProductService.class);
+        
+        // Load all products once and count by category
+        productService.fetchAllProducts().enqueue(new Callback<com.example.myapplication.network.dto.ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, 
+                                 Response<com.example.myapplication.network.dto.ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    com.example.myapplication.network.dto.ApiResponse<List<Product>> apiResponse = response.body();
+                    if (apiResponse.getCode() == 9999 && apiResponse.getResult() != null) {
+                        List<Product> allProducts = apiResponse.getResult();
+                        
+                        // Count products for each category
+                        for (Category category : categories) {
+                            if (category.getCategoryID() != null) {
+                                int count = 0;
+                                for (Product product : allProducts) {
+                                    if (product.getCategoryID() != null && 
+                                        product.getCategoryID().getCategoryID() != null &&
+                                        product.getCategoryID().getCategoryID().equals(category.getCategoryID())) {
+                                        count++;
+                                    }
+                                }
+                                category.setProductCount(count);
+                            }
+                        }
+                        
+                        // Update UI
+                        if (getContext() != null && categoryAdapter != null) {
+                            getActivity().runOnUiThread(() -> {
+                                categoryAdapter.notifyDataSetChanged();
+                            });
+                        }
+                    }
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, Throwable t) {
+                android.util.Log.w("CategoryFragment", "Failed to load product counts: " + t.getMessage());
+            }
+        });
     }
 }
