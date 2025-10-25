@@ -19,6 +19,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.AuthService;
+import com.example.myapplication.network.dto.ForgotPasswordRequest;
+import com.example.myapplication.network.dto.ForgotPasswordResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -131,14 +133,38 @@ public class ActivityResetPassword extends AppCompatActivity {
     private void callResetPasswordAPI(String email, String newPassword) {
         Log.d("ActivityResetPassword", "Calling reset password API for: " + email);
 
-        // TODO: Implement API call to /users/forgot-password
-        // Tạm thời hiển thị thông báo thành công
-        Toast.makeText(this, "Mật khẩu đã được đặt lại thành công!", Toast.LENGTH_LONG).show();
+        ForgotPasswordRequest request = new ForgotPasswordRequest(email, newPassword);
         
-        // Chuyển về trang đăng nhập
-        Intent intent = new Intent(this, ActivityLogin.class);
-        startActivity(intent);
-        finish();
+        Call<ForgotPasswordResponse> call = authService.forgotPassword(request);
+        call.enqueue(new Callback<ForgotPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
+                resetPasswordButton.setEnabled(true);
+                resetPasswordButton.setText("Đặt lại mật khẩu");
+                
+                if (response.isSuccessful() && response.body() != null) {
+                    ForgotPasswordResponse passwordResponse = response.body();
+                    Log.d("ActivityResetPassword", "Password reset successful: " + passwordResponse.getResult());
+                    Toast.makeText(ActivityResetPassword.this, passwordResponse.getResult(), Toast.LENGTH_LONG).show();
+                    
+                    // Chuyển về trang đăng nhập
+                    Intent intent = new Intent(ActivityResetPassword.this, ActivityLogin.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Log.e("ActivityResetPassword", "Password reset failed: " + response.code());
+                    Toast.makeText(ActivityResetPassword.this, "Đặt lại mật khẩu thất bại (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
+                resetPasswordButton.setEnabled(true);
+                resetPasswordButton.setText("Đặt lại mật khẩu");
+                Log.e("ActivityResetPassword", "Error resetting password", t);
+                Toast.makeText(ActivityResetPassword.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
