@@ -6,6 +6,8 @@ import com.example.myapplication.model.User;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.AddCartItemRequest;
 import com.example.myapplication.network.dto.ChangeQuantityRequest;
+import com.example.myapplication.network.dto.ForgotPasswordRequest;
+import com.example.myapplication.network.dto.ForgotPasswordResponse;
 import okhttp3.ResponseBody;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
@@ -31,6 +33,9 @@ public interface AuthService {
     Call<RegisterResponse> register(@Body RegisterRequest request);
     @GET("users/{id}")
     Call<User> getUserProfile(@Path("id") Long userID);
+
+    @POST("users/forgot-password")
+    Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
 
     @GET("carts/get-by-userID/{userID}")
     Call<Cart> getCartByUserId(@Path("userID") Long userID);

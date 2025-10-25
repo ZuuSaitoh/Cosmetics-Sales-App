@@ -20,6 +20,8 @@ import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.model.User;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.UserService;
+import com.example.myapplication.network.dto.UpdatePasswordRequest;
+import com.example.myapplication.network.dto.UpdatePasswordResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +36,12 @@ public class ActivityUpdateProfile extends AppCompatActivity {
     private EditText emailEditText;
     private EditText phoneEditText;
     private EditText addressEditText;
+    private EditText oldPasswordEditText;
+    private EditText newPasswordEditText;
+    private EditText confirmPasswordEditText;
     private Button saveButton;
     private Button cancelButton;
+    private Button updatePasswordButton;
     private ImageButton backButton;
     private ProgressBar loadingProgressBar;
     
@@ -73,8 +79,12 @@ public class ActivityUpdateProfile extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
         addressEditText = findViewById(R.id.addressEditText);
+        oldPasswordEditText = findViewById(R.id.oldPasswordEditText);
+        newPasswordEditText = findViewById(R.id.newPasswordEditText);
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         saveButton = findViewById(R.id.saveButton);
         cancelButton = findViewById(R.id.cancelButton);
+        updatePasswordButton = findViewById(R.id.updatePasswordButton);
         backButton = findViewById(R.id.backButton);
         loadingProgressBar = findViewById(R.id.loadingProgressBar);
     }
@@ -83,6 +93,7 @@ public class ActivityUpdateProfile extends AppCompatActivity {
         saveButton.setOnClickListener(v -> saveUserInfo());
         cancelButton.setOnClickListener(v -> finish());
         backButton.setOnClickListener(v -> finish());
+        updatePasswordButton.setOnClickListener(v -> updatePassword());
     }
 
     private void loadCurrentUserInfo() {
@@ -217,6 +228,86 @@ public class ActivityUpdateProfile extends AppCompatActivity {
 
         if (address.isEmpty()) {
             addressEditText.setError("Vui lòng nhập địa chỉ");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private void updatePassword() {
+        String oldPassword = oldPasswordEditText.getText().toString().trim();
+        String newPassword = newPasswordEditText.getText().toString().trim();
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+
+        if (!validatePasswordInput(oldPassword, newPassword, confirmPassword)) {
+            return;
+        }
+
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        updatePasswordButton.setEnabled(false);
+
+        UpdatePasswordRequest request = new UpdatePasswordRequest(oldPassword, newPassword);
+
+        Log.d("ActivityUpdateProfile", "Updating password for user: " + userId);
+
+        Call<UpdatePasswordResponse> call = userService.updatePassword(userId, request);
+        call.enqueue(new Callback<UpdatePasswordResponse>() {
+            @Override
+            public void onResponse(Call<UpdatePasswordResponse> call, Response<UpdatePasswordResponse> response) {
+                loadingProgressBar.setVisibility(View.GONE);
+                updatePasswordButton.setEnabled(true);
+
+                if (response.isSuccessful() && response.body() != null) {
+                    UpdatePasswordResponse passwordResponse = response.body();
+                    Log.d("ActivityUpdateProfile", "Password updated successfully: " + passwordResponse.getResult());
+                    Toast.makeText(ActivityUpdateProfile.this, passwordResponse.getResult(), Toast.LENGTH_SHORT).show();
+                    
+                    // Clear password fields
+                    oldPasswordEditText.setText("");
+                    newPasswordEditText.setText("");
+                    confirmPasswordEditText.setText("");
+                } else {
+                    Log.e("ActivityUpdateProfile", "Password update failed: " + response.code());
+                    Toast.makeText(ActivityUpdateProfile.this, "Cập nhật mật khẩu thất bại (Code: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdatePasswordResponse> call, Throwable t) {
+                loadingProgressBar.setVisibility(View.GONE);
+                updatePasswordButton.setEnabled(true);
+                Log.e("ActivityUpdateProfile", "Error updating password", t);
+                Toast.makeText(ActivityUpdateProfile.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean validatePasswordInput(String oldPassword, String newPassword, String confirmPassword) {
+        boolean isValid = true;
+
+        if (oldPassword.isEmpty()) {
+            oldPasswordEditText.setError("Vui lòng nhập mật khẩu cũ");
+            isValid = false;
+        }
+
+        if (newPassword.isEmpty()) {
+            newPasswordEditText.setError("Vui lòng nhập mật khẩu mới");
+            isValid = false;
+        } else if (newPassword.length() < 6) {
+            newPasswordEditText.setError("Mật khẩu phải có ít nhất 6 ký tự");
+            isValid = false;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordEditText.setError("Vui lòng xác nhận mật khẩu mới");
+            isValid = false;
+        } else if (!newPassword.equals(confirmPassword)) {
+            confirmPasswordEditText.setError("Mật khẩu xác nhận không khớp");
+            isValid = false;
+        }
+
+        if (oldPassword.equals(newPassword)) {
+            newPasswordEditText.setError("Mật khẩu mới phải khác mật khẩu cũ");
             isValid = false;
         }
 
