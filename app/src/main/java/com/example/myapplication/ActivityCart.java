@@ -348,16 +348,6 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
             recyclerView.setVisibility(View.VISIBLE);
             totalSection.setVisibility(View.VISIBLE);
 
-            // Only add new items to selected if they're not already selected
-            // This ensures we don't override user's previous selections
-            for (CartItem item : items) {
-                if (!selectedItems.contains(item.getCartItemID())) {
-                    // Only auto-select if no previous selection exists
-                    if (selectedItems.isEmpty()) {
-                        selectedItems.add(item.getCartItemID());
-                    }
-                }
-            }
 
             cartAdapter.updateItems(items);
             cartAdapter.setSelectedItems(selectedItems);

@@ -107,7 +107,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             // Fallback: sử dụng hình ảnh mặc định
             h.image.setImageResource(R.drawable.img_no_product);
         }
+        // Đồng bộ trạng thái checkbox
+        h.checkSelect.setOnCheckedChangeListener(null);
+        h.checkSelect.setChecked(selectedItems.contains(item.getCartItemID()));
 
+        // Gắn sự kiện khi tick checkbox
+        h.checkSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (selectionChangedListener != null) {
+                selectionChangedListener.onSelectionChanged(item, isChecked);
+            }
+        });
         h.btnPlus.setOnClickListener(v -> {
             if (quantityChangedListener != null) {
                 quantityChangedListener.onQuantityChanged(item, item.getQuantity() + 1);
@@ -139,6 +148,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
                 h.quantity.setText(String.valueOf(item.getQuantity()));
             }
         });
+
     }
 
     @Override
