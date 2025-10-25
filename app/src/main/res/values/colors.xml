@@ -10,6 +10,7 @@
     <color name="lavender">#8692f7</color>
     <color name="lavender_light">#E8EBFF</color>
     <color name="background_color">#F8F9FF</color>
+    <color name="red">#FF0000</color>
     
     <!-- Search and Cart Colors -->
     <color name="primary_color">#8692f7</color>

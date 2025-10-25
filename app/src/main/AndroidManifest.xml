@@ -74,6 +74,15 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication" />
 
+        <activity
+            android:name=".OrderFailedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+
+        <activity
+            android:name=".VNPayActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
 
         <activity
             android:name=".ActivityOrderDetail"
