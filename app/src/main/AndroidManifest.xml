@@ -79,6 +79,12 @@
             android:exported="false"
             android:label="Xác thực OTP"
             android:theme="@style/Theme.MyApplication" />
+        
+        <activity
+            android:name=".ActivityResetPassword"
+            android:exported="false"
+            android:label="Đặt lại mật khẩu"
+            android:theme="@style/Theme.MyApplication" />
 
         <activity
             android:name=".AdminDashboardActivity"

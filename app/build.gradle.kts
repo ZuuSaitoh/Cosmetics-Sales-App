@@ -110,9 +110,6 @@ dependencies {
     // Utilities
    // implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.jakewharton:butterknife:10.2.3")
-    
-    // EmailJS alternative - using OkHttp for HTTP requests
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Play services
     implementation("com.google.android.gms:play-services-maps:18.1.0")
