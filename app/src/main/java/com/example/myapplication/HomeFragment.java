@@ -177,10 +177,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         bannerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         List<Banner> banners = new ArrayList<>();
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
+        banners.add(new Banner(R.drawable.banner_1));
+        banners.add(new Banner(R.drawable.banner_2));
+        banners.add(new Banner(R.drawable.banner_3));
+        banners.add(new Banner(R.drawable.banner_4));
         
         bannerAdapter = new BannerAdapter(banners);
         bannerRecyclerView.setAdapter(bannerAdapter);
@@ -262,12 +262,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
     private void loadFallbackProducts() {
         List<Product> fallbackProducts = new ArrayList<>();
-        fallbackProducts.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner));
+        fallbackProducts.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner_1));
 
         productAdapter.updateProducts(fallbackProducts);
     }

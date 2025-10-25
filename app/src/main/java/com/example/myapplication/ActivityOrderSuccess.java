@@ -2,16 +2,10 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
-import com.example.myapplication.R; // Đảm bảo bạn import R
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class ActivityOrderSuccess extends AppCompatActivity {
 
@@ -30,7 +24,7 @@ public class ActivityOrderSuccess extends AppCompatActivity {
         // 3. Thiết lập sự kiện cho nút "Về trang chủ"
         btnBackHome.setOnClickListener(v -> {
             // TODO: Thay 'Main.class' bằng Activity trang chủ của bạn nếu tên khác
-            Intent mainIntent = new Intent(ActivityOrderSuccess.this, Main.class);
+            Intent mainIntent = new Intent(ActivityOrderSuccess.this, ActivityMain.class);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(mainIntent);
             finish();

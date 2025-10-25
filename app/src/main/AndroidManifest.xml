@@ -51,7 +51,7 @@
         <!-- Các Activity khác -->
 
         <activity
-            android:name=".Main"
+            android:name=".ActivityMain"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication" />

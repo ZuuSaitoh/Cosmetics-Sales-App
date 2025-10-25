@@ -130,7 +130,7 @@ public class Product implements Serializable {
     }
 
     public int getImageResId() {
-        return imageResId != 0 ? imageResId : R.drawable.banner; // Default image
+        return imageResId != 0 ? imageResId : R.drawable.banner_1; // Default image
     }
 
     public void setImageResId(int imageResId) {

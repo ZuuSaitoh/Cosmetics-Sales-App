@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -15,14 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.myapplication.auth.AuthManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Main extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     private AuthManager authManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
         // Khởi tạo AuthManager
         authManager = new AuthManager(this);

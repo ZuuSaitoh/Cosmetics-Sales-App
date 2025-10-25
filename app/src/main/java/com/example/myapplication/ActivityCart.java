@@ -249,7 +249,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> finish());
         btnContinueShopping.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityCart.this, Main.class);
+            Intent intent = new Intent(ActivityCart.this, ActivityMain.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -495,7 +495,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
 
     private void showDeleteAllConfirmation() {
         Dialog dialog = new Dialog(this);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_delete_confirmation_dialog, null);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_custom_delete_confirmation, null);
         
         Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
         Button btnConfirmDelete = dialogView.findViewById(R.id.btn_confirm_delete);

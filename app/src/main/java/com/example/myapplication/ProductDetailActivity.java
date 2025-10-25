@@ -222,7 +222,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void showQuantityPopup() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProductDetailActivity.this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_quantity);
+        bottomSheetDialog.setContentView(R.layout.dialog_quantity_product);
 
         TextView textTotalPrice = bottomSheetDialog.findViewById(R.id.text_total_price);
         TextView textQuantity = bottomSheetDialog.findViewById(R.id.text_quantity);

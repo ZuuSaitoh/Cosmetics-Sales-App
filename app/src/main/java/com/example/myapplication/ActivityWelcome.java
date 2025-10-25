@@ -55,7 +55,7 @@ public class ActivityWelcome extends AppCompatActivity {
     private void checkLoginStatus() {
         if (authManager.isLoggedIn()) {
             // Người dùng đã đăng nhập, chuyển thẳng đến Main
-            Intent intent = new Intent(ActivityWelcome.this, Main.class);
+            Intent intent = new Intent(ActivityWelcome.this, ActivityMain.class);
             startActivity(intent);
             finish(); // Đóng ActivityWelcome để không thể quay lại
         }
@@ -64,7 +64,7 @@ public class ActivityWelcome extends AppCompatActivity {
     private void setupClickListeners() {
         // Chuyển đến màn hình Đăng nhập khi nhấn nút
         getStartedButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityWelcome.this, Main.class);
+            Intent intent = new Intent(ActivityWelcome.this, ActivityMain.class);
             startActivity(intent);
             finish(); // Đóng màn hình này để người dùng không quay lại được
         });

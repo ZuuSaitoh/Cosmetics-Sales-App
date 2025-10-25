@@ -201,7 +201,7 @@ public class ActivityLogin extends AppCompatActivity {
 
                         // Trường hợp 3: Login thông thường, vào Main
                         setResult(RESULT_OK);
-                        Intent intent = new Intent(ActivityLogin.this, Main.class);
+                        Intent intent = new Intent(ActivityLogin.this, ActivityMain.class);
                         startActivity(intent);
                         finish();
 

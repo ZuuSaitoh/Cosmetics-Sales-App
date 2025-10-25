@@ -66,29 +66,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/cart_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Danh sách"
-            android:textColor="#00695C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/leaf_decoration"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_leaf"
-            app:layout_constraintBottom_toBottomOf="@id/cart_title"
-            app:layout_constraintStart_toEndOf="@id/cart_title"
-            app:layout_constraintTop_toTopOf="@id/cart_title" />
-
-        <!-- Empty State (hidden by default) -->
         <LinearLayout
             android:id="@+id/empty_state"
             android:layout_width="match_parent"
@@ -98,8 +75,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cart_title">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,7 +99,6 @@
 
         </LinearLayout>
 
-        <!-- Cart Items (shown when not empty) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_cart"
             android:layout_width="0dp"
@@ -134,43 +109,39 @@
             app:layout_constraintBottom_toTopOf="@id/total_section"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cart_title" />
+            app:layout_constraintTop_toTopOf="parent" /> <LinearLayout
+        android:id="@+id/total_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        android:background="@drawable/rounded_white_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Total Section -->
-        <LinearLayout
-            android:id="@+id/total_section"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@drawable/rounded_white_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:text="Tổng cộng:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#00695C"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Tổng cộng:"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#00695C"
-                android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/text_grand_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 VND"
+            android:textStyle="bold"
+            android:textColor="#DE0000"
+            android:textSize="20sp"/>
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_grand_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 VND"
-                android:textStyle="bold"
-                android:textColor="#DE0000"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <!-- Button container for order and delete buttons -->
         <LinearLayout
             android:id="@+id/button_container"
             android:layout_width="0dp"
@@ -213,5 +184,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
