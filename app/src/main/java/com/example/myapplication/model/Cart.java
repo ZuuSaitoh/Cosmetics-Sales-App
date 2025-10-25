@@ -1,8 +1,21 @@
 package com.example.myapplication.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Cart {
+
+    @SerializedName("cartID")
     private Long cartID;
-    private Long userID;
+
+    @SerializedName("users")
+    private User users;
+
+    @SerializedName("totalPrice")
+    private double totalPrice;
+
+    @SerializedName("status")
+    private String status;
+
 
     public Long getCartID() {
         return cartID;
@@ -12,11 +25,27 @@ public class Cart {
         this.cartID = cartID;
     }
 
-    public Long getUserID() {
-        return userID;
+    public User getUsers() {
+        return users;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUsers(User users) {
+        this.users = users;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

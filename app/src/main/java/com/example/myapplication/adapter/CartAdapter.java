@@ -152,7 +152,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title, price, total;
+        final TextView title, price;
         final android.widget.EditText quantity;
         final android.widget.CheckBox checkSelect;
         final MaterialButton btnPlus, btnMinus, btnRemove;
@@ -163,7 +163,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
             quantity = itemView.findViewById(R.id.textQty);
-            total = itemView.findViewById(R.id.textTotal);
+//            total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnRemove = itemView.findViewById(R.id.btn_remove);

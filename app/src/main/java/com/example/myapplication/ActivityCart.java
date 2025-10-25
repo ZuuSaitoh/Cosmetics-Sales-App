@@ -310,7 +310,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
             @Override
             public void onResponse(Call<CartItemsResponse> call, Response<CartItemsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    updateCartUI(response.body().getCartItems());
+                    updateCartUI(response.body().getResult());
                 } else {
                     updateCartUI(Collections.emptyList());
                 }

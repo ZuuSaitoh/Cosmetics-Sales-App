@@ -1,54 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginHorizontal="4dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    app:strokeWidth="0dp">
+    android:orientation="horizontal"
+    android:background="@drawable/bg_white_rounded"
+    android:padding="12dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="8dp"
+    android:elevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Ảnh sản phẩm -->
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:layout_marginEnd="12dp">
 
         <ImageView
             android:id="@+id/ivOrderThumbnail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/img_no_product"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Order thumbnail"
-            android:layout_marginEnd="16dp" />
+            android:src="@drawable/img_no_product"
+            android:background="@drawable/img_no_product"
+            android:contentDescription="@string/app_name" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <!-- Badge hiện +n nếu có nhiều sản phẩm -->
+        <TextView
+            android:id="@+id/tvMultiItemBadge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_gravity="top|end"
+            android:layout_margin="4dp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:background="@drawable/bg_badge_circle"
+            android:text="+2"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
-            <TextView
-                android:id="@+id/tvOrderDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ngày đặt: 12/10/2025"
-                android:textColor="#555555"
-                android:layout_marginTop="4dp" />
+    <!-- Thông tin đơn hàng -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvOrderStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trạng thái: Đang xử lý"
-                android:textColor="#FF9800"
-                android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/tvOrderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày đặt: 01/01/2025"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái: Đang xử lý"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif" />
 
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng tiền: 1.200.000 ₫"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium" />
     </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

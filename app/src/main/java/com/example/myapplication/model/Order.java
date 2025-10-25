@@ -1,6 +1,5 @@
 package com.example.myapplication.model;
 
-
 import com.google.gson.annotations.SerializedName;
 
 public class Order {
@@ -8,11 +7,11 @@ public class Order {
     @SerializedName("orderID")
     private int orderID;
 
-    @SerializedName("cartID")
-    private int cartID;
+    @SerializedName("cart")
+    private Cart cart;
 
-    @SerializedName("userID")
-    private int userID;
+    @SerializedName("user")
+    private User user;
 
     @SerializedName("paymentMethod")
     private String paymentMethod;
@@ -26,11 +25,6 @@ public class Order {
     @SerializedName("orderDate")
     private String orderDate;
 
-
-    public Order() {
-    }
-
-
     public int getOrderID() {
         return orderID;
     }
@@ -39,20 +33,20 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public int getCartID() {
-        return cartID;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartID(int cartID) {
-        this.cartID = cartID;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getPaymentMethod() {

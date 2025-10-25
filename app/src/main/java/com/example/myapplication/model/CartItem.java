@@ -7,10 +7,9 @@ import java.io.Serializable;
 public class CartItem implements Serializable {
     @SerializedName("cartItemID")
     private Long cartItemID;
-    
-    // Fix: Changed from @SerializedName("product") to @SerializedName("products")
     @SerializedName("products")
     private Product product;
+    @SerializedName("quantity")
     private int quantity;
 
     public CartItem(Product product, int quantity) {

@@ -13,7 +13,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.myapplication.CartActivity;
+import com.example.myapplication.ActivityCart;
 import com.example.myapplication.R;
 import com.example.myapplication.database.AppDatabase;
 import com.example.myapplication.model.Notification;
@@ -158,7 +158,7 @@ public class NotificationHelper {
      */
     private NotificationCompat.Builder buildCartNotification(String title, String message, int itemCount) {
         // Tạo Intent mở CartActivity khi click notification
-        Intent intent = new Intent(context, CartActivity.class);
+        Intent intent = new Intent(context, ActivityCart.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         
         PendingIntent pendingIntent = PendingIntent.getActivity(

@@ -349,7 +349,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onResponse(Call<com.example.myapplication.network.dto.CartItemsResponse> call, Response<com.example.myapplication.network.dto.CartItemsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     com.example.myapplication.network.dto.CartItemsResponse cartItemsResponse = response.body();
-                    List<com.example.myapplication.model.CartItem> existingItems = cartItemsResponse.getCartItems();
+                    List<com.example.myapplication.model.CartItem> existingItems = cartItemsResponse.getResult();
                     
                     // Tìm sản phẩm đã tồn tại
                     com.example.myapplication.model.CartItem existingItem = null;
