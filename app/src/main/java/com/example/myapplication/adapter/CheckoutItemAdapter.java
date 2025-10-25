@@ -47,14 +47,7 @@ public class CheckoutItemAdapter extends RecyclerView.Adapter<CheckoutItemAdapte
         }
         holder.tvProductQuantity.setText("x" + item.getQuantity());
 
-        // TODO: Load ảnh sản phẩm nếu có dùng Glide/Picasso
-        // Ví dụ:
-        // if (item.getProduct() != null && item.getProduct().getImageURL() != null) {
-        //     Glide.with(context)
-        //          .load(item.getProduct().getImageURL())
-        //          .placeholder(R.drawable.img_no_product) // Ảnh chờ
-        //          .into(holder.ivProductImage);
-        // }
+
     }
 
     @Override

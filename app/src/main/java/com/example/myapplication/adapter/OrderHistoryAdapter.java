@@ -30,17 +30,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderViewHolder> {
 
     private Context context;
     private List<Order> orderList;
+    private OnOrderClickListener listener;
+
+
     private SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
     private SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
-    public OrderAdapter(Context context, List<Order> orderList) {
+    public interface OnOrderClickListener {
+        void onOrderClick(Order order);
+    }
+
+    public OrderHistoryAdapter(Context context, List<Order> orderList, OnOrderClickListener listener) {
         this.context = context;
         this.orderList = orderList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -54,6 +62,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orderList.get(position);
 
+        //  Hiển thị ngày đặt hàng
         //  Hiển thị ngày đặt hàng
         try {
             String isoDate = order.getOrderDate();
@@ -127,6 +136,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 }
             });
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onOrderClick(order);
+            }
+        });
+
+
     }
 
     @Override
@@ -140,6 +157,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         this.orderList.addAll(newOrderList);
         notifyDataSetChanged();
     }
+
+
+
+
+
 
     //  ViewHolder khớp với item_order.xml
     static class OrderViewHolder extends RecyclerView.ViewHolder {

@@ -18,12 +18,13 @@
         app:navigationIcon="@drawable/ic_arrow_back"
         app:titleCentered="true" />
 
-    <!-- Layout chính cuộn được -->
+    <!-- Nội dung chính cuộn được -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="72dp"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -44,20 +45,17 @@
                 android:elevation="2dp">
 
                 <TextView
-                    android:id="@+id/tvOrderId"
-                    android:text="Mã đơn hàng: #123456"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:fontFamily="sans-serif-medium" />
-
-                <TextView
                     android:id="@+id/tvOrderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Ngày đặt: 20/10/2025"
                     android:textColor="#555555"
                     android:layout_marginTop="4dp" />
 
                 <TextView
                     android:id="@+id/tvOrderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Trạng thái: Chờ xử lý"
                     android:textColor="#00695C"
                     android:textStyle="bold"
@@ -83,6 +81,8 @@
 
             <!-- Địa chỉ giao hàng -->
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Địa chỉ giao hàng"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -99,6 +99,8 @@
 
             <!-- Phương thức thanh toán -->
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Phương thức thanh toán"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -114,37 +116,20 @@
                 android:textColor="#555555" />
 
             <!-- Tổng cộng -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:background="@drawable/bg_card"
-                android:layout_marginTop="20dp">
+                android:text="Tổng cộng: 520.000đ"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp" />
 
-                <TextView
-                    android:id="@+id/tvSubtotal"
-                    android:text="Tạm tính: 500.000đ"
-                    android:textColor="#555555" />
-
-                <TextView
-                    android:id="@+id/tvShippingFee"
-                    android:text="Phí vận chuyển: 20.000đ"
-                    android:textColor="#555555"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:id="@+id/tvTotal"
-                    android:text="Tổng cộng: 520.000đ"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="6dp" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Nút hủy đơn (chỉ hiện khi trạng thái = "Chờ xử lý") -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancelOrder"
         android:layout_width="match_parent"
@@ -152,19 +137,11 @@
         android:text="Hủy đơn hàng"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:layout_margin="16dp"
         android:backgroundTint="#D32F2F"
-        android:visibility="gone"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom"
         app:cornerRadius="12dp"
-        app:layout_anchorGravity="bottom" />
-
-    <!-- Progress loading -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
         android:visibility="gone" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

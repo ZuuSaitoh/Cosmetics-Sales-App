@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.myapplication.adapter.OrderAdapter;
+import com.example.myapplication.adapter.OrderHistoryAdapter;
 import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.network.ApiClient;
@@ -34,7 +34,7 @@ public class ActivityOrderHistory extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayout emptyLayout;
 
-    private OrderAdapter orderAdapter;
+    private OrderHistoryAdapter orderAdapter;
     private List<Order> orderList;
     private OrderService orderService;
 
@@ -47,7 +47,6 @@ public class ActivityOrderHistory extends AppCompatActivity {
         setupToolbar();
         setupRecyclerView();
         setupSwipeRefresh();
-
         fetchOrders();
     }
 
@@ -63,7 +62,11 @@ public class ActivityOrderHistory extends AppCompatActivity {
 
     private void setupRecyclerView() {
         orderList = new ArrayList<>();
-        orderAdapter = new OrderAdapter(this, orderList);
+        orderAdapter = new OrderHistoryAdapter(this, orderList, order -> {
+            Intent intent = new Intent(ActivityOrderHistory.this, ActivityOrderDetail.class);
+            intent.putExtra("orderId", order.getOrderID());
+            startActivityForResult(intent, 100);
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderAdapter);
     }
@@ -119,4 +122,31 @@ public class ActivityOrderHistory extends AppCompatActivity {
     private void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            int deletedOrderId = data.getIntExtra("deletedOrderId", -1);
+            if (deletedOrderId != -1) {
+                removeOrderById(deletedOrderId);
+            }
+        }
+    }
+
+    // Hàm xóa order khỏi danh sách
+    private void removeOrderById(int orderId) {
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).getOrderID() == orderId) {
+                orderList.remove(i);
+                orderAdapter.notifyItemRemoved(i);
+                if (orderList.isEmpty()) {
+                    emptyLayout.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+                break;
+            }
+        }
+    }
+
 }
