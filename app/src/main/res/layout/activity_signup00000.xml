@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context=".ActivitySignUp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/content_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/cosme02_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cosme02_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/backButton"
@@ -35,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Register"
+            android:text="Đăng ký"
             android:textColor="#00695C"
             android:textSize="32sp"
             android:textStyle="bold"
@@ -48,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Create your new account"
+            android:text="Tạo tài khoản mới"
             android:textColor="@android:color/darker_gray"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +68,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-            android:hint="Full Name"
+            android:hint="Tên đăng nhập"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/register_subtitle"
@@ -104,7 +109,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Password"
+            android:hint="Mật khẩu"
             app:layout_constraintEnd_toEndOf="@id/emailInputLayout"
             app:layout_constraintStart_toStartOf="@id/emailInputLayout"
             app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
@@ -118,27 +123,47 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordInputLayout"
+            style="@style/Widget.App.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Xác nhận mật khẩu"
+            app:layout_constraintEnd_toEndOf="@id/passwordInputLayout"
+            app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="24dp"
-            android:text="Register"
+            android:text="Đăng ký"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:backgroundTint="#00695C"
             app:cornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="@id/passwordInputLayout"
-            app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
-            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
+            app:layout_constraintEnd_toEndOf="@id/confirmPasswordInputLayout"
+            app:layout_constraintStart_toStartOf="@id/confirmPasswordInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/confirmPasswordInputLayout" />
 
         <TextView
             android:id="@+id/dividerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Or continue with"
+            android:text="Hoặc tiếp tục với"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +259,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="120dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -244,7 +269,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account? "
+                android:text="Đã có tài khoản? "
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 
@@ -252,7 +277,7 @@
                 android:id="@+id/loginText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Đăng nhập"
                 android:textColor="#00695C"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -260,4 +285,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
