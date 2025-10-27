@@ -13,11 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.AuthService;
+import com.example.myapplication.network.EmailService;
+import com.example.myapplication.network.dto.CheckMailResponse;
+import com.example.myapplication.network.dto.SendOtpResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Random;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ActivityForgotPassword extends AppCompatActivity {
 
@@ -28,6 +35,10 @@ public class ActivityForgotPassword extends AppCompatActivity {
     private TextView loginTextView;
     private ImageButton backButton;
 
+    // --- SERVICES ---
+    private AuthService authService;
+    private EmailService emailService;
+
     // --- OTP GENERATION ---
     private String generatedOtp;
     private String userEmail;
@@ -37,6 +48,10 @@ public class ActivityForgotPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_forgot_password);
+
+        // Initialize services
+        authService = ApiClient.getRetrofit(this).create(AuthService.class);
+        emailService = ApiClient.getRetrofit(this).create(EmailService.class);
 
         // Ánh xạ các view từ file XML
         initializeViews();
@@ -92,46 +107,131 @@ public class ActivityForgotPassword extends AppCompatActivity {
             return; // Dừng lại nếu email không hợp lệ
         }
 
-        // Lưu email và tạo OTP
+        // Lưu email
         userEmail = email;
-        generatedOtp = generateOtp();
 
         // Vô hiệu hóa nút để tránh click nhiều lần
         sendOtpButton.setEnabled(false);
-        sendOtpButton.setText("Đang gửi...");
+        sendOtpButton.setText("Đang kiểm tra...");
 
-        // Gửi OTP qua API backend
-        Log.d("ActivityForgotPassword", "Sending OTP via backend API");
-        sendOtpViaAPI(email, generatedOtp);
+        // Kiểm tra email có tồn tại trong hệ thống không
+        checkEmailExists(email);
     }
 
     /**
-     * Tạo mã OTP 6 chữ số ngẫu nhiên.
+     * Kiểm tra email có tồn tại trong hệ thống không và gửi OTP
      */
-    private String generateOtp() {
-        Random random = new Random();
-        int otp = 100000 + random.nextInt(900000); // Tạo số từ 100000 đến 999999
-        return String.valueOf(otp);
+    private void checkEmailExists(String email) {
+        Call<CheckMailResponse> call = authService.checkMail(email);
+        
+        call.enqueue(new Callback<CheckMailResponse>() {
+            @Override
+            public void onResponse(Call<CheckMailResponse> call, Response<CheckMailResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    CheckMailResponse checkMailResponse = response.body();
+                    
+                    // Kiểm tra email có tồn tại (result = true)
+                    if (checkMailResponse.getResult() != null && checkMailResponse.getResult()) {
+                        // Email tồn tại, tiến hành gửi OTP qua API
+                        Log.d("ActivityForgotPassword", "Email exists, sending OTP via API");
+                        sendOtpViaAPI(email);
+                    } else {
+                        // Email không tồn tại
+                        sendOtpButton.setEnabled(true);
+                        sendOtpButton.setText("Gửi mã OTP");
+                        emailInputLayout.setError("Email không tồn tại trong hệ thống");
+                        Toast.makeText(ActivityForgotPassword.this, 
+                                "Email không tồn tại. Vui lòng kiểm tra lại.", 
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    sendOtpButton.setEnabled(true);
+                    sendOtpButton.setText("Gửi mã OTP");
+                    Log.e("ActivityForgotPassword", "Failed to check email. Response: " + response.code());
+                    Toast.makeText(ActivityForgotPassword.this, 
+                            "Lỗi khi kiểm tra email. Vui lòng thử lại.", 
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<CheckMailResponse> call, Throwable t) {
+                sendOtpButton.setEnabled(true);
+                sendOtpButton.setText("Gửi mã OTP");
+                Log.e("ActivityForgotPassword", "Network error checking email", t);
+                Toast.makeText(ActivityForgotPassword.this, 
+                        "Lỗi mạng. Vui lòng kiểm tra kết nối và thử lại.", 
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
+    
     /**
      * Gửi OTP qua API backend
      */
-    private void sendOtpViaAPI(String email, String otp) {
-        Log.d("ActivityForgotPassword", "API OTP method - Email: " + email + ", OTP: " + otp);
+    private void sendOtpViaAPI(String email) {
+        sendOtpButton.setText("Đang gửi OTP...");
         
-        // Tạm thời sử dụng method đơn giản vì chưa có API implementation
-        // TODO: Implement API call to /users/forgot-password
-        Toast.makeText(this, "Mã OTP: " + otp + " (API mode)", Toast.LENGTH_LONG).show();
+        Call<SendOtpResponse> call = emailService.sendOtp(email);
         
-        // Chuyển đến màn hình xác thực OTP
-        Intent intent = new Intent(this, ActivityOtpVerification.class);
-        intent.putExtra("email", email);
-        intent.putExtra("otp", otp);
-        startActivity(intent);
-        finish();
+        call.enqueue(new Callback<SendOtpResponse>() {
+            @Override
+            public void onResponse(Call<SendOtpResponse> call, Response<SendOtpResponse> response) {
+                sendOtpButton.setEnabled(true);
+                sendOtpButton.setText("Gửi mã OTP");
+                
+                if (response.isSuccessful() && response.body() != null) {
+                    SendOtpResponse otpResponse = response.body();
+                    
+                    // Kiểm tra code 1111 là thành công
+                    if (otpResponse.getCode() == 1111) {
+                        // Lấy OTP từ result
+                        String otp = otpResponse.getResult();
+                        
+                        Log.d("ActivityForgotPassword", "OTP sent successfully. Message: " + otpResponse.getMessage());
+                        Log.d("ActivityForgotPassword", "OTP from API: " + otp);
+                        
+                        // Hiển thị thông báo
+                        Toast.makeText(ActivityForgotPassword.this, 
+                                "OTP đã được gửi đến email của bạn.", 
+                                Toast.LENGTH_SHORT).show();
+                        
+                        // Chuyển đến màn hình xác thực OTP
+                        Intent intent = new Intent(ActivityForgotPassword.this, ActivityOtpVerification.class);
+                        intent.putExtra("email", email);
+                        // Lưu OTP để verify (cho development/testing)
+                        if (otp != null && !otp.isEmpty()) {
+                            intent.putExtra("otp", otp);
+                        }
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Code không phải 1111 - có lỗi
+                        Log.e("ActivityForgotPassword", "Failed to send OTP. Code: " + otpResponse.getCode() + ", Message: " + otpResponse.getMessage());
+                        Toast.makeText(ActivityForgotPassword.this, 
+                                "Lỗi: " + otpResponse.getMessage(), 
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("ActivityForgotPassword", "Failed to send OTP. Response: " + response.code());
+                    Toast.makeText(ActivityForgotPassword.this, 
+                            "Lỗi khi gửi OTP. Vui lòng thử lại.", 
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<SendOtpResponse> call, Throwable t) {
+                sendOtpButton.setEnabled(true);
+                sendOtpButton.setText("Gửi mã OTP");
+                Log.e("ActivityForgotPassword", "Network error sending OTP", t);
+                Toast.makeText(ActivityForgotPassword.this, 
+                        "Lỗi mạng. Vui lòng kiểm tra kết nối và thử lại.", 
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
+    
     /**
      * Kiểm tra email có hợp lệ không.
      * @param email Email cần kiểm tra
