@@ -185,11 +185,11 @@ public class ActivityLogin extends AppCompatActivity {
                         authManager.saveAuth(token, role, userId);
 
                         if (role.equals("Admin") || role.equals("Staff")) {
-                            Intent intent = new Intent(ActivityLogin.this, AdminDashboardActivity.class);
+                            Intent intent = new Intent(ActivityLogin.this, ActivityAdminMain.class);
                             startActivity(intent);
                             finish();
                             return;
-                        } else if (role.equals("User")) {
+                        } else {
                             // Trường hợp 1: Quay về ProductDetail
                             Intent resultIntent = new Intent();
                             if (getIntent() != null && getIntent().hasExtra("pending_product")) {
