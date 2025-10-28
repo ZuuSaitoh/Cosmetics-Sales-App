@@ -54,8 +54,18 @@ public class ActivityWelcome extends AppCompatActivity {
      */
     private void checkLoginStatus() {
         if (authManager.isLoggedIn()) {
-            // Người dùng đã đăng nhập, chuyển thẳng đến Main
-            Intent intent = new Intent(ActivityWelcome.this, ActivityMain.class);
+            // Người dùng đã đăng nhập, kiểm tra role để chuyển hướng
+            String role = authManager.getRole();
+            Intent intent;
+            
+            // Kiểm tra role để chuyển hướng phù hợp
+            if (role != null && (role.equalsIgnoreCase("Admin") || role.equalsIgnoreCase("Administrator"))) {
+                // Nếu role là Admin, chuyển đến trang admin
+                intent = new Intent(ActivityWelcome.this, ActivityAdminMain.class);
+            } else {
+                // Nếu không phải Admin, chuyển đến trang chính
+                intent = new Intent(ActivityWelcome.this, ActivityMain.class);
+            }
             startActivity(intent);
             finish(); // Đóng ActivityWelcome để không thể quay lại
         }

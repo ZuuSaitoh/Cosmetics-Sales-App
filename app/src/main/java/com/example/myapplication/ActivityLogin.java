@@ -184,7 +184,9 @@ public class ActivityLogin extends AppCompatActivity {
                         // Token hợp lệ, lưu lại
                         authManager.saveAuth(token, role, userId);
 
-                        if (role.equals("Admin") || role.equals("Staff")) {
+                        // Check role để redirect đến trang phù hợp
+                        if (role != null && (role.equalsIgnoreCase("Admin") || role.equalsIgnoreCase("Staff") || role.equalsIgnoreCase("Administrator"))) {
+                            // Nếu role là Admin/Staff, chuyển đến trang admin
                             Intent intent = new Intent(ActivityLogin.this, ActivityAdminMain.class);
                             startActivity(intent);
                             finish();
