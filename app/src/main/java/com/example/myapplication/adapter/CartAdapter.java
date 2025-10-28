@@ -3,23 +3,81 @@ package com.example.myapplication.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-import com.example.myapplication.CartManager;
 import com.example.myapplication.model.CartItem;
+import com.google.android.material.button.MaterialButton;
+import com.bumptech.glide.Glide;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
-    private final List<CartItem> items;
+    private List<CartItem> items;
+    private final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+    private java.util.Set<Long> selectedItems = new java.util.HashSet<>();
+
+    // Listeners for item interactions
+    private OnItemQuantityChangedListener quantityChangedListener;
+    private OnItemRemovedListener itemRemovedListener;
+    private OnItemSelectionChangedListener selectionChangedListener;
+
+    public interface OnItemQuantityChangedListener {
+        void onQuantityChanged(CartItem item, int newQuantity);
+    }
+
+    public interface OnItemRemovedListener {
+        void onItemRemoved(CartItem item);
+    }
+
+    public interface OnItemSelectionChangedListener {
+        void onSelectionChanged(CartItem item, boolean isSelected);
+    }
 
     public CartAdapter(List<CartItem> items) {
         this.items = items;
+    }
+
+    public void updateItems(List<CartItem> newItems) {
+        this.items = newItems;
+        notifyDataSetChanged();
+    }
+
+    public void setSelectedItems(java.util.Set<Long> selectedItems) {
+        this.selectedItems = selectedItems;
+        notifyDataSetChanged();
+    }
+
+    public void setOnItemQuantityChangedListener(OnItemQuantityChangedListener listener) {
+        this.quantityChangedListener = listener;
+    }
+
+    public void setOnItemRemovedListener(OnItemRemovedListener listener) {
+        this.itemRemovedListener = listener;
+    }
+
+    public CartItem getItemAt(int position) {
+        if (position >= 0 && position < items.size()) {
+            return items.get(position);
+        }
+        return null;
+    }
+
+    public void setOnItemSelectionChangedListener(OnItemSelectionChangedListener listener) {
+        this.selectionChangedListener = listener;
+    }
+
+    public List<CartItem> getItems() {
+        return items;
     }
 
     @NonNull
@@ -33,76 +91,93 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int position) {
         CartItem item = items.get(position);
         h.title.setText(item.getProduct().getName());
-        h.quantity.setText("x" + item.getQuantity());
-        h.price.setText(String.format("$%.2f", item.getProduct().getPrice()));
-        h.total.setText(String.format("$%.2f", item.getItemTotal()));
-        h.image.setImageResource(item.getProduct().getImageResId());
+        // Hiển thị giá niêm yết (không phải total)
+        h.price.setText(formatPrice(item.getProduct().getPrice()));
+        h.quantity.setText(String.valueOf(item.getQuantity()));
 
+        // Cập nhật hình ảnh sản phẩm
+        if (item.getProduct().getImageURL() != null && !item.getProduct().getImageURL().isEmpty()) {
+            // Sử dụng Glide để load hình ảnh từ URL
+            Glide.with(h.image.getContext())
+                .load(item.getProduct().getImageURL().trim())
+                .placeholder(R.drawable.img_no_product)
+                .error(R.drawable.img_no_product)
+                .into(h.image);
+        } else {
+            // Fallback: sử dụng hình ảnh mặc định
+            h.image.setImageResource(R.drawable.img_no_product);
+        }
+        // Đồng bộ trạng thái checkbox
+        h.checkSelect.setOnCheckedChangeListener(null);
+        h.checkSelect.setChecked(selectedItems.contains(item.getCartItemID()));
+
+        // Gắn sự kiện khi tick checkbox
+        h.checkSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (selectionChangedListener != null) {
+                selectionChangedListener.onSelectionChanged(item, isChecked);
+            }
+        });
         h.btnPlus.setOnClickListener(v -> {
-            CartManager.getInstance().updateQuantity(item.getProduct(), item.getQuantity() + 1);
-            refreshBinding(h.getAdapterPosition());
+            if (quantityChangedListener != null) {
+                quantityChangedListener.onQuantityChanged(item, item.getQuantity() + 1);
+            }
         });
 
         h.btnMinus.setOnClickListener(v -> {
-            int newQty = Math.max(1, item.getQuantity() - 1);
-            CartManager.getInstance().updateQuantity(item.getProduct(), newQty);
-            refreshBinding(h.getAdapterPosition());
+            if (quantityChangedListener != null && item.getQuantity() > 1) {
+                quantityChangedListener.onQuantityChanged(item, item.getQuantity() - 1);
+            }
         });
 
         h.btnRemove.setOnClickListener(v -> {
-            CartManager.getInstance().remove(item.getProduct());
-            int idx = h.getAdapterPosition();
-            if (idx != RecyclerView.NO_POSITION) {
-                items.remove(idx);
-                notifyItemRemoved(idx);
+            if (itemRemovedListener != null) {
+                itemRemovedListener.onItemRemoved(item);
             }
-            if (onCartChangedListener != null) onCartChangedListener.onChanged();
         });
-    }
 
-    private void refreshBinding(int position) {
-        if (position == RecyclerView.NO_POSITION) return;
-        notifyItemChanged(position);
-        if (onCartChangedListener != null) onCartChangedListener.onChanged();
+        // Cho phép nhập số trực tiếp
+        h.quantity.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                try {
+                    int newQty = Integer.parseInt(h.quantity.getText().toString().trim());
+                    newQty = Math.max(1, newQty);
+                    if (quantityChangedListener != null && newQty != item.getQuantity()) {
+                        quantityChangedListener.onQuantityChanged(item, newQty);
+                    }
+                } catch (Exception ignored) { }
+                h.quantity.setText(String.valueOf(item.getQuantity()));
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items != null ? items.size() : 0;
+    }
+
+    private String formatPrice(double price) {
+        return numberFormat.format((long) price) + " VND";
     }
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title;
-        final TextView quantity;
-        final TextView price;
-        final TextView total;
-        final TextView btnPlus;
-        final TextView btnMinus;
-        final TextView btnRemove;
+        final TextView title, price;
+        final android.widget.EditText quantity;
+        final android.widget.CheckBox checkSelect;
+        final MaterialButton btnPlus, btnMinus, btnRemove;
 
         VH(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageProduct);
             title = itemView.findViewById(R.id.textTitle);
-            quantity = itemView.findViewById(R.id.textQty);
             price = itemView.findViewById(R.id.textPrice);
-            total = itemView.findViewById(R.id.textTotal);
+            quantity = itemView.findViewById(R.id.textQty);
+//            total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnRemove = itemView.findViewById(R.id.btn_remove);
+            checkSelect = itemView.findViewById(R.id.checkSelect);
         }
     }
-
-    public interface OnCartChangedListener {
-        void onChanged();
-    }
-
-    private OnCartChangedListener onCartChangedListener;
-
-    public void setOnCartChangedListener(OnCartChangedListener listener) {
-        this.onCartChangedListener = listener;
-    }
 }
-
-

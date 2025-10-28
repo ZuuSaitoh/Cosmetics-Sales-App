@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_white_rounded"
+    android:padding="12dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="8dp"
+    android:elevation="2dp">
+
+    <!-- Ảnh sản phẩm -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp">
+
+        <ImageView
+            android:id="@+id/ivOrderThumbnail"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_no_product"
+            android:background="@drawable/img_no_product"
+            android:contentDescription="@string/app_name" />
+
+        <!-- Badge hiện +n nếu có nhiều sản phẩm -->
+        <TextView
+            android:id="@+id/tvMultiItemBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="4dp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:background="@drawable/bg_badge_circle"
+            android:text="+2"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Thông tin đơn hàng -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvOrderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày đặt: 01/01/2025"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái: Đang xử lý"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng tiền: 1.200.000 ₫"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,13 +1,30 @@
 package com.example.myapplication.network;
 
+import com.example.myapplication.model.Cart;
+import com.example.myapplication.model.Order;
+import com.example.myapplication.model.User;
+import com.example.myapplication.network.dto.CartItemsResponse;
+import com.example.myapplication.network.dto.AddCartItemRequest;
+import com.example.myapplication.network.dto.ChangeQuantityRequest;
+import com.example.myapplication.network.dto.ForgotPasswordRequest;
+import com.example.myapplication.network.dto.ForgotPasswordResponse;
+import okhttp3.ResponseBody;
+import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
 import com.example.myapplication.network.dto.LoginResponse;
+import com.example.myapplication.network.dto.PlaceOrderResponse;
 import com.example.myapplication.network.dto.RegisterRequest;
 import com.example.myapplication.network.dto.RegisterResponse;
+import com.example.myapplication.network.dto.PlaceOrderRequest;
+import com.example.myapplication.network.dto.CheckMailResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface AuthService {
     @POST("users/auth/token")
@@ -15,6 +32,37 @@ public interface AuthService {
 
     @POST("users/create")
     Call<RegisterResponse> register(@Body RegisterRequest request);
+    @GET("users/{id}")
+    Call<User> getUserProfile(@Path("id") Long userID);
+
+    @POST("users/forgot-password")
+    Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
+
+    @GET("users/check-mail/{email}")
+    Call<CheckMailResponse> checkMail(@Path("email") String email);
+
+    @GET("carts/get-by-userID/{userID}")
+    Call<Cart> getCartByUserId(@Path("userID") Long userID);
+
+    @POST("carts/create")
+    Call<Cart> createCart(@Body CreateCartRequest request);
+
+    @GET("cart-items/fetchAll/{cartID}")
+    Call<CartItemsResponse> getCartItems(@Path("cartID") Long cartID);
+
+    @POST("cart-items/add-products")
+    Call<ResponseBody> addProductToCart(@Body AddCartItemRequest request);
+
+    @PUT("cart-items/change-quantity")
+    Call<ResponseBody> changeQuantity(@Body ChangeQuantityRequest request);
+
+    @DELETE("cart-items/delete/{cartID}")
+    Call<Void> deleteAllCartItems(@Path("cartID") Long cartID);
+
+    @DELETE("cart-items/delete/item/{cartItemID}")
+    Call<Void> deleteCartItem(@Path("cartItemID") Long cartItemID);
+
+
+
+
 }
-
-

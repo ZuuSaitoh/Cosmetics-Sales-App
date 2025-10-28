@@ -57,14 +57,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         private ImageView categoryIcon;
         private TextView categoryName;
-        private TextView categoryDescription;
         private TextView productCount;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryIcon = itemView.findViewById(R.id.categoryIcon);
             categoryName = itemView.findViewById(R.id.categoryName);
-            categoryDescription = itemView.findViewById(R.id.categoryDescription);
             productCount = itemView.findViewById(R.id.productCount);
 
             itemView.setOnClickListener(v -> {
@@ -80,7 +78,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         public void bind(Category category) {
             categoryIcon.setImageResource(category.getIconResId());
             categoryName.setText(category.getName());
-            categoryDescription.setText(category.getDescription());
             productCount.setText(category.getProductCount() + " sản phẩm");
         }
     }

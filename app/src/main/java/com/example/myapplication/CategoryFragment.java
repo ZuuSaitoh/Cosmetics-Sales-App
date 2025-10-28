@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,13 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.CategoryAdapter;
+import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.model.Category;
+import com.example.myapplication.model.Product;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.CategoryService;
+import com.example.myapplication.network.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +117,7 @@ public class CategoryFragment extends Fragment {
                         try {
                             android.content.Context ctx = getContext();
                             if (ctx != null) {
-                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.CartActivity.class);
+                                android.content.Intent i = new android.content.Intent(ctx, ActivityCart.class);
                                 startActivity(i);
                             }
                         } catch (Exception e) {
@@ -186,6 +190,9 @@ public class CategoryFragment extends Fragment {
                                 
                                 // Set default icons and descriptions for categories
                                 setDefaultIconsAndDescriptions(categories);
+                                
+                                // Load product counts for each category
+                                loadProductCountsForCategories(categories);
                                 
                                 filteredCategories.clear();
                                 filteredCategories.addAll(categories);
@@ -278,16 +285,17 @@ public class CategoryFragment extends Fragment {
                 public void onCategoryClick(Category category) {
                     try {
                         if (getContext() != null) {
-                            Toast.makeText(getContext(), "Đã chọn: " + category.getName(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
+                            intent.putExtra("category", category);
+                            startActivity(intent);
                         }
-                        // TODO: Navigate to products in this category
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
             
-            categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             categoriesRecyclerView.setAdapter(categoryAdapter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -298,5 +306,91 @@ public class CategoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateCartBadge();
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng
+     */
+    private void runCartAnimation() {
+        if (getView() != null && cartIcon != null && cartBadge != null) {
+            // Tìm search box để làm source
+            View sourceView = getView().findViewById(R.id.searchEditText);
+            
+            if (sourceView != null) {
+                CartAnimation.simpleFlyToCart(sourceView, cartIcon, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - làm rung cart icon
+                        if (cartIcon != null) {
+                            cartIcon.animate()
+                                .scaleX(1.2f)
+                                .scaleY(1.2f)
+                                .setDuration(150)
+                                .withEndAction(() -> {
+                                    cartIcon.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(150);
+                                });
+                        }
+                    }
+                });
+            }
+        }
+    }
+    
+    /**
+     * Load product counts for each category by fetching all products once
+     */
+    private void loadProductCountsForCategories(List<Category> categories) {
+        if (getContext() == null) return;
+        
+        ProductService productService = ApiClient.getRetrofit(getContext()).create(ProductService.class);
+        
+        // Load all products once and count by category
+        productService.fetchAllProducts().enqueue(new Callback<com.example.myapplication.network.dto.ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, 
+                                 Response<com.example.myapplication.network.dto.ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    com.example.myapplication.network.dto.ApiResponse<List<Product>> apiResponse = response.body();
+                    if (apiResponse.getCode() == 9999 && apiResponse.getResult() != null) {
+                        List<Product> allProducts = apiResponse.getResult();
+                        
+                        // Count products for each category
+                        for (Category category : categories) {
+                            if (category.getCategoryID() != null) {
+                                int count = 0;
+                                for (Product product : allProducts) {
+                                    if (product.getCategoryID() != null && 
+                                        product.getCategoryID().getCategoryID() != null &&
+                                        product.getCategoryID().getCategoryID().equals(category.getCategoryID())) {
+                                        count++;
+                                    }
+                                }
+                                category.setProductCount(count);
+                            }
+                        }
+                        
+                        // Update UI
+                        if (getContext() != null && categoryAdapter != null) {
+                            getActivity().runOnUiThread(() -> {
+                                categoryAdapter.notifyDataSetChanged();
+                            });
+                        }
+                    }
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, Throwable t) {
+                android.util.Log.w("CategoryFragment", "Failed to load product counts: " + t.getMessage());
+            }
+        });
     }
 }

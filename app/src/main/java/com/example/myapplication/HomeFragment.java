@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
+import com.example.myapplication.animation.CartAnimation;
 import com.example.myapplication.map.MapsActivity;
 import com.example.myapplication.model.Banner;
 import com.example.myapplication.model.Product;
@@ -30,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
     private RecyclerView bannerRecyclerView;
     private RecyclerView productRecyclerView;
     private BannerAdapter bannerAdapter;
@@ -126,7 +128,7 @@ public class HomeFragment extends Fragment {
                         try {
                             android.content.Context ctx = getContext();
                             if (ctx != null) {
-                                android.content.Intent i = new android.content.Intent(ctx, com.example.myapplication.CartActivity.class);
+                                android.content.Intent i = new android.content.Intent(ctx, ActivityCart.class);
                                 startActivity(i);
                             }
                         } catch (Exception e) {
@@ -144,6 +146,10 @@ public class HomeFragment extends Fragment {
 
     public void addToCart() {
         updateCartBadge();
+        
+        // Chạy animation bay vào giỏ hàng với hình ảnh sản phẩm mặc định
+        runCartAnimationWithProduct();
+        
         Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
@@ -171,10 +177,10 @@ public class HomeFragment extends Fragment {
         bannerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         List<Banner> banners = new ArrayList<>();
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
-        banners.add(new Banner(R.drawable.banner));
+        banners.add(new Banner(R.drawable.banner_1));
+        banners.add(new Banner(R.drawable.banner_2));
+        banners.add(new Banner(R.drawable.banner_3));
+        banners.add(new Banner(R.drawable.banner_4));
         
         bannerAdapter = new BannerAdapter(banners);
         bannerRecyclerView.setAdapter(bannerAdapter);
@@ -189,6 +195,7 @@ public class HomeFragment extends Fragment {
             // Initialize with empty list
             List<Product> products = new ArrayList<>();
             productAdapter = new ProductAdapter(getContext(), products);
+            productAdapter.setOnProductClickListener(this);
             productRecyclerView.setAdapter(productAdapter);
 
             // Load products from API
@@ -255,12 +262,12 @@ public class HomeFragment extends Fragment {
 
     private void loadFallbackProducts() {
         List<Product> fallbackProducts = new ArrayList<>();
-        fallbackProducts.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner));
-        fallbackProducts.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner));
+        fallbackProducts.add(new Product("Lipstick", "High-quality lipstick", 25.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Foundation", "Perfect coverage foundation", 35.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Eyeshadow", "Beautiful eyeshadow palette", 29.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Mascara", "Long-lasting mascara", 19.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Blush", "Natural blush color", 22.99, R.drawable.banner_1));
+        fallbackProducts.add(new Product("Concealer", "Full coverage concealer", 24.99, R.drawable.banner_1));
 
         productAdapter.updateProducts(fallbackProducts);
     }
@@ -295,5 +302,59 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopAutoScroll();
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng với hình ảnh sản phẩm
+     */
+    private void runCartAnimationWithProduct() {
+        if (getView() != null && cartIcon != null && cartBadge != null) {
+            // Tìm một view để làm source (có thể là search box hoặc banner)
+            View sourceView = getView().findViewById(R.id.searchEditText);
+            if (sourceView == null) {
+                sourceView = getView().findViewById(R.id.bannerRecyclerView);
+            }
+            
+            if (sourceView != null) {
+                // Sử dụng hình ảnh sản phẩm mặc định
+                CartAnimation.flyToCartWithDrawable(sourceView, cartIcon, getContext(), R.drawable.img_no_product, new CartAnimation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        // Animation bắt đầu
+                    }
+                    
+                    @Override
+                    public void onAnimationEnd() {
+                        // Animation kết thúc - làm rung cart icon
+                        if (cartIcon != null) {
+                            cartIcon.animate()
+                                .scaleX(1.2f)
+                                .scaleY(1.2f)
+                                .setDuration(150)
+                                .withEndAction(() -> {
+                                    cartIcon.animate()
+                                        .scaleX(1.0f)
+                                        .scaleY(1.0f)
+                                        .setDuration(150);
+                                });
+                        }
+                    }
+                });
+            }
+        }
+    }
+    
+    /**
+     * Chạy animation bay vào giỏ hàng (backward compatibility)
+     */
+    private void runCartAnimation() {
+        runCartAnimationWithProduct();
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+        intent.putExtra("product", product);
+        startActivity(intent);
     }
 }

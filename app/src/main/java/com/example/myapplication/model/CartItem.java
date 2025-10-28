@@ -1,9 +1,15 @@
- package com.example.myapplication.model;
+package com.example.myapplication.model;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class CartItem implements Serializable {
-    private final Product product;
+    @SerializedName("cartItemID")
+    private Long cartItemID;
+    @SerializedName("products")
+    private Product product;
+    @SerializedName("quantity")
     private int quantity;
 
     public CartItem(Product product, int quantity) {
@@ -15,6 +21,10 @@ public class CartItem implements Serializable {
         return product;
     }
 
+    public Long getCartItemID() {
+        return cartItemID;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -24,8 +34,11 @@ public class CartItem implements Serializable {
     }
 
     public double getItemTotal() {
-        return product.getPrice() * quantity;
+        if (product != null) {
+            return product.getPrice() * quantity;
+        }
+        return 0;
     }
+
+
 }
-
-

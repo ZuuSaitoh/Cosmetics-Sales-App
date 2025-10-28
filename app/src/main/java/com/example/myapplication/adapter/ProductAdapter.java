@@ -2,6 +2,9 @@ package com.example.myapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.util.Log;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.view.LayoutInflater;
@@ -11,8 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.ProductDetailActivity;
@@ -24,12 +34,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final Context context;
     private final List<Product> originalProducts;
     private final List<Product> filteredProducts;
+    private OnProductClickListener listener;
 
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
 
     public ProductAdapter(Context context, List<Product> products) {
         this.context = context;
         this.originalProducts = new ArrayList<>(products);
         this.filteredProducts = new ArrayList<>(products);
+    }
+
+    public void setOnProductClickListener(OnProductClickListener listener) {
+        this.listener = listener;
     }
     
     public void updateProducts(List<Product> newProducts) {
@@ -49,22 +67,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return new ProductViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = filteredProducts.get(position);
         holder.titleText.setText(product.getName());
-        
-        // Format price as VND
+
         String formattedPrice = String.format("%,.0f VND", product.getPrice());
         holder.priceText.setText(formattedPrice);
-        
-        holder.imageView.setImageResource(product.getImageResId());
 
+        String imageURL = product.getImageURL();
+
+        if (imageURL != null && !imageURL.isEmpty()) {
+            Glide.with(context)
+                    .load(imageURL.trim())
+                    .placeholder(R.drawable.img_no_product) // Ảnh chờ
+                    .error(R.drawable.img_no_product)       // Ảnh khi lỗi
+                    .into(holder.imageView);
+        } else {
+            holder.imageView.setImageResource(R.drawable.img_no_product);
+        }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("product", product);
-            context.startActivity(intent);
+            if (listener != null) {
+                listener.onProductClick(product);
+            }
         });
     }
 

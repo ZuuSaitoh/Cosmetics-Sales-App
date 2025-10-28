@@ -1,9 +1,11 @@
 package com.example.myapplication; // Đảm bảo tên package này khớp với package của bạn
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,13 +29,13 @@ import retrofit2.Response;
 public class ActivitySignUp extends AppCompatActivity {
 
     // --- VIEWS ---
-    private TextInputLayout fullNameInputLayout, emailInputLayout, passwordInputLayout;
-    private TextInputEditText fullNameEditText, emailEditText, passwordEditText;
+    private TextInputLayout fullNameInputLayout, emailInputLayout, passwordInputLayout, confirmPasswordInputLayout;
+    private TextInputEditText fullNameEditText, emailEditText, passwordEditText, confirmPasswordEditText;
     private MaterialButton registerButton;
     private TextView loginTextView;
     private ImageButton backButton;
     // Social login buttons (optional functionality)
-    private ImageButton facebookLoginButton, googleLoginButton, appleLoginButton;
+    private View facebookLoginButton, googleLoginButton, appleLoginButton;
 
 
     // --- SERVICES ---
@@ -74,13 +76,16 @@ public class ActivitySignUp extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordInputLayout = findViewById(R.id.passwordInputLayout);
         passwordEditText = findViewById(R.id.passwordEditText);
+        confirmPasswordInputLayout = findViewById(R.id.confirmPasswordInputLayout);
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         registerButton = findViewById(R.id.registerButton);
         loginTextView = findViewById(R.id.loginText);
         backButton = findViewById(R.id.backButton);
 
-        // Tìm các nút social login bằng cách truy cập vào LinearLayout cha
-        // Lưu ý: Các nút này không có ID, nên chúng ta không gán sự kiện click trực tiếp ở đây.
-        // Nếu cần, bạn nên thêm ID cho chúng trong file XML.
+        // Ánh xạ các nút social login
+        facebookLoginButton = findViewById(R.id.facebookLoginButton);
+        googleLoginButton = findViewById(R.id.googleLoginButton);
+        appleLoginButton = findViewById(R.id.appleLoginButton);
     }
 
     /**
@@ -94,7 +99,30 @@ public class ActivitySignUp extends AppCompatActivity {
         backButton.setOnClickListener(v -> onBackPressed()); // Quay lại màn hình trước đó
 
         // Sự kiện click cho chữ "Login"
-        loginTextView.setOnClickListener(v -> finish()); // Đóng màn hình hiện tại và quay lại LoginScreen
+        loginTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivitySignUp.this, ActivityLogin.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Sự kiện click cho các nút social login
+        if (facebookLoginButton != null) {
+            facebookLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Facebook đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (googleLoginButton != null) {
+            googleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Google đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (appleLoginButton != null) {
+            appleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng ký Apple đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     /**
@@ -104,9 +132,10 @@ public class ActivitySignUp extends AppCompatActivity {
         String fullName = fullNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
         // Kiểm tra tính hợp lệ của dữ liệu đầu vào
-        if (!validateInput(fullName, email, password)) {
+        if (!validateInput(fullName, email, password, confirmPassword)) {
             return; // Dừng lại nếu dữ liệu không hợp lệ
         }
 
@@ -114,9 +143,7 @@ public class ActivitySignUp extends AppCompatActivity {
         registerButton.setEnabled(false);
 
         // Tạo yêu cầu đăng ký
-        // LƯU Ý: Lớp RegisterRequest của bạn cần có constructor (username, password, confirmPassword, email)
-        // Vì layout không có trường "confirm password", ta sẽ truyền password 2 lần.
-        RegisterRequest request = new RegisterRequest(fullName, password, password, email);
+        RegisterRequest request = new RegisterRequest(fullName, password, confirmPassword, email);
 
         // Gọi API đăng ký
         Call<RegisterResponse> call = authService.register(request);
@@ -146,14 +173,15 @@ public class ActivitySignUp extends AppCompatActivity {
      * Kiểm tra các trường nhập liệu và hiển thị lỗi nếu cần.
      * @return true nếu tất cả các trường hợp lệ, ngược lại là false.
      */
-    private boolean validateInput(String fullName, String email, String password) {
+    private boolean validateInput(String fullName, String email, String password, String confirmPassword) {
         // Xóa các lỗi cũ
         fullNameInputLayout.setError(null);
         emailInputLayout.setError(null);
         passwordInputLayout.setError(null);
+        confirmPasswordInputLayout.setError(null);
 
         if (fullName.isEmpty()) {
-            fullNameInputLayout.setError("Vui lòng nhập họ và tên");
+            fullNameInputLayout.setError("Vui lòng nhập tên đăng nhập");
             return false;
         }
 
@@ -164,6 +192,16 @@ public class ActivitySignUp extends AppCompatActivity {
 
         if (password.isEmpty()) {
             passwordInputLayout.setError("Vui lòng nhập mật khẩu");
+            return false;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordInputLayout.setError("Vui lòng xác nhận mật khẩu");
+            return false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            confirmPasswordInputLayout.setError("Mật khẩu xác nhận không khớp");
             return false;
         }
 

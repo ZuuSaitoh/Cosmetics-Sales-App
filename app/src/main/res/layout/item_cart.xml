@@ -1,98 +1,151 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp">
-
-    <ImageView
-        android:id="@+id/imageProduct"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_apple"/>
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_marginStart="12dp">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sản phẩm"
-            android:textStyle="bold"/>
+        <CheckBox
+            android:id="@+id/checkSelect"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:buttonTint="#00695C" />
 
-        <TextView
-            android:id="@+id/textQty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="x1"/>
-
-        <TextView
-            android:id="@+id/textPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$0.00"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="end">
-
-        <TextView
-            android:id="@+id/textTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$0.00"
-            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/imageProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_apple"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/rounded_image_background" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
-                android:id="@+id/btn_minus"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="-"
-                android:textSize="18sp"
-                android:background="@android:color/darker_gray"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/btn_plus"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:text="+"
-                android:textSize="18sp"
-                android:background="@android:color/holo_green_dark"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/btn_remove"
+                android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginStart="12dp"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="Xóa"
-                android:textSize="14sp"
-                android:background="@android:color/holo_red_dark"
-                android:textColor="@android:color/white" />
+                android:layout_height="wrap_content"
+                android:text="Sản phẩm"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#00695C"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:layout_marginTop="12dp"> <TextView
+                android:id="@+id/textPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 VND"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#DE0000"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/quantity_selector_background">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_minus"
+                        android:layout_width="28dp"
+                        android:layout_height="match_parent"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        app:backgroundTint="@android:color/transparent"
+                        app:rippleColor="#E0E0E0"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        style="@style/Widget.Material3.Button.IconButton" />
+
+                    <EditText
+                        android:id="@+id/textQty"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/quantity_text_background"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:maxLength="2"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_plus"
+                        android:layout_width="28dp"
+                        android:layout_height="match_parent"
+                        android:text="+"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#00695C"
+                        app:backgroundTint="@android:color/transparent"
+                        app:rippleColor="#E0E0E0"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        style="@style/Widget.Material3.Button.IconButton" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:text="Xóa"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:backgroundTint="#F44336"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_delete"
+            app:iconSize="14dp"
+            app:iconTint="@android:color/white"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"/>
+
     </LinearLayout>
 
-</LinearLayout>
-
-
+</androidx.cardview.widget.CardView>
