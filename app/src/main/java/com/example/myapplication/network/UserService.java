@@ -1,6 +1,8 @@
 package com.example.myapplication.network;
 
 import com.example.myapplication.model.User;
+import com.example.myapplication.network.dto.UpdatePasswordRequest;
+import com.example.myapplication.network.dto.UpdatePasswordResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,4 +16,7 @@ public interface UserService {
     
     @PUT("users/update/{id}")
     Call<User> updateUser(@Path("id") Long userId, @Body User user);
+    
+    @PUT("users/update/password/{id}")
+    Call<UpdatePasswordResponse> updatePassword(@Path("id") Long userId, @Body UpdatePasswordRequest request);
 }

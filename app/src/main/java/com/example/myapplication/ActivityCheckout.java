@@ -27,7 +27,6 @@ import com.example.myapplication.network.dto.PlaceOrderRequest;
 import com.example.myapplication.network.dto.PlaceOrderResponse;
 import com.google.android.material.button.MaterialButton;
 
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +142,7 @@ public class ActivityCheckout extends AppCompatActivity {
             if (checkedId == R.id.rbCashOnDelivery) {
                 selectedPaymentMethod = "COD";
             } else if (checkedId == R.id.rbVNPay) {
-                selectedPaymentMethod = "VNPAY";
+                selectedPaymentMethod = "VNPay";
             }
         });
 
@@ -316,12 +315,12 @@ public class ActivityCheckout extends AppCompatActivity {
                 totalPrice
         );
 
-        android.util.Log.d("Checkout", "Order Request - UserID: " + userId);
-        android.util.Log.d("Checkout", "Order Request - CartID: " + currentCartId);
-        android.util.Log.d("Checkout", "Order Request - PaymentMethod: " + selectedPaymentMethod);
-        android.util.Log.d("Checkout", "Order Request - BillingAddress: " + billingAddress);
-        android.util.Log.d("Checkout", "Order Request - SelectedItems: " + selectedItems.toString());
-        android.util.Log.d("Checkout", "Order Request - TotalAmount: " + totalPrice);
+        android.util.Log.d("Checkout", "Unified Order Request - UserID: " + userId);
+        android.util.Log.d("Checkout", "Unified Order Request - CartID: " + currentCartId);
+        android.util.Log.d("Checkout", "Unified Order Request - PaymentMethod: " + selectedPaymentMethod);
+        android.util.Log.d("Checkout", "Unified Order Request - BillingAddress: " + billingAddress);
+        android.util.Log.d("Checkout", "Unified Order Request - SelectedItems: " + selectedItems.toString());
+        android.util.Log.d("Checkout", "Unified Order Request - TotalAmount: " + totalPrice);
 
         orderService.placeNewOrder(orderRequest).enqueue(new Callback<PlaceOrderResponse>() {
             @Override
@@ -330,31 +329,39 @@ public class ActivityCheckout extends AppCompatActivity {
                 btnCheckout.setEnabled(true);
                 btnCheckout.setText("Đặt hàng");
 
-                android.util.Log.d("Checkout", "Response Code: " + response.code());
-
                 if (response.isSuccessful() && response.body() != null) {
                     PlaceOrderResponse orderResponse = response.body();
 
                     if (orderResponse.getCode() == 9999 && orderResponse.getResult() != null) {
                         Order order = orderResponse.getResult();
-                        Toast.makeText(ActivityCheckout.this,
-                                "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID(),
-                                Toast.LENGTH_SHORT).show();
+                        clearSelectedItems(); // Xóa các mục đã chọn cho cả hai phương thức
 
-                        clearSelectedItems();
+                        if ("VNPay".equals(selectedPaymentMethod)) {
+                            // Xử lý VNPay
+                            Intent intent = new Intent(ActivityCheckout.this, VNPayActivity.class);
+                            intent.putExtra("orderId", order.getOrderID());
+                            intent.putExtra("amount", totalPrice); // Sử dụng tổng giá tiền đã có
+                            startActivity(intent);
+                            finish(); // Kết thúc activity checkout
+                        } else {
+                            // Xử lý COD
+                            Toast.makeText(ActivityCheckout.this,
+                                    "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID(),
+                                    Toast.LENGTH_SHORT).show();
 
-                        Intent successIntent = new Intent(ActivityCheckout.this, ActivityOrderSuccess.class);
-                        successIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(successIntent);
-                        finish();
-
+                            Intent successIntent = new Intent(ActivityCheckout.this, ActivityOrderSuccess.class);
+                            successIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(successIntent);
+                            finish();
+                        }
                     } else {
+                        // Xử lý lỗi từ API (ví dụ: code != 9999)
                         Toast.makeText(ActivityCheckout.this,
                                 "Đặt hàng thất bại: " + orderResponse.getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
+                    // Xử lý lỗi HTTP
                     Toast.makeText(ActivityCheckout.this,
                             "Đặt hàng thất bại. (HTTP " + response.code() + ")",
                             Toast.LENGTH_SHORT).show();

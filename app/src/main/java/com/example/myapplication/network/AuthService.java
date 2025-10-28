@@ -6,6 +6,8 @@ import com.example.myapplication.model.User;
 import com.example.myapplication.network.dto.CartItemsResponse;
 import com.example.myapplication.network.dto.AddCartItemRequest;
 import com.example.myapplication.network.dto.ChangeQuantityRequest;
+import com.example.myapplication.network.dto.ForgotPasswordRequest;
+import com.example.myapplication.network.dto.ForgotPasswordResponse;
 import okhttp3.ResponseBody;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.LoginRequest;
@@ -14,6 +16,7 @@ import com.example.myapplication.network.dto.PlaceOrderResponse;
 import com.example.myapplication.network.dto.RegisterRequest;
 import com.example.myapplication.network.dto.RegisterResponse;
 import com.example.myapplication.network.dto.PlaceOrderRequest;
+import com.example.myapplication.network.dto.CheckMailResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,6 +34,12 @@ public interface AuthService {
     Call<RegisterResponse> register(@Body RegisterRequest request);
     @GET("users/{id}")
     Call<User> getUserProfile(@Path("id") Long userID);
+
+    @POST("users/forgot-password")
+    Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
+
+    @GET("users/check-mail/{email}")
+    Call<CheckMailResponse> checkMail(@Path("email") String email);
 
     @GET("carts/get-by-userID/{userID}")
     Call<Cart> getCartByUserId(@Path("userID") Long userID);

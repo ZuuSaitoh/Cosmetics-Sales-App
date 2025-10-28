@@ -3,6 +3,8 @@ package com.example.myapplication.network;
 import com.example.myapplication.model.Order; // Đảm bảo import đúng model Order
 import com.example.myapplication.model.OrderDetail;
 import com.example.myapplication.network.dto.ApiResponse;
+import com.example.myapplication.network.dto.CreateOrderRequest;
+import com.example.myapplication.network.dto.CreateOrderResponse;
 import com.example.myapplication.network.dto.PlaceOrderRequest;
 import com.example.myapplication.network.dto.PlaceOrderResponse;
 
@@ -24,6 +26,9 @@ public interface OrderService {
 
     @DELETE("orders/delete-by-order-id/{orderID}")
     Call<ApiResponse> cancelOrder(@Path("orderID") int orderID);
+
+    @POST("/orders/create-order")
+    Call<CreateOrderResponse> createOrder(@Body CreateOrderRequest request);
 
 
 

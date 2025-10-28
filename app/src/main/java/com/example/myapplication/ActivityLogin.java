@@ -95,7 +95,8 @@ public class ActivityLogin extends AppCompatActivity {
         backButton.setOnClickListener(v -> onBackPressed());
 
         forgotPasswordTextView.setOnClickListener(v -> {
-            Toast.makeText(ActivityLogin.this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ActivityLogin.this, ActivityForgotPassword.class);
+            startActivity(intent);
         });
     }
 
