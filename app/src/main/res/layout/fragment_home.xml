@@ -60,7 +60,6 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/gray_500"
                         android:textSize="14sp" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
