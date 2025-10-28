@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JwtDecoder {
     private static final String TAG = "JwtDecoder";
@@ -161,6 +163,51 @@ public class JwtDecoder {
         public JwtInfo(Long userId, String payload) {
             this.userId = userId;
             this.payload = payload;
+        }
+    }
+
+    private static String extractRoleFromPayload(String payload) {
+        try {
+            Pattern pattern = Pattern.compile("\"role\"\\s*:\\s*\"([^\"]+)\"");
+            Matcher matcher = pattern.matcher(payload);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error extracting role from payload", e);
+        }
+        return null;
+    }
+
+    public static String getRoleFromToken(String token) {
+        if (token == null || token.isEmpty()) {
+            Log.w(TAG, "Token is null or empty");
+            return null;
+        }
+
+        try {
+            // JWT token có format: header.payload.signature
+            String[] parts = token.split("\\.");
+            if (parts.length != 3) {
+                Log.w(TAG, "Invalid JWT format - expected 3 parts, got: " + parts.length);
+                return null;
+            }
+
+            // Decode payload (phần thứ 2) mà không cần verify signature
+            String payload = parts[1];
+
+            // Decode base64
+            byte[] decodedBytes = android.util.Base64.decode(payload, android.util.Base64.URL_SAFE);
+            String decodedPayload = new String(decodedBytes, StandardCharsets.UTF_8);
+
+            Log.d(TAG, "Decoded JWT payload: " + decodedPayload);
+
+            // Parse JSON để lấy role
+            return extractRoleFromPayload(decodedPayload);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error decoding JWT token", e);
+            return null;
         }
     }
 }

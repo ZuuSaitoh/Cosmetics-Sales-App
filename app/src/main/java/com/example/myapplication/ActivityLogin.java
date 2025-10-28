@@ -174,6 +174,8 @@ public class ActivityLogin extends AppCompatActivity {
                             android.util.Log.d("ActivityLogin", "Trying to decode userId from JWT token");
                             userId = com.example.myapplication.auth.JwtDecoder.getUserIdFromToken(token);
                             android.util.Log.d("ActivityLogin", "Decoded userId from JWT: " + userId);
+                            role = com.example.myapplication.auth.JwtDecoder.getRoleFromToken(token);
+                            android.util.Log.d("ActivityLogin", "Decoded role from JWT: " + role);
                         }
                     }
 
@@ -182,30 +184,36 @@ public class ActivityLogin extends AppCompatActivity {
                         // Token hợp lệ, lưu lại
                         authManager.saveAuth(token, role, userId);
 
-                        // Trường hợp 1: Quay về ProductDetail
-                        Intent resultIntent = new Intent();
-                        if (getIntent() != null && getIntent().hasExtra("pending_product")) {
-                            resultIntent.putExtra("pending_product", getIntent().getSerializableExtra("pending_product"));
-                            resultIntent.putExtra("pending_quantity", getIntent().getIntExtra("pending_quantity", 1));
-                            setResult(RESULT_OK, resultIntent);
-                            finish(); // Quay về ProductDetailActivity
-                            return;
-                        }
-
-                        // Trường hợp 2: Redirect về chat sau khi login
-                        if (getIntent() != null && getIntent().getBooleanExtra("redirect_to_chat", false)) {
-                            Intent intent = new Intent(ActivityLogin.this, ChatActivity.class);
+                        if (role.equals("Admin") || role.equals("Staff")) {
+                            Intent intent = new Intent(ActivityLogin.this, AdminDashboardActivity.class);
                             startActivity(intent);
                             finish();
                             return;
+                        } else if (role.equals("User")) {
+                            // Trường hợp 1: Quay về ProductDetail
+                            Intent resultIntent = new Intent();
+                            if (getIntent() != null && getIntent().hasExtra("pending_product")) {
+                                resultIntent.putExtra("pending_product", getIntent().getSerializableExtra("pending_product"));
+                                resultIntent.putExtra("pending_quantity", getIntent().getIntExtra("pending_quantity", 1));
+                                setResult(RESULT_OK, resultIntent);
+                                finish(); // Quay về ProductDetailActivity
+                                return;
+                            }
+
+                            // Trường hợp 2: Redirect về chat sau khi login
+                            if (getIntent() != null && getIntent().getBooleanExtra("redirect_to_chat", false)) {
+                                Intent intent = new Intent(ActivityLogin.this, ChatActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return;
+                            }
+
+                            // Trường hợp 3: Login thông thường, vào Main
+                            setResult(RESULT_OK);
+                            Intent intent = new Intent(ActivityLogin.this, ActivityMain.class);
+                            startActivity(intent);
+                            finish();
                         }
-
-                        // Trường hợp 3: Login thông thường, vào Main
-                        setResult(RESULT_OK);
-                        Intent intent = new Intent(ActivityLogin.this, ActivityMain.class);
-                        startActivity(intent);
-                        finish();
-
                     } else {
                         // Token rỗng hoặc null -> Login thất bại
                         Toast.makeText(ActivityLogin.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
