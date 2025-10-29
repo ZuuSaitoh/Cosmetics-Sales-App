@@ -6,31 +6,41 @@ import com.google.gson.annotations.SerializedName;
  * DTO (Data Transfer Object) cho Notification từ API
  * Dùng để parse JSON response từ backend
  * Tách riêng với Room Entity để tránh conflict
+ * 
+ * Hỗ trợ nhiều field name variations từ backend
  */
 public class NotificationDTO {
     
-    @SerializedName("notificationId")
+    // Hỗ trợ nhiều variations: id, notificationId, notification_id, notificationID
+    @SerializedName(value = "notificationId", alternate = {"id", "notification_id", "notificationID"})
     private Long notificationId;
     
-    @SerializedName("userId")
-    private Long userId;  // Backend có thể trả về Long thay vì String
+    // Backend trả về nested User object, không phải userId đơn thuần
+    @SerializedName("user")
+    private UserDTO user;
     
+    // Title - có thể null vì backend không trả về
     @SerializedName("title")
     private String title;
     
     @SerializedName("message")
     private String message;
     
-    @SerializedName("notificationType")
+    // Hỗ trợ nhiều variations: notificationType, notification_type, type
+    // Có thể null vì backend không trả về
+    @SerializedName(value = "notificationType", alternate = {"notification_type", "type"})
     private String notificationType;
     
-    @SerializedName("isRead")
+    // Hỗ trợ nhiều variations: isRead, is_read, read
+    @SerializedName(value = "isRead", alternate = {"is_read", "read"})
     private Boolean isRead;
     
-    @SerializedName("createdAt")
+    // Hỗ trợ nhiều variations: createdAt, created_at, timestamp, createAt
+    @SerializedName(value = "createdAt", alternate = {"created_at", "timestamp", "createAt"})
     private String createdAt;  // Backend có thể trả về String datetime
     
-    @SerializedName("dataPayload")
+    // Hỗ trợ nhiều variations: dataPayload, data_payload, payload
+    @SerializedName(value = "dataPayload", alternate = {"data_payload", "payload"})
     private String dataPayload;
     
     // Constructors
@@ -46,12 +56,19 @@ public class NotificationDTO {
         this.notificationId = notificationId;
     }
     
-    public Long getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
     
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+    
+    /**
+     * Helper method để lấy userId từ nested user object
+     */
+    public Long getUserId() {
+        return (user != null) ? user.getUserID() : null;
     }
     
     public String getTitle() {
@@ -106,7 +123,8 @@ public class NotificationDTO {
     public String toString() {
         return "NotificationDTO{" +
                 "notificationId=" + notificationId +
-                ", userId=" + userId +
+                ", user=" + (user != null ? user.toString() : "null") +
+                ", userId=" + getUserId() +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +
                 ", notificationType='" + notificationType + '\'' +

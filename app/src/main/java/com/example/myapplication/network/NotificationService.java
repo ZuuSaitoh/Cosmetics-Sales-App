@@ -29,11 +29,14 @@ public interface NotificationService {
      * Xóa một notification
      * DELETE /notifications/delete-notification/{notificationID}
      * 
+     * Backend có thể trả về ApiResponse hoặc String
+     * Dùng ResponseBody để handle cả 2 cases
+     * 
      * @param notificationId ID của notification cần xóa
-     * @return Call chứa ApiResponse (có thể chứa message hoặc null result)
+     * @return Call chứa ResponseBody (raw response)
      */
     @DELETE("notifications/delete-notification/{notificationID}")
-    Call<ApiResponse<Void>> deleteNotification(@Path("notificationID") Long notificationId);
+    Call<okhttp3.ResponseBody> deleteNotification(@Path("notificationID") Long notificationId);
 }
 
 

@@ -25,6 +25,7 @@ import com.example.myapplication.network.dto.NotificationDTO;
 import com.example.myapplication.network.dto.NotificationMapper;
 import com.example.myapplication.notification.NotificationAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,11 +45,21 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     private TextView unreadCountTextView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private com.google.android.material.tabs.TabLayout tabLayout;
     
     private NotificationAdapter adapter;
     private AuthManager authManager;
     private NotificationService notificationService;
     private Long currentUserId;
+    
+    // Toast instance để tránh "Toast already killed"
+    private android.widget.Toast currentToast;
+    
+    // Danh sách notifications từ API
+    private List<Notification> allNotifications = new ArrayList<>();
+    
+    // Tab hiện tại: 0 = Khuyến mãi, 1 = Của bạn
+    private int currentTab = 0;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,6 +107,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         unreadCountTextView = view.findViewById(R.id.text_unread_count);
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        tabLayout = view.findViewById(R.id.tab_layout);
         
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -108,6 +120,26 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
             swipeRefreshLayout.setOnRefreshListener(() -> {
                 Log.d(TAG, "Refreshing notifications...");
                 loadNotificationsFromAPI();
+            });
+        }
+        
+        // Setup TabLayout
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new com.google.android.material.tabs.TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(com.google.android.material.tabs.TabLayout.Tab tab) {
+                    currentTab = tab.getPosition();
+                    Log.d(TAG, "Tab selected: " + currentTab + " (" + tab.getText() + ")");
+                    filterAndDisplayNotifications();
+                }
+                
+                @Override
+                public void onTabUnselected(com.google.android.material.tabs.TabLayout.Tab tab) {
+                }
+                
+                @Override
+                public void onTabReselected(com.google.android.material.tabs.TabLayout.Tab tab) {
+                }
             });
         }
     }
@@ -144,6 +176,11 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                 }
                 
                 try {
+                    // LOG RAW RESPONSE để debug
+                    Log.d(TAG, "========== LOAD NOTIFICATIONS RESPONSE ==========");
+                    Log.d(TAG, "HTTP Status: " + response.code());
+                    Log.d(TAG, "Response successful: " + response.isSuccessful());
+                    
                     if (response.isSuccessful() && response.body() != null) {
                         ApiResponse<List<NotificationDTO>> apiResponse = response.body();
                         
@@ -156,37 +193,58 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                             
                             Log.d(TAG, "Received " + notificationDTOs.size() + " notification DTOs");
                             
+                            // LOG chi tiết TOÀN BỘ DTO để debug
+                            for (int i = 0; i < Math.min(5, notificationDTOs.size()); i++) {
+                                NotificationDTO dto = notificationDTOs.get(i);
+                                Log.d(TAG, "  ──────────────────────────────────────");
+                                Log.d(TAG, "  DTO[" + i + "] FULL DATA:");
+                                Log.d(TAG, "    notificationId (Long): " + dto.getNotificationId());
+                                Log.d(TAG, "    userId (Long): " + dto.getUserId());
+                                Log.d(TAG, "    title: " + dto.getTitle());
+                                Log.d(TAG, "    message: " + dto.getMessage());
+                                Log.d(TAG, "    type: " + dto.getNotificationType());
+                                Log.d(TAG, "    isRead: " + dto.getIsRead());
+                                Log.d(TAG, "    createdAt: " + dto.getCreatedAt());
+                                Log.d(TAG, "    Full DTO: " + dto.toString());
+                            }
+                            Log.d(TAG, "  ──────────────────────────────────────");
+                            
                             // Convert DTO sang Entity
                             List<Notification> notifications = NotificationMapper.toEntityList(notificationDTOs);
                             
                             Log.d(TAG, "Converted to " + notifications.size() + " notifications");
                             
+                            // LOG chi tiết IDs sau convert
+                            for (int i = 0; i < Math.min(3, notifications.size()); i++) {
+                                Notification n = notifications.get(i);
+                                Log.d(TAG, "  Entity[" + i + "] - Local notificationId (int): " + n.getNotificationId());
+                            }
+                            
+                            // Lưu toàn bộ notifications
+                            allNotifications = notifications;
+                            
                             if (notifications.isEmpty()) {
                                 showEmptyState("Bạn chưa có thông báo nào");
                             } else {
-                                showNotifications(notifications);
-                                updateUnreadCount(notifications);
+                                // Filter và hiển thị theo tab hiện tại
+                                filterAndDisplayNotifications();
                             }
                         } else {
                             String errorMsg = apiResponse.getMessage() != null ? 
                                 apiResponse.getMessage() : "Lỗi không xác định";
                             Log.e(TAG, "API Error: " + errorMsg);
                             showEmptyState("Lỗi: " + errorMsg);
-                            Toast.makeText(getContext(), "Lỗi: " + errorMsg, Toast.LENGTH_SHORT).show();
+                            showToast("Lỗi: " + errorMsg);
                         }
                     } else {
                         Log.e(TAG, "Response not successful - Code: " + response.code());
                         showEmptyState("Không thể tải thông báo");
-                        Toast.makeText(getContext(), 
-                            "Lỗi tải thông báo: " + response.code(), 
-                            Toast.LENGTH_SHORT).show();
+                        showToast("Lỗi tải thông báo: " + response.code());
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Error processing response", e);
                     showEmptyState("Lỗi xử lý dữ liệu");
-                    Toast.makeText(getContext(), 
-                        "Lỗi: " + e.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
+                    showToast("Lỗi: " + e.getMessage());
                 }
             }
             
@@ -202,9 +260,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                 
                 Log.e(TAG, "API call failed", t);
                 showEmptyState("Không thể kết nối đến server");
-                Toast.makeText(getContext(), 
-                    "Lỗi kết nối: " + t.getMessage(), 
-                    Toast.LENGTH_LONG).show();
+                showToast("Lỗi kết nối: " + t.getMessage(), android.widget.Toast.LENGTH_LONG);
             }
         });
     }
@@ -219,6 +275,69 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(isLoading);
+        }
+    }
+    
+    /**
+     * Filter và hiển thị notifications theo tab hiện tại
+     */
+    private void filterAndDisplayNotifications() {
+        if (allNotifications == null || allNotifications.isEmpty()) {
+            showEmptyState("Bạn chưa có thông báo nào");
+            return;
+        }
+        
+        List<Notification> filteredNotifications = new ArrayList<>();
+        
+        Log.d(TAG, "=== FILTERING NOTIFICATIONS ===");
+        Log.d(TAG, "Current Tab: " + (currentTab == 0 ? "Khuyến mãi" : "Của bạn"));
+        Log.d(TAG, "Total notifications to filter: " + allNotifications.size());
+        
+        for (Notification notification : allNotifications) {
+            String type = notification.getNotificationType();
+            if (type == null) {
+                type = "SYSTEM"; // Default
+            }
+            
+            Log.d(TAG, "Notification ID: " + notification.getNotificationId() + 
+                  ", Type: " + type + ", Title: " + notification.getTitle());
+            
+            if (currentTab == 0) {
+                // Tab "Khuyến mãi" - Notifications từ admin (PROMOTION, SYSTEM)
+                if (type.equals(Notification.NotificationType.PROMOTION) || 
+                    type.equals(Notification.NotificationType.SYSTEM)) {
+                    filteredNotifications.add(notification);
+                    Log.d(TAG, "  ✅ Added to Khuyến mãi tab");
+                } else {
+                    Log.d(TAG, "  ❌ Filtered out from Khuyến mãi tab");
+                }
+            } else {
+                // Tab "Của bạn" - Notifications cá nhân (CART, ORDER, PAYMENT, ...)
+                if (type.equals(Notification.NotificationType.CART) || 
+                    type.equals(Notification.NotificationType.ORDER) ||
+                    type.equals(Notification.NotificationType.PAYMENT)) {
+                    filteredNotifications.add(notification);
+                    Log.d(TAG, "  ✅ Added to Của bạn tab - Type: " + type);
+                } else {
+                    Log.d(TAG, "  ❌ Filtered out from Của bạn tab - Type: " + type);
+                }
+            }
+        }
+        
+        Log.d(TAG, "=== FILTER RESULT ===");
+        Log.d(TAG, "Filtered count: " + filteredNotifications.size());
+        Log.d(TAG, "====================");
+        
+        Log.d(TAG, "Filtered notifications - Tab: " + currentTab + ", Count: " + filteredNotifications.size());
+        
+        if (filteredNotifications.isEmpty()) {
+            String emptyMessage = currentTab == 0 ? 
+                "Chưa có thông báo khuyến mãi" : 
+                "Bạn chưa có thông báo nào";
+            showEmptyState(emptyMessage);
+        } else {
+            showNotifications(filteredNotifications);
+            updateUnreadCount(filteredNotifications);
         }
     }
     
@@ -257,6 +376,35 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     }
     
     /**
+     * Show toast an toàn, tránh "Toast already killed"
+     */
+    private void showToast(String message, int duration) {
+        if (getContext() == null || !isAdded()) {
+            return;
+        }
+        
+        try {
+            // Cancel toast cũ nếu đang hiển thị
+            if (currentToast != null) {
+                currentToast.cancel();
+            }
+            
+            // Tạo toast mới
+            currentToast = android.widget.Toast.makeText(getContext(), message, duration);
+            currentToast.show();
+        } catch (Exception e) {
+            Log.e(TAG, "Error showing toast", e);
+        }
+    }
+    
+    /**
+     * Show toast ngắn (short)
+     */
+    private void showToast(String message) {
+        showToast(message, android.widget.Toast.LENGTH_SHORT);
+    }
+    
+    /**
      * Cập nhật số lượng thông báo chưa đọc
      */
     private void updateUnreadCount(List<Notification> notifications) {
@@ -274,11 +422,11 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         Log.d(TAG, "Unread count: " + unreadCount);
         
         if (unreadCount > 0) {
-            unreadCountTextView.setVisibility(View.VISIBLE);
+                unreadCountTextView.setVisibility(View.VISIBLE);
             unreadCountTextView.setText(unreadCount + " thông báo chưa đọc");
         } else {
-            unreadCountTextView.setVisibility(View.GONE);
-        }
+                unreadCountTextView.setVisibility(View.GONE);
+            }
     }
     
     @Override
@@ -291,30 +439,30 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         // Handle click based on notification type
         String type = notification.getNotificationType();
         if (type == null) {
-            Toast.makeText(requireContext(), notification.getMessage(), Toast.LENGTH_SHORT).show();
+            showToast(notification.getMessage());
             return;
         }
         
         switch (type) {
             case Notification.NotificationType.CART:
-                Toast.makeText(requireContext(), "Mở giỏ hàng...", Toast.LENGTH_SHORT).show();
+                showToast("Mở giỏ hàng...");
                 // TODO: Navigate to cart activity
                 // Intent intent = new Intent(requireContext(), ActivityCart.class);
                 // startActivity(intent);
                 break;
                 
             case Notification.NotificationType.ORDER:
-                Toast.makeText(requireContext(), "Xem chi tiết đơn hàng...", Toast.LENGTH_SHORT).show();
+                showToast("Xem chi tiết đơn hàng...");
                 // TODO: Navigate to order details
                 break;
                 
             case Notification.NotificationType.PROMOTION:
-                Toast.makeText(requireContext(), "Xem khuyến mãi...", Toast.LENGTH_SHORT).show();
+                showToast("Xem khuyến mãi...");
                 // TODO: Navigate to promotions
                 break;
                 
             default:
-                Toast.makeText(requireContext(), notification.getMessage(), Toast.LENGTH_SHORT).show();
+                showToast(notification.getMessage());
                 break;
         }
     }
@@ -340,80 +488,143 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
      */
     private void deleteNotificationFromAPI(Notification notification) {
         if (notification == null || notification.getNotificationId() <= 0) {
-            Toast.makeText(requireContext(), "Lỗi: ID thông báo không hợp lệ", Toast.LENGTH_SHORT).show();
+            showToast("Lỗi: ID thông báo không hợp lệ");
             return;
         }
         
-        Long notificationId = (long) notification.getNotificationId();
+        // LOG chi tiết để trace ID conversion
+        int entityId = notification.getNotificationId();
+        Long apiId = (long) entityId;
         
-        Log.d(TAG, "Deleting notification ID: " + notificationId);
+        Log.d(TAG, "========== DELETE NOTIFICATION ==========");
+        Log.d(TAG, "Notification Entity ID (int): " + entityId);
+        Log.d(TAG, "Converting to API parameter (Long): " + apiId);
+        Log.d(TAG, "Full notification: " + notification.toString());
+        Log.d(TAG, "API call: DELETE /notifications/delete-notification/" + apiId);
+        Log.d(TAG, "=========================================");
         
         // Hiển thị loading (optional - có thể dùng ProgressDialog)
         // showLoading(true);
         
-        // Gọi API delete
-        Call<ApiResponse<Void>> call = notificationService.deleteNotification(notificationId);
+        // Gọi API delete với apiId
+        Call<okhttp3.ResponseBody> call = notificationService.deleteNotification(apiId);
         
-        call.enqueue(new Callback<ApiResponse<Void>>() {
+        call.enqueue(new Callback<okhttp3.ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ApiResponse<Void>> call, 
-                                 @NonNull Response<ApiResponse<Void>> response) {
+            public void onResponse(@NonNull Call<okhttp3.ResponseBody> call, 
+                                 @NonNull Response<okhttp3.ResponseBody> response) {
                 // showLoading(false);
                 
-                if (!isAdded() || getContext() == null) {
+                // Check fragment state để tránh IllegalStateException
+                if (!isAdded() || getContext() == null || getActivity() == null || isDetached()) {
+                    Log.w(TAG, "Fragment not in valid state - skipping delete response handling");
                     return;
                 }
                 
                 try {
-                    if (response.isSuccessful() && response.body() != null) {
-                        ApiResponse<Void> apiResponse = response.body();
+                    Log.d(TAG, "========== DELETE API RESPONSE ==========");
+                    Log.d(TAG, "HTTP Status Code: " + response.code());
+                    Log.d(TAG, "Response successful: " + response.isSuccessful());
+                    
+                    // Đọc raw response body
+                    String responseBodyString = null;
+                    if (response.body() != null) {
+                        try {
+                            responseBodyString = response.body().string();
+                            Log.d(TAG, "Response Body: " + responseBodyString);
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error reading response body", e);
+                        }
+                    }
+                    
+                    Log.d(TAG, "Deleted notification ID was: " + apiId);
+                    Log.d(TAG, "=========================================");
+                    
+                    // Check HTTP status code - nếu 200-299 = success
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "✅ Delete successful! Refreshing notification list...");
                         
-                        Log.d(TAG, "Delete API Response - Code: " + apiResponse.getCode());
-                        Log.d(TAG, "Delete API Response - Message: " + apiResponse.getMessage());
-                        
-                        // Kiểm tra code == 9999 (success)
-                        if (apiResponse.getCode() == 9999) {
-                            Toast.makeText(getContext(), 
-                                "Đã xóa thông báo", 
-                                Toast.LENGTH_SHORT).show();
-                            
-                            // Refresh danh sách notifications
-                            loadNotificationsFromAPI();
-                        } else {
-                            String errorMsg = apiResponse.getMessage() != null ? 
-                                apiResponse.getMessage() : "Không thể xóa thông báo";
-                            Log.e(TAG, "Delete API Error: " + errorMsg);
-                            Toast.makeText(getContext(), 
-                                "Lỗi: " + errorMsg, 
-                                Toast.LENGTH_SHORT).show();
+                        // Post to UI thread và check fragment state
+                        if (getActivity() != null && isAdded()) {
+                            getActivity().runOnUiThread(() -> {
+                                if (isAdded() && getContext() != null) {
+                                    showToast("Đã xóa thông báo");
+                                    
+                                    Log.d(TAG, "Calling loadNotificationsFromAPI() to refresh list");
+                                    loadNotificationsFromAPI();
+                                }
+                            });
                         }
                     } else {
-                        Log.e(TAG, "Delete response not successful - Code: " + response.code());
-                        Toast.makeText(getContext(), 
-                            "Lỗi xóa thông báo: " + response.code(), 
-                            Toast.LENGTH_SHORT).show();
+                        // HTTP error (4xx, 5xx)
+                        Log.e(TAG, "Delete HTTP Error - Code: " + response.code());
+                        Log.d(TAG, "=========================================");
+                        
+                        final int errorCode = response.code();
+                        if (getActivity() != null && isAdded()) {
+                            getActivity().runOnUiThread(() -> {
+                                if (isAdded() && getContext() != null) {
+                                    showToast("Lỗi xóa thông báo: HTTP " + errorCode);
+                                }
+                            });
+                        }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Error processing delete response", e);
-                    Toast.makeText(getContext(), 
-                        "Lỗi: " + e.getMessage(), 
-                        Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Exception processing delete response", e);
+                    Log.e(TAG, "Exception type: " + e.getClass().getName());
+                    Log.e(TAG, "Exception message: " + e.getMessage());
+                    Log.d(TAG, "=========================================");
+                    
+                    // Bất kỳ exception nào - nếu HTTP success vẫn coi như delete thành công
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "✅ Delete HTTP successful despite exception! Refreshing notification list...");
+                        
+                        if (getActivity() != null && isAdded()) {
+                            getActivity().runOnUiThread(() -> {
+                                if (isAdded() && getContext() != null) {
+                                    showToast("Đã xóa thông báo");
+                                    
+                                    Log.d(TAG, "Calling loadNotificationsFromAPI() to refresh list");
+                                    loadNotificationsFromAPI();
+                                }
+                            });
+                        }
+                    } else {
+                        // HTTP không success thì show error
+                        String exceptionMsg = e.getMessage() != null ? e.getMessage() : "Unknown error";
+                        
+                        if (getActivity() != null && isAdded()) {
+                            final String errorMessage = exceptionMsg;
+                            getActivity().runOnUiThread(() -> {
+                                if (isAdded() && getContext() != null) {
+                                    showToast("Lỗi: " + errorMessage);
+                                }
+                            });
+                        }
+                    }
                 }
             }
             
             @Override
-            public void onFailure(@NonNull Call<ApiResponse<Void>> call, 
+            public void onFailure(@NonNull Call<okhttp3.ResponseBody> call, 
                                 @NonNull Throwable t) {
                 // showLoading(false);
                 
-                if (!isAdded() || getContext() == null) {
+                if (!isAdded() || getContext() == null || getActivity() == null) {
+                    Log.w(TAG, "Fragment not in valid state - skipping delete failure handling");
                     return;
                 }
                 
                 Log.e(TAG, "Delete API call failed", t);
-                Toast.makeText(getContext(), 
-                    "Lỗi kết nối: " + t.getMessage(), 
-                    Toast.LENGTH_LONG).show();
+                
+                final String errorMessage = t.getMessage();
+                if (getActivity() != null && isAdded()) {
+                    getActivity().runOnUiThread(() -> {
+                        if (isAdded() && getContext() != null) {
+                            showToast("Lỗi kết nối: " + errorMessage, android.widget.Toast.LENGTH_LONG);
+                        }
+                    });
+                }
             }
         });
     }

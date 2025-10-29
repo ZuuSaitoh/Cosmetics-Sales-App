@@ -37,20 +37,42 @@ public class NotificationMapper {
         
         Notification notification = new Notification();
         
-        // NotificationId
+        // NotificationId - LOGGING để trace conversion
         if (dto.getNotificationId() != null) {
-            notification.setNotificationId(dto.getNotificationId().intValue());
+            Long dtoId = dto.getNotificationId();
+            int entityId = dtoId.intValue();
+            
+            Log.d(TAG, "Converting NotificationId - DTO(Long): " + dtoId + " → Entity(int): " + entityId);
+            
+            notification.setNotificationId(entityId);
+        } else {
+            Log.w(TAG, "DTO notificationId is NULL!");
         }
         
-        // UserId - convert Long to String
-        if (dto.getUserId() != null) {
-            notification.setUserId(String.valueOf(dto.getUserId()));
+        // UserId - extract từ nested user object
+        Long userId = dto.getUserId();  // Helper method đã extract từ user.getUserID()
+        if (userId != null) {
+            notification.setUserId(String.valueOf(userId));
+            Log.d(TAG, "Extracted userId from nested user object: " + userId);
         } else {
             notification.setUserId("");  // Default empty string
+            Log.w(TAG, "UserId is null - user object may be missing");
         }
         
-        // Title
-        notification.setTitle(dto.getTitle());
+        // Title - backend không trả về, tạo default
+        String title = dto.getTitle();
+        if (title == null || title.isEmpty()) {
+            // Tạo default title từ message hoặc "Thông báo"
+            String message = dto.getMessage();
+            if (message != null && !message.isEmpty()) {
+                // Lấy 30 ký tự đầu làm title
+                title = message.length() > 30 ? message.substring(0, 30) + "..." : message;
+            } else {
+                title = "Thông báo";  // Default title
+            }
+            Log.d(TAG, "Title is null, using default: " + title);
+        }
+        notification.setTitle(title);
         
         // Message
         if (dto.getMessage() != null) {
@@ -59,8 +81,13 @@ public class NotificationMapper {
             notification.setMessage("");  // Default empty string
         }
         
-        // NotificationType
-        notification.setNotificationType(dto.getNotificationType());
+        // NotificationType - backend không trả về, default SYSTEM
+        String type = dto.getNotificationType();
+        if (type == null || type.isEmpty()) {
+            type = "SYSTEM";  // Default type
+            Log.d(TAG, "NotificationType is null, using default: SYSTEM");
+        }
+        notification.setNotificationType(type);
         
         // IsRead
         if (dto.getIsRead() != null) {
@@ -138,37 +165,19 @@ public class NotificationMapper {
     
     /**
      * Convert Notification entity sang NotificationDTO
-     * (Dùng khi cần gửi data lên server)
+     * (KHÔNG CẦN DÙNG - chỉ cần DTO → Entity để đọc từ API)
+     * 
+     * Method này được comment vì backend response có nested user object,
+     * không thể convert ngược lại từ Entity (userId String) → DTO (user Object)
      */
+    /*
     public static NotificationDTO toDTO(Notification notification) {
-        if (notification == null) {
-            return null;
-        }
-        
-        NotificationDTO dto = new NotificationDTO();
-        
-        dto.setNotificationId((long) notification.getNotificationId());
-        
-        // Parse userId from String to Long
-        try {
-            dto.setUserId(Long.parseLong(notification.getUserId()));
-        } catch (NumberFormatException e) {
-            Log.w(TAG, "Invalid userId format: " + notification.getUserId());
-            dto.setUserId(0L);
-        }
-        
-        dto.setTitle(notification.getTitle());
-        dto.setMessage(notification.getMessage());
-        dto.setNotificationType(notification.getNotificationType());
-        dto.setIsRead(notification.isRead());
-        
-        // Convert timestamp to ISO datetime string
-        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-        dto.setCreatedAt(isoFormat.format(new Date(notification.getCreatedAt())));
-        
-        dto.setDataPayload(notification.getDataPayload());
-        
-        return dto;
+        // Not implemented - backend response structure không support
+        // Backend expect nested user object, không phải userId đơn thuần
+        throw new UnsupportedOperationException(
+            "Cannot convert Entity to DTO - backend uses nested user object"
+        );
     }
+    */
 }
 
