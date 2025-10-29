@@ -46,6 +46,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private com.google.android.material.tabs.TabLayout tabLayout;
+    private android.widget.Button btnMarkAllRead;
     
     private NotificationAdapter adapter;
     private AuthManager authManager;
@@ -108,6 +109,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         tabLayout = view.findViewById(R.id.tab_layout);
+        btnMarkAllRead = view.findViewById(R.id.btn_mark_all_read);
         
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -139,6 +141,30 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                 
                 @Override
                 public void onTabReselected(com.google.android.material.tabs.TabLayout.Tab tab) {
+                }
+            });
+        }
+        
+        // Setup button "Đánh dấu tất cả đã đọc"
+        if (btnMarkAllRead != null) {
+            btnMarkAllRead.setOnClickListener(v -> {
+                Log.d(TAG, "Mark all read button clicked");
+                
+                // Kiểm tra xem có notification chưa đọc không
+                boolean hasUnread = false;
+                if (allNotifications != null) {
+                    for (Notification n : allNotifications) {
+                        if (!n.isRead()) {
+                            hasUnread = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (hasUnread) {
+                    markAllNotificationsAsRead();
+                } else {
+                    showToast("Tất cả thông báo đã được đọc");
                 }
             });
         }
@@ -433,10 +459,12 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     public void onNotificationClick(Notification notification) {
         Log.d(TAG, "Notification clicked: " + notification.getTitle());
         
-        // TODO: Implement mark as read API call if available
-        // For now, just handle navigation based on notification type
+        // Đánh dấu notification là đã đọc
+        if (!notification.isRead()) {
+            markNotificationAsRead(notification);
+        }
         
-        // Handle click based on notification type
+        // Handle navigation based on notification type
         String type = notification.getNotificationType();
         if (type == null) {
             showToast(notification.getMessage());
@@ -465,6 +493,131 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                 showToast(notification.getMessage());
                 break;
         }
+    }
+    
+    /**
+     * Đánh dấu TẤT CẢ notifications của user là đã đọc
+     * API: PUT /notifications/mark-all-as-read/{userID}
+     */
+    private void markAllNotificationsAsRead() {
+        if (currentUserId == null) {
+            showToast("Không thể đánh dấu: User ID không hợp lệ");
+            return;
+        }
+        
+        Log.d(TAG, "Marking all notifications as read for user: " + currentUserId);
+        
+        // Gọi API mark-all-as-read
+        Call<okhttp3.ResponseBody> call = notificationService.markAllNotificationsAsRead(currentUserId);
+        
+        call.enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<okhttp3.ResponseBody> call, 
+                                 @NonNull Response<okhttp3.ResponseBody> response) {
+                if (!isAdded() || getContext() == null) {
+                    return;
+                }
+                
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "✅ Marked all notifications as read");
+                    
+                    // Update tất cả local notifications
+                    if (allNotifications != null) {
+                        for (Notification n : allNotifications) {
+                            n.setRead(true);
+                        }
+                    }
+                    
+                    // Refresh UI
+                    if (getActivity() != null && isAdded()) {
+                        getActivity().runOnUiThread(() -> {
+                            if (isAdded()) {
+                                showToast("Đã đánh dấu tất cả là đã đọc");
+                                filterAndDisplayNotifications();
+                            }
+                        });
+                    }
+                } else {
+                    Log.e(TAG, "Failed to mark all as read - HTTP: " + response.code());
+                    if (getActivity() != null && isAdded()) {
+                        getActivity().runOnUiThread(() -> {
+                            if (isAdded()) {
+                                showToast("Lỗi đánh dấu đã đọc");
+                            }
+                        });
+                    }
+                }
+            }
+            
+            @Override
+            public void onFailure(@NonNull Call<okhttp3.ResponseBody> call, 
+                                @NonNull Throwable t) {
+                if (isAdded()) {
+                    Log.e(TAG, "API call failed - mark all as read", t);
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            if (isAdded()) {
+                                showToast("Lỗi kết nối");
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    
+    /**
+     * Đánh dấu notification là đã đọc
+     * API: PUT /notifications/mark-as-read/{notificationID}
+     */
+    private void markNotificationAsRead(Notification notification) {
+        if (notification == null || notification.getNotificationId() <= 0) {
+            return;
+        }
+        
+        Long notificationId = (long) notification.getNotificationId();
+        
+        Log.d(TAG, "Marking notification as read - ID: " + notificationId);
+        
+        // Gọi API mark-as-read
+        Call<okhttp3.ResponseBody> call = notificationService.markNotificationAsRead(notificationId);
+        
+        call.enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<okhttp3.ResponseBody> call, 
+                                 @NonNull Response<okhttp3.ResponseBody> response) {
+                if (!isAdded() || getContext() == null) {
+                    return;
+                }
+                
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "✅ Marked notification " + notificationId + " as read");
+                    
+                    // Update local notification object
+                    notification.setRead(true);
+                    
+                    // Refresh UI để update unread count
+                    if (getActivity() != null && isAdded()) {
+                        getActivity().runOnUiThread(() -> {
+                            if (isAdded() && adapter != null) {
+                                adapter.notifyDataSetChanged();
+                                filterAndDisplayNotifications();
+                            }
+                        });
+                    }
+                } else {
+                    Log.e(TAG, "Failed to mark as read - HTTP: " + response.code());
+                }
+            }
+            
+            @Override
+            public void onFailure(@NonNull Call<okhttp3.ResponseBody> call, 
+                                @NonNull Throwable t) {
+                if (isAdded()) {
+                    Log.e(TAG, "API call failed - mark as read", t);
+                }
+            }
+        });
     }
     
     @Override

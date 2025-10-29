@@ -37,6 +37,26 @@ public interface NotificationService {
      */
     @DELETE("notifications/delete-notification/{notificationID}")
     Call<okhttp3.ResponseBody> deleteNotification(@Path("notificationID") Long notificationId);
+    
+    /**
+     * Đánh dấu một notification là đã đọc
+     * PUT /notifications/mark-as-read/{notificationID}
+     * 
+     * @param notificationId ID của notification cần đánh dấu
+     * @return Call chứa ResponseBody (raw response)
+     */
+    @retrofit2.http.PUT("notifications/mark-as-read/{notificationID}")
+    Call<okhttp3.ResponseBody> markNotificationAsRead(@Path("notificationID") Long notificationId);
+    
+    /**
+     * Đánh dấu tất cả notifications của user là đã đọc
+     * PUT /notifications/mark-all-as-read/{userID}
+     * 
+     * @param userId ID của user
+     * @return Call chứa ResponseBody (raw response)
+     */
+    @retrofit2.http.PUT("notifications/mark-all-as-read/{userID}")
+    Call<okhttp3.ResponseBody> markAllNotificationsAsRead(@Path("userID") Long userId);
 }
 
 
