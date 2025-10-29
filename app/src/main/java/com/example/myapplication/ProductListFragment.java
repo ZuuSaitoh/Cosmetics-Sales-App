@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +44,20 @@ public class ProductListFragment extends Fragment {
     private ProductAdapter productAdapter;
     private GridLayoutManager layoutManager;
     private boolean isGrid = true;
+    private List<Product> allProducts = new ArrayList<>();
+
+    // Sort UI
+    private TextView btnSortFeatured;
+    private TextView btnSortBestSelling;
+    private TextView btnSortNewest;
+    private LinearLayout btnSortPrice;
+    private TextView textPriceLabel;
+    private ImageView imgPriceSort;
+    private ImageButton btnLayoutToggle;
+
+    // Sort state
+    private String currentSort = "Nổi bật";
+    private boolean isPriceAscending = true;
 
     public ProductListFragment() {}
 
@@ -56,8 +73,16 @@ public class ProductListFragment extends Fragment {
         com.google.android.material.appbar.MaterialToolbar toolbar = root.findViewById(R.id.toolbar_products);
         View fabAdd = root.findViewById(R.id.fab_add);
         View btnCreate = root.findViewById(R.id.btn_create_product);
-        View btnToggle = root.findViewById(R.id.btn_toggle_layout);
         final com.google.android.material.textfield.TextInputEditText etSearch = root.findViewById(R.id.et_search);
+
+        // Sort views
+        btnSortFeatured = root.findViewById(R.id.btnSortFeatured);
+        btnSortBestSelling = root.findViewById(R.id.btnSortBestSelling);
+        btnSortNewest = root.findViewById(R.id.btnSortNewest);
+        btnSortPrice = root.findViewById(R.id.btnSortPrice);
+        textPriceLabel = root.findViewById(R.id.textPriceLabel);
+        imgPriceSort = root.findViewById(R.id.imgPriceSort);
+        btnLayoutToggle = root.findViewById(R.id.btnLayoutToggle);
 
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -85,12 +110,14 @@ public class ProductListFragment extends Fragment {
         fabAdd.setOnClickListener(addAction);
         btnCreate.setOnClickListener(addAction);
 
-        btnToggle.setOnClickListener(v -> {
-            toggleLayout(null);
-            if (v instanceof com.google.android.material.button.MaterialButton) {
-                ((com.google.android.material.button.MaterialButton) v).setText(isGrid ? "Chuyển List" : "Chuyển Grid");
-            }
-        });
+        // removed old top toggle button; use icon in sort toolbar instead
+
+        // Sort listeners
+        if (btnSortFeatured != null) btnSortFeatured.setOnClickListener(v -> { currentSort = "Nổi bật"; sortProducts("Nổi bật"); updateSortButtons(); });
+        if (btnSortBestSelling != null) btnSortBestSelling.setOnClickListener(v -> { currentSort = "Bán chạy"; sortProducts("Bán chạy"); updateSortButtons(); });
+        if (btnSortNewest != null) btnSortNewest.setOnClickListener(v -> { currentSort = "Mới nhất"; sortProducts("Mới nhất"); updateSortButtons(); });
+        if (btnSortPrice != null) btnSortPrice.setOnClickListener(v -> { currentSort = "Giá"; isPriceAscending = !isPriceAscending; sortProducts("Giá"); updateSortButtons(); });
+        if (btnLayoutToggle != null) btnLayoutToggle.setOnClickListener(v -> { isGrid = !isGrid; layoutManager.setSpanCount(isGrid ? 2 : 1); recyclerView.setLayoutManager(layoutManager); recyclerView.getAdapter().notifyDataSetChanged(); });
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -221,7 +248,11 @@ public class ProductListFragment extends Fragment {
                     ApiResponse<List<Product>> api = response.body();
                     List<Product> products = api.getResult();
                     if (products != null && !products.isEmpty()) {
-                        productAdapter.updateProducts(products);
+                        allProducts.clear();
+                        allProducts.addAll(products);
+                        // initial sort like other screens
+                        sortProducts(currentSort);
+                        updateSortButtons();
                         showEmpty(false);
                     } else {
                         showEmpty(true);
@@ -240,6 +271,63 @@ public class ProductListFragment extends Fragment {
                 showEmpty(true);
             }
         });
+    }
+
+    private void sortProducts(String sortType) {
+        if (allProducts == null || allProducts.isEmpty()) return;
+        List<Product> sorted = new ArrayList<>(allProducts);
+        switch (sortType) {
+            case "Nổi bật":
+                java.util.Collections.shuffle(sorted);
+                break;
+            case "Bán chạy":
+                java.util.Collections.sort(sorted, (p1, p2) -> {
+                    int q1 = p1.getInstockQuantity() == null ? 0 : p1.getInstockQuantity();
+                    int q2 = p2.getInstockQuantity() == null ? 0 : p2.getInstockQuantity();
+                    return Integer.compare(q2, q1);
+                });
+                break;
+            case "Mới nhất":
+                java.util.Collections.sort(sorted, (p1, p2) -> {
+                    Long id1 = p1.getProductID() == null ? 0L : p1.getProductID();
+                    Long id2 = p2.getProductID() == null ? 0L : p2.getProductID();
+                    return Long.compare(id2, id1);
+                });
+                break;
+            case "Giá":
+                if (isPriceAscending) {
+                    java.util.Collections.sort(sorted, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+                } else {
+                    java.util.Collections.sort(sorted, (p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()));
+                }
+                break;
+        }
+        productAdapter.updateProducts(sorted);
+    }
+
+    private void updateSortButtons() {
+        if (btnSortFeatured == null) return;
+        btnSortFeatured.setTextColor(0xFF666666);
+        btnSortBestSelling.setTextColor(0xFF666666);
+        btnSortNewest.setTextColor(0xFF666666);
+        textPriceLabel.setTextColor(0xFF666666);
+        if (imgPriceSort != null) imgPriceSort.setImageResource(R.drawable.ic_price_sort_default);
+
+        switch (currentSort) {
+            case "Nổi bật":
+                btnSortFeatured.setTextColor(0xFF4CAF50);
+                break;
+            case "Bán chạy":
+                btnSortBestSelling.setTextColor(0xFF4CAF50);
+                break;
+            case "Mới nhất":
+                btnSortNewest.setTextColor(0xFF4CAF50);
+                break;
+            case "Giá":
+                textPriceLabel.setTextColor(0xFF4CAF50);
+                if (imgPriceSort != null) imgPriceSort.setImageResource(isPriceAscending ? R.drawable.ic_price_sort_asc : R.drawable.ic_price_sort_desc);
+                break;
+        }
     }
 
     private void openAddProductDialog() {
