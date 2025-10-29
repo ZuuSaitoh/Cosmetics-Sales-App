@@ -189,6 +189,13 @@
             android:label="Sản phẩm theo danh mục"
             android:theme="@style/Theme.MyApplication" />
 
+        <!-- Address Book Activity -->
+        <activity
+            android:name=".AddressBookActivity"
+            android:exported="false"
+            android:label="Sổ địa chỉ"
+            android:theme="@style/Theme.MyApplication" />
+
         <service
             android:name="vn.vietmap.services.android.navigation.v5.navigation.NavigationService"
             android:enabled="true"

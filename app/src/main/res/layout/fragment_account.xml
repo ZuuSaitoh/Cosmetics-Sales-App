@@ -243,11 +243,15 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/order_status_new"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                    android:orientation="vertical"
-                        android:gravity="center">
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -268,11 +272,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/order_status_processing"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -293,11 +301,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/order_status_successful"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -318,11 +330,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/order_status_cancelled"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -404,11 +420,15 @@
                         android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/purchased_viewed"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -429,11 +449,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/purchased_liked"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -454,11 +478,15 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                        android:id="@+id/purchased_rated"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -479,11 +507,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/purchased_redeem"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -534,12 +566,16 @@
 
                     <!-- Row 1 -->
                     <LinearLayout
+                        android:id="@+id/option_personal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -560,12 +596,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_address_book"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -586,12 +626,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_qa"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -612,12 +656,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_brands"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -639,12 +687,16 @@
 
                     <!-- Row 2 -->
                     <LinearLayout
+                        android:id="@+id/option_new_arrivals"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -667,12 +719,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_best_sellers"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -695,12 +751,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_chat"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -722,12 +782,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_loyalty"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -749,12 +813,16 @@
 
                     <!-- Row 3 -->
                     <LinearLayout
+                        android:id="@+id/option_regulations"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -775,12 +843,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_support"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -801,12 +873,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_recruitment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -827,12 +903,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/option_voucher"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:layout_width="48dp"

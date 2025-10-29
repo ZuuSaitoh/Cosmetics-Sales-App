@@ -329,10 +329,10 @@ public class AccountFragment extends Fragment {
         }
         
         // Individual order status click listeners
-        setupOrderStatusClickListener(view, "new_order", "Mới đặt");
-        setupOrderStatusClickListener(view, "processing", "Đang xử lý");
-        setupOrderStatusClickListener(view, "successful", "Thành công");
-        setupOrderStatusClickListener(view, "cancelled", "Đã hủy");
+        setupOrderStatusClickListener(view, R.id.order_status_new, "Mới đặt");
+        setupOrderStatusClickListener(view, R.id.order_status_processing, "Đang xử lý");
+        setupOrderStatusClickListener(view, R.id.order_status_successful, "Thành công");
+        setupOrderStatusClickListener(view, R.id.order_status_cancelled, "Đã hủy");
     }
 
     private void setupWatchListOrdersClick() {
@@ -345,10 +345,13 @@ public class AccountFragment extends Fragment {
     }
 
 
-    private void setupOrderStatusClickListener(View view, String status, String statusName) {
-        // This would be implemented with actual order status filtering
-        // For now, just show a toast when clicked
-        // Note: Individual order status buttons would need specific IDs to implement this properly
+    private void setupOrderStatusClickListener(View root, int viewId, String statusName) {
+        View v = root.findViewById(viewId);
+        if (v != null) {
+            v.setOnClickListener(click -> {
+                Toast.makeText(getContext(), "Đơn hàng: " + statusName, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
     
     private void setupPurchasedProductsClickListeners(View view) {
@@ -361,37 +364,47 @@ public class AccountFragment extends Fragment {
         }
         
         // Individual product interaction click listeners
-        setupProductInteractionClickListener(view, "viewed", "Đã xem");
-        setupProductInteractionClickListener(view, "liked", "Yêu thích");
-        setupProductInteractionClickListener(view, "rated", "Đánh giá");
-        setupProductInteractionClickListener(view, "redeem", "Đổi quà");
+        setupProductInteractionClickListener(view, R.id.purchased_viewed, "Đã xem");
+        setupProductInteractionClickListener(view, R.id.purchased_liked, "Yêu thích");
+        setupProductInteractionClickListener(view, R.id.purchased_rated, "Đánh giá");
+        setupProductInteractionClickListener(view, R.id.purchased_redeem, "Đổi quà");
     }
     
-    private void setupProductInteractionClickListener(View view, String interaction, String interactionName) {
-        // This would be implemented with actual product interaction filtering
-        // For now, just show a toast when clicked
-        // Note: Individual product interaction buttons would need specific IDs to implement this properly
+    private void setupProductInteractionClickListener(View root, int viewId, String interactionName) {
+        View v = root.findViewById(viewId);
+        if (v != null) {
+            v.setOnClickListener(click -> {
+                Toast.makeText(getContext(), "Sản phẩm đã mua: " + interactionName, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
     
     private void setupAccountOptionsClickListeners(View view) {
-        // Account management options click listeners
-        setupAccountOptionClickListener(view, "personal", "Cá nhân");
-        setupAccountOptionClickListener(view, "address_book", "Sổ địa chỉ");
-        setupAccountOptionClickListener(view, "qa", "Hỏi đáp");
-        setupAccountOptionClickListener(view, "brands", "Thương hiệu");
-        setupAccountOptionClickListener(view, "new_arrivals", "Sản phẩm mới về");
-        setupAccountOptionClickListener(view, "best_sellers", "Sản phẩm bán chạy");
-        setupAccountOptionClickListener(view, "chat", "CSKH");
-        setupAccountOptionClickListener(view, "loyalty", "Tri ân");
-        setupAccountOptionClickListener(view, "regulations", "Quy định");
-        setupAccountOptionClickListener(view, "support", "Hỗ trợ");
-        setupAccountOptionClickListener(view, "recruitment", "Tuyển dụng");
-        setupAccountOptionClickListener(view, "voucher", "Voucher trải nghiệm");
+        setupAccountOptionClickListener(view, R.id.option_personal, "Cá nhân");
+        setupAccountOptionClickListener(view, R.id.option_address_book, "Sổ địa chỉ");
+        setupAccountOptionClickListener(view, R.id.option_qa, "Hỏi đáp");
+        setupAccountOptionClickListener(view, R.id.option_brands, "Thương hiệu");
+        setupAccountOptionClickListener(view, R.id.option_new_arrivals, "Sản phẩm mới về");
+        setupAccountOptionClickListener(view, R.id.option_best_sellers, "Sản phẩm bán chạy");
+        setupAccountOptionClickListener(view, R.id.option_chat, "CSKH");
+        setupAccountOptionClickListener(view, R.id.option_loyalty, "Tri ân");
+        setupAccountOptionClickListener(view, R.id.option_regulations, "Quy định");
+        setupAccountOptionClickListener(view, R.id.option_support, "Hỗ trợ");
+        setupAccountOptionClickListener(view, R.id.option_recruitment, "Tuyển dụng");
+        setupAccountOptionClickListener(view, R.id.option_voucher, "Voucher trải nghiệm");
     }
     
-    private void setupAccountOptionClickListener(View view, String option, String optionName) {
-        // This would be implemented with actual navigation to specific features
-        // For now, just show a toast when clicked
-        // Note: Individual account option buttons would need specific IDs to implement this properly
+    private void setupAccountOptionClickListener(View root, int viewId, String optionName) {
+        View optionView = root.findViewById(viewId);
+        if (optionView != null) {
+            optionView.setOnClickListener(v -> {
+                if (viewId == R.id.option_address_book) {
+                    Intent intent = new Intent(getContext(), AddressBookActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), optionName + " đang được phát triển", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
