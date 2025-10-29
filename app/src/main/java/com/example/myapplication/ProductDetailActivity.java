@@ -154,11 +154,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
         ProductService productService = ApiClient.getRetrofit(this).create(ProductService.class);
-        productService.getProductById(productId).enqueue(new Callback<Product>() {
+        productService.getProductById(productId).enqueue(new Callback<com.example.myapplication.network.dto.ApiResponse<Product>>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    product = response.body();
+            public void onResponse(Call<com.example.myapplication.network.dto.ApiResponse<Product>> call, Response<com.example.myapplication.network.dto.ApiResponse<Product>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                    product = response.body().getResult();
                     displayProductData();
                 } else {
                     displayProductData(); // Fallback
@@ -166,7 +166,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Product> call, Throwable t) {
+            public void onFailure(Call<com.example.myapplication.network.dto.ApiResponse<Product>> call, Throwable t) {
                 displayProductData(); // Fallback
             }
         });
