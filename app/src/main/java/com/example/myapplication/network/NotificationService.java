@@ -2,12 +2,15 @@ package com.example.myapplication.network;
 
 import com.example.myapplication.network.dto.ApiResponse;
 import com.example.myapplication.network.dto.NotificationDTO;
+import com.example.myapplication.network.dto.NotificationRequest;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -57,6 +60,24 @@ public interface NotificationService {
      */
     @retrofit2.http.PUT("notifications/mark-all-as-read/{userID}")
     Call<okhttp3.ResponseBody> markAllNotificationsAsRead(@Path("userID") Long userId);
+    
+    /**
+     * Tạo notification mới cho user
+     * POST /notifications/create
+     * 
+     * Request body:
+     * {
+     *   "userId": 7,
+     *   "message": "Đơn hàng #12345 của bạn đã được xác nhận",
+     *   "notificationType": "ORDER",
+     *   "dataPayload": "{\"orderId\":12345,\"status\":\"CONFIRMED\"}"
+     * }
+     * 
+     * @param request NotificationRequest object chứa thông tin notification
+     * @return Call chứa ApiResponse với NotificationDTO đã tạo
+     */
+    @POST("notifications/create")
+    Call<ApiResponse<NotificationDTO>> createNotification(@Body NotificationRequest request);
 }
 
 
