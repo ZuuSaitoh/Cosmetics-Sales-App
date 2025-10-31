@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="16dp">
+        android:paddingBottom="24dp">
 
         <!-- 🔹 HEADER -->
         <LinearLayout
@@ -21,12 +21,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
             android:background="#00695C">
 
+            <!-- Ô tìm kiếm -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
@@ -35,8 +37,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp"
+                    android:layout_height="match_parent"
                     android:paddingHorizontal="16dp">
 
                     <ImageView
@@ -44,7 +45,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="12dp"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_search"
                         app:tint="#00695C" />
 
@@ -64,10 +65,11 @@
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Biểu tượng location -->
             <FrameLayout
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/icon_background_circle"
                 android:clickable="true"
                 android:focusable="true"
@@ -75,18 +77,19 @@
 
                 <ImageButton
                     android:id="@+id/locationIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:src="@drawable/baseline_location_on_24"
                     app:tint="#00695C" />
             </FrameLayout>
 
+            <!-- Biểu tượng giỏ hàng -->
             <FrameLayout
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/icon_background_circle"
                 android:clickable="true"
                 android:focusable="true"
@@ -94,8 +97,8 @@
 
                 <ImageButton
                     android:id="@+id/cartIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_cart"
@@ -106,8 +109,8 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="top|end"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/badge_background"
                     android:gravity="center"
                     android:text="0"
@@ -119,22 +122,23 @@
             </FrameLayout>
         </LinearLayout>
 
-        <!-- 🌸 BỐ CỤC MỚI (Glowy Skin section) -->
+        <!-- 🌸 Glowy Skin Section -->
         <LinearLayout
             android:id="@+id/beautySectionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp">
 
-            <!-- Ảnh lớn “Glowy Skin” -->
+            <!-- Ảnh lớn -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardElevation="3dp">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -145,18 +149,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="16dp"
+                    android:text="GLOWY SKIN"
+                    android:textColor="@android:color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
                     android:shadowColor="#80000000"
                     android:shadowDx="2"
                     android:shadowDy="2"
-                    android:shadowRadius="4"
-                    android:text="GLOWY SKIN"
-                    android:textColor="@android:color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:shadowRadius="4" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Hai ảnh nhỏ: BODYCARE & SKINCARE -->
+            <!-- Hai ảnh nhỏ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="8dp"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp">
 
@@ -196,7 +201,7 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="8dp"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp">
 
@@ -222,28 +227,23 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 🔹 BANNER CHÍNH -->
+        <!-- 🔹 Banner chính -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bannerRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:clipToPadding="false"
-            android:paddingHorizontal="8dp" />
+            android:paddingHorizontal="12dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:paddingHorizontal="16dp" />
-
+        <!-- 🔹 Danh sách sản phẩm -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:nestedScrollingEnabled="false"
-            android:paddingHorizontal="12dp" />
+            android:paddingHorizontal="16dp" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

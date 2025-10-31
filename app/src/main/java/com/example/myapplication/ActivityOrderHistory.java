@@ -37,6 +37,8 @@ public class ActivityOrderHistory extends AppCompatActivity {
     private OrderHistoryAdapter orderAdapter;
     private List<Order> orderList;
     private OrderService orderService;
+    private String filterStatus; // e.g., Processing, Shipped, Delivered, Cancelled
+    private String filterStatusName; // localized name for toolbar
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +46,13 @@ public class ActivityOrderHistory extends AppCompatActivity {
         setContentView(R.layout.activity_order_history);
         orderService = ApiClient.getRetrofit(this).create(OrderService.class);
         initViews();
+        // Read optional status filter from intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            filterStatus = intent.getStringExtra("status");
+            filterStatusName = intent.getStringExtra("status_name");
+        }
+
         setupToolbar();
         setupRecyclerView();
         setupSwipeRefresh();
@@ -57,6 +66,9 @@ public class ActivityOrderHistory extends AppCompatActivity {
         emptyLayout = findViewById(R.id.emptyLayout);
     }
     private void setupToolbar() {
+        if (filterStatusName != null && !filterStatusName.isEmpty()) {
+            toolbar.setTitle(filterStatusName);
+        }
         toolbar.setNavigationOnClickListener(v -> finish());
     }
 
@@ -85,27 +97,30 @@ public class ActivityOrderHistory extends AppCompatActivity {
             showError("Không thể xác định người dùng. Vui lòng đăng nhập lại.");
             return;
         }
-
-        orderService.getOrdersByUserId(String.valueOf(userId))
+        // Luôn tải theo user để đảm bảo đồng nhất, sau đó lọc client-side theo status nếu có
+        orderService.getOrdersByUserId(userId)
                 .enqueue(new Callback<ApiResponse<List<Order>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Order>>> call, Response<ApiResponse<List<Order>>> response) {
                         swipeRefreshLayout.setRefreshing(false);
                         if (response.isSuccessful() && response.body() != null) {
                             List<Order> orders = response.body().getResult();
-
-                            if (orders != null && !orders.isEmpty()) {
-                                emptyLayout.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                                orderAdapter.setOrderList(orders);
+                            if (filterStatus != null && !filterStatus.isEmpty()) {
+                                List<Order> filtered = new ArrayList<>();
+                                if (orders != null) {
+                                    for (Order o : orders) {
+                                        if (o != null && matchesStatus(o.getOrderStatus(), filterStatus)) {
+                                            filtered.add(o);
+                                        }
+                                    }
+                                }
+                                updateList(filtered);
                             } else {
-                                emptyLayout.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
+                                updateList(orders);
                             }
                         } else {
                             showError("Không thể tải đơn hàng. Mã lỗi: " + response.code());
-                            emptyLayout.setVisibility(View.VISIBLE);
-                            recyclerView.setVisibility(View.GONE);
+                            showEmpty();
                         }
                     }
 
@@ -113,10 +128,45 @@ public class ActivityOrderHistory extends AppCompatActivity {
                     public void onFailure(Call<ApiResponse<List<Order>>> call, Throwable t) {
                         swipeRefreshLayout.setRefreshing(false);
                         showError("Lỗi kết nối: " + t.getMessage());
-                        emptyLayout.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
+                        showEmpty();
                     }
                 });
+    }
+
+    private boolean matchesStatus(String orderStatus, String filter) {
+        if (orderStatus == null || filter == null) return false;
+        String s = orderStatus.trim().toLowerCase();
+        String f = filter.trim().toLowerCase();
+        // Chấp nhận nhiều biến thể tiếng Anh/Việt, có/không dấu, viết sai thường gặp
+        if (f.contains("process")) {
+            return s.contains("process") || s.contains("đang xử");
+        }
+        if (f.contains("ship") || f.contains("giao")) {
+            return s.contains("ship") || s.contains("giao");
+        }
+        if (f.contains("deliver") || f.contains("giao")) {
+            return s.contains("deliver") || s.contains("đã giao");
+        }
+        if (f.contains("cancel")) {
+            return s.contains("cancel") || s.contains("hủy") || s.contains("huy");
+        }
+        // Fallback: so sánh bằng nhau sau khi bỏ khoảng trắng thừa
+        return s.equals(f);
+    }
+
+    private void updateList(List<Order> orders) {
+        if (orders != null && !orders.isEmpty()) {
+            emptyLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            orderAdapter.setOrderList(orders);
+        } else {
+            showEmpty();
+        }
+    }
+
+    private void showEmpty() {
+        emptyLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     private void showError(String message) {

@@ -25,6 +25,15 @@ public class Order {
     @SerializedName("orderDate")
     private String orderDate;
 
+
+    public Order(int orderID, User user, Cart cart, String paymentMethod, String billingAddress, String orderStatus, String orderDate) {
+        this.orderID = orderID;
+        this.user = user;
+        this.cart = cart;
+        this.orderStatus = orderStatus;
+        this.orderDate = orderDate;
+    }
+
     public int getOrderID() {
         return orderID;
     }

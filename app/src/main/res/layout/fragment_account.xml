@@ -243,7 +243,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/order_status_new"
+                        android:id="@+id/order_status_processing"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -265,14 +265,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mới đặt"
+                            android:text="Đang xử lý"
                             android:textColor="@android:color/black"
                             android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/order_status_processing"
+                        android:id="@+id/order_status_shipped"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -294,14 +294,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Đang xử lý"
+                            android:text="Đã xác nhận"
                             android:textColor="@android:color/black"
                             android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/order_status_successful"
+                        android:id="@+id/order_status_delivered"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -323,7 +323,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thành công"
+                            android:text="Đã giao"
                             android:textColor="@android:color/black"
                             android:textSize="12sp" />
 
