@@ -23,6 +23,6 @@
 
     <item
         android:id="@+id/nav_reports"
-        android:icon="@drawable/ic_reports"
-        android:title="Báo cáo" />
+        android:icon="@drawable/ic_notifications"
+        android:title="Thông báo" />
 </menu>
