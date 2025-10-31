@@ -20,7 +20,7 @@ public interface OrderService {
     @POST("/orders/place-new-orders")
     Call<PlaceOrderResponse> placeNewOrder(@Body PlaceOrderRequest request);
     @GET("orders/fetch-by-user-id/{userID}")
-    Call<ApiResponse<List<Order>>> getOrdersByUserId(@Path("userID") String userId);
+    Call<ApiResponse<List<Order>>> getOrdersByUserId(@Path("userID") Long userId);
     @GET("orders/fetch-by-order-id/{orderID}")
     Call<ApiResponse<OrderDetail>> getOrderDetail(@Path("orderID") int orderID);
 
@@ -30,6 +30,7 @@ public interface OrderService {
     @POST("/orders/create-order")
     Call<CreateOrderResponse> createOrder(@Body CreateOrderRequest request);
 
-
+    @GET("/orders/fetch-all-by-status/{status}")
+    Call<ApiResponse<List<Order>>> getOrdersByStatus(@Path("status") String status);
 
 }

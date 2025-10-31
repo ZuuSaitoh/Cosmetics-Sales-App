@@ -74,6 +74,10 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication" />
 
+
+        
+
+
         <activity
             android:name=".ActivityOrderHistory"
             android:exported="false"

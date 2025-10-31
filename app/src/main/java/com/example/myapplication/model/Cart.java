@@ -16,6 +16,11 @@ public class Cart {
     @SerializedName("status")
     private String status;
 
+    private CartItem cartItem;
+
+    public CartItem getCartItem() {
+        return cartItem;
+    }
 
     public Long getCartID() {
         return cartID;

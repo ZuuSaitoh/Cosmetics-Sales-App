@@ -2,79 +2,189 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@drawable/bg_white_rounded"
-    android:padding="12dp"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginVertical="8dp"
-    android:elevation="2dp">
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
 
-    <!-- Ảnh sản phẩm -->
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <!-- Header Section: Order Badge + Code with improved spacing -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
 
+        <!-- Optional product thumbnail -->
         <ImageView
             android:id="@+id/ivOrderThumbnail"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/img_no_product"
-            android:background="@drawable/img_no_product"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="12dp"
             android:contentDescription="@string/app_name" />
 
-        <!-- Badge hiện +n nếu có nhiều sản phẩm -->
+        <!-- Multi-item Badge with modern styling -->
         <TextView
             android:id="@+id/tvMultiItemBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="4dp"
-            android:paddingHorizontal="6dp"
-            android:paddingVertical="2dp"
-            android:background="@drawable/bg_badge_circle"
-            android:text="+2"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:text="+5 items"
+            android:textSize="11sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/badge_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginEnd="12dp"
             android:visibility="gone" />
-    </FrameLayout>
 
-    <!-- Thông tin đơn hàng -->
+        <!-- Order Code with brand typography -->
+        <TextView
+            android:id="@+id/tvOrderCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mã đơn hàng: #123456"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Divider for section separation -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_light"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Order Info Section: Enhanced spacing and typography -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp">
+
+        <!-- Order Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ngày đặt:"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvOrderDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15/10/2024"
+                android:textSize="13sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Order Quantity -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Số lượng:"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvOrderQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 sản phẩm"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <!-- Order Status with dynamic color -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Trạng thái:"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đang xử lý"
+                android:textSize="13sp"
+                android:textColor="@color/status_processing_text"
+                android:textStyle="bold"
+                android:background="@drawable/status_processing_background"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Divider before total price -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_light"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Total Price Section with brand color highlight -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
 
         <TextView
-            android:id="@+id/tvOrderDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Ngày đặt: 01/01/2025"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif-medium" />
-
-        <TextView
-            android:id="@+id/tvOrderStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trạng thái: Đang xử lý"
-            android:textColor="#555555"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif" />
+            android:layout_weight="1"
+            android:text="Tổng tiền:"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tổng tiền: 1.200.000 ₫"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-medium" />
+            android:text="1.299.000 đ"
+            android:textSize="16sp"
+            android:textColor="@color/brand_primary"
+            android:textStyle="bold" />
     </LinearLayout>
+
 </LinearLayout>

@@ -329,9 +329,9 @@ public class AccountFragment extends Fragment {
         }
         
         // Individual order status click listeners
-        setupOrderStatusClickListener(view, R.id.order_status_new, "Mới đặt");
         setupOrderStatusClickListener(view, R.id.order_status_processing, "Đang xử lý");
-        setupOrderStatusClickListener(view, R.id.order_status_successful, "Thành công");
+        setupOrderStatusClickListener(view, R.id.order_status_shipped, "Đang giao");
+        setupOrderStatusClickListener(view, R.id.order_status_delivered, "Đã giao");
         setupOrderStatusClickListener(view, R.id.order_status_cancelled, "Đã hủy");
     }
 
@@ -345,15 +345,35 @@ public class AccountFragment extends Fragment {
     }
 
 
+
+
+
     private void setupOrderStatusClickListener(View root, int viewId, String statusName) {
         View v = root.findViewById(viewId);
         if (v != null) {
             v.setOnClickListener(click -> {
-                Toast.makeText(getContext(), "Đơn hàng: " + statusName, Toast.LENGTH_SHORT).show();
+                String statusParam = null;
+                if ("Đang xử lý".equalsIgnoreCase(statusName)) {
+                    statusParam = "Processing";
+                } else if ("Đang giao".equalsIgnoreCase(statusName)) {
+                    statusParam = "Shipped";
+                } else if ("Đã giao".equalsIgnoreCase(statusName)) {
+                    statusParam = "Delivered";
+                } else if ("Đã hủy".equalsIgnoreCase(statusName)) {
+                    statusParam = "Cancelled";
+                }
+
+                Intent intent = new Intent(getContext(), ActivityOrderHistory.class);
+                if (statusParam != null) {
+                    intent.putExtra("status", statusParam);
+                    intent.putExtra("status_name", statusName);
+                }
+                startActivity(intent);
             });
         }
     }
-    
+
+
     private void setupPurchasedProductsClickListeners(View view) {
         // "Xem tất cả" click listener
         View purchasedSection = view.findViewById(R.id.purchased_products_section);

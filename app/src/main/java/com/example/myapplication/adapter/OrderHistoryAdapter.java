@@ -62,42 +62,47 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orderList.get(position);
 
-        //  Hiển thị ngày đặt hàng
+        // Mã đơn hàng (sử dụng cartID nếu có)
+        if (order.getCart() != null && order.getCart().getCartID() != null) {
+            holder.tvOrderCode.setText("#" + order.getCart().getCartID());
+        } else {
+            holder.tvOrderCode.setText("#-");
+        }
+
         //  Hiển thị ngày đặt hàng
         try {
             String isoDate = order.getOrderDate();
             Date date = isoFormat.parse(isoDate);
-            holder.tvOrderDate.setText("Ngày đặt: " + outputFormat.format(date));
+            holder.tvOrderDate.setText(outputFormat.format(date));
         } catch (Exception e) {
-            holder.tvOrderDate.setText("Ngày đặt: " + order.getOrderDate());
+            holder.tvOrderDate.setText(order.getOrderDate());
         }
 
         //  Hiển thị trạng thái đơn hàng
         String status = order.getOrderStatus();
-        holder.tvOrderStatus.setText("Trạng thái: " + (status != null ? status : "N/A"));
+        holder.tvOrderStatus.setText(status != null ? status : "N/A");
 
-        if (status != null) {
-            if (status.equalsIgnoreCase("Đã giao") || status.equalsIgnoreCase("Hoàn thành")) {
-                holder.tvOrderStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark));
-            } else if (status.equalsIgnoreCase("Đang xử lý") || status.equalsIgnoreCase("Processing") || status.equalsIgnoreCase("Đang giao")) {
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#FF9800")); // Cam
-            } else if (status.equalsIgnoreCase("Đã hủy")) {
-                holder.tvOrderStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light));
-            } else {
-                holder.tvOrderStatus.setTextColor(Color.GRAY);
-            }
+        applyStatusColors(holder, status);
+
+        //  Hiển thị tổng số lượng (tạm thời từ CartItem nếu có)
+        if (order.getCart() != null && order.getCart().getCartItem() != null) {
+            holder.tvOrderQuantity.setText(String.valueOf(order.getCart().getCartItem().getQuantity()));
+        } else {
+            holder.tvOrderQuantity.setText("-");
         }
 
         //  Hiển thị tổng tiền
         if (order.getCart() != null) {
             double totalPrice = order.getCart().getTotalPrice();
-            holder.tvTotalPrice.setText("Tổng tiền: " + currencyFormat.format(totalPrice));
+            holder.tvTotalPrice.setText(currencyFormat.format(totalPrice));
         } else {
             holder.tvTotalPrice.setText("Tổng tiền: N/A");
         }
 
-        // Mặc định ảnh rỗng
-        holder.ivOrderThumbnail.setImageResource(R.drawable.img_no_product);
+        // Mặc định ảnh rỗng (nếu có ImageView)
+        if (holder.ivOrderThumbnail != null) {
+            holder.ivOrderThumbnail.setImageResource(R.drawable.img_no_product);
+        }
         holder.tvMultiItemBadge.setVisibility(View.GONE);
 
         // Gọi API phụ để lấy danh sách sản phẩm trong giỏ hàng
@@ -113,11 +118,13 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                         if (!items.isEmpty()) {
                             String imageUrl = items.get(0).getProduct().getImageURL();
 
-                            Glide.with(context)
-                                    .load(imageUrl)
-                                    .placeholder(R.drawable.img_no_product)
-                                    .error(R.drawable.img_no_product)
-                                    .into(holder.ivOrderThumbnail);
+                            if (holder.ivOrderThumbnail != null) {
+                                Glide.with(context)
+                                        .load(imageUrl)
+                                        .placeholder(R.drawable.img_no_product)
+                                        .error(R.drawable.img_no_product)
+                                        .into(holder.ivOrderThumbnail);
+                            }
 
                             //  Nếu có nhiều sản phẩm -> hiện badge +n
                             if (items.size() > 1) {
@@ -126,6 +133,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                             } else {
                                 holder.tvMultiItemBadge.setVisibility(View.GONE);
                             }
+
+                            // Cập nhật số lượng từ danh sách items (độ tin cậy cao hơn)
+                            holder.tvOrderQuantity.setText(String.valueOf(items.size()));
                         }
                     }
                 }
@@ -144,6 +154,40 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         });
 
 
+    }
+
+    private void applyStatusColors(@NonNull OrderViewHolder holder, String statusRaw) {
+        if (statusRaw == null) {
+            return;
+        }
+        String status = statusRaw.trim().toLowerCase();
+
+        int bgColor;
+        int textColor;
+        if (status.contains("processing") || status.contains("đang xử")) {
+            bgColor = ContextCompat.getColor(context, R.color.status_processing_bg);
+            textColor = ContextCompat.getColor(context, R.color.status_processing_text);
+        } else if (status.contains("shipped") || status.contains("đang giao") || status.contains("shipping")) {
+            bgColor = ContextCompat.getColor(context, R.color.status_shipping_bg);
+            textColor = ContextCompat.getColor(context, R.color.status_shipping_text);
+        } else if (status.contains("delivered") || status.contains("đã giao")) {
+            bgColor = ContextCompat.getColor(context, R.color.status_delivered_bg);
+            textColor = ContextCompat.getColor(context, R.color.status_delivered_text);
+        } else if (status.contains("cancelled") || status.contains("canceled") || status.contains("đã hủy") || status.contains("da huy")) {
+            bgColor = ContextCompat.getColor(context, R.color.status_cancelled_bg);
+            textColor = ContextCompat.getColor(context, R.color.status_cancelled_text);
+        } else {
+            bgColor = ContextCompat.getColor(context, R.color.divider_light);
+            textColor = ContextCompat.getColor(context, R.color.text_secondary);
+        }
+
+        holder.tvOrderStatus.setTextColor(textColor);
+        android.graphics.drawable.GradientDrawable badge = new android.graphics.drawable.GradientDrawable();
+        badge.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        badge.setColor(bgColor);
+        float radiusPx = holder.itemView.getResources().getDisplayMetrics().density * 12f;
+        badge.setCornerRadius(radiusPx);
+        holder.tvOrderStatus.setBackground(badge);
     }
 
     @Override
@@ -166,10 +210,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     //  ViewHolder khớp với item_order.xml
     static class OrderViewHolder extends RecyclerView.ViewHolder {
         ImageView ivOrderThumbnail;
-        TextView tvOrderDate, tvOrderStatus, tvTotalPrice, tvMultiItemBadge;
+        TextView tvOrderDate, tvOrderStatus, tvTotalPrice, tvMultiItemBadge, tvOrderCode, tvOrderQuantity;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvOrderCode = itemView.findViewById(R.id.tvOrderCode);
+            tvOrderQuantity = itemView.findViewById(R.id.tvOrderQuantity);
             ivOrderThumbnail = itemView.findViewById(R.id.ivOrderThumbnail);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvOrderStatus = itemView.findViewById(R.id.tvOrderStatus);
