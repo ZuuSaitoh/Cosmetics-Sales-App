@@ -8,7 +8,11 @@
     <!-- Màu nền & phụ -->
     <color name="cosmetic_white">#FFFFFF</color>
     <color name="cosmetic_bg_soft">#E0F2F1</color>
+    <color name="cosmetic_bg_light">#F5F5F5</color>
     <color name="cosmetic_card_bg">#FAFAFA</color>
+    <color name="cosmetic_secondary">#80CBC4</color>
+    <color name="cosmetic_accent">#FF4081</color>
+    <color name="cosmetic_divider">#E0E0E0</color>
 
     <!-- Màu chữ -->
     <color name="cosmetic_text_primary">#212121</color>

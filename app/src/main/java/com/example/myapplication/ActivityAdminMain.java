@@ -58,7 +58,7 @@ public class ActivityAdminMain extends AppCompatActivity {
             } else if (id == R.id.nav_customers) {
                 selected = new CustomerListFragment();
             } else if (id == R.id.nav_reports) {
-                selected = new ReportFragment();
+                selected = new AdminNotificationFragment();
             }
 
             if (selected != null) {

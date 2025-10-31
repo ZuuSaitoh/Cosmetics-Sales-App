@@ -8,22 +8,28 @@ import com.google.gson.annotations.SerializedName;
  */
 public class NotificationRequest {
     
-    @SerializedName("userId")
+    // Backend expect "userID" với I và D viết hoa!
+    @SerializedName(value = "userID", alternate = {"userId", "user_id"})
     private Long userId;
     
     @SerializedName("message")
     private String message;
     
+    // Optional - không bắt buộc cho admin notification
     @SerializedName("notificationType")
     private String notificationType;
     
+    // Optional - không bắt buộc
     @SerializedName("dataPayload")
     private String dataPayload;
     
-    // Constructor
-    public NotificationRequest() {
+    // Constructor cho Admin (chỉ userID và message)
+    public NotificationRequest(Long userId, String message) {
+        this.userId = userId;
+        this.message = message;
     }
     
+    // Constructor đầy đủ cho system notifications
     public NotificationRequest(Long userId, String message, String notificationType) {
         this.userId = userId;
         this.message = message;
