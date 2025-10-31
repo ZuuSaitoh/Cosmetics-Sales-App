@@ -27,6 +27,7 @@
     <color name="white">@color/cosmetic_white</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
+<<<<<<< Updated upstream
 
 
     <!-- Brand Colors -->
@@ -50,4 +51,9 @@
     <color name="status_shipping_text">#1E40AF</color>
     <color name="status_cancelled_bg">#FEE2E2</color>
     <color name="status_cancelled_text">#7F1D1D</color>
+=======
+    
+    <!-- Status Colors -->
+    <color name="status_processing_bg">#E3F2FD</color>
+>>>>>>> Stashed changes
 </resources>
