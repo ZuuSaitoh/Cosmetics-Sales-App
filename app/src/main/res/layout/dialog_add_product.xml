@@ -1,98 +1,400 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@color/cosmetic_white"
+        android:padding="20dp">
+
+        <!-- Header with Title and Reset Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="THÊM SẢN PHẨM MỚI"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/cosmetic_text_primary"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ĐẶT LẠI"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/cosmetic_primary"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground" />
+        </LinearLayout>
+
+        <!-- TÊN SẢN PHẨM -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TÊN SẢN PHẨM"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tên sản phẩm"/>
+                android:hint="Nhập tên sản phẩm"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TẢI LÊN HÌNH ẢNH -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TẢI LÊN HÌNH ẢNH"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <!-- Main image placeholder -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_main_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#E8F4F8"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_add"
+                        android:tint="#90A4AE" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Additional image placeholders -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_image_1"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/cosmetic_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_add"
+                            android:tint="#9E9E9E" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thêm"
+                            android:textSize="10sp"
+                            android:textColor="#9E9E9E"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_image_2"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/cosmetic_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_add"
+                            android:tint="#9E9E9E" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thêm"
+                            android:textSize="10sp"
+                            android:textColor="#9E9E9E"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- GIÁ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GIÁ"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_price"
                 android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Giá"/>
+                android:hint="Nhập giá (VND)"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- SỐ LƯỢNG -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SỐ LƯỢNG"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_quantity"
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Số lượng"/>
+                android:hint="Số lượng"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- CHI TIẾT -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHI TIẾT"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ảnh URL"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_brand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Thương hiệu"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_category"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mã danh mục"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_brief"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mô tả ngắn"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mô tả đầy đủ"/>
+                android:minLines="4"
+                android:maxLines="6"
+                android:hint="Nhập mô tả chi tiết sản phẩm..."
+                android:padding="12dp"
+                android:gravity="top"
+                android:backgroundTint="@android:color/transparent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- MÔ TẢ NGẮN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MÔ TẢ NGẮN"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_brief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập mô tả ngắn gọn"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Hidden fields for API -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ảnh URL"
+                android:padding="12dp"
+                android:visibility="gone"
+                android:backgroundTint="@android:color/transparent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Thương hiệu"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- DANH MỤC -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DANH MỤC"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="false">
+            <AutoCompleteTextView
+                android:id="@+id/sp_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Chọn danh mục"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- LƯU THAY ĐỔI Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_changes"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="LƯU THAY ĐỔI"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/cosmetic_primary"
+            app:cornerRadius="12dp"
+            android:elevation="4dp" />
 
     </LinearLayout>
 </ScrollView>
-
-

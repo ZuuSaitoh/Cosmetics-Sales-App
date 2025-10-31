@@ -22,19 +22,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.ProductAdapter;
+import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.CategoryService;
 import com.example.myapplication.network.ProductService;
 import com.example.myapplication.network.dto.ApiResponse;
 import com.example.myapplication.network.dto.AddProductRequest;
 // removed file-pick/multipart imports
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 public class ProductListFragment extends Fragment {
 
@@ -337,28 +343,98 @@ public class ProductListFragment extends Fragment {
         final com.google.android.material.textfield.TextInputEditText etPrice = view.findViewById(R.id.et_price);
         final com.google.android.material.textfield.TextInputEditText etQty = view.findViewById(R.id.et_quantity);
         final com.google.android.material.textfield.TextInputEditText etBrand = view.findViewById(R.id.et_brand);
-        final com.google.android.material.textfield.TextInputEditText etCategory = view.findViewById(R.id.et_category);
+        final AutoCompleteTextView spCategory = view.findViewById(R.id.sp_category);
         final com.google.android.material.textfield.TextInputEditText etBrief = view.findViewById(R.id.et_brief);
         final com.google.android.material.textfield.TextInputEditText etFull = view.findViewById(R.id.et_full);
         final com.google.android.material.textfield.TextInputEditText etImage = view.findViewById(R.id.et_image);
+        final TextView btnReset = view.findViewById(R.id.btn_reset);
+        final TextView tvTitle = view.findViewById(R.id.tv_title);
+        final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
 
-        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Tạo sản phẩm")
+        tvTitle.setText("THÊM SẢN PHẨM MỚI");
+        btnReset.setText("ĐẶT LẠI");
+
+        // Load categories for dropdown
+        final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
+        final List<String> categoryNames = new ArrayList<>();
+        CategoryService categoryService = ApiClient.getRetrofit(getContext()).create(CategoryService.class);
+        categoryService.fetchAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Category>> apiResponse = response.body();
+                    if (apiResponse.getCode() == 9999 && apiResponse.getResult() != null) {
+                        categoriesArray[0].clear();
+                        categoriesArray[0].addAll(apiResponse.getResult());
+                        categoryNames.clear();
+                        for (Category cat : categoriesArray[0]) {
+                            categoryNames.add(cat.getName());
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_dropdown_item_1line, categoryNames);
+                        spCategory.setAdapter(adapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
+                // Fallback - use empty adapter
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_dropdown_item_1line, new ArrayList<>());
+                spCategory.setAdapter(adapter);
+            }
+        });
+
+        // Reset button
+        btnReset.setOnClickListener(v -> {
+            etName.setText("");
+            etPrice.setText("");
+            etQty.setText("");
+            etBrand.setText("");
+            spCategory.setText("");
+            etBrief.setText("");
+            etFull.setText("");
+            etImage.setText("");
+        });
+
+        final android.app.Dialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("")
                 .setView(view)
-                .setPositiveButton("Lưu", (d, which) -> {
-                    AddProductRequest req = new AddProductRequest();
-                    req.productName = String.valueOf(etName.getText());
-                    req.price = safeDouble(etPrice.getText());
-                    req.instockQuantity = (int) safeDouble(etQty.getText());
-                    req.imageURL = String.valueOf(etImage.getText());
-                    req.brand = String.valueOf(etBrand.getText());
-                    req.categoryID = (long) safeDouble(etCategory.getText());
-                    req.briefDescription = String.valueOf(etBrief.getText());
-                    req.fullDescription = String.valueOf(etFull.getText());
-                    addProduct(req);
-                })
-                .setNegativeButton("Hủy", null)
-                .show();
+                .setCancelable(true)
+                .create();
+
+        // Save Changes button
+        btnSave.setOnClickListener(v -> {
+            // Get selected category ID
+            String selectedCategoryName = spCategory.getText().toString();
+            Long categoryID = null;
+            for (Category cat : categoriesArray[0]) {
+                if (cat.getName().equals(selectedCategoryName)) {
+                    categoryID = cat.getCategoryID();
+                    break;
+                }
+            }
+
+            if (categoryID == null) {
+                Toast.makeText(getContext(), "Vui lòng chọn danh mục", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            AddProductRequest req = new AddProductRequest();
+            req.productName = String.valueOf(etName.getText());
+            req.price = safeDouble(etPrice.getText());
+            req.instockQuantity = (int) safeDouble(etQty.getText());
+            req.imageURL = String.valueOf(etImage.getText());
+            req.brand = String.valueOf(etBrand.getText());
+            req.categoryID = categoryID;
+            req.briefDescription = String.valueOf(etBrief.getText());
+            req.fullDescription = String.valueOf(etFull.getText());
+            addProduct(req);
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     private void openEditProductDialog(Product product) {
@@ -368,51 +444,142 @@ public class ProductListFragment extends Fragment {
         final com.google.android.material.textfield.TextInputEditText etPrice = view.findViewById(R.id.et_price);
         final com.google.android.material.textfield.TextInputEditText etQty = view.findViewById(R.id.et_quantity);
         final com.google.android.material.textfield.TextInputEditText etBrand = view.findViewById(R.id.et_brand);
-        final com.google.android.material.textfield.TextInputEditText etCategory = view.findViewById(R.id.et_category);
+        final AutoCompleteTextView spCategory = view.findViewById(R.id.sp_category);
         final com.google.android.material.textfield.TextInputEditText etBrief = view.findViewById(R.id.et_brief);
         final com.google.android.material.textfield.TextInputEditText etFull = view.findViewById(R.id.et_full);
         final com.google.android.material.textfield.TextInputEditText etImage = view.findViewById(R.id.et_image);
+        final TextView btnReset = view.findViewById(R.id.btn_reset);
+        final TextView tvTitle = view.findViewById(R.id.tv_title);
+        final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
+
+        tvTitle.setText("CHỈNH SỬA SẢN PHẨM");
+        btnReset.setText("ĐẶT LẠI");
+
+        // Load categories for dropdown
+        final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
+        final List<String> categoryNames = new ArrayList<>();
+        CategoryService categoryService = ApiClient.getRetrofit(getContext()).create(CategoryService.class);
+        categoryService.fetchAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Category>> apiResponse = response.body();
+                    if (apiResponse.getCode() == 9999 && apiResponse.getResult() != null) {
+                        categoriesArray[0].clear();
+                        categoriesArray[0].addAll(apiResponse.getResult());
+                        categoryNames.clear();
+                        for (Category cat : categoriesArray[0]) {
+                            categoryNames.add(cat.getName());
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_dropdown_item_1line, categoryNames);
+                        spCategory.setAdapter(adapter);
+
+                        // Prefill category name
+                        if (product.getCategoryID() != null) {
+                            try {
+                                Long categoryId = product.getCategoryID().getCategoryID();
+                                for (Category cat : categoriesArray[0]) {
+                                    if (cat.getCategoryID().equals(categoryId)) {
+                                        spCategory.setText(cat.getName(), false);
+                                        break;
+                                    }
+                                }
+                            } catch (Exception ignored) {}
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_dropdown_item_1line, new ArrayList<>());
+                spCategory.setAdapter(adapter);
+            }
+        });
 
         // Prefill
         etName.setText(product.getName());
-        etPrice.setText(String.valueOf(product.getPrice()));
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        nf.setGroupingUsed(false);
+        etPrice.setText(nf.format(product.getPrice()));
         etQty.setText(String.valueOf(product.getInstockQuantity() == null ? 0 : product.getInstockQuantity()));
         etBrand.setText(product.getBrand());
-        if (product.getCategoryID() != null) {
-            // categoryID appears as CategoryInfo; try to render id if available
-            // fallback to 0
-            try { etCategory.setText(String.valueOf(product.getCategoryID().getCategoryID())); } catch (Exception ignored) { etCategory.setText("0"); }
-        }
         etBrief.setText(product.getDescription());
         etFull.setText(product.getFullDescription());
         etImage.setText(product.getImageURL());
 
-        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Sửa sản phẩm")
-                .setView(view)
-                .setPositiveButton("Lưu", (d, which) -> {
-                    // Update info
-                    com.example.myapplication.network.dto.UpdateProductInfoRequest info = new com.example.myapplication.network.dto.UpdateProductInfoRequest();
-                    info.productName = String.valueOf(etName.getText());
-                    info.price = safeDouble(etPrice.getText());
-                    info.imageURL = String.valueOf(etImage.getText());
-                    info.brand = String.valueOf(etBrand.getText());
-                    info.categoryID = (long) safeDouble(etCategory.getText());
-                    info.briefDescription = String.valueOf(etBrief.getText());
-                    info.fullDescription = String.valueOf(etFull.getText());
+        // Reset button
+        btnReset.setOnClickListener(v -> {
+            etName.setText(product.getName());
+            etPrice.setText(nf.format(product.getPrice()));
+            etQty.setText(String.valueOf(product.getInstockQuantity() == null ? 0 : product.getInstockQuantity()));
+            etBrand.setText(product.getBrand());
+            if (product.getCategoryID() != null) {
+                try {
+                    Long categoryId = product.getCategoryID().getCategoryID();
+                    for (Category cat : categoriesArray[0]) {
+                        if (cat.getCategoryID().equals(categoryId)) {
+                            spCategory.setText(cat.getName(), false);
+                            break;
+                        }
+                    }
+                } catch (Exception ignored) {}
+            }
+            etBrief.setText(product.getDescription());
+            etFull.setText(product.getFullDescription());
+            etImage.setText(product.getImageURL());
+        });
 
-                    int newQty = (int) safeDouble(etQty.getText());
-                    updateProduct(product, info, newQty);
-                })
-                .setNegativeButton("Hủy", null)
-                .show();
+        final android.app.Dialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("")
+                .setView(view)
+                .setCancelable(true)
+                .create();
+
+        // Save Changes button
+        btnSave.setOnClickListener(v -> {
+            if (product.getProductID() == null) return;
+
+            // Get selected category ID
+            String selectedCategoryName = spCategory.getText().toString();
+            Long categoryID = null;
+            for (Category cat : categoriesArray[0]) {
+                if (cat.getName().equals(selectedCategoryName)) {
+                    categoryID = cat.getCategoryID();
+                    break;
+                }
+            }
+
+            if (categoryID == null) {
+                Toast.makeText(getContext(), "Vui lòng chọn danh mục", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            final Long productId = product.getProductID();
+            final int newQty = (int) safeDouble(etQty.getText());
+
+            com.example.myapplication.network.dto.UpdateProductInfoRequest req = new com.example.myapplication.network.dto.UpdateProductInfoRequest();
+            req.productName = String.valueOf(etName.getText());
+            req.price = safeDouble(etPrice.getText());
+            req.imageURL = String.valueOf(etImage.getText());
+            req.brand = String.valueOf(etBrand.getText());
+            req.categoryID = categoryID;
+            req.briefDescription = String.valueOf(etBrief.getText());
+            req.fullDescription = String.valueOf(etFull.getText());
+            updateProduct(productId, req, product, newQty);
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
-    private void updateProduct(Product product, com.example.myapplication.network.dto.UpdateProductInfoRequest info, int newQty) {
-        if (getContext() == null || product == null || product.getProductID() == null) return;
+    private void updateProduct(Long productId, com.example.myapplication.network.dto.UpdateProductInfoRequest info, Product originalProduct, int newQty) {
+        if (getContext() == null || productId == null) return;
         showLoading(true);
         ProductService svc = ApiClient.getRetrofit(getContext()).create(ProductService.class);
-        svc.updateProductInfo(product.getProductID(), info).enqueue(new Callback<ApiResponse<Product>>() {
+        svc.updateProductInfo(productId, info).enqueue(new Callback<ApiResponse<Product>>() {
             @Override
             public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
                 if (getContext() == null) return;
@@ -420,17 +587,18 @@ public class ProductListFragment extends Fragment {
                     Product updated = response.body().getResult();
                     productAdapter.replaceProduct(updated);
                     // quantity update if changed
-                    Integer currentQty = product.getInstockQuantity();
+                    Integer currentQty = originalProduct.getInstockQuantity();
                     if (currentQty == null) currentQty = 0;
                     if (currentQty != newQty) {
                         com.example.myapplication.network.dto.UpdateQuantityRequest q = new com.example.myapplication.network.dto.UpdateQuantityRequest();
                         q.instockQuantity = newQty;
-                        svc.updateProductQuantity(product.getProductID(), q).enqueue(new Callback<ApiResponse<Product>>() {
+                        svc.updateProductQuantity(productId, q).enqueue(new Callback<ApiResponse<Product>>() {
                             @Override
                             public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> resp2) {
                                 showLoading(false);
                                 if (resp2.isSuccessful() && resp2.body() != null && resp2.body().getResult() != null) {
                                     productAdapter.replaceProduct(resp2.body().getResult());
+                                    Toast.makeText(getContext(), "Đã cập nhật sản phẩm", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -442,6 +610,7 @@ public class ProductListFragment extends Fragment {
                         });
                     } else {
                         showLoading(false);
+                        Toast.makeText(getContext(), "Đã cập nhật sản phẩm", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     showLoading(false);
