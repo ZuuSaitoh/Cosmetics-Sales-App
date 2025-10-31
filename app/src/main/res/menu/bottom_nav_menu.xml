@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@drawable/ic_dashboard"
+        android:icon="@drawable/ic_grid_view"
         android:title="Dashboard" />
 
     <item
@@ -12,9 +12,10 @@
         android:title="Đơn hàng" />
 
     <item
-        android:id="@+id/nav_products"
-        android:icon="@drawable/ic_products"
-        android:title="Sản phẩm" />
+        android:id="@+id/nav_placeholder"
+        android:title=""
+        android:enabled="false"
+        android:checkable="false" />
 
     <item
         android:id="@+id/nav_customers"

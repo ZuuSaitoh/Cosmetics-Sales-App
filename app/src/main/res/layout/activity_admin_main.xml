@@ -15,12 +15,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bottom_nav_background"
+        android:elevation="12dp"
+        android:outlineProvider="bounds"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/cosmetic_primary"
-        app:itemTextColor="@color/cosmetic_primary"
-        android:background="@color/cosmetic_white" />
+        app:itemTextColor="@color/cosmetic_primary" />
+
+    <!-- Center FloatingActionButton for Product/Category menu -->
 
     <!-- Logout Button -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_menu"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="40dp"
+        app:backgroundTint="@color/cosmetic_primary"
+        app:elevation="10dp"
+        app:layout_anchor="@+id/bottom_navigation"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="@color/white" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
