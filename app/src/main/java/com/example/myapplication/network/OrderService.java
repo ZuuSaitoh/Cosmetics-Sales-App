@@ -32,10 +32,12 @@ public interface OrderService {
     @PUT("orders/update-order-status/{orderID}")
     Call<ApiResponse<Order>> updateOrderStatus(@Path("orderID") int orderID, @Body UpdateStatusRequest request);
 
-    @POST("/orders/create-order")
-    Call<CreateOrderResponse> createOrder(@Body CreateOrderRequest request);
-
     @GET("/orders/fetch-all-by-status/{status}")
     Call<ApiResponse<List<Order>>> getOrdersByStatus(@Path("status") String status);
+
+    @GET("orders/fetch-all")
+    Call<ApiResponse<List<Order>>> getAllOrders();
+
+
 
 }

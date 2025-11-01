@@ -60,7 +60,7 @@ public class ActivityAdminMain extends AppCompatActivity {
             if (id == R.id.nav_dashboard) {
                 selected = new DashboardFragment();
             } else if (id == R.id.nav_orders) {
-                selected = new OrderListFragment();
+                selected = new OrderAdminListFragment();
             } else if (id == R.id.nav_customers) {
                 selected = new CustomerListFragment();
             } else if (id == R.id.nav_reports) {

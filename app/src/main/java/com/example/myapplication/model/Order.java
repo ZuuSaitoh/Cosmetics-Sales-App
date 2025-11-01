@@ -26,13 +26,15 @@ public class Order {
     private String orderDate;
 
 
-    public Order(int orderID, User user, Cart cart, String paymentMethod, String billingAddress, String orderStatus, String orderDate) {
+    public Order(int orderID, String orderDate,String orderStatus, Cart cart, User user ) {
         this.orderID = orderID;
         this.user = user;
         this.cart = cart;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
     }
+
+
 
     public int getOrderID() {
         return orderID;

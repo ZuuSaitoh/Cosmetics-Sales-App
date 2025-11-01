@@ -300,18 +300,7 @@ public class ActivityOrderDetail extends AppCompatActivity {
                     // KHÔNG finish() để user vẫn có thể xem đơn đã hủy
 
                 } else {
-                    // Hiển thị message lỗi từ backend nếu có
                     String errorMessage = "Không thể hủy đơn hàng";
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        errorMessage = response.body().getMessage();
-                    } else if (response.errorBody() != null) {
-                        try {
-                            String errorBody = response.errorBody().string();
-                            errorMessage = "Lỗi: " + errorBody;
-                        } catch (Exception e) {
-                            errorMessage = "Lỗi mã: " + response.code();
-                        }
-                    }
                     Toast.makeText(ActivityOrderDetail.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
