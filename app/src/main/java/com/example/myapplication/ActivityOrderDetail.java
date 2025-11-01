@@ -219,8 +219,9 @@ public class ActivityOrderDetail extends AppCompatActivity {
             tvOrderDate.setText("Ngày đặt: " + order.getOrderDate());
         }
         
-        // Hiển thị trạng thái đơn hàng
-        tvOrderStatus.setText("Trạng thái: " + order.getOrderStatus());
+        // Hiển thị trạng thái đơn hàng - Chuyển sang tiếng Việt
+        String statusVietnamese = getStatusInVietnamese(order.getOrderStatus());
+        tvOrderStatus.setText("Trạng thái: " + statusVietnamese);
         
         // Hiển thị địa chỉ giao hàng
         tvAddress.setText(order.getBillingAddress());
@@ -288,8 +289,8 @@ public class ActivityOrderDetail extends AppCompatActivity {
                     // Thông báo thành công
                     Toast.makeText(ActivityOrderDetail.this, "Đã hủy đơn hàng", Toast.LENGTH_SHORT).show();
                     
-                    // Cập nhật UI
-                    tvOrderStatus.setText("Trạng thái: Cancelled");
+                    // Cập nhật UI - Chuyển sang tiếng Việt
+                    tvOrderStatus.setText("Trạng thái: " + getStatusInVietnamese("Cancelled"));
                     btnCancelOrder.setVisibility(View.GONE);
 
                     // Gửi kết quả về ActivityOrderHistory để refresh danh sách
@@ -313,6 +314,38 @@ public class ActivityOrderDetail extends AppCompatActivity {
     }
 
     // ========== HELPER METHODS ==========
+
+    /**
+     * Chuyển đổi status từ tiếng Anh sang tiếng Việt
+     */
+    private String getStatusInVietnamese(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            return "Không xác định";
+        }
+        
+        String statusLower = status.trim().toLowerCase();
+        
+        if (statusLower.contains("processing")) {
+            return "Đang xử lý";
+        } else if (statusLower.contains("shipped") || statusLower.contains("shipping")) {
+            return "Đang giao";
+        } else if (statusLower.contains("delivered")) {
+            return "Đã giao";
+        } else if (statusLower.contains("cancelled") || statusLower.contains("canceled")) {
+            return "Đã hủy";
+        } else if (statusLower.contains("đang xử")) {
+            return "Đang xử lý";
+        } else if (statusLower.contains("đang giao")) {
+            return "Đang giao";
+        } else if (statusLower.contains("đã giao")) {
+            return "Đã giao";
+        } else if (statusLower.contains("đã hủy") || statusLower.contains("da huy")) {
+            return "Đã hủy";
+        }
+        
+        // Nếu không match, trả về status gốc (có thể đã là tiếng Việt)
+        return status;
+    }
 
     /**
      * Kiểm tra xem status có phải là "Processing" hay không

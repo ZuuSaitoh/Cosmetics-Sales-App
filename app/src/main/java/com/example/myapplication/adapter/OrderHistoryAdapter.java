@@ -78,9 +78,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             holder.tvOrderDate.setText(order.getOrderDate());
         }
 
-        //  Hiển thị trạng thái đơn hàng
+        //  Hiển thị trạng thái đơn hàng - Chuyển sang tiếng Việt
         String status = order.getOrderStatus();
-        holder.tvOrderStatus.setText(status != null ? status : "N/A");
+        String statusVietnamese = getStatusInVietnamese(status);
+        holder.tvOrderStatus.setText(statusVietnamese != null ? statusVietnamese : "N/A");
 
         applyStatusColors(holder, status);
 
@@ -155,6 +156,38 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         });
 
 
+    }
+
+    /**
+     * Chuyển đổi status từ tiếng Anh sang tiếng Việt
+     */
+    private String getStatusInVietnamese(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            return "Không xác định";
+        }
+        
+        String statusLower = status.trim().toLowerCase();
+        
+        if (statusLower.contains("processing")) {
+            return "Đang xử lý";
+        } else if (statusLower.contains("shipped") || statusLower.contains("shipping")) {
+            return "Đang giao";
+        } else if (statusLower.contains("delivered")) {
+            return "Đã giao";
+        } else if (statusLower.contains("cancelled") || statusLower.contains("canceled")) {
+            return "Đã hủy";
+        } else if (statusLower.contains("đang xử")) {
+            return "Đang xử lý";
+        } else if (statusLower.contains("đang giao")) {
+            return "Đang giao";
+        } else if (statusLower.contains("đã giao")) {
+            return "Đã giao";
+        } else if (statusLower.contains("đã hủy") || statusLower.contains("da huy")) {
+            return "Đã hủy";
+        }
+        
+        // Nếu không match, trả về status gốc (có thể đã là tiếng Việt)
+        return status;
     }
 
     private void applyStatusColors(@NonNull OrderViewHolder holder, String statusRaw) {
