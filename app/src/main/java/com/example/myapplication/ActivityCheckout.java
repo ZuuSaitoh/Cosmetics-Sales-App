@@ -25,6 +25,8 @@ import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.OrderService;
 import com.example.myapplication.network.dto.PlaceOrderRequest;
 import com.example.myapplication.network.dto.PlaceOrderResponse;
+import com.example.myapplication.network.dto.NotificationDTO;
+import com.example.myapplication.notification.NotificationCreator;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.NumberFormat;
@@ -335,6 +337,9 @@ public class ActivityCheckout extends AppCompatActivity {
                     if (orderResponse.getCode() == 9999 && orderResponse.getResult() != null) {
                         Order order = orderResponse.getResult();
                         clearSelectedItems(); // Xóa các mục đã chọn cho cả hai phương thức
+                        
+                        // Tạo notification đơn hàng đã xác nhận
+                        createOrderNotification(order);
 
                         if ("VNPay".equals(selectedPaymentMethod)) {
                             // Xử lý VNPay
@@ -383,5 +388,41 @@ public class ActivityCheckout extends AppCompatActivity {
         sharedPreferences.edit()
                 .remove(SELECTED_ITEMS_KEY)
                 .apply();
+    }
+    
+    /**
+     * Tạo notification khi đơn hàng được xác nhận thành công
+     * Notification sẽ hiển thị ở tab "Của bạn" trong trang Notifications
+     */
+    private void createOrderNotification(Order order) {
+        if (order == null || order.getOrderID() <= 0) {
+            android.util.Log.w("Checkout", "Cannot create notification - order is null or orderID is invalid");
+            return;
+        }
+        
+        if (userId == null) {
+            android.util.Log.w("Checkout", "Cannot create notification - userId is null");
+            return;
+        }
+        
+        String orderId = String.valueOf(order.getOrderID());
+        
+        android.util.Log.d("Checkout", "Creating order notification - OrderID: " + orderId + ", UserID: " + userId);
+        
+        // Tạo notification qua API
+        NotificationCreator creator = new NotificationCreator(this);
+        creator.notifyOrderConfirmed(userId, orderId, new NotificationCreator.OnNotificationCreatedListener() {
+            @Override
+            public void onSuccess(NotificationDTO notification) {
+                android.util.Log.d("Checkout", "✅ Order notification created successfully - ID: " + notification.getNotificationId());
+                // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
+            }
+            
+            @Override
+            public void onError(String error) {
+                // Silent fail - không ảnh hưởng UX chính
+                android.util.Log.e("Checkout", "Failed to create order notification: " + error);
+            }
+        });
     }
 }

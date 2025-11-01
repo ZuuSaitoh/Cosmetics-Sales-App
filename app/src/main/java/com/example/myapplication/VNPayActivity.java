@@ -7,9 +7,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.model.Payment;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.PaymentService;
+import com.example.myapplication.network.dto.NotificationDTO;
+import com.example.myapplication.notification.NotificationCreator;
 
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -40,11 +43,14 @@ public class VNPayActivity extends AppCompatActivity {
     private String secretKey = "EHFO9MXOQYSJ2QV73STA5SY55QP123LU";
     private int orderId;
     private double amount;
+    private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vnpay);
+        
+        authManager = new AuthManager(this);
 
         webView = findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -148,6 +154,9 @@ public class VNPayActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     if ("00".equals(paymentStatus)) {
+                        // Tạo notification thanh toán thành công
+                        createPaymentSuccessNotification(orderId, amount);
+                        
                         Intent intent = new Intent(VNPayActivity.this, ActivityOrderSuccess.class);
                         startActivity(intent);
                     } else {
@@ -190,5 +199,37 @@ public class VNPayActivity extends AppCompatActivity {
         } catch (Exception ex) {
             return "";
         }
+    }
+    
+    /**
+     * Tạo notification khi thanh toán VNPay thành công
+     * Notification sẽ hiển thị ở tab "Của bạn" trong trang Notifications
+     */
+    private void createPaymentSuccessNotification(int orderId, double amount) {
+        Long userId = authManager != null ? authManager.getUserId() : null;
+        if (userId == null) {
+            android.util.Log.w("VNPay", "Cannot create notification - userId is null");
+            return;
+        }
+        
+        String orderIdStr = String.valueOf(orderId);
+        
+        android.util.Log.d("VNPay", "Creating payment success notification - OrderID: " + orderIdStr + ", Amount: " + amount);
+        
+        // Tạo notification qua API
+        NotificationCreator creator = new NotificationCreator(this);
+        creator.notifyPaymentSuccess(userId, orderIdStr, amount, new NotificationCreator.OnNotificationCreatedListener() {
+            @Override
+            public void onSuccess(NotificationDTO notification) {
+                android.util.Log.d("VNPay", "✅ Payment notification created successfully - ID: " + notification.getNotificationId());
+                // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
+            }
+            
+            @Override
+            public void onError(String error) {
+                // Silent fail - không ảnh hưởng UX chính
+                android.util.Log.e("VNPay", "Failed to create payment notification: " + error);
+            }
+        });
     }
 }

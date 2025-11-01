@@ -26,7 +26,9 @@ import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.dto.CreateCartRequest;
 import com.example.myapplication.network.dto.AddCartItemRequest;
+import com.example.myapplication.network.dto.NotificationDTO;
 import com.example.myapplication.model.Cart;
+import com.example.myapplication.notification.NotificationCreator;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -523,6 +525,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     
                     Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     updateCartBadge();
+                    
+                    // Tạo notification "Giỏ hàng của bạn có X sản phẩm"
+                    createCartNotification(quantity);
                 } else {
                     String msg = "Thêm vào giỏ hàng thất bại (" + response.code() + ")";
                     Toast.makeText(ProductDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -645,5 +650,40 @@ public class ProductDetailActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+    
+    /**
+     * Tạo notification khi thêm sản phẩm vào giỏ hàng
+     * Notification sẽ hiển thị ở tab "Của bạn" trong trang Notifications
+     */
+    private void createCartNotification(int addedQuantity) {
+        Long userId = authManager != null ? authManager.getUserId() : null;
+        if (userId == null) {
+            android.util.Log.w("ProductDetailActivity", "Cannot create notification - userId is null");
+            return;
+        }
+        
+        // Lấy tổng số items trong giỏ hàng
+        int totalItems = CartManager.getInstance().getTotalQuantity();
+        
+        // Lấy tên sản phẩm
+        String productName = product != null ? product.getName() : "Sản phẩm";
+        
+        // Tạo notification qua API
+        NotificationCreator creator = new NotificationCreator(this);
+        creator.notifyProductAddedToCart(userId, productName, addedQuantity, totalItems, 
+            new NotificationCreator.OnNotificationCreatedListener() {
+                @Override
+                public void onSuccess(NotificationDTO notification) {
+                    android.util.Log.d("ProductDetailActivity", "✅ Cart notification created: " + notification.getNotificationId());
+                    // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
+                }
+                
+                @Override
+                public void onError(String error) {
+                    // Silent fail - không ảnh hưởng UX chính
+                    android.util.Log.e("ProductDetailActivity", "Failed to create cart notification: " + error);
+                }
+            });
     }
 }

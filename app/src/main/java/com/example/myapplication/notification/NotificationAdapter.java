@@ -85,6 +85,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
         
         public void bind(Notification notification) {
+            // LOG chi tiết notification data
+            android.util.Log.d("NotificationAdapter", 
+                "Binding notification - ID: " + notification.getNotificationId() + 
+                ", Title: " + notification.getTitle() + 
+                ", Message: " + notification.getMessage() + 
+                ", Type: " + notification.getNotificationType());
+            
             // Set title
             String title = notification.getTitle();
             if (title == null || title.isEmpty()) {
@@ -124,6 +131,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             
             btnDelete.setOnClickListener(v -> {
                 if (listener != null) {
+                    android.util.Log.d("NotificationAdapter", 
+                        "Delete button clicked - Notification ID: " + notification.getNotificationId() + 
+                        ", Title: " + notification.getTitle());
                     listener.onNotificationDelete(notification);
                 }
             });

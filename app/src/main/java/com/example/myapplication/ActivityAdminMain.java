@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.auth.AuthManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ActivityAdminMain extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
     private MaterialButton logoutButton;
+    private FloatingActionButton fabAddMenu;
     private AuthManager authManager;
 
     @Override
@@ -32,6 +34,12 @@ public class ActivityAdminMain extends AppCompatActivity {
         // Setup logout button click
         if (logoutButton != null) {
             logoutButton.setOnClickListener(v -> handleLogout());
+        }
+
+        // Setup FloatingActionButton for Product/Category menu
+        fabAddMenu = findViewById(R.id.fab_add_menu);
+        if (fabAddMenu != null) {
+            fabAddMenu.setOnClickListener(v -> showAddMenu());
         }
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -53,12 +61,10 @@ public class ActivityAdminMain extends AppCompatActivity {
                 selected = new DashboardFragment();
             } else if (id == R.id.nav_orders) {
                 selected = new OrderListFragment();
-            } else if (id == R.id.nav_products) {
-                selected = new ProductListFragment();
             } else if (id == R.id.nav_customers) {
                 selected = new CustomerListFragment();
             } else if (id == R.id.nav_reports) {
-                selected = new ReportFragment();
+                selected = new AdminNotificationFragment();
             }
 
             if (selected != null) {
@@ -70,6 +76,35 @@ public class ActivityAdminMain extends AppCompatActivity {
             }
             return false;
         });
+    }
+    
+    private void showAddMenu() {
+        PopupMenu popupMenu = new PopupMenu(this, fabAddMenu);
+        popupMenu.getMenuInflater().inflate(R.menu.add_product_category_menu, popupMenu.getMenu());
+        
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            
+            if (id == R.id.menu_edit_product) {
+                // Navigate to Product List
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, new ProductListFragment())
+                        .commit();
+                return true;
+            } else if (id == R.id.menu_category) {
+                // Navigate to Admin Category
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, new AdminCategoryFragment())
+                        .commit();
+                return true;
+            }
+            
+            return false;
+        });
+        
+        popupMenu.show();
     }
     
     private void handleLogout() {

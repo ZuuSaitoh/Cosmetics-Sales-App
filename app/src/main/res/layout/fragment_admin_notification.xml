@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cosmetic_bg_soft"
+    android:fillViewport="false"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="70dp"
+        android:paddingBottom="100dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gửi Thông Báo Khuyến Mãi"
+            android:textColor="@color/cosmetic_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gửi thông báo đến users. Thông báo sẽ hiển thị ở tab Khuyến mãi."
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textSize="13sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- User ID Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="User ID"
+            app:helperText="Nhập ID của user muốn gửi thông báo"
+            app:helperTextTextColor="@color/cosmetic_text_secondary"
+            app:boxBackgroundColor="@android:color/white"
+            app:boxStrokeColor="@color/cosmetic_primary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/cosmetic_text_primary"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Message Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Nội dung thông báo"
+            app:boxBackgroundColor="@android:color/white"
+            app:boxStrokeColor="@color/cosmetic_primary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLines="5"
+                android:minLines="3"
+                android:textColor="@color/cosmetic_text_primary"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Notification Type -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Loại thông báo:"
+            android:textColor="@color/cosmetic_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rg_notification_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <RadioButton
+                android:id="@+id/rb_promotion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Khuyến mãi"
+                android:textColor="@color/cosmetic_text_primary"
+                android:textSize="14sp"
+                android:buttonTint="@color/cosmetic_primary" />
+
+            <RadioButton
+                android:id="@+id/rb_system"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hệ thống"
+                android:textColor="@color/cosmetic_text_primary"
+                android:textSize="14sp"
+                android:buttonTint="@color/cosmetic_primary" />
+        </RadioGroup>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/cosmetic_divider" />
+
+        <!-- Quick Templates -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mẫu thông báo nhanh:"
+            android:textColor="@color/cosmetic_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Flash Sale Template -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_flash_sale"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🔥 Flash Sale 50%"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:backgroundTint="@color/cosmetic_accent"
+            app:cornerRadius="8dp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- New Product Template -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_new_product"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="✨ Sản phẩm mới"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:backgroundTint="@color/cosmetic_secondary"
+            app:cornerRadius="8dp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Birthday Template -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🎉 Sinh nhật giảm 20%"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:backgroundTint="#FF9800"
+            app:cornerRadius="8dp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Abandoned Cart Template -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_abandoned_cart"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🛒 Nhắc nhở giỏ hàng"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:backgroundTint="#9C27B0"
+            app:cornerRadius="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/cosmetic_divider" />
+
+        <!-- Send Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_send_notification"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="📩 Gửi thông báo"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/cosmetic_primary"
+            app:cornerRadius="12dp" />
+
+        <!-- Info Text -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="💡 Lưu ý:\n• Nhập User ID cụ thể để gửi thông báo cho user đó\n• Thông báo sẽ hiển thị ở tab 'Khuyến mãi' trong trang Notifications của user"
+            android:textColor="@color/cosmetic_text_secondary"
+            android:textSize="12sp"
+            android:lineSpacingExtra="2dp"
+            android:padding="12dp"
+            android:background="@color/cosmetic_bg_light" />
+
+    </LinearLayout>
+</ScrollView>
+
+
