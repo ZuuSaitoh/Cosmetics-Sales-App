@@ -194,7 +194,34 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (textStock != null) {
             textStock.setText("Còn lại: " + (product.getInstockQuantity() != null ? product.getInstockQuantity() : 0) + " sản phẩm");
         }
+        
+        // Kiểm tra và disable nút "Thêm vào giỏ hàng" nếu số lượng = 0
+        updateAddToCartButtonState();
+        
         loadProductImage();
+    }
+    
+    /**
+     * Cập nhật trạng thái nút "Thêm vào giỏ hàng"
+     * - Disable (màu xám, không click được) nếu số lượng tồn kho = 0
+     * - Enable nếu số lượng tồn kho > 0
+     */
+    private void updateAddToCartButtonState() {
+        if (btnAddToCart == null || product == null) {
+            return;
+        }
+        
+        Integer instockQuantity = product.getInstockQuantity();
+        boolean isOutOfStock = (instockQuantity == null || instockQuantity <= 0);
+        
+        btnAddToCart.setEnabled(!isOutOfStock);
+        btnAddToCart.setAlpha(isOutOfStock ? 0.5f : 1.0f);
+        
+        if (isOutOfStock) {
+            btnAddToCart.setText("Hết hàng");
+        } else {
+            btnAddToCart.setText("Thêm vào giỏ hàng");
+        }
     }
 
     private void loadProductImage() {
@@ -262,11 +289,28 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         }
 
+        // Lấy số lượng tồn kho
+        Integer instockQuantity = product.getInstockQuantity();
+        int maxQuantity = (instockQuantity != null && instockQuantity > 0) ? instockQuantity : 0;
+        
         final int[] quantity = {1};
+        // Đảm bảo quantity không vượt quá số lượng tồn kho
+        if (maxQuantity > 0) {
+            // Nếu có hàng, quantity tối đa = maxQuantity
+            if (quantity[0] > maxQuantity) {
+                quantity[0] = maxQuantity;
+            }
+        } else {
+            // Nếu hết hàng, quantity = 0
+            quantity[0] = 0;
+        }
         textQuantity.setText(String.valueOf(quantity[0]));
 
         double totalPrice = product.getPrice() * quantity[0];
         textTotalPrice.setText(String.format("%,.0f VND", totalPrice));
+
+        // Cập nhật trạng thái các nút ban đầu
+        updateQuantityButtonsState(btnMinus, btnPlus, btnConfirm, quantity[0], maxQuantity);
 
         btnMinus.setOnClickListener(v -> {
             if (quantity[0] > 1) {
@@ -274,23 +318,72 @@ public class ProductDetailActivity extends AppCompatActivity {
                 textQuantity.setText(String.valueOf(quantity[0]));
                 double totalPriceMinus = product.getPrice() * quantity[0];
                 textTotalPrice.setText(String.format("%,.0f VND", totalPriceMinus));
+                // Cập nhật trạng thái nút sau khi giảm
+                updateQuantityButtonsState(btnMinus, btnPlus, btnConfirm, quantity[0], maxQuantity);
             }
         });
 
         btnPlus.setOnClickListener(v -> {
-            quantity[0]++;
-            textQuantity.setText(String.valueOf(quantity[0]));
-            double totalPricePlus = product.getPrice() * quantity[0];
-            textTotalPrice.setText(String.format("%,.0f VND", totalPricePlus));
+            if (quantity[0] < maxQuantity) {
+                quantity[0]++;
+                textQuantity.setText(String.valueOf(quantity[0]));
+                double totalPricePlus = product.getPrice() * quantity[0];
+                textTotalPrice.setText(String.format("%,.0f VND", totalPricePlus));
+                // Cập nhật trạng thái nút sau khi tăng
+                updateQuantityButtonsState(btnMinus, btnPlus, btnConfirm, quantity[0], maxQuantity);
+            } else {
+                Toast.makeText(this, "Số lượng vượt quá tồn kho (" + maxQuantity + " sản phẩm)", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Confirm add -> call backend add-to-cart API
         btnConfirm.setOnClickListener(v -> {
+            if (quantity[0] <= 0) {
+                Toast.makeText(this, "Vui lòng chọn số lượng lớn hơn 0", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (quantity[0] > maxQuantity) {
+                Toast.makeText(this, "Số lượng vượt quá tồn kho", Toast.LENGTH_SHORT).show();
+                return;
+            }
             bottomSheetDialog.dismiss();
             ensureCartThenAdd(quantity[0]);
         });
 
         bottomSheetDialog.show();
+    }
+
+    /**
+     * Cập nhật trạng thái các nút trong popup chọn số lượng
+     * - btnMinus: disable khi quantity = 1
+     * - btnPlus: disable khi quantity >= maxQuantity (số lượng tồn kho)
+     * - btnConfirm: disable khi quantity = 0 hoặc quantity > maxQuantity
+     * 
+     * @param btnMinus Nút giảm số lượng
+     * @param btnPlus Nút tăng số lượng
+     * @param btnConfirm Nút xác nhận thêm vào giỏ hàng
+     * @param currentQuantity Số lượng hiện tại
+     * @param maxQuantity Số lượng tối đa (tồn kho)
+     */
+    private void updateQuantityButtonsState(ImageButton btnMinus, ImageButton btnPlus, Button btnConfirm, 
+                                              int currentQuantity, int maxQuantity) {
+        if (btnMinus == null || btnPlus == null || btnConfirm == null) {
+            return;
+        }
+        
+        // Disable btnMinus khi quantity = 1 (tối thiểu)
+        btnMinus.setEnabled(currentQuantity > 1);
+        btnMinus.setAlpha(currentQuantity > 1 ? 1.0f : 0.5f);
+        
+        // Disable btnPlus khi quantity >= maxQuantity hoặc maxQuantity = 0
+        boolean canIncrease = (maxQuantity > 0 && currentQuantity < maxQuantity);
+        btnPlus.setEnabled(canIncrease);
+        btnPlus.setAlpha(canIncrease ? 1.0f : 0.5f);
+        
+        // Disable btnConfirm khi quantity = 0 hoặc > maxQuantity
+        boolean canConfirm = (currentQuantity > 0 && currentQuantity <= maxQuantity && maxQuantity > 0);
+        btnConfirm.setEnabled(canConfirm);
+        btnConfirm.setAlpha(canConfirm ? 1.0f : 0.5f);
     }
 
     private void ensureCartThenAdd(int quantity) {

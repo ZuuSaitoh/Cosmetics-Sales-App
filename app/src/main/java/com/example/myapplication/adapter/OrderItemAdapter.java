@@ -41,7 +41,6 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         holder.tvQuantity.setText("Số lượng: " + item.getQuantity());
         holder.tvPrice.setText("Tổng tiền: " + currencyFormat.format(item.getPrice()));
 
-
         Glide.with(context)
                 .load(item.getImageUrl())
                 .placeholder(R.drawable.img_no_product)

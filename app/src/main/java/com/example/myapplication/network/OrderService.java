@@ -7,6 +7,7 @@ import com.example.myapplication.network.dto.CreateOrderRequest;
 import com.example.myapplication.network.dto.CreateOrderResponse;
 import com.example.myapplication.network.dto.PlaceOrderRequest;
 import com.example.myapplication.network.dto.PlaceOrderResponse;
+import com.example.myapplication.network.dto.UpdateStatusRequest;
 
 import java.util.List;
 import retrofit2.Call;
@@ -14,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface OrderService {
@@ -25,7 +27,10 @@ public interface OrderService {
     Call<ApiResponse<OrderDetail>> getOrderDetail(@Path("orderID") int orderID);
 
     @DELETE("orders/delete-by-order-id/{orderID}")
-    Call<ApiResponse> cancelOrder(@Path("orderID") int orderID);
+    Call<ApiResponse> deleteOrder(@Path("orderID") int orderID);
+
+    @PUT("orders/update-order-status/{orderID}")
+    Call<ApiResponse<Order>> updateOrderStatus(@Path("orderID") int orderID, @Body UpdateStatusRequest request);
 
     @POST("/orders/create-order")
     Call<CreateOrderResponse> createOrder(@Body CreateOrderRequest request);

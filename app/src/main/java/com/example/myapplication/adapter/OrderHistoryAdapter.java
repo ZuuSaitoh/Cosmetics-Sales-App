@@ -54,7 +54,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @NonNull
     @Override
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order_with_delete, parent, false);
         return new OrderViewHolder(view);
     }
 
@@ -115,7 +115,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 public void onResponse(Call<CartItemsResponse> call, Response<CartItemsResponse> response) {
                     if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
                         List<CartItem> items = response.body().getResult();
-                        if (!items.isEmpty()) {
+                        if (!items.isEmpty() && items.get(0).getProduct() != null) {
                             String imageUrl = items.get(0).getProduct().getImageURL();
 
                             if (holder.ivOrderThumbnail != null) {
@@ -134,7 +134,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                                 holder.tvMultiItemBadge.setVisibility(View.GONE);
                             }
 
-                            // Cập nhật số lượng từ danh sách items (độ tin cậy cao hơn)
+                            // Cập nhật số lượng từ danh sách items 
                             holder.tvOrderQuantity.setText(String.valueOf(items.size()));
                         }
                     }
@@ -147,6 +147,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             });
         }
 
+        // Click vào item để mở chi tiết đơn hàng
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onOrderClick(order);
@@ -207,13 +208,17 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
 
 
-    //  ViewHolder khớp với item_order.xml
-    static class OrderViewHolder extends RecyclerView.ViewHolder {
+    //  ViewHolder khớp với item_order_with_delete.xml
+    public static class OrderViewHolder extends RecyclerView.ViewHolder {
+        public View foregroundView;
+        public View deleteBackground;
         ImageView ivOrderThumbnail;
         TextView tvOrderDate, tvOrderStatus, tvTotalPrice, tvMultiItemBadge, tvOrderCode, tvOrderQuantity;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
+            foregroundView = itemView.findViewById(R.id.foregroundView);
+            deleteBackground = itemView.findViewById(R.id.deleteBackground);
             tvOrderCode = itemView.findViewById(R.id.tvOrderCode);
             tvOrderQuantity = itemView.findViewById(R.id.tvOrderQuantity);
             ivOrderThumbnail = itemView.findViewById(R.id.ivOrderThumbnail);
