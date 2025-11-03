@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cosmetic_bg_soft"
+    android:background="@color/cosmetic_bg_light"
     android:fillViewport="true">
 
     <LinearLayout
@@ -13,132 +13,317 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Toolbar -->
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cosmetic_primary"
-            android:title="Dashboard"
-            android:titleTextColor="@color/cosmetic_white"
-            app:menu="@menu/menu_dashboard" />
-
-        <!-- Cards thống kê -->
+        <!-- Top Header Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
-            <androidx.cardview.widget.CardView
-                style="@style/MetricCardStyle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView android:text="Doanh thu"
-                        android:textColor="@color/cosmetic_text_secondary"
-                        android:textSize="12sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                    <TextView android:id="@+id/tv_revenue_value"
-                        android:text="₫0"
-                        android:textColor="@color/cosmetic_text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            <!-- Hamburger Menu Icon -->
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_more"
+                android:background="@drawable/circular_button_background"
+                android:contentDescription="Menu"
+                android:padding="8dp"
+               />
 
-            <androidx.cardview.widget.CardView
-                style="@style/MetricCardStyle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView android:text="Tổng đơn"
-                        android:textColor="@color/cosmetic_text_secondary"
-                        android:textSize="12sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                    <TextView android:id="@+id/tv_total_orders_value"
-                        android:text="0"
-                        android:textColor="@color/cosmetic_text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="1dp" />
 
-            <androidx.cardview.widget.CardView
-                style="@style/MetricCardStyle"
+            <!-- Location Section -->
+            <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="ĐỊA CHỈ"
+                    android:textColor="@color/cosmetic_primary"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView android:text="Đang giao"
-                        android:textColor="@color/cosmetic_text_secondary"
-                        android:textSize="12sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                    <TextView android:id="@+id/tv_shipping_value"
-                        android:text="0"
-                        android:textColor="@color/cosmetic_text_primary"
-                        android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:text="Cửa hàng Cosmetics"
+                        android:textColor="#1F2937"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginTop="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@android:drawable/arrow_down_float"
+                        android:layout_marginStart="4dp"
+                        />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Profile Avatar -->
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circular_button_background"
+                android:scaleType="centerCrop"
+                android:contentDescription="Profile"
+                android:padding="4dp"
+                app:backgroundTint="#E5E7EB" />
+
         </LinearLayout>
 
-        <!-- Placeholder chart -->
-        <androidx.cardview.widget.CardView
-            style="@style/MetricCardStyle"
+        <!-- Summary Cards Section (Running Orders & Order Request) -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="12dp">
-            <TextView
-                android:text="Biểu đồ (Chart Placeholder)"
-                android:textColor="@color/cosmetic_text_secondary"
-                android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- Running Orders Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_running_orders_value"
+                        android:text="20"
+                        android:textColor="#1F2937"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="ĐƠN ĐÃ GIAO"
+                        android:textColor="#6B7280"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Order Request Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_order_request_value"
+                        android:text="05"
+                        android:textColor="#1F2937"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="ĐƠN MỚI"
+                        android:textColor="#6B7280"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- Total Revenue Chart Section -->
+            <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_background">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Revenue Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- Left: Title & Value -->
+                    <LinearLayout
+                android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="Doanh thu"
+                            android:textColor="#1F2937"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_revenue_value"
+                            android:text="₫125,400,000"
+                            android:textColor="#1F2937"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+                <!-- Revenue Chart -->
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chartRevenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        <!-- Reviews Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Reviews Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:text="Đánh giá"
+                        android:textColor="#1F2937"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvSeeAllReviews"
+                        android:text="Xem tất cả"
+                        android:textColor="@color/cosmetic_primary"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+                <!-- Reviews Content -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/btn_star_big_on"
+                        android:contentDescription="Star rating"
+                        app:tint="@color/cosmetic_primary" />
+
+                    <TextView
+                        android:id="@+id/tvRating"
+                        android:text="4.9"
+                        android:textColor="@color/cosmetic_primary"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvTotalReviews"
+                        android:text="Tổng 20 đánh giá"
+                        android:textColor="#6B7280"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Danh sách top sản phẩm -->
-        <TextView
-            android:text="Top sản phẩm bán chạy"
-            android:textColor="@color/cosmetic_text_primary"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_top_products"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false"/>
 
-    </LinearLayout>
+
+
+        </LinearLayout>
 </androidx.core.widget.NestedScrollView>
