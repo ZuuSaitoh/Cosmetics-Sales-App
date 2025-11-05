@@ -19,13 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.BannerAdapter;
 import com.example.myapplication.adapter.ProductAdapter;
 import com.example.myapplication.animation.CartAnimation;
+import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.map.MapsActivity;
 import com.example.myapplication.model.Banner;
+import com.example.myapplication.model.Cart;
+import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.AuthService;
 import com.example.myapplication.network.ProductService;
+import com.example.myapplication.network.dto.CartItemsResponse;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,6 +50,8 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private TextView cartBadge;
     private ImageView locationIcon;
     private int cartItemCount = 0;
+    private AuthManager authManager;
+    private AuthService authService;
 
     private Handler autoScrollHandler = new Handler();
     private Runnable autoScrollRunnable;
@@ -63,6 +71,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         cartIcon = view.findViewById(R.id.cartIcon);
         cartBadge = view.findViewById(R.id.cartBadge);
         locationIcon = view.findViewById(R.id.locationIcon);
+
+        // Initialize auth manager and service
+        authManager = new AuthManager(getContext());
+        if (getContext() != null) {
+            authService = ApiClient.getRetrofit(getContext()).create(AuthService.class);
+        }
 
         setupSearch();
         setupCart();
@@ -169,8 +183,84 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         if (autoScrollRunnable != null) {
             startAutoScroll();
         }
-        // refresh badge on return
-        updateCartBadge();
+        // Load cart from server to sync with CartManager
+        loadCartFromServer();
+    }
+    
+    /** Load cart from server and sync with CartManager */
+    private void loadCartFromServer() {
+        Long userId = authManager != null ? authManager.getUserId() : null;
+        if (userId == null || authService == null) {
+            // If not logged in, just update badge from CartManager
+            updateCartBadge();
+            return;
+        }
+        
+        // Load cart from server
+        authService.getCartByUserId(userId).enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Long cartId = response.body().getCartID();
+                    // Load cart items
+                    fetchCartItems(cartId);
+                } else {
+                    // Cart not found, clear CartManager
+                    CartManager.getInstance().clear();
+                    updateCartBadge();
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                // On error, just update badge from current CartManager state
+                updateCartBadge();
+            }
+        });
+    }
+    
+    /** Fetch cart items and sync with CartManager */
+    private void fetchCartItems(Long cartId) {
+        if (cartId == null || authService == null) {
+            updateCartBadge();
+            return;
+        }
+        
+        authService.getCartItems(cartId).enqueue(new Callback<CartItemsResponse>() {
+            @Override
+            public void onResponse(Call<CartItemsResponse> call, Response<CartItemsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CartItem> items = response.body().getResult();
+                    // Sync CartManager with server data
+                    syncCartManagerWithServer(items);
+                } else {
+                    // No items, clear CartManager
+                    CartManager.getInstance().clear();
+                }
+                updateCartBadge();
+            }
+            
+            @Override
+            public void onFailure(Call<CartItemsResponse> call, Throwable t) {
+                // On error, just update badge from current CartManager state
+                updateCartBadge();
+            }
+        });
+    }
+    
+    /** Sync CartManager with server cart data */
+    private void syncCartManagerWithServer(List<CartItem> items) {
+        // Clear CartManager first
+        CartManager.getInstance().clear();
+        
+        // Add all items from server to CartManager
+        if (items != null) {
+            for (CartItem item : items) {
+                if (item.getProduct() != null) {
+                    CartManager.getInstance().addToCart(item.getProduct(), item.getQuantity());
+                }
+            }
+        }
     }
 
     private void setupBannerList() {
