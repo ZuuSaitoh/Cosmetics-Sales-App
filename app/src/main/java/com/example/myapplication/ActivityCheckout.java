@@ -205,7 +205,7 @@ public class ActivityCheckout extends AppCompatActivity {
         loadUserProfile();
         setupProductRecyclerView();
         tvTotalPrice.setText(formatMoney(totalPrice));
-        if (selectedItems.isEmpty() && selectedProductList.isEmpty()) {
+        if (selectedProductList == null || selectedProductList.isEmpty()) {
             Toast.makeText(this, "Không có sản phẩm nào được chọn. Vui lòng quay lại giỏ hàng.", Toast.LENGTH_LONG).show();
             finish();
         }
@@ -226,14 +226,14 @@ public class ActivityCheckout extends AppCompatActivity {
             Toast.makeText(this, "Lỗi: Không tìm thấy giỏ hàng.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (selectedItems == null || selectedItems.isEmpty()) {
+        if (selectedProductList == null || selectedProductList.isEmpty()) {
             Toast.makeText(this, "Lỗi: Không có sản phẩm nào được chọn.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         android.util.Log.d("Checkout", "Validation - UserID: " + userId);
         android.util.Log.d("Checkout", "Validation - CartID: " + currentCartId);
-        android.util.Log.d("Checkout", "Validation - SelectedItems size: " + selectedItems.size());
+        android.util.Log.d("Checkout", "Validation - SelectedProductList size: " + selectedProductList.size());
         android.util.Log.d("Checkout", "Validation - TotalPrice: " + totalPrice);
 
         checkCartExists();
@@ -308,12 +308,22 @@ public class ActivityCheckout extends AppCompatActivity {
 
         String billingAddress = tvReceiverAddress.getText().toString();
 
+        // Extract IDs from selectedProductList
+        List<Long> itemIds = new ArrayList<>();
+        if (selectedProductList != null && !selectedProductList.isEmpty()) {
+            for (CartItem item : selectedProductList) {
+                if (item.getCartItemID() != null) {
+                    itemIds.add(item.getCartItemID());
+                }
+            }
+        }
+
         PlaceOrderRequest orderRequest = new PlaceOrderRequest(
                 userId,
                 currentCartId,
                 selectedPaymentMethod,
                 billingAddress,
-                selectedItems,
+                itemIds,
                 totalPrice
         );
 
@@ -321,7 +331,7 @@ public class ActivityCheckout extends AppCompatActivity {
         android.util.Log.d("Checkout", "Unified Order Request - CartID: " + currentCartId);
         android.util.Log.d("Checkout", "Unified Order Request - PaymentMethod: " + selectedPaymentMethod);
         android.util.Log.d("Checkout", "Unified Order Request - BillingAddress: " + billingAddress);
-        android.util.Log.d("Checkout", "Unified Order Request - SelectedItems: " + selectedItems.toString());
+        android.util.Log.d("Checkout", "Unified Order Request - SelectedItemIds: " + itemIds.toString());
         android.util.Log.d("Checkout", "Unified Order Request - TotalAmount: " + totalPrice);
 
         orderService.placeNewOrder(orderRequest).enqueue(new Callback<PlaceOrderResponse>() {

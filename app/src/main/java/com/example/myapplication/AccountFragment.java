@@ -17,9 +17,14 @@ import com.google.android.material.button.MaterialButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.auth.AuthManager;
+import com.example.myapplication.model.Order;
 import com.example.myapplication.model.User;
 import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.OrderService;
 import com.example.myapplication.network.UserService;
+import com.example.myapplication.network.dto.ApiResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +34,7 @@ public class AccountFragment extends Fragment {
     
     private AuthManager authManager;
     private UserService userService;
+    private OrderService orderService;
     
     // Views
     private ImageView avatarImageView;
@@ -40,6 +46,8 @@ public class AccountFragment extends Fragment {
     private LinearLayout authButtonsContainer;
     private ProgressBar loadingProgressBar;
     private TextView wach_list_orders;
+    private TextView badgeProcessing;
+    private TextView badgeShipped;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +57,7 @@ public class AccountFragment extends Fragment {
         // Khởi tạo services
         authManager = new AuthManager(getContext());
         userService = ApiClient.getRetrofit(getContext()).create(UserService.class);
+        orderService = ApiClient.getRetrofit(getContext()).create(OrderService.class);
         
 
         initializeViews(view);
@@ -60,6 +69,7 @@ public class AccountFragment extends Fragment {
         String token = authManager.getToken();
         if (token != null && !token.isEmpty()) {
             loadUserInfo();
+            loadOrderCounts();
         } else {
             // Khi chưa đăng nhập, chỉ hiển thị thông tin fallback và ẩn loading
             if (loadingProgressBar != null) {
@@ -69,6 +79,16 @@ public class AccountFragment extends Fragment {
         }
         
         return view;
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Reload order counts khi fragment được resume
+        String token = authManager.getToken();
+        if (token != null && !token.isEmpty()) {
+            loadOrderCounts();
+        }
     }
     
     private void initializeViews(View view) {
@@ -81,6 +101,8 @@ public class AccountFragment extends Fragment {
         authButtonsContainer = view.findViewById(R.id.authButtonsContainer);
         loadingProgressBar = view.findViewById(R.id.loadingProgressBar);
         wach_list_orders = view.findViewById(R.id.wach_list_orders);
+        badgeProcessing = view.findViewById(R.id.badge_processing);
+        badgeShipped = view.findViewById(R.id.badge_shipped);
         
         // Setup click listeners for new sections
         setupOrderSectionClickListeners(view);
@@ -312,10 +334,65 @@ public class AccountFragment extends Fragment {
             // User đã update thành công, reload thông tin
             Log.d("AccountFragment", "User updated, reloading info");
             loadUserInfo();
+            loadOrderCounts();
         } else if ((requestCode == 1002 || requestCode == 1003) && resultCode == getActivity().RESULT_OK) {
             // Đăng nhập hoặc đăng ký thành công, reload thông tin
             Log.d("AccountFragment", "Login/Register successful, reloading info");
             loadUserInfo();
+            loadOrderCounts();
+        }
+    }
+    
+    /** Load số lượng đơn hàng theo status và cập nhật badge */
+    private void loadOrderCounts() {
+        Long userId = authManager.getUserId();
+        if (userId == null || orderService == null) {
+            return;
+        }
+        
+        // Load đơn hàng của user
+        orderService.getOrdersByUserId(userId).enqueue(new Callback<ApiResponse<List<Order>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Order>>> call, Response<ApiResponse<List<Order>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Order> orders = response.body().getResult();
+                    if (orders != null) {
+                        int processingCount = 0;
+                        int shippedCount = 0;
+                        
+                        for (Order order : orders) {
+                            if (order != null && order.getOrderStatus() != null) {
+                                String status = order.getOrderStatus().toLowerCase();
+                                if (status.contains("processing")) {
+                                    processingCount++;
+                                } else if (status.contains("shipped")) {
+                                    shippedCount++;
+                                }
+                            }
+                        }
+                        
+                        updateBadge(badgeProcessing, processingCount);
+                        updateBadge(badgeShipped, shippedCount);
+                    }
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<ApiResponse<List<Order>>> call, Throwable t) {
+                Log.e("AccountFragment", "Failed to load order counts", t);
+            }
+        });
+    }
+    
+    /** Cập nhật badge với số lượng */
+    private void updateBadge(TextView badge, int count) {
+        if (badge != null) {
+            if (count > 0) {
+                badge.setText(String.valueOf(count));
+                badge.setVisibility(View.VISIBLE);
+            } else {
+                badge.setVisibility(View.GONE);
+            }
         }
     }
     
