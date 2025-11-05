@@ -228,6 +228,7 @@ public class OrderAdminListFragment extends Fragment {
 
     /**
      * Filter orders dựa trên status filter và search query
+     * Sắp xếp đơn hàng mới nhất (orderID lớn nhất) lên đầu
      */
     private void filterOrders() {
         filteredOrderList.clear();
@@ -272,6 +273,15 @@ public class OrderAdminListFragment extends Fragment {
                 }
             }
         }
+
+        // ⭐ Sắp xếp đơn hàng MỚI NHẤT lên đầu (orderID giảm dần)
+        java.util.Collections.sort(filteredOrderList, new java.util.Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                // Sort theo orderID giảm dần (mới nhất lên đầu)
+                return Integer.compare(o2.getOrderID(), o1.getOrderID());
+            }
+        });
 
         updateAdapter();
         updateEmptyState();

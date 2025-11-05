@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.NotificationService;
 import com.example.myapplication.network.dto.ApiResponse;
+import com.example.myapplication.network.dto.BroadcastNotificationRequest;
 import com.example.myapplication.network.dto.NotificationDTO;
 import com.example.myapplication.network.dto.NotificationRequest;
 
@@ -39,6 +40,7 @@ public class AdminNotificationFragment extends Fragment {
     private RadioButton rbPromotion, rbSystem;
     private Button btnSendNotification;
     private Button btnFlashSale, btnNewProduct, btnBirthday, btnAbandonedCart;
+    private Button btnLogout;
     
     private NotificationService notificationService;
     
@@ -80,6 +82,9 @@ public class AdminNotificationFragment extends Fragment {
         btnBirthday = view.findViewById(R.id.btn_birthday);
         btnAbandonedCart = view.findViewById(R.id.btn_abandoned_cart);
         
+        // Logout button
+        btnLogout = view.findViewById(R.id.btn_logout);
+        
         // Default: PROMOTION
         rbPromotion.setChecked(true);
     }
@@ -108,6 +113,27 @@ public class AdminNotificationFragment extends Fragment {
         
         // Send button
         btnSendNotification.setOnClickListener(v -> sendNotification());
+        
+        // Logout button
+        btnLogout.setOnClickListener(v -> logout());
+    }
+    
+    private void logout() {
+        // Clear auth data
+        com.example.myapplication.auth.AuthManager authManager = new com.example.myapplication.auth.AuthManager(requireContext());
+        authManager.clear();
+        
+        Log.d(TAG, "Admin logged out");
+        showToast("Đã đăng xuất");
+        
+        // Navigate to login screen
+        android.content.Intent intent = new android.content.Intent(requireContext(), ActivityLogin.class);
+        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
     }
     
     private void sendNotification() {
@@ -137,13 +163,102 @@ public class AdminNotificationFragment extends Fragment {
         // Get notification type (chỉ để hiển thị trong log, không gửi lên server)
         String notificationType = rbPromotion.isChecked() ? "PROMOTION" : "SYSTEM";
         
-        Log.d(TAG, "Sending notification to user: " + userId);
-        Log.d(TAG, "Message: " + message);
-        Log.d(TAG, "Type (UI only): " + notificationType);
-        
         // Disable button
         btnSendNotification.setEnabled(false);
         btnSendNotification.setText("Đang gửi...");
+        
+        // Check if broadcasting to all users
+        if (userId == 0) {
+            // Sử dụng API mới: /notifications/send-notification-to-all
+            sendNotificationToAll(message, notificationType);
+        } else {
+            // Gửi cho user cụ thể
+            sendNotificationToUser(userId, message, notificationType);
+        }
+    }
+    
+    /**
+     * Gửi notification cho TẤT CẢ users
+     */
+    private void sendNotificationToAll(String message, String notificationType) {
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        Log.d(TAG, "📢 BROADCASTING notification to ALL USERS");
+        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Type (UI only): " + notificationType);
+        
+        // Create request - CHỈ CẦN message
+        BroadcastNotificationRequest request = new BroadcastNotificationRequest(message);
+        
+        // Debug: Log request với Gson để thấy exact JSON
+        com.google.gson.Gson gson = new com.google.gson.Gson();
+        String requestJson = gson.toJson(request);
+        Log.d(TAG, "📤 REQUEST");
+        Log.d(TAG, "Endpoint: POST /notifications/send-notification-to-all");
+        Log.d(TAG, "Body: " + requestJson);
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        
+        // Call API
+        Call<ApiResponse<String>> call = notificationService.sendNotificationToAll(request);
+        
+        call.enqueue(new Callback<ApiResponse<String>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<String>> call, 
+                                 @NonNull Response<ApiResponse<String>> response) {
+                
+                Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                Log.d(TAG, "📥 RESPONSE - BROADCAST TO ALL");
+                Log.d(TAG, "HTTP Code: " + response.code());
+                Log.d(TAG, "Is Successful: " + response.isSuccessful());
+                
+                // Re-enable button
+                btnSendNotification.setEnabled(true);
+                btnSendNotification.setText("📩 Gửi thông báo");
+                
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<String> apiResponse = response.body();
+                    
+                    Log.d(TAG, "Response Code: " + apiResponse.getCode());
+                    Log.d(TAG, "Response Message: " + apiResponse.getMessage());
+                    Log.d(TAG, "Result: " + apiResponse.getResult());
+                    
+                    // Kiểm tra success (có thể là code 0 hoặc 9999)
+                    if (apiResponse.getCode() == 0 || apiResponse.getCode() == 9999) {
+                        Log.d(TAG, "✅ Broadcast successful!");
+                        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                        
+                        showToast("✅ Đã gửi thông báo cho TẤT CẢ users!");
+                        
+                        // Clear form
+                        etUserID.setText("");
+                        etMessage.setText("");
+                        rbPromotion.setChecked(true);
+                        
+                    } else {
+                        String error = "Lỗi: " + apiResponse.getMessage();
+                        Log.e(TAG, error);
+                        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                        showToast(error);
+                    }
+                } else {
+                    handleErrorResponse(response);
+                }
+            }
+            
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<String>> call, @NonNull Throwable t) {
+                handleFailure(t);
+            }
+        });
+    }
+    
+    /**
+     * Gửi notification cho user cụ thể
+     */
+    private void sendNotificationToUser(Long userId, String message, String notificationType) {
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        Log.d(TAG, "📤 Sending notification to specific user: " + userId);
+        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Type (UI only): " + notificationType);
         
         // Create request - CHỈ GỬI userID và message theo API spec
         NotificationRequest request = new NotificationRequest(userId, message);
@@ -151,7 +266,6 @@ public class AdminNotificationFragment extends Fragment {
         // Debug: Log request với Gson để thấy exact JSON
         com.google.gson.Gson gson = new com.google.gson.Gson();
         String requestJson = gson.toJson(request);
-        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         Log.d(TAG, "📤 REQUEST");
         Log.d(TAG, "Endpoint: POST /notifications/create");
         Log.d(TAG, "Body: " + requestJson);
@@ -168,13 +282,13 @@ public class AdminNotificationFragment extends Fragment {
                                  @NonNull Response<ApiResponse<NotificationDTO>> response) {
                 
                 Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                Log.d(TAG, "📥 RESPONSE");
+                Log.d(TAG, "📥 RESPONSE - SPECIFIC USER");
                 Log.d(TAG, "HTTP Code: " + response.code());
                 Log.d(TAG, "Is Successful: " + response.isSuccessful());
                 
                 // Re-enable button
                 btnSendNotification.setEnabled(true);
-                btnSendNotification.setText("Gửi thông báo");
+                btnSendNotification.setText("📩 Gửi thông báo");
                 
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<NotificationDTO> apiResponse = response.body();
@@ -201,62 +315,80 @@ public class AdminNotificationFragment extends Fragment {
                         showToast(error);
                     }
                 } else {
-                    // Log error body để debug
-                    String errorBody = "";
-                    String errorMessage = "Lỗi gửi thông báo: " + response.code();
-                    
-                    Log.e(TAG, "❌ HTTP ERROR " + response.code());
-                    
-                    try {
-                        if (response.errorBody() != null) {
-                            errorBody = response.errorBody().string();
-                            Log.e(TAG, "Error Body: " + errorBody);
-                            
-                            // Parse error body để hiển thị message rõ ràng
-                            if (errorBody.contains("\"code\":1005") || errorBody.contains("Users not existed")) {
-                                String userIdStr = etUserID.getText().toString().trim();
-                                errorMessage = "User ID " + userIdStr + " không tồn tại! Vui lòng kiểm tra lại User ID.";
-                                Log.e(TAG, "User ID " + userIdStr + " not found in database");
-                            } else if (errorBody.contains("message")) {
-                                // Try to extract message from JSON
-                                try {
-                                    int messageStart = errorBody.indexOf("\"message\":\"") + 11;
-                                    int messageEnd = errorBody.indexOf("\"", messageStart);
-                                    if (messageStart > 10 && messageEnd > messageStart) {
-                                        String extractedMsg = errorBody.substring(messageStart, messageEnd);
-                                        errorMessage = "Lỗi: " + extractedMsg;
-                                    }
-                                } catch (Exception e) {
-                                    Log.w(TAG, "Cannot extract error message", e);
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Cannot read error body", e);
-                    }
-                    
-                    Log.e(TAG, "Final error message: " + errorMessage);
-                    Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                    showToast(errorMessage);
+                    handleErrorResponse(response);
                 }
             }
             
             @Override
             public void onFailure(@NonNull Call<ApiResponse<NotificationDTO>> call, @NonNull Throwable t) {
-                Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                Log.e(TAG, "❌ NETWORK FAILURE");
-                Log.e(TAG, "Error: " + t.getClass().getSimpleName());
-                Log.e(TAG, "Message: " + t.getMessage());
-                Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                
-                // Re-enable button
-                btnSendNotification.setEnabled(true);
-                btnSendNotification.setText("Gửi thông báo");
-                
-                String error = "Lỗi kết nối: " + t.getMessage();
-                showToast(error);
+                handleFailure(t);
             }
         });
+    }
+    
+    /**
+     * Xử lý error response chung
+     */
+    private void handleErrorResponse(Response<?> response) {
+        // Log error body để debug
+        String errorBody = "";
+        String errorMessage = "Lỗi gửi thông báo: " + response.code();
+        
+        Log.e(TAG, "❌ HTTP ERROR " + response.code());
+        
+        try {
+            if (response.errorBody() != null) {
+                errorBody = response.errorBody().string();
+                Log.e(TAG, "Error Body: " + errorBody);
+                
+                // Parse error body để hiển thị message rõ ràng
+                if (errorBody.contains("\"code\":1005") || errorBody.contains("Users not existed")) {
+                    String userIdStr = etUserID.getText().toString().trim();
+                    errorMessage = "User ID " + userIdStr + " không tồn tại! Vui lòng kiểm tra lại User ID.";
+                    Log.e(TAG, "User ID " + userIdStr + " not found in database");
+                } else if (errorBody.contains("message")) {
+                    // Try to extract message from JSON
+                    try {
+                        int messageStart = errorBody.indexOf("\"message\":\"") + 11;
+                        int messageEnd = errorBody.indexOf("\"", messageStart);
+                        if (messageStart > 10 && messageEnd > messageStart) {
+                            String extractedMsg = errorBody.substring(messageStart, messageEnd);
+                            errorMessage = "Lỗi: " + extractedMsg;
+                        }
+                    } catch (Exception e) {
+                        Log.w(TAG, "Cannot extract error message", e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Cannot read error body", e);
+        }
+        
+        Log.e(TAG, "Final error message: " + errorMessage);
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        showToast(errorMessage);
+        
+        // Re-enable button
+        btnSendNotification.setEnabled(true);
+        btnSendNotification.setText("📩 Gửi thông báo");
+    }
+    
+    /**
+     * Xử lý network failure chung
+     */
+    private void handleFailure(Throwable t) {
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        Log.e(TAG, "❌ NETWORK FAILURE");
+        Log.e(TAG, "Error: " + t.getClass().getSimpleName());
+        Log.e(TAG, "Message: " + t.getMessage());
+        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        
+        // Re-enable button
+        btnSendNotification.setEnabled(true);
+        btnSendNotification.setText("📩 Gửi thông báo");
+        
+        String error = "Lỗi kết nối: " + t.getMessage();
+        showToast(error);
     }
     
     private void showToast(String message) {
