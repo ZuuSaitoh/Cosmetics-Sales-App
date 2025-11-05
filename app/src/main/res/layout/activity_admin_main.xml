@@ -52,6 +52,7 @@
         android:textColor="@color/white"
         app:backgroundTint="#FF6B6B"
         app:icon="@drawable/ic_lock"
-        app:iconTint="@color/white" />
+        app:iconTint="@color/white"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.auth.AuthManager;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.network.ApiClient;
 import com.example.myapplication.network.OrderService;
@@ -101,6 +103,19 @@ public class DashboardFragment extends Fragment {
         // Chart
         chartRevenue = root.findViewById(R.id.chartRevenue);
         setupChart();
+
+        // Logout button for admin
+        View btnLogout = root.findViewById(R.id.btnLogoutAdmin);
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> {
+                AuthManager authManager = new AuthManager(requireContext());
+                authManager.clear();
+                Intent intent = new Intent(requireContext(), ActivityWelcome.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                requireActivity().finish();
+            });
+        }
     }
 
     /**

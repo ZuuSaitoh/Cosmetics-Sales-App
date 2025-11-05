@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cosmetic_bg_light"
+    android:layout_marginTop="55dp"
     android:fillViewport="true">
 
     <LinearLayout
@@ -320,6 +321,21 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- Logout Button (Admin) below reviews -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogoutAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Đăng xuất"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:backgroundTint="#FF6B6B"
+            app:icon="@drawable/ic_lock"
+            app:iconTint="@color/white" />
 
 
 
