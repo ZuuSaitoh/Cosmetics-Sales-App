@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User ID"
-            app:helperText="Nhập ID của user muốn gửi thông báo"
+            app:helperText="Nhập 0 để gửi tất cả, hoặc ID cụ thể (ví dụ: 7)"
             app:helperTextTextColor="@color/cosmetic_text_secondary"
             app:boxBackgroundColor="@android:color/white"
             app:boxStrokeColor="@color/cosmetic_primary"
@@ -207,12 +207,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="💡 Lưu ý:\n• Nhập User ID cụ thể để gửi thông báo cho user đó\n• Thông báo sẽ hiển thị ở tab 'Khuyến mãi' trong trang Notifications của user"
+            android:text="💡 Lưu ý:\n• Nhập User ID = 0 để gửi thông báo cho TẤT CẢ users\n• Nhập User ID cụ thể (ví dụ: 7) để gửi cho user đó\n• Thông báo sẽ hiển thị ở tab 'Khuyến mãi' trong trang Notifications của user"
             android:textColor="@color/cosmetic_text_secondary"
             android:textSize="12sp"
             android:lineSpacingExtra="2dp"
             android:padding="12dp"
             android:background="@color/cosmetic_bg_light" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/cosmetic_divider" />
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="🔓 Đăng xuất"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#F44336"
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="20dp" />
 
     </LinearLayout>
 </ScrollView>
