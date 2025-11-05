@@ -57,7 +57,19 @@ public class ChatActivity extends AppCompatActivity {
         initViews();
         setupRecyclerView();
         setupClickListeners();
-        ensureConversationExists();
+        // If admin opened with an existing conversationId, use it
+        if (getIntent() != null && getIntent().hasExtra("conversationId")) {
+            long cid = getIntent().getLongExtra("conversationId", -1L);
+            if (cid != -1L) {
+                conversationId = cid;
+                android.util.Log.d("ChatActivity", "Started with conversationId=" + conversationId);
+                fetchConversationMessages();
+            } else {
+                ensureConversationExists();
+            }
+        } else {
+            ensureConversationExists();
+        }
     }
     
     private void initViews() {
@@ -143,67 +155,7 @@ public class ChatActivity extends AppCompatActivity {
             } else {
                 android.util.Log.w("ChatActivity", "createMessage skipped: conversationId or userId is null");
             }
-
-            // Simulate phản hồi từ hỗ trợ (demo)
-            simulateSupportResponse();
         }
-    }
-    
-    private void simulateSupportResponse() {
-        recyclerMessages.postDelayed(() -> {
-            String[] responses = {
-                "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ hỗ trợ bạn ngay.",
-                "Bạn có thể cho tôi biết thêm chi tiết về vấn đề này không?",
-                "Tôi hiểu vấn đề của bạn. Để tôi kiểm tra và phản hồi sớm nhất.",
-                "Có điều gì khác tôi có thể giúp bạn không?",
-                "Chúng tôi sẽ xử lý yêu cầu của bạn trong thời gian sớm nhất."
-            };
-            
-            String randomResponse = responses[(int) (Math.random() * responses.length)];
-            
-            ChatMessage supportMessage = new ChatMessage(
-                randomResponse,
-                false, // isFromUser
-                new Date()
-            );
-            
-            messages.add(supportMessage);
-            chatAdapter.notifyItemInserted(messages.size() - 1);
-            recyclerMessages.scrollToPosition(messages.size() - 1);
-        }, 1000);
-    }
-    
-    private void loadSampleMessages() {
-        // Thêm một số tin nhắn mẫu
-        messages.add(new ChatMessage(
-            "Xin chào! Tôi có thể giúp gì cho bạn?",
-            false,
-            new Date(System.currentTimeMillis() - 300000) // 5 phút trước
-        ));
-        
-        messages.add(new ChatMessage(
-            "Tôi muốn hỏi về sản phẩm này",
-            true,
-            new Date(System.currentTimeMillis() - 240000) // 4 phút trước
-        ));
-        
-        messages.add(new ChatMessage(
-            "Tất nhiên! Bạn quan tâm đến sản phẩm nào?",
-            false,
-            new Date(System.currentTimeMillis() - 180000) // 3 phút trước
-        ));
-        
-        // Đảm bảo adapter được notify và scroll xuống cuối
-        chatAdapter.notifyDataSetChanged();
-        
-        // Debug: Log số lượng messages
-        android.util.Log.d("ChatActivity", "Messages loaded: " + messages.size());
-        
-        recyclerMessages.post(() -> {
-            if (messages.size() > 0) {
-                recyclerMessages.scrollToPosition(messages.size() - 1);
-            }
-        });
     }
 
     private void ensureConversationExists() {

@@ -2,6 +2,7 @@ package com.example.myapplication.network;
 
 import com.example.myapplication.model.Conversation;
 import com.example.myapplication.network.dto.ApiResponse;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,6 +16,9 @@ public interface ConversationService {
 
     @POST("conversations/create/{userID}")
     Call<ApiResponse<Conversation>> createConversation(@Path("userID") long userId);
+
+    @GET("conversations/all")
+    Call<ApiResponse<List<Conversation>>> getAllConversations();
 }
 
 
