@@ -45,7 +45,6 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     private TextView unreadCountTextView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private com.google.android.material.tabs.TabLayout tabLayout;
     private android.widget.Button btnMarkAllRead;
     
     private NotificationAdapter adapter;
@@ -56,11 +55,8 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     // Toast instance để tránh "Toast already killed"
     private android.widget.Toast currentToast;
     
-    // Danh sách notifications từ API
+    // Danh sách TẤT CẢ notifications từ API
     private List<Notification> allNotifications = new ArrayList<>();
-    
-    // Tab hiện tại: 0 = Khuyến mãi, 1 = Của bạn
-    private int currentTab = 0;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,7 +104,6 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         unreadCountTextView = view.findViewById(R.id.text_unread_count);
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
-        tabLayout = view.findViewById(R.id.tab_layout);
         btnMarkAllRead = view.findViewById(R.id.btn_mark_all_read);
         
         if (recyclerView != null) {
@@ -120,28 +115,8 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         // Setup SwipeRefreshLayout để pull-to-refresh
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setOnRefreshListener(() -> {
-                Log.d(TAG, "Refreshing notifications...");
+                Log.d(TAG, "Refreshing all notifications...");
                 loadNotificationsFromAPI();
-            });
-        }
-        
-        // Setup TabLayout
-        if (tabLayout != null) {
-            tabLayout.addOnTabSelectedListener(new com.google.android.material.tabs.TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(com.google.android.material.tabs.TabLayout.Tab tab) {
-                    currentTab = tab.getPosition();
-                    Log.d(TAG, "Tab selected: " + currentTab + " (" + tab.getText() + ")");
-                    filterAndDisplayNotifications();
-                }
-                
-                @Override
-                public void onTabUnselected(com.google.android.material.tabs.TabLayout.Tab tab) {
-                }
-                
-                @Override
-                public void onTabReselected(com.google.android.material.tabs.TabLayout.Tab tab) {
-                }
             });
         }
         
@@ -252,8 +227,8 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                             if (notifications.isEmpty()) {
                                 showEmptyState("Bạn chưa có thông báo nào");
                             } else {
-                                // Filter và hiển thị theo tab hiện tại
-                                filterAndDisplayNotifications();
+                                // Hiển thị TẤT CẢ notifications
+                                displayAllNotifications();
                             }
                         } else {
                             String errorMsg = apiResponse.getMessage() != null ? 
@@ -305,66 +280,20 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
     }
     
     /**
-     * Filter và hiển thị notifications theo tab hiện tại
+     * Hiển thị TẤT CẢ notifications (không filter theo type)
      */
-    private void filterAndDisplayNotifications() {
+    private void displayAllNotifications() {
         if (allNotifications == null || allNotifications.isEmpty()) {
             showEmptyState("Bạn chưa có thông báo nào");
             return;
         }
         
-        List<Notification> filteredNotifications = new ArrayList<>();
+        Log.d(TAG, "=== DISPLAYING ALL NOTIFICATIONS ===");
+        Log.d(TAG, "Total count: " + allNotifications.size());
         
-        Log.d(TAG, "=== FILTERING NOTIFICATIONS ===");
-        Log.d(TAG, "Current Tab: " + (currentTab == 0 ? "Khuyến mãi" : "Của bạn"));
-        Log.d(TAG, "Total notifications to filter: " + allNotifications.size());
-        
-        for (Notification notification : allNotifications) {
-            String type = notification.getNotificationType();
-            if (type == null) {
-                type = "SYSTEM"; // Default
-            }
-            
-            Log.d(TAG, "Notification ID: " + notification.getNotificationId() + 
-                  ", Type: " + type + ", Title: " + notification.getTitle());
-            
-            if (currentTab == 0) {
-                // Tab "Khuyến mãi" - Notifications từ admin (PROMOTION, SYSTEM)
-                if (type.equals(Notification.NotificationType.PROMOTION) || 
-                    type.equals(Notification.NotificationType.SYSTEM)) {
-                    filteredNotifications.add(notification);
-                    Log.d(TAG, "  ✅ Added to Khuyến mãi tab");
-                } else {
-                    Log.d(TAG, "  ❌ Filtered out from Khuyến mãi tab");
-                }
-            } else {
-                // Tab "Của bạn" - Notifications cá nhân (CART, ORDER, PAYMENT, ...)
-                if (type.equals(Notification.NotificationType.CART) || 
-                    type.equals(Notification.NotificationType.ORDER) ||
-                    type.equals(Notification.NotificationType.PAYMENT)) {
-                    filteredNotifications.add(notification);
-                    Log.d(TAG, "  ✅ Added to Của bạn tab - Type: " + type);
-                } else {
-                    Log.d(TAG, "  ❌ Filtered out from Của bạn tab - Type: " + type);
-                }
-            }
-        }
-        
-        Log.d(TAG, "=== FILTER RESULT ===");
-        Log.d(TAG, "Filtered count: " + filteredNotifications.size());
-        Log.d(TAG, "====================");
-        
-        Log.d(TAG, "Filtered notifications - Tab: " + currentTab + ", Count: " + filteredNotifications.size());
-        
-        if (filteredNotifications.isEmpty()) {
-            String emptyMessage = currentTab == 0 ? 
-                "Chưa có thông báo khuyến mãi" : 
-                "Bạn chưa có thông báo nào";
-            showEmptyState(emptyMessage);
-        } else {
-            showNotifications(filteredNotifications);
-            updateUnreadCount(filteredNotifications);
-        }
+        // Hiển thị TẤT CẢ notifications
+        showNotifications(allNotifications);
+        updateUnreadCount(allNotifications);
     }
     
     /**
@@ -533,7 +462,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                         getActivity().runOnUiThread(() -> {
                             if (isAdded()) {
                                 showToast("Đã đánh dấu tất cả là đã đọc");
-                                filterAndDisplayNotifications();
+                                displayAllNotifications();
                             }
                         });
                     }
@@ -596,12 +525,12 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                     // Update local notification object
                     notification.setRead(true);
                     
-                    // Refresh UI để update unread count
+                    // Refresh UI
                     if (getActivity() != null && isAdded()) {
                         getActivity().runOnUiThread(() -> {
                             if (isAdded() && adapter != null) {
                                 adapter.notifyDataSetChanged();
-                                filterAndDisplayNotifications();
+                                displayAllNotifications();
                             }
                         });
                     }
@@ -703,7 +632,7 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                                 if (isAdded() && getContext() != null) {
                                     showToast("Đã xóa thông báo");
                                     
-                                    Log.d(TAG, "Calling loadNotificationsFromAPI() to refresh list");
+                                    Log.d(TAG, "Reloading all notifications after delete");
                                     loadNotificationsFromAPI();
                                 }
                             });

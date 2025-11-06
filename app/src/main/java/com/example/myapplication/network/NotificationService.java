@@ -1,6 +1,7 @@
 package com.example.myapplication.network;
 
 import com.example.myapplication.network.dto.ApiResponse;
+import com.example.myapplication.network.dto.BroadcastNotificationRequest;
 import com.example.myapplication.network.dto.NotificationDTO;
 import com.example.myapplication.network.dto.NotificationRequest;
 
@@ -27,6 +28,31 @@ public interface NotificationService {
      */
     @GET("notifications/get-all-notifications-by-user-id/{userID}")
     Call<ApiResponse<List<NotificationDTO>>> getAllNotificationsByUserId(@Path("userID") Long userId);
+    
+    /**
+     * Lấy danh sách notifications CHƯA ĐỌC của một user
+     * GET /notifications/get-unread-notifications/{userID}
+     * 
+     * Response:
+     * {
+     *   "code": 9999,
+     *   "message": "Success",
+     *   "result": [
+     *     {
+     *       "notificationID": 6,
+     *       "user": { "userID": 9, ... },
+     *       "message": "...",
+     *       "isRead": false,
+     *       "createdAt": "2025-11-05T19:18:58.807"
+     *     }
+     *   ]
+     * }
+     * 
+     * @param userId ID của user
+     * @return Call chứa ApiResponse với danh sách NotificationDTO chưa đọc
+     */
+    @GET("notifications/get-unread-notifications/{userID}")
+    Call<ApiResponse<List<NotificationDTO>>> getUnreadNotificationsByUserId(@Path("userID") Long userId);
     
     /**
      * Xóa một notification
@@ -78,6 +104,28 @@ public interface NotificationService {
      */
     @POST("notifications/create")
     Call<ApiResponse<NotificationDTO>> createNotification(@Body NotificationRequest request);
+    
+    /**
+     * Gửi notification cho TẤT CẢ users
+     * POST /notifications/send-notification-to-all
+     * 
+     * Request body:
+     * {
+     *   "message": "🔥 FLASH SALE SỐC! Giảm 50% tất cả sản phẩm"
+     * }
+     * 
+     * Response:
+     * {
+     *   "code": 0,
+     *   "message": "string",
+     *   "result": "string"
+     * }
+     * 
+     * @param request BroadcastNotificationRequest chỉ chứa message
+     * @return Call chứa ApiResponse với result message
+     */
+    @POST("notifications/send-notification-to-all")
+    Call<ApiResponse<String>> sendNotificationToAll(@Body BroadcastNotificationRequest request);
 }
 
 

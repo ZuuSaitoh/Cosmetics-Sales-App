@@ -63,3 +63,4 @@ mapping.txt
 proguard/
 app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt
 app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt
+*.txt
