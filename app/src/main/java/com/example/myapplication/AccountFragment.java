@@ -244,6 +244,11 @@ public class AccountFragment extends Fragment {
     private void setupLogout() {
         if (logoutButton != null) {
             logoutButton.setOnClickListener(v -> {
+                // Clear cart data trước khi logout
+                if (getContext() != null) {
+                    authManager.clearCartOnLogout(getContext());
+                }
+                
                 // Xóa token và thông tin đăng nhập
                 authManager.clear();
                 

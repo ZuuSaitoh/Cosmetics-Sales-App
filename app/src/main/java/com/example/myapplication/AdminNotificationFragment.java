@@ -121,6 +121,8 @@ public class AdminNotificationFragment extends Fragment {
     private void logout() {
         // Clear auth data
         com.example.myapplication.auth.AuthManager authManager = new com.example.myapplication.auth.AuthManager(requireContext());
+        // Clear cart data trước khi logout
+        authManager.clearCartOnLogout(requireContext());
         authManager.clear();
         
         Log.d(TAG, "Admin logged out");

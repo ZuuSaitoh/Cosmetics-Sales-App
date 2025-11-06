@@ -109,6 +109,8 @@ public class DashboardFragment extends Fragment {
         if (btnLogout != null) {
             btnLogout.setOnClickListener(v -> {
                 AuthManager authManager = new AuthManager(requireContext());
+                // Clear cart data trước khi logout
+                authManager.clearCartOnLogout(requireContext());
                 authManager.clear();
                 Intent intent = new Intent(requireContext(), ActivityWelcome.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
