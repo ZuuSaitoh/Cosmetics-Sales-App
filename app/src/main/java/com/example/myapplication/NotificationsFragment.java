@@ -290,7 +290,10 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         
         Log.d(TAG, "=== DISPLAYING ALL NOTIFICATIONS ===");
         Log.d(TAG, "Total count: " + allNotifications.size());
-        
+
+        allNotifications.sort((n1, n2) ->
+                Integer.compare(n2.getNotificationId(), n1.getNotificationId())
+        );
         // Hiển thị TẤT CẢ notifications
         showNotifications(allNotifications);
         updateUnreadCount(allNotifications);

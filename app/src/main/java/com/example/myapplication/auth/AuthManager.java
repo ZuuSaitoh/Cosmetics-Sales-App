@@ -3,6 +3,10 @@ package com.example.myapplication.auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.myapplication.CartManager;
+import com.example.myapplication.notification.BootReceiver;
+import com.example.myapplication.notification.NotificationHelper;
+
 public class AuthManager {
     private static final String PREFS_NAME = "auth_prefs";
     private static final String KEY_TOKEN = "auth_token";
@@ -72,6 +76,29 @@ public class AuthManager {
     public void clear() {
         sharedPreferences.edit().clear().apply();
         android.util.Log.d("AuthManager", "Cleared all auth data");
+    }
+
+    /**
+     * Clear cart data khi logout
+     * Bao gồm: CartManager, SharedPreferences cart state, và notifications
+     */
+    public void clearCartOnLogout(Context context) {
+        try {
+            // Clear CartManager
+            CartManager.getInstance().clear();
+            android.util.Log.d("AuthManager", "Cleared CartManager");
+
+            // Clear cart state trong SharedPreferences
+            BootReceiver.clearCartState(context);
+            android.util.Log.d("AuthManager", "Cleared cart state from SharedPreferences");
+
+            // Clear cart notifications
+            NotificationHelper notificationHelper = new NotificationHelper(context);
+            notificationHelper.clearCartNotification();
+            android.util.Log.d("AuthManager", "Cleared cart notifications");
+        } catch (Exception e) {
+            android.util.Log.e("AuthManager", "Error clearing cart on logout", e);
+        }
     }
 
     /**
