@@ -501,7 +501,7 @@ public class AccountFragment extends Fragment {
         if (optionView != null) {
             optionView.setOnClickListener(v -> {
                 if (viewId == R.id.option_address_book) {
-                    Intent intent = new Intent(getContext(), AddressBookActivity.class);
+                    Intent intent = new Intent(getContext(), ActivityAddressBook.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), optionName + " đang được phát triển", Toast.LENGTH_SHORT).show();
