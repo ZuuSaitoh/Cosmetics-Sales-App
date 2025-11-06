@@ -374,20 +374,27 @@ public class ProductListFragment extends Fragment {
         final TextView btnReset = view.findViewById(R.id.btn_reset);
         final TextView tvTitle = view.findViewById(R.id.tv_title);
         final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
+        final androidx.cardview.widget.CardView cardMainImage = view.findViewById(R.id.card_main_image);
 
         tvTitle.setText("THÊM SẢN PHẨM MỚI");
         btnReset.setText("ĐẶT LẠI");
-        final androidx.cardview.widget.CardView cardMainImage = view.findViewById(R.id.card_main_image);
         etImageGlobal = etImage;
         cardMainImageGlobal = cardMainImage;
 
 // Khi bấm vào ảnh chính -> mở thư viện
-        cardMainImage.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh sản phẩm"), PICK_IMAGE_REQUEST);
-        });
+        View firstChildAdd = cardMainImage.getChildAt(0);
+        View.OnClickListener openPicker = v1 -> openImagePicker();
+        cardMainImage.setOnClickListener(openPicker);
+        if (firstChildAdd instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) firstChildAdd;
+            group.setOnClickListener(openPicker);
+            if (group.getChildCount() > 0) {
+                View inner = group.getChildAt(0);
+                inner.setOnClickListener(openPicker);
+            }
+        }
+
+        // Enable image pick/upload like Add dialog (already set above)
 
         // Load categories for dropdown
         final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
@@ -494,9 +501,27 @@ public class ProductListFragment extends Fragment {
         final TextView btnReset = view.findViewById(R.id.btn_reset);
         final TextView tvTitle = view.findViewById(R.id.tv_title);
         final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
+        final androidx.cardview.widget.CardView cardMainImage = view.findViewById(R.id.card_main_image);
 
         tvTitle.setText("CHỈNH SỬA SẢN PHẨM");
         btnReset.setText("ĐẶT LẠI");
+
+        // Enable image pick/upload similar to Add dialog
+        etImageGlobal = etImage;
+        cardMainImageGlobal = cardMainImage;
+        if (cardMainImage != null) {
+            View firstChildEdit = cardMainImage.getChildAt(0);
+            View.OnClickListener openPicker2 = v -> openImagePicker();
+            cardMainImage.setOnClickListener(openPicker2);
+            if (firstChildEdit instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) firstChildEdit;
+                group.setOnClickListener(openPicker2);
+                if (group.getChildCount() > 0) {
+                    View inner = group.getChildAt(0);
+                    inner.setOnClickListener(openPicker2);
+                }
+            }
+        }
 
         // Load categories for dropdown
         final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
@@ -552,6 +577,12 @@ public class ProductListFragment extends Fragment {
         etBrief.setText(product.getDescription());
         etFull.setText(product.getFullDescription());
         etImage.setText(product.getImageURL());
+        try {
+            String imgUrl = product.getImageURL();
+            if (imgUrl != null && !imgUrl.trim().isEmpty()) {
+                setPreviewImage(Uri.parse(imgUrl));
+            }
+        } catch (Exception ignored) {}
 
         // Reset button
         btnReset.setOnClickListener(v -> {
@@ -744,13 +775,29 @@ public class ProductListFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == android.app.Activity.RESULT_OK
                 && data != null && data.getData() != null) {
 
             imageUri = data.getData();
             // Hiển thị preview ngay lập tức bằng URI cục bộ trước khi upload
             setPreviewImage(imageUri);
             uploadImageToFirebase(imageUri);
+        }
+    }
+
+    private void openImagePicker() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh sản phẩm"), PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh sản phẩm"), PICK_IMAGE_REQUEST);
         }
     }
 
