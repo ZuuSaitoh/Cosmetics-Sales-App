@@ -10,6 +10,7 @@
         android:id="@+id/toolbarOrderHistory"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginTop="55dp"
         android:background="#00695C"
         app:title="Đơn hàng của tôi"
         app:titleTextColor="@android:color/white"
@@ -21,7 +22,7 @@
         android:id="@+id/swipeRefreshOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp">
+        android:layout_marginTop="111dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOrders"
@@ -39,7 +40,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
-        android:layout_marginTop="56dp">
+        android:layout_marginTop="111dp">
 
         <ImageView
             android:layout_width="120dp"

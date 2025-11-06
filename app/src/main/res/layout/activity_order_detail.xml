@@ -12,6 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="55dp"
         android:background="#00695C"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:title="Chi tiết đơn hàng"
@@ -23,7 +24,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="111dp"
         android:layout_marginBottom="72dp"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
