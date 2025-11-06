@@ -22,6 +22,8 @@ public class NotificationRequest {
     // Optional - không bắt buộc
     @SerializedName("dataPayload")
     private String dataPayload;
+    @SerializedName("title")
+    private String title;
     
     // Constructor cho Admin (chỉ userID và message)
     public NotificationRequest(Long userId, String message) {
@@ -30,11 +32,11 @@ public class NotificationRequest {
     }
     
     // Constructor đầy đủ cho system notifications
-    public NotificationRequest(Long userId, String message, String notificationType) {
-        this.userId = userId;
-        this.message = message;
-        this.notificationType = notificationType;
-    }
+//    public NotificationRequest(Long userId, String message, String notificationType) {
+//        this.userId = userId;
+//        this.message = message;
+//        this.notificationType = notificationType;
+//    }
     
     public NotificationRequest(Long userId, String message, String notificationType, String dataPayload) {
         this.userId = userId;
@@ -42,7 +44,14 @@ public class NotificationRequest {
         this.notificationType = notificationType;
         this.dataPayload = dataPayload;
     }
-    
+
+
+    public NotificationRequest(Long userId, String message, String title) {
+        this.userId = userId;
+        this.message = message;
+        this.title = title;
+    }
+
     // Getters and Setters
     public Long getUserId() {
         return userId;
@@ -74,6 +83,14 @@ public class NotificationRequest {
     
     public void setDataPayload(String dataPayload) {
         this.dataPayload = dataPayload;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
 

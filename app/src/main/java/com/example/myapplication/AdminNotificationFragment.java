@@ -187,7 +187,7 @@ public class AdminNotificationFragment extends Fragment {
         Log.d(TAG, "Type (UI only): " + notificationType);
         
         // Create request - CHỈ CẦN message
-        BroadcastNotificationRequest request = new BroadcastNotificationRequest(message);
+        BroadcastNotificationRequest request = new BroadcastNotificationRequest(message, notificationType);
         
         // Debug: Log request với Gson để thấy exact JSON
         com.google.gson.Gson gson = new com.google.gson.Gson();
@@ -261,7 +261,7 @@ public class AdminNotificationFragment extends Fragment {
         Log.d(TAG, "Type (UI only): " + notificationType);
         
         // Create request - CHỈ GỬI userID và message theo API spec
-        NotificationRequest request = new NotificationRequest(userId, message);
+        NotificationRequest request = new NotificationRequest(userId, message, notificationType);
         
         // Debug: Log request với Gson để thấy exact JSON
         com.google.gson.Gson gson = new com.google.gson.Gson();
