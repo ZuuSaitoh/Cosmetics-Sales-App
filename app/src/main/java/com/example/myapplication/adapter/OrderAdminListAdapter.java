@@ -86,19 +86,29 @@ public class OrderAdminListAdapter extends RecyclerView.Adapter<OrderAdminListAd
         holder.layoutMultiItemBadge.setVisibility(View.GONE);
 
         // Kiểm tra status để enable/disable nút Xác nhận
-        boolean isProcessingStatus = isProcessingStatus(status);
-        holder.btnConfirmOrder.setEnabled(isProcessingStatus);
-        holder.btnConfirmOrder.setAlpha(isProcessingStatus ? 1.0f : 0.5f); // Visual feedback
+        // Enable cho cả Processing (để chuyển sang Shipped) và Shipped (để chuyển sang Delivered)
+        boolean canConfirm = isProcessingStatus(status) || isShippedStatus(status);
+        holder.btnConfirmOrder.setEnabled(canConfirm);
+        holder.btnConfirmOrder.setAlpha(canConfirm ? 1.0f : 0.5f); // Visual feedback
+
+        // Kiểm tra status để enable/disable nút Hủy
+        // Chỉ enable khi đơn hàng ở trạng thái "Đang xử lý" (Processing)
+        // Vô hiệu hóa khi đã "Đang giao" (Shipped) hoặc "Đã giao" (Delivered)
+        boolean canCancel = isProcessingStatus(status) && !isShippedStatus(status) && !isDeliveredStatus(status);
+        holder.btnCancelOrder.setEnabled(canCancel);
+        holder.btnCancelOrder.setAlpha(canCancel ? 1.0f : 0.5f); // Visual feedback
 
         // Sự kiện click
         holder.btnConfirmOrder.setOnClickListener(v -> {
-            if (isProcessingStatus && listener != null) {
+            if (canConfirm && listener != null) {
                 listener.onConfirmClick(order);
             }
         });
 
         holder.btnCancelOrder.setOnClickListener(v -> {
-            if (listener != null) listener.onCancelClick(order);
+            if (canCancel && listener != null) {
+                listener.onCancelClick(order);
+            }
         });
     }
 
@@ -111,6 +121,28 @@ public class OrderAdminListAdapter extends RecyclerView.Adapter<OrderAdminListAd
         }
         String statusLower = status.trim().toLowerCase();
         return statusLower.contains("processing") || statusLower.contains("đang xử");
+    }
+
+    /**
+     * Kiểm tra xem status có phải là "Shipped" (Đang giao) không
+     */
+    private boolean isShippedStatus(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            return false;
+        }
+        String statusLower = status.trim().toLowerCase();
+        return statusLower.contains("shipped") || statusLower.contains("đang giao") || statusLower.contains("shipping");
+    }
+
+    /**
+     * Kiểm tra xem status có phải là "Delivered" (Đã giao) không
+     */
+    private boolean isDeliveredStatus(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            return false;
+        }
+        String statusLower = status.trim().toLowerCase();
+        return statusLower.contains("delivered") || statusLower.contains("đã giao");
     }
 
     /**

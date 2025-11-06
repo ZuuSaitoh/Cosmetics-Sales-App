@@ -81,8 +81,17 @@ public class OrderAdminListFragment extends Fragment {
         adapter = new OrderAdminListAdapter(requireContext(), filteredOrderList, new OrderAdminListAdapter.OnOrderActionListener() {
             @Override
             public void onConfirmClick(Order order) {
-                // Xác nhận đơn hàng - chuyển từ Processing sang Shipped
-                updateOrderStatusToShipped(order);
+                // Xác nhận đơn hàng:
+                // - Nếu đang ở Processing -> chuyển sang Shipped (Đang giao)
+                // - Nếu đang ở Shipped -> chuyển sang Delivered (Đã giao)
+                String currentStatus = order.getOrderStatus() != null ? order.getOrderStatus().toLowerCase() : "";
+                if (currentStatus.contains("shipped") || currentStatus.contains("đang giao")) {
+                    // Đang ở trạng thái "Đang giao" -> chuyển sang "Đã giao"
+                    updateOrderStatusToDelivered(order);
+                } else {
+                    // Đang ở trạng thái "Đang xử lý" -> chuyển sang "Đang giao"
+                    updateOrderStatusToShipped(order);
+                }
             }
 
             @Override
@@ -435,6 +444,51 @@ public class OrderAdminListFragment extends Fragment {
                     if (apiResponse.getCode() == 9999) {
                         Log.d(TAG, "Order status updated successfully");
                         Toast.makeText(requireContext(), "Đã xác nhận đơn hàng #" + order.getOrderID(), Toast.LENGTH_SHORT).show();
+                        // Refresh danh sách đơn hàng
+                        fetchOrders();
+                    } else {
+                        String errorMsg = apiResponse.getMessage() != null ? apiResponse.getMessage() : "Không thể cập nhật trạng thái";
+                        Log.e(TAG, "API Error: " + errorMsg);
+                        showError(errorMsg);
+                    }
+                } else {
+                    Log.e(TAG, "Response not successful. Code: " + response.code());
+                    showError("Không thể cập nhật trạng thái (HTTP " + response.code() + ")");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Order>> call, Throwable t) {
+                Log.e(TAG, "Network error: " + t.getMessage(), t);
+                showError("Lỗi mạng: " + t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Cập nhật trạng thái đơn hàng sang "Delivered" (Đã giao) khi admin xác nhận đơn hàng đang giao
+     */
+    private void updateOrderStatusToDelivered(Order order) {
+        if (order == null || order.getOrderID() <= 0) {
+            showError("Đơn hàng không hợp lệ");
+            return;
+        }
+
+        // Tạo request để update status sang "Delivered"
+        UpdateStatusRequest request = new UpdateStatusRequest();
+        request.setOrderStatus("Delivered");
+        request.setOrderID(order.getOrderID());
+
+        Log.d(TAG, "Updating order #" + order.getOrderID() + " to Delivered");
+
+        orderService.updateOrderStatus(order.getOrderID(), request).enqueue(new Callback<ApiResponse<Order>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Order>> call, Response<ApiResponse<Order>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Order> apiResponse = response.body();
+                    if (apiResponse.getCode() == 9999) {
+                        Log.d(TAG, "Order status updated to Delivered successfully");
+                        Toast.makeText(requireContext(), "Đã xác nhận đơn hàng #" + order.getOrderID() + " đã giao", Toast.LENGTH_SHORT).show();
                         // Refresh danh sách đơn hàng
                         fetchOrders();
                     } else {
