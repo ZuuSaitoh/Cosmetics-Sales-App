@@ -42,9 +42,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView imageProduct;
     private TextView textName, textPrice, textDescription, textFullDescription, textBrand, textCategory, textStock;
+    private TextView btnReadMore;
     private Button btnAddToCart;
     private ImageButton btnBack;
     private ImageButton btnCart;
+    private boolean isDescriptionExpanded = false;
 
     private Product product;
     private Long productId;
@@ -94,7 +96,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(v -> finish());
+        
+        // Setup Read more button
+        setupReadMoreButton();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh authManager và cập nhật cart badge khi quay lại activity
+        // Điều này đảm bảo cart badge hiển thị đúng sau khi đặt hàng
+        authManager = new AuthManager(getApplicationContext());
+        updateCartBadge();
     }
 
     private void initViews() {
@@ -110,7 +124,32 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         btnCart = findViewById(R.id.btn_cart);
         cartBadge = findViewById(R.id.cart_badge);
+        btnReadMore = findViewById(R.id.btn_read_more);
 
+    }
+    
+    private void setupReadMoreButton() {
+        if (btnReadMore == null) {
+            return;
+        }
+        
+        btnReadMore.setOnClickListener(v -> {
+            if (textFullDescription == null) {
+                return;
+            }
+            
+            if (isDescriptionExpanded) {
+                // Thu gọn
+                textFullDescription.setVisibility(View.GONE);
+                btnReadMore.setText("Đọc thêm");
+                isDescriptionExpanded = false;
+            } else {
+                // Mở rộng
+                textFullDescription.setVisibility(View.VISIBLE);
+                btnReadMore.setText("Thu gọn");
+                isDescriptionExpanded = true;
+            }
+        });
     }
 
     public void setupCart() {
@@ -184,6 +223,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         textDescription.setText(product.getBriefDescription() != null ? product.getBriefDescription() : "Mô tả sản phẩm");
         if (textFullDescription != null) {
             textFullDescription.setText(product.getFullDescription() != null ? product.getFullDescription() : "Mô tả chi tiết");
+            // Reset trạng thái khi load dữ liệu mới
+            textFullDescription.setVisibility(View.GONE);
+            if (btnReadMore != null) {
+                btnReadMore.setText("Đọc thêm");
+            }
+            isDescriptionExpanded = false;
         }
         if (textBrand != null) {
             textBrand.setText("Thương hiệu: " + (product.getBrand() != null ? product.getBrand() : "Không có"));
@@ -394,6 +439,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
 
+        // Refresh authManager để đảm bảo có thông tin user mới nhất
+        authManager = new AuthManager(getApplicationContext());
         Long userId = authManager != null ? authManager.getUserId() : null;
         if (userId == null) {
             Toast.makeText(this, "Vui lòng đăng nhập trước khi thêm giỏ hàng.", Toast.LENGTH_SHORT).show();
@@ -404,40 +451,98 @@ public class ProductDetailActivity extends AppCompatActivity {
         authService.getCartByUserId(userId).enqueue(new Callback<Cart>() {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().getCartID() != null) {
                     Long cartId = response.body().getCartID();
                     // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
                     checkAndAddProduct(cartId, product.getProductID(), quantity);
                 } else {
-                    // Create cart then add
-                    authService.createCart(new CreateCartRequest(userId)).enqueue(new Callback<Cart>() {
-                        @Override
-                        public void onResponse(Call<Cart> call2, Response<Cart> resp2) {
-                            if (resp2.isSuccessful() && resp2.body() != null) {
-                                Long newCartId = resp2.body().getCartID();
-                                // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
-                                checkAndAddProduct(newCartId, product.getProductID(), quantity);
-                            } else {
-                                Toast.makeText(ProductDetailActivity.this, "Không thể tạo giỏ hàng.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Cart> call2, Throwable t) {
-                            Toast.makeText(ProductDetailActivity.this, "Lỗi tạo giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    // Kiểm tra response code: 404 = cart không tồn tại, các lỗi khác có thể là cart đã tồn tại
+                    int responseCode = response.code();
+                    if (responseCode == 404) {
+                        // Cart không tồn tại -> tạo mới
+                        createCartAndAddProduct(userId, quantity);
+                    } else {
+                        // Lỗi khác (có thể cart đã tồn tại nhưng response không đúng format)
+                        // Thử lại getCartByUserId hoặc tạo cart mới
+                        android.util.Log.w("ProductDetail", "getCartByUserId returned code: " + responseCode + ", trying to create cart");
+                        createCartAndAddProduct(userId, quantity);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-                Toast.makeText(ProductDetailActivity.this, "Lỗi khi lấy giỏ hàng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                // Nếu lỗi mạng khi lấy cart, thử tạo cart mới
+                android.util.Log.w("ProductDetail", "getCartByUserId failed: " + t.getMessage() + ", trying to create cart");
+                createCartAndAddProduct(userId, quantity);
+            }
+        });
+    }
+
+    /**
+     * Tạo cart mới và thêm sản phẩm vào cart đó
+     * Nếu tạo cart thất bại (có thể cart đã tồn tại), thử lại getCartByUserId
+     */
+    private void createCartAndAddProduct(Long userId, int quantity) {
+        authService.createCart(new CreateCartRequest(userId)).enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getCartID() != null) {
+                    Long newCartId = response.body().getCartID();
+                    // Đảm bảo cartId không null trước khi thêm sản phẩm
+                    if (newCartId != null && product != null && product.getProductID() != null) {
+                        checkAndAddProduct(newCartId, product.getProductID(), quantity);
+                    } else {
+                        Toast.makeText(ProductDetailActivity.this, "Thiếu thông tin giỏ hàng hoặc sản phẩm.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Tạo cart thất bại - có thể cart đã tồn tại
+                    // Thử lại getCartByUserId một lần nữa
+                    android.util.Log.w("ProductDetail", "createCart failed with code: " + response.code() + ", retrying getCartByUserId");
+                    retryGetCartAndAddProduct(userId, quantity);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                // Lỗi mạng khi tạo cart - thử lại getCartByUserId
+                android.util.Log.w("ProductDetail", "createCart network error: " + t.getMessage() + ", retrying getCartByUserId");
+                retryGetCartAndAddProduct(userId, quantity);
+            }
+        });
+    }
+
+    /**
+     * Thử lại getCartByUserId và thêm sản phẩm
+     * Dùng khi createCart thất bại (có thể cart đã tồn tại)
+     */
+    private void retryGetCartAndAddProduct(Long userId, int quantity) {
+        authService.getCartByUserId(userId).enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getCartID() != null) {
+                    Long cartId = response.body().getCartID();
+                    checkAndAddProduct(cartId, product.getProductID(), quantity);
+                } else {
+                    // Vẫn không lấy được cart sau khi retry
+                    Toast.makeText(ProductDetailActivity.this, "Không thể lấy hoặc tạo giỏ hàng. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void checkAndAddProduct(Long cartId, Long productId, int quantity) {
+        // Kiểm tra cartId và productId không null trước khi tiếp tục
+        if (cartId == null || productId == null) {
+            Toast.makeText(this, "Thiếu thông tin giỏ hàng hoặc sản phẩm.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
         authService.getCartItems(cartId).enqueue(new Callback<com.example.myapplication.network.dto.CartItemsResponse>() {
             @Override
