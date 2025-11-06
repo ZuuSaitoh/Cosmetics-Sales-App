@@ -145,11 +145,16 @@
                         retrofit2.Call<com.example.myapplication.network.dto.ApiResponse<List<UserAddressRequest>>> call,
                         retrofit2.Response<com.example.myapplication.network.dto.ApiResponse<List<UserAddressRequest>>> response) {
                     addresses.clear();
+                    
+                    // Load local storage để merge
+                    List<AddressEntry> localAddresses = AddressStorage.load(requireContext());
+                    
                     if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
-                        // Load local để merge name/phone nếu API không có
-                        List<AddressEntry> localAddresses = AddressStorage.load(requireContext());
+                        List<UserAddressRequest> apiAddresses = response.body().getResult();
+                        android.util.Log.d("AddressPicker", "Loaded " + apiAddresses.size() + " addresses from API");
                         
-                        for (UserAddressRequest dto : response.body().getResult()) {
+                        // Xử lý địa chỉ từ API
+                        for (UserAddressRequest dto : apiAddresses) {
                             // Ưu tiên lấy name và phone từ local storage trước (để giữ lại dữ liệu đã có)
                             String name = null;
                             String phone = null;
@@ -189,10 +194,48 @@
                             ));
                         }
                         
+                        // Thêm các địa chỉ từ local storage mà không có trong API (chưa sync)
+                        for (AddressEntry local : localAddresses) {
+                            // Chỉ thêm địa chỉ local nếu không có ID hoặc ID không có trong danh sách API
+                            if (local.id == null) {
+                                // Địa chỉ local chưa sync với server
+                                boolean exists = false;
+                                for (AddressEntry apiAddr : addresses) {
+                                    if (apiAddr.address != null && local.address != null && 
+                                        apiAddr.address.equals(local.address)) {
+                                        exists = true;
+                                        break;
+                                    }
+                                }
+                                if (!exists) {
+                                    addresses.add(local);
+                                    android.util.Log.d("AddressPicker", "Added local-only address: " + local.address);
+                                }
+                            } else {
+                                // Kiểm tra xem địa chỉ này đã có trong danh sách API chưa
+                                boolean existsInApi = false;
+                                for (AddressEntry apiAddr : addresses) {
+                                    if (apiAddr.id != null && apiAddr.id.equals(local.id)) {
+                                        existsInApi = true;
+                                        break;
+                                    }
+                                }
+                                // Nếu không có trong API nhưng có trong local, vẫn thêm vào (có thể đã bị xóa trên server)
+                                if (!existsInApi) {
+                                    addresses.add(local);
+                                    android.util.Log.d("AddressPicker", "Added local address not in API: " + local.address);
+                                }
+                            }
+                        }
+                        
                         // Lưu lại để giữ name/phone cho lần sau
                         AddressStorage.save(requireContext(), addresses);
+                        android.util.Log.d("AddressPicker", "Total addresses after merge: " + addresses.size());
                     } else {
-                        addresses.addAll(AddressStorage.load(requireContext()));
+                        // API không thành công, dùng local storage
+                        android.util.Log.w("AddressPicker", "API call failed, using local storage. Response code: " + 
+                            (response.isSuccessful() ? "success but null body" : response.code()));
+                        addresses.addAll(localAddresses);
                     }
 
                     int defaultIndex = AddressStorage.findDefaultIndex(addresses);
@@ -204,6 +247,7 @@
                 public void onFailure(
                         retrofit2.Call<com.example.myapplication.network.dto.ApiResponse<List<UserAddressRequest>>> call,
                         Throwable t) {
+                    android.util.Log.e("AddressPicker", "API call failed: " + t.getMessage());
                     addresses.clear();
                     addresses.addAll(AddressStorage.load(requireContext()));
                     int defaultIndex = AddressStorage.findDefaultIndex(addresses);
