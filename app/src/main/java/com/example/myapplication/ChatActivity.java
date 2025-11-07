@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -26,8 +28,10 @@ import com.example.myapplication.network.dto.ChatMessageCreateRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class ChatActivity extends AppCompatActivity {
     
@@ -40,6 +44,14 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatMessage> messages;
     private AuthManager authManager;
     private Long conversationId;
+    
+    // HTTP Polling để nhận tin nhắn mới
+    private Handler pollingHandler;
+    private Runnable pollingRunnable;
+    private static final long POLLING_INTERVAL = 2000; // 2 giây
+    private boolean isPollingActive = false;
+    private Date lastMessageTimestamp = null;
+    private Set<Long> addedMessageIds = new HashSet<>(); // Track message IDs đã thêm để tránh duplicate
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,8 @@ public class ChatActivity extends AppCompatActivity {
         initViews();
         setupRecyclerView();
         setupClickListeners();
+        setupPolling();
+        
         // If admin opened with an existing conversationId, use it
         if (getIntent() != null && getIntent().hasExtra("conversationId")) {
             long cid = getIntent().getLongExtra("conversationId", -1L);
@@ -70,6 +84,119 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             ensureConversationExists();
         }
+    }
+    
+    private void setupPolling() {
+        pollingHandler = new Handler(Looper.getMainLooper());
+        pollingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (isPollingActive && conversationId != null) {
+                    pollForNewMessages();
+                    pollingHandler.postDelayed(this, POLLING_INTERVAL);
+                }
+            }
+        };
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Bắt đầu polling khi activity được hiển thị
+        startPolling();
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Dừng polling khi activity bị ẩn để tiết kiệm pin và băng thông
+        stopPolling();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Đảm bảo dừng polling khi activity bị hủy
+        stopPolling();
+    }
+    
+    private void startPolling() {
+        if (!isPollingActive && conversationId != null) {
+            isPollingActive = true;
+            pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL);
+            android.util.Log.d("ChatActivity", "Polling started");
+        }
+    }
+    
+    private void stopPolling() {
+        if (isPollingActive) {
+            isPollingActive = false;
+            pollingHandler.removeCallbacks(pollingRunnable);
+            android.util.Log.d("ChatActivity", "Polling stopped");
+        }
+    }
+    
+    private void pollForNewMessages() {
+        if (conversationId == null) return;
+        
+        ChatMessageService messageService = ApiClient.getRetrofit(this).create(ChatMessageService.class);
+        messageService.getMessagesByConversation(conversationId).enqueue(new retrofit2.Callback<ApiResponse<java.util.List<ChatMessageDto>>>() {
+            @Override
+            public void onResponse(retrofit2.Call<ApiResponse<java.util.List<ChatMessageDto>>> call, retrofit2.Response<ApiResponse<java.util.List<ChatMessageDto>>> response) {
+                if (!response.isSuccessful() || response.body() == null || response.body().getResult() == null) {
+                    return;
+                }
+                
+                List<ChatMessageDto> dtoList = response.body().getResult();
+                Long currentUserId = authManager.getUserId();
+                
+                // Chỉ thêm tin nhắn mới dựa trên message ID
+                boolean hasNewMessages = false;
+                for (ChatMessageDto dto : dtoList) {
+                    Long messageId = dto.getChatMessageID();
+                    
+                    // Bỏ qua nếu message ID null hoặc đã được thêm rồi
+                    if (messageId == null || addedMessageIds.contains(messageId)) {
+                        continue;
+                    }
+                    
+                    Date messageDate;
+                    try {
+                        messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getSentAt());
+                    } catch (Exception e) {
+                        messageDate = new Date();
+                    }
+                    
+                    boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
+                    ChatMessage newMessage = new ChatMessage(messageId, dto.getMessage(), fromUser, messageDate);
+                    
+                    // Thêm vào list và mark đã thêm
+                    messages.add(newMessage);
+                    addedMessageIds.add(messageId);
+                    hasNewMessages = true;
+                    
+                    // Cập nhật lastMessageTimestamp
+                    if (lastMessageTimestamp == null || messageDate.after(lastMessageTimestamp)) {
+                        lastMessageTimestamp = messageDate;
+                    }
+                }
+                
+                if (hasNewMessages) {
+                    // Sắp xếp lại messages theo thời gian
+                    messages.sort((m1, m2) -> m1.getTimestamp().compareTo(m2.getTimestamp()));
+                    chatAdapter.notifyDataSetChanged();
+                    if (!messages.isEmpty()) {
+                        recyclerMessages.scrollToPosition(messages.size() - 1);
+                    }
+                    android.util.Log.d("ChatActivity", "New messages received via polling: " + hasNewMessages);
+                }
+            }
+            
+            @Override
+            public void onFailure(retrofit2.Call<ApiResponse<java.util.List<ChatMessageDto>>> call, Throwable t) {
+                // Lỗi polling - không cần log vì sẽ thử lại sau
+            }
+        });
     }
     
     private void initViews() {
@@ -121,8 +248,9 @@ public class ChatActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(messageText)) {
             Long currentUserId = authManager.getUserId();
             android.util.Log.d("ChatActivity", "sendMessage: text='" + messageText + "', conversationId=" + conversationId + ", userId=" + currentUserId);
-            // Tạo tin nhắn từ người dùng
+            // Tạo tin nhắn từ người dùng (tạm thời không có ID, sẽ được cập nhật khi server trả về)
             ChatMessage userMessage = new ChatMessage(
+                null, // messageId sẽ được cập nhật sau
                 messageText,
                 true, // isFromUser
                 new Date()
@@ -131,6 +259,9 @@ public class ChatActivity extends AppCompatActivity {
             messages.add(userMessage);
             chatAdapter.notifyItemInserted(messages.size() - 1);
             recyclerMessages.scrollToPosition(messages.size() - 1);
+            
+            // Cập nhật lastMessageTimestamp
+            lastMessageTimestamp = userMessage.getTimestamp();
             
             // Xóa text trong input
             editMessage.setText("");
@@ -145,6 +276,29 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(retrofit2.Call<ApiResponse<ChatMessageDto>> call, retrofit2.Response<ApiResponse<ChatMessageDto>> response) {
                         android.util.Log.d("ChatActivity", "createMessage response code=" + response.code());
+                        
+                        // Cập nhật message ID từ server response
+                        if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                            ChatMessageDto createdDto = response.body().getResult();
+                            Long createdMessageId = createdDto.getChatMessageID();
+                            
+                            if (createdMessageId != null && !messages.isEmpty()) {
+                                // Tìm tin nhắn vừa gửi (tin nhắn gần nhất không có ID và khớp nội dung)
+                                // Tìm từ cuối lên để tìm tin nhắn mới nhất
+                                for (int i = messages.size() - 1; i >= 0; i--) {
+                                    ChatMessage msg = messages.get(i);
+                                    if (msg.getMessageId() == null && 
+                                        msg.getMessage().equals(messageText) && 
+                                        msg.isFromUser() &&
+                                        !addedMessageIds.contains(createdMessageId)) {
+                                        msg.setMessageId(createdMessageId);
+                                        addedMessageIds.add(createdMessageId);
+                                        android.util.Log.d("ChatActivity", "Updated message ID: " + createdMessageId);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     @Override
@@ -235,8 +389,16 @@ public class ChatActivity extends AppCompatActivity {
                 List<ChatMessageDto> dtoList = response.body().getResult();
                 android.util.Log.d("ChatActivity", "fetchConversationMessages: received=" + dtoList.size());
                 Long currentUserId = authManager.getUserId();
+                
+                // Clear messages và reset tracking
                 messages.clear();
+                addedMessageIds.clear();
+                lastMessageTimestamp = null;
+                
                 for (ChatMessageDto dto : dtoList) {
+                    Long messageId = dto.getChatMessageID();
+                    if (messageId == null) continue; // Bỏ qua nếu không có ID
+                    
                     boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
                     Date ts;
                     try {
@@ -244,12 +406,23 @@ public class ChatActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         ts = new Date();
                     }
-                    messages.add(new ChatMessage(dto.getMessage(), fromUser, ts));
+                    
+                    ChatMessage msg = new ChatMessage(messageId, dto.getMessage(), fromUser, ts);
+                    messages.add(msg);
+                    addedMessageIds.add(messageId); // Track message ID đã thêm
+                    
+                    // Cập nhật lastMessageTimestamp
+                    if (lastMessageTimestamp == null || ts.after(lastMessageTimestamp)) {
+                        lastMessageTimestamp = ts;
+                    }
                 }
                 chatAdapter.notifyDataSetChanged();
                 if (!messages.isEmpty()) {
                     recyclerMessages.scrollToPosition(messages.size() - 1);
                 }
+                
+                // Bắt đầu polling sau khi đã load xong messages
+                startPolling();
             }
 
             @Override
