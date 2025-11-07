@@ -2,9 +2,11 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.PopupMenu;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -79,35 +81,49 @@ public class ActivityAdminMain extends AppCompatActivity {
     }
     
     private void showAddMenu() {
-        PopupMenu popupMenu = new PopupMenu(this, fabAddMenu);
-        popupMenu.getMenuInflater().inflate(R.menu.add_product_category_menu, popupMenu.getMenu());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_menu, null);
+        builder.setView(dialogView);
         
-        popupMenu.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-            
-            if (id == R.id.menu_edit_product) {
-                // Navigate to Product List
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_host_fragment, new ProductListFragment())
-                        .commit();
-                return true;
-            } else if (id == R.id.menu_category) {
-                // Navigate to Admin Category
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_host_fragment, new AdminCategoryFragment())
-                        .commit();
-                return true;
-            }
-            
-            return false;
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        
+        MaterialButton btnEditProduct = dialogView.findViewById(R.id.btn_edit_product);
+        MaterialButton btnCategory = dialogView.findViewById(R.id.btn_category);
+        MaterialButton btnChat = dialogView.findViewById(R.id.btn_chat);
+        
+        btnEditProduct.setOnClickListener(v -> {
+            dialog.dismiss();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, new ProductListFragment())
+                    .commit();
         });
         
-        popupMenu.show();
+        btnCategory.setOnClickListener(v -> {
+            dialog.dismiss();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, new AdminCategoryFragment())
+                    .commit();
+        });
+        
+        btnChat.setOnClickListener(v -> {
+            dialog.dismiss();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, new ChatConversationListFragment())
+                    .commit();
+        });
+        
+        dialog.show();
     }
     
     private void handleLogout() {
+        // Clear cart data trước khi logout
+        authManager.clearCartOnLogout(this);
+        
         // Clear auth data
         authManager.clear();
         

@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.core.content.ContextCompat;
 // removed insets handling
 
+import com.example.myapplication.adapter.AddressBookAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -40,7 +39,7 @@ import retrofit2.Response;
  * Temporary Address Book screen without backend API.
  * Stores a simple list of addresses in SharedPreferences as JSON.
  */
-public class AddressBookActivity extends AppCompatActivity {
+public class ActivityAddressBook extends AppCompatActivity {
 
     private static final String PREFS_NAME = "address_book_prefs";
     private static final String KEY_ADDRESSES = "addresses";

@@ -202,7 +202,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -240,7 +242,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:clipChildren="false">
 
                     <LinearLayout
                         android:id="@+id/order_status_processing"
@@ -251,16 +254,47 @@
                         android:gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless">
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:clipChildren="false">
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:background="@drawable/circular_icon_background"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_check"
-                            android:tint="#00695C" />
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="4dp">
+
+                            <ImageView
+                                android:id="@+id/icon_processing"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/circular_icon_background"
+                                android:padding="12dp"
+                                android:src="@drawable/ic_clock"
+                                android:tint="#00695C" />
+
+                            <TextView
+                                android:id="@+id/badge_processing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top|end"
+                                android:background="@drawable/badge_background"
+                                android:paddingStart="6dp"
+                                android:paddingEnd="6dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:visibility="gone"
+                                android:minWidth="18dp"
+                                android:gravity="center" />
+
+                        </FrameLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -280,16 +314,47 @@
                         android:gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless">
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:clipChildren="false">
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:background="@drawable/circular_icon_background"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_truck"
-                            android:tint="#00695C" />
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="4dp">
+
+                            <ImageView
+                                android:id="@+id/icon_shipped"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/circular_icon_background"
+                                android:padding="12dp"
+                                android:src="@drawable/ic_check_circle"
+                                android:tint="#00695C" />
+
+                            <TextView
+                                android:id="@+id/badge_shipped"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top|end"
+                                android:background="@drawable/badge_background"
+                                android:paddingStart="6dp"
+                                android:paddingEnd="6dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:visibility="gone"
+                                android:minWidth="18dp"
+                                android:gravity="center" />
+
+                        </FrameLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -346,7 +411,7 @@
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/circular_icon_background"
                             android:padding="12dp"
-                            android:src="@drawable/ic_refresh"
+                            android:src="@drawable/ic_delete"
                             android:tint="#00695C" />
 
                         <TextView

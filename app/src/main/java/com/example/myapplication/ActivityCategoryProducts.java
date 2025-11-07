@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,14 +22,13 @@ import com.example.myapplication.network.ProductService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryProductsActivity extends AppCompatActivity implements ProductAdapter.OnProductClickListener {
+public class ActivityCategoryProducts extends AppCompatActivity implements ProductAdapter.OnProductClickListener {
     
     private RecyclerView recyclerView;
     private TextView textCategoryName;
@@ -132,12 +130,12 @@ public class CategoryProductsActivity extends AppCompatActivity implements Produ
                         textCategoryName.setText(categoryNameWithCount);
                     } else {
                         android.util.Log.e("CategoryProducts", "API Error - Code: " + apiResponse.getCode() + ", Message: " + apiResponse.getMessage());
-                        Toast.makeText(CategoryProductsActivity.this, 
+                        Toast.makeText(ActivityCategoryProducts.this,
                             "Lỗi API: " + (apiResponse.getMessage() != null ? apiResponse.getMessage() : "Unknown error"), 
                             Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(CategoryProductsActivity.this, 
+                    Toast.makeText(ActivityCategoryProducts.this,
                         "Lỗi tải sản phẩm: " + response.code(), 
                         Toast.LENGTH_SHORT).show();
                 }
@@ -145,7 +143,7 @@ public class CategoryProductsActivity extends AppCompatActivity implements Produ
             
             @Override
             public void onFailure(Call<com.example.myapplication.network.dto.ApiResponse<List<Product>>> call, Throwable t) {
-                Toast.makeText(CategoryProductsActivity.this, 
+                Toast.makeText(ActivityCategoryProducts.this,
                     "Lỗi khi tải sản phẩm: " + t.getMessage(), 
                     Toast.LENGTH_SHORT).show();
             }

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.ActivityAddressBook;
+import com.example.myapplication.R;
+
 import java.util.List;
 
 public class AddressBookAdapter extends RecyclerView.Adapter<AddressBookAdapter.AddressViewHolder> {
@@ -18,10 +21,10 @@ public class AddressBookAdapter extends RecyclerView.Adapter<AddressBookAdapter.
         void onSetDefault(int position);
     }
 
-    private final List<AddressBookActivity.AddressEntry> items;
+    private final List<ActivityAddressBook.AddressEntry> items;
     private final AddressActionListener listener;
 
-    public AddressBookAdapter(List<AddressBookActivity.AddressEntry> items, AddressActionListener listener) {
+    public AddressBookAdapter(List<ActivityAddressBook.AddressEntry> items, AddressActionListener listener) {
         this.items = items;
         this.listener = listener;
     }
@@ -35,7 +38,7 @@ public class AddressBookAdapter extends RecyclerView.Adapter<AddressBookAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
-        AddressBookActivity.AddressEntry e = items.get(position);
+        ActivityAddressBook.AddressEntry e = items.get(position);
         holder.txtName.setText(e.name);
         holder.txtPhone.setText(e.phone);
         holder.txtAddress.setText(e.address);

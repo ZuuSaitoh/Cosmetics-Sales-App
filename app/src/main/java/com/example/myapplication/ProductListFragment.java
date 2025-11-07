@@ -42,6 +42,14 @@ import retrofit2.Response;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
+import android.content.Intent;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+
 public class ProductListFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -65,6 +73,13 @@ public class ProductListFragment extends Fragment {
     private String currentSort = "Nổi bật";
     private boolean isPriceAscending = true;
 
+    private static final int PICK_IMAGE_REQUEST = 101;
+    private Uri imageUri;
+    private StorageReference storageReference;
+    private com.google.android.material.textfield.TextInputEditText etImageGlobal;
+    private androidx.cardview.widget.CardView cardMainImageGlobal;
+
+
     public ProductListFragment() {}
 
     @Nullable
@@ -72,6 +87,7 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product_list, container, false);
+        storageReference = FirebaseStorage.getInstance().getReference("product_images");
 
         recyclerView = root.findViewById(R.id.rv_products_admin);
         progressBar = root.findViewById(R.id.progress_bar);
@@ -344,15 +360,41 @@ public class ProductListFragment extends Fragment {
         final com.google.android.material.textfield.TextInputEditText etQty = view.findViewById(R.id.et_quantity);
         final com.google.android.material.textfield.TextInputEditText etBrand = view.findViewById(R.id.et_brand);
         final AutoCompleteTextView spCategory = view.findViewById(R.id.sp_category);
+        final com.google.android.material.textfield.TextInputLayout tilCategory = view.findViewById(R.id.til_category);
+        if (tilCategory != null) {
+            tilCategory.setEndIconMode(com.google.android.material.textfield.TextInputLayout.END_ICON_DROPDOWN_MENU);
+        }
+        spCategory.setThreshold(0);
+        spCategory.setInputType(0); // disable soft keyboard
+        spCategory.setOnClickListener(v2 -> spCategory.showDropDown());
+        spCategory.setOnFocusChangeListener((v2, hasFocus) -> { if (hasFocus) spCategory.showDropDown(); });
         final com.google.android.material.textfield.TextInputEditText etBrief = view.findViewById(R.id.et_brief);
         final com.google.android.material.textfield.TextInputEditText etFull = view.findViewById(R.id.et_full);
         final com.google.android.material.textfield.TextInputEditText etImage = view.findViewById(R.id.et_image);
         final TextView btnReset = view.findViewById(R.id.btn_reset);
         final TextView tvTitle = view.findViewById(R.id.tv_title);
         final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
+        final androidx.cardview.widget.CardView cardMainImage = view.findViewById(R.id.card_main_image);
 
         tvTitle.setText("THÊM SẢN PHẨM MỚI");
         btnReset.setText("ĐẶT LẠI");
+        etImageGlobal = etImage;
+        cardMainImageGlobal = cardMainImage;
+
+// Khi bấm vào ảnh chính -> mở thư viện
+        View firstChildAdd = cardMainImage.getChildAt(0);
+        View.OnClickListener openPicker = v1 -> openImagePicker();
+        cardMainImage.setOnClickListener(openPicker);
+        if (firstChildAdd instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) firstChildAdd;
+            group.setOnClickListener(openPicker);
+            if (group.getChildCount() > 0) {
+                View inner = group.getChildAt(0);
+                inner.setOnClickListener(openPicker);
+            }
+        }
+
+        // Enable image pick/upload like Add dialog (already set above)
 
         // Load categories for dropdown
         final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
@@ -445,15 +487,41 @@ public class ProductListFragment extends Fragment {
         final com.google.android.material.textfield.TextInputEditText etQty = view.findViewById(R.id.et_quantity);
         final com.google.android.material.textfield.TextInputEditText etBrand = view.findViewById(R.id.et_brand);
         final AutoCompleteTextView spCategory = view.findViewById(R.id.sp_category);
+        final com.google.android.material.textfield.TextInputLayout tilCategory = view.findViewById(R.id.til_category);
+        if (tilCategory != null) {
+            tilCategory.setEndIconMode(com.google.android.material.textfield.TextInputLayout.END_ICON_DROPDOWN_MENU);
+        }
+        spCategory.setThreshold(0);
+        spCategory.setInputType(0);
+        spCategory.setOnClickListener(v2 -> spCategory.showDropDown());
+        spCategory.setOnFocusChangeListener((v2, hasFocus) -> { if (hasFocus) spCategory.showDropDown(); });
         final com.google.android.material.textfield.TextInputEditText etBrief = view.findViewById(R.id.et_brief);
         final com.google.android.material.textfield.TextInputEditText etFull = view.findViewById(R.id.et_full);
         final com.google.android.material.textfield.TextInputEditText etImage = view.findViewById(R.id.et_image);
         final TextView btnReset = view.findViewById(R.id.btn_reset);
         final TextView tvTitle = view.findViewById(R.id.tv_title);
         final com.google.android.material.button.MaterialButton btnSave = view.findViewById(R.id.btn_save_changes);
+        final androidx.cardview.widget.CardView cardMainImage = view.findViewById(R.id.card_main_image);
 
         tvTitle.setText("CHỈNH SỬA SẢN PHẨM");
         btnReset.setText("ĐẶT LẠI");
+
+        // Enable image pick/upload similar to Add dialog
+        etImageGlobal = etImage;
+        cardMainImageGlobal = cardMainImage;
+        if (cardMainImage != null) {
+            View firstChildEdit = cardMainImage.getChildAt(0);
+            View.OnClickListener openPicker2 = v -> openImagePicker();
+            cardMainImage.setOnClickListener(openPicker2);
+            if (firstChildEdit instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) firstChildEdit;
+                group.setOnClickListener(openPicker2);
+                if (group.getChildCount() > 0) {
+                    View inner = group.getChildAt(0);
+                    inner.setOnClickListener(openPicker2);
+                }
+            }
+        }
 
         // Load categories for dropdown
         final List<Category>[] categoriesArray = new List[]{new ArrayList<>()};
@@ -509,6 +577,12 @@ public class ProductListFragment extends Fragment {
         etBrief.setText(product.getDescription());
         etFull.setText(product.getFullDescription());
         etImage.setText(product.getImageURL());
+        try {
+            String imgUrl = product.getImageURL();
+            if (imgUrl != null && !imgUrl.trim().isEmpty()) {
+                setPreviewImage(Uri.parse(imgUrl));
+            }
+        } catch (Exception ignored) {}
 
         // Reset button
         btnReset.setOnClickListener(v -> {
@@ -696,6 +770,100 @@ public class ProductListFragment extends Fragment {
     }
 
     // Removed multipart helpers; using URL input for image
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == android.app.Activity.RESULT_OK
+                && data != null && data.getData() != null) {
+
+            imageUri = data.getData();
+            // Hiển thị preview ngay lập tức bằng URI cục bộ trước khi upload
+            setPreviewImage(imageUri);
+            uploadImageToFirebase(imageUri);
+        }
+    }
+
+    private void openImagePicker() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh sản phẩm"), PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh sản phẩm"), PICK_IMAGE_REQUEST);
+        }
+    }
+
+    private void uploadImageToFirebase(Uri uri) {
+        if (uri == null) return;
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Đang tải ảnh...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        String fileName = System.currentTimeMillis() + ".jpg";
+        StorageReference fileRef = storageReference.child(fileName);
+
+        fileRef.putFile(uri)
+                .addOnSuccessListener(taskSnapshot ->
+                        fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                            progressDialog.dismiss();
+                            if (etImageGlobal != null) {
+                                etImageGlobal.setText(downloadUri.toString());
+                            }
+
+                            // Cập nhật ảnh xem trước trong card
+                            // Hiển thị preview với URL tải về (ghi đè preview tạm thời nếu có)
+                            setPreviewImage(downloadUri);
+
+                            Toast.makeText(getContext(), "Tải ảnh thành công", Toast.LENGTH_SHORT).show();
+                        }))
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(), "Lỗi tải ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void setPreviewImage(Uri uri) {
+        if (cardMainImageGlobal == null || uri == null) return;
+        View firstChild = cardMainImageGlobal.getChildAt(0);
+        if (firstChild instanceof ViewGroup) {
+            ViewGroup container = (ViewGroup) firstChild;
+            if (container.getChildCount() > 0) {
+                View maybeImageView = container.getChildAt(0);
+                if (maybeImageView instanceof ImageView) {
+                    ImageView preview = (ImageView) maybeImageView;
+                    // Làm cho ảnh lấp đầy thẻ và cắt giữa, bỏ tint icon mặc định
+                    ViewGroup.LayoutParams lp = preview.getLayoutParams();
+                    lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    preview.setLayoutParams(lp);
+                    preview.setAdjustViewBounds(false);
+                    preview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    preview.clearColorFilter();
+                    try { preview.setImageTintList(null); } catch (Throwable ignored) {}
+                    // Bỏ padding nếu LinearLayout đặt padding ảnh
+                    container.setPadding(0, 0, 0, 0);
+                    // Bỏ nền xám để hình hiển thị rõ
+                    try { container.setBackgroundColor(android.graphics.Color.TRANSPARENT); } catch (Throwable ignored) {}
+                    // Nạp ảnh
+                    com.bumptech.glide.Glide.with(preview.getContext())
+                            .load(uri)
+                            .centerCrop()
+                            .into(preview);
+                }
+            }
+        }
+    }
+
 }
 
 

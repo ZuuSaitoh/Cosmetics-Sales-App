@@ -15,6 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.auth.AuthManager;
+import com.example.myapplication.model.Conversation;
+import com.example.myapplication.network.ApiClient;
+import com.example.myapplication.network.ConversationService;
+import com.example.myapplication.network.dto.ApiResponse;
 
 public class ChatFragment extends Fragment {
     
@@ -68,6 +72,25 @@ public class ChatFragment extends Fragment {
             textWelcome.setText("Chào mừng trở lại!");
             textDescription.setText("Nhấn vào nút bên dưới để bắt đầu trò chuyện với đội ngũ hỗ trợ khách hàng của chúng tôi.");
             btnStartChat.setText("Bắt đầu chat");
+            // Kiểm tra nếu đã có hội thoại thì vào thẳng khung chat
+            Long userId = authManager.getUserId();
+            if (userId != null) {
+                ConversationService service = ApiClient.getRetrofit(requireContext()).create(ConversationService.class);
+                service.getConversationByUser(userId).enqueue(new retrofit2.Callback<ApiResponse<Conversation>>() {
+                    @Override
+                    public void onResponse(retrofit2.Call<ApiResponse<Conversation>> call, retrofit2.Response<ApiResponse<Conversation>> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                            // Đã có cuộc trò chuyện -> mở thẳng ChatActivity
+                            startActivity(new android.content.Intent(getContext(), ChatActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<ApiResponse<Conversation>> call, Throwable t) {
+                        // ignore, giữ UI bắt đầu chat
+                    }
+                });
+            }
         } else {
             // Chưa đăng nhập
             textWelcome.setText("Vui lòng đăng nhập để chat với CSKH");

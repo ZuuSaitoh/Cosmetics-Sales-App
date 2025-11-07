@@ -4,13 +4,13 @@
     <!-- App Theme -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/cosmetic_primary</item>
-        <item name="colorPrimaryVariant">@color/cosmetic_primary_dark</item>
+        <item name="colorPrimaryVariant">@color/brand_secondary</item>
         <item name="colorOnPrimary">@color/cosmetic_white</item>
         <item name="colorSecondary">@color/cosmetic_primary_light</item>
         <item name="android:windowBackground">@color/cosmetic_bg_soft</item>
         <item name="android:textColor">@color/cosmetic_text_primary</item>
-        <item name="android:navigationBarColor">@color/cosmetic_primary_dark</item>
-        <item name="android:statusBarColor">@color/cosmetic_primary_dark</item>
+        <item name="android:navigationBarColor">@color/brand_secondary</item>
+        <item name="android:statusBarColor">@color/brand_secondary</item>
     </style>
 
     <!-- Thẻ thống kê (MetricCard) -->
@@ -20,6 +20,12 @@
         <item name="cardElevation">4dp</item>
         <item name="android:padding">12dp</item>
         <item name="cardBackgroundColor">@color/cosmetic_card_bg</item>
+    </style>
+
+    <!-- Dialog Animation Style -->
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
 </resources>

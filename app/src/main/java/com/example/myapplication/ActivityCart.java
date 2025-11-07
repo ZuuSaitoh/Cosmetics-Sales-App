@@ -248,12 +248,8 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
 
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> finish());
-        btnContinueShopping.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityCart.this, ActivityMain.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
+        // Mặc định: nút này dùng để "Tiếp tục mua sắm" (về Home).
+        btnContinueShopping.setOnClickListener(v -> navigateHome());
         btnOrder.setOnClickListener(v -> proceedOrder());
         btnDeleteAll.setOnClickListener(v -> showDeleteAllConfirmation());
     }
@@ -343,6 +339,16 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
             totalSection.setVisibility(View.GONE);
             cartAdapter.updateItems(Collections.emptyList());
             selectedItems.clear();
+
+            // Khi chưa đăng nhập: nút ở giữa là "Đăng nhập"
+            if (!isLoggedIn) {
+                btnContinueShopping.setText("Đăng nhập");
+                btnContinueShopping.setOnClickListener(v -> navigateLogin());
+            } else {
+                // Đã đăng nhập nhưng giỏ trống: hiển thị "Tiếp tục mua sắm" -> về Home
+                btnContinueShopping.setText("Tiếp tục mua sắm");
+                btnContinueShopping.setOnClickListener(v -> navigateHome());
+            }
         } else {
             emptyState.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -350,7 +356,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
 
 
             cartAdapter.updateItems(items);
-            cartAdapter.setSelectedItems(selectedItems);
+            // Không còn chọn theo checkbox; tổng sẽ tính tất cả items
         }
         updateGrandTotal(items);
         
@@ -387,9 +393,7 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         double total = 0;
         if (items != null) {
             for (CartItem item : items) {
-                if (selectedItems.contains(item.getCartItemID())) {
-                    total += item.getItemTotal();
-                }
+                total += item.getItemTotal();
             }
         }
         textGrandTotal.setText(numberFormat.format((long) total) + " VND");
@@ -404,14 +408,12 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
         double total = 0;
         ArrayList<CartItem> selectedItemsList = new ArrayList<>();
         for (CartItem item : cartAdapter.getItems()) {
-            if (selectedItems.contains(item.getCartItemID())) {
-                total += item.getItemTotal();
-                selectedItemsList.add(item);
-            }
+            total += item.getItemTotal();
+            selectedItemsList.add(item);
         }
 
         if (total == 0) {
-            Toast.makeText(this, "Vui lòng chọn sản phẩm để thanh toán", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -478,19 +480,19 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
 
     @Override
     public void onSelectionChanged(CartItem item, boolean isSelected) {
-        if (item.getCartItemID() == null) return;
+        // Checkbox đã bị ẩn; bỏ qua sự kiện này
+    }
 
-        if (isSelected) {
-            selectedItems.add(item.getCartItemID());
-        } else {
-            selectedItems.remove(item.getCartItemID());
-        }
+    private void navigateHome() {
+        Intent intent = new Intent(ActivityCart.this, ActivityMain.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 
-        // Save selection state
-        saveSelectedItems();
-
-        // Update total with current cart items
-        updateGrandTotal(cartAdapter.getItems());
+    private void navigateLogin() {
+        Intent intent = new Intent(ActivityCart.this, ActivityLogin.class);
+        startActivity(intent);
     }
 
     private void showDeleteAllConfirmation() {

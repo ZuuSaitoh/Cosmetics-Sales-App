@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_menu"
+    android:padding="8dp"
+    android:elevation="8dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_product"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Sửa Product"
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:gravity="start|center_vertical"
+        app:icon="@android:drawable/ic_menu_edit"
+        app:iconTint="@color/cosmetic_primary"
+        app:iconGravity="textStart"
+        app:iconPadding="16dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginHorizontal="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_category"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Category"
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:gravity="start|center_vertical"
+        app:icon="@android:drawable/ic_menu_sort_by_size"
+        app:iconTint="@color/cosmetic_primary"
+        app:iconGravity="textStart"
+        app:iconPadding="16dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginHorizontal="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_chat"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Chat"
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:gravity="start|center_vertical"
+        app:icon="@android:drawable/ic_menu_send"
+        app:iconTint="@color/cosmetic_primary"
+        app:iconGravity="textStart"
+        app:iconPadding="16dp" />
+
+</LinearLayout>
+
+
+
