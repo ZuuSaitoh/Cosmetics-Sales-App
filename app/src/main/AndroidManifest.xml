@@ -172,7 +172,7 @@
             android:theme="@style/Theme.MyApplication" />
         
         <activity
-            android:name=".AdminActivity"
+            android:name=".ActivityAdmin"
             android:exported="false"
             android:label="Trang quản trị"
             android:theme="@style/Theme.MyApplication" />
@@ -190,14 +190,14 @@
             android:theme="@style/Theme.MyApplication" />
 
         <activity
-            android:name=".CategoryProductsActivity"
+            android:name=".ActivityCategoryProducts"
             android:exported="false"
             android:label="Sản phẩm theo danh mục"
             android:theme="@style/Theme.MyApplication" />
 
         <!-- Address Book Activity -->
         <activity
-            android:name=".AddressBookActivity"
+            android:name=".ActivityAddressBook"
             android:exported="false"
             android:label="Sổ địa chỉ"
             android:theme="@style/Theme.MyApplication" />

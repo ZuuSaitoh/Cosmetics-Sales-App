@@ -27,6 +27,9 @@ import com.example.myapplication.network.dto.PlaceOrderRequest;
 import com.example.myapplication.network.dto.PlaceOrderResponse;
 import com.example.myapplication.network.dto.NotificationDTO;
 import com.example.myapplication.notification.NotificationCreator;
+import com.example.myapplication.address.AddressPickerBottomSheet;
+import com.example.myapplication.address.AddressEntry;
+import com.example.myapplication.address.AddressStorage;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.NumberFormat;
@@ -38,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ActivityCheckout extends AppCompatActivity {
+public class ActivityCheckout extends AppCompatActivity implements AddressPickerBottomSheet.OnAddressPickedListener {
 
     private ImageButton btnBack;
     private RadioGroup rgPaymentMethod;
@@ -46,6 +49,7 @@ public class ActivityCheckout extends AppCompatActivity {
     private TextView tvReceiverName, tvReceiverPhone, tvReceiverAddress;
     private TextView tvTotalPrice;
     private MaterialButton btnCheckout;
+    private androidx.cardview.widget.CardView cardDeliveryInfo;
 
     private String selectedPaymentMethod = "COD";
     private double totalPrice = 0.0;
@@ -66,6 +70,7 @@ public class ActivityCheckout extends AppCompatActivity {
     private RecyclerView rvCheckoutItems;
     private CheckoutItemAdapter checkoutItemAdapter;
     private ArrayList<CartItem> selectedProductList = new ArrayList<>();
+    private AddressEntry selectedAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,7 @@ public class ActivityCheckout extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnCheckout = findViewById(R.id.btnCheckout);
         rvCheckoutItems = findViewById(R.id.rvCheckoutItems);
+        cardDeliveryInfo = findViewById(R.id.cardDeliveryInfo);
     }
 
     /** Lấy dữ liệu được gửi từ CartActivity */
@@ -149,6 +155,13 @@ public class ActivityCheckout extends AppCompatActivity {
         });
 
         btnCheckout.setOnClickListener(v -> showConfirmDialog());
+
+        // Open address picker bottom sheet when tapping delivery card
+        View.OnClickListener openAddressPicker = v -> {
+            AddressPickerBottomSheet sheet = new AddressPickerBottomSheet();
+            sheet.show(getSupportFragmentManager(), "address_picker");
+        };
+        cardDeliveryInfo.setOnClickListener(openAddressPicker);
     }
 
     /** Dùng data demo khi gọi API thất bại */
@@ -169,9 +182,11 @@ public class ActivityCheckout extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User user = response.body();
-                    tvReceiverName.setText(user.getUsername());
-                    tvReceiverPhone.setText(user.getPhoneNumber());
-                    tvReceiverAddress.setText(user.getAddress());
+                    if (selectedAddress == null) {
+                        tvReceiverName.setText(user.getUsername());
+                        tvReceiverPhone.setText(user.getPhoneNumber());
+                        tvReceiverAddress.setText(user.getAddress());
+                    }
                 } else {
                     Toast.makeText(ActivityCheckout.this, "Không thể tải thông tin người dùng", Toast.LENGTH_SHORT).show();
                     setDemoUserData();
@@ -202,6 +217,7 @@ public class ActivityCheckout extends AppCompatActivity {
 
     /** Hiển thị dữ liệu */
     private void loadDisplayData() {
+        preloadDefaultAddress();
         loadUserProfile();
         setupProductRecyclerView();
         tvTotalPrice.setText(formatMoney(totalPrice));
@@ -209,6 +225,38 @@ public class ActivityCheckout extends AppCompatActivity {
             Toast.makeText(this, "Không có sản phẩm nào được chọn. Vui lòng quay lại giỏ hàng.", Toast.LENGTH_LONG).show();
             finish();
         }
+    }
+
+    private void preloadDefaultAddress() {
+        java.util.List<AddressEntry> list = AddressStorage.load(this);
+        int def = AddressStorage.findDefaultIndex(list);
+        if (def >= 0) {
+            selectedAddress = list.get(def);
+            applySelectedAddressToUi();
+        }
+    }
+
+    private void applySelectedAddressToUi() {
+        if (selectedAddress != null) {
+            // Hiển thị tên người nhận
+            String name = selectedAddress.name != null && !selectedAddress.name.trim().isEmpty() 
+                    ? selectedAddress.name : "Người nhận";
+            tvReceiverName.setText(name);
+            
+            // Hiển thị số điện thoại
+            String phone = selectedAddress.phone != null && !selectedAddress.phone.trim().isEmpty() 
+                    ? selectedAddress.phone : "";
+            tvReceiverPhone.setText(phone);
+            
+            // Hiển thị địa chỉ
+            tvReceiverAddress.setText(selectedAddress.address != null ? selectedAddress.address : "");
+        }
+    }
+
+    @Override
+    public void onAddressPicked(AddressEntry entry) {
+        this.selectedAddress = entry;
+        applySelectedAddressToUi();
     }
 
     /** Định dạng tiền VND */
@@ -306,7 +354,58 @@ public class ActivityCheckout extends AppCompatActivity {
         btnCheckout.setEnabled(false);
         btnCheckout.setText("Đang xử lý...");
 
-        String billingAddress = tvReceiverAddress.getText().toString();
+        // Ưu tiên lấy địa chỉ từ selectedAddress nếu có, nếu không mới lấy từ UI
+        String billingAddress;
+        if (selectedAddress != null && selectedAddress.address != null && !selectedAddress.address.trim().isEmpty()) {
+            // Format địa chỉ đầy đủ: Tên | SĐT | Địa chỉ chi tiết
+            StringBuilder fullAddress = new StringBuilder();
+            
+            // Thêm tên người nhận
+            String name = selectedAddress.name != null && !selectedAddress.name.trim().isEmpty() 
+                    ? selectedAddress.name : "Người nhận";
+            fullAddress.append(name);
+            
+            // Thêm số điện thoại nếu có
+            if (selectedAddress.phone != null && !selectedAddress.phone.trim().isEmpty()) {
+                fullAddress.append(" | ").append(selectedAddress.phone);
+            }
+            
+            // Thêm địa chỉ chi tiết
+            fullAddress.append(" | ").append(selectedAddress.address);
+            
+            billingAddress = fullAddress.toString();
+            android.util.Log.d("Checkout", "Using selectedAddress (formatted): " + billingAddress);
+        } else {
+            // Fallback: lấy từ UI và format tương tự
+            String name = tvReceiverName.getText().toString().trim();
+            String phone = tvReceiverPhone.getText().toString().trim();
+            String address = tvReceiverAddress.getText().toString().trim();
+            
+            StringBuilder fullAddress = new StringBuilder();
+            if (!name.isEmpty()) {
+                fullAddress.append(name);
+            } else {
+                fullAddress.append("Người nhận");
+            }
+            if (!phone.isEmpty()) {
+                fullAddress.append(" | ").append(phone);
+            }
+            if (!address.isEmpty()) {
+                fullAddress.append(" | ").append(address);
+            }
+            
+            billingAddress = fullAddress.toString();
+            android.util.Log.d("Checkout", "Using UI fields (formatted): " + billingAddress);
+        }
+        
+        // Validate địa chỉ
+        if (billingAddress == null || billingAddress.trim().isEmpty() || billingAddress.trim().equals("Người nhận |")) {
+            Toast.makeText(this, "Vui lòng chọn địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
+            isPlacingOrder = false;
+            btnCheckout.setEnabled(true);
+            btnCheckout.setText("Đặt hàng");
+            return;
+        }
 
         // Extract IDs from selectedProductList
         List<Long> itemIds = new ArrayList<>();
@@ -424,7 +523,7 @@ public class ActivityCheckout extends AppCompatActivity {
         creator.notifyOrderConfirmed(userId, orderId, new NotificationCreator.OnNotificationCreatedListener() {
             @Override
             public void onSuccess(NotificationDTO notification) {
-                android.util.Log.d("Checkout", "✅ Order notification created successfully - ID: " + notification.getNotificationId());
+                android.util.Log.d("Checkout", "Order notification created successfully - ID: " + notification.getNotificationId());
                 // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
             }
             

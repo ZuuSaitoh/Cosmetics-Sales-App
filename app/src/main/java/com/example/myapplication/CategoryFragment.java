@@ -285,7 +285,7 @@ public class CategoryFragment extends Fragment {
                 public void onCategoryClick(Category category) {
                     try {
                         if (getContext() != null) {
-                            Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
+                            Intent intent = new Intent(getContext(), ActivityCategoryProducts.class);
                             intent.putExtra("category", category);
                             startActivity(intent);
                         }

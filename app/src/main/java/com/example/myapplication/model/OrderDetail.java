@@ -1,5 +1,6 @@
 package com.example.myapplication.model;
 
+import com.example.myapplication.address.AddressEntry;
 import com.google.gson.annotations.SerializedName;
 
 public class OrderDetail {

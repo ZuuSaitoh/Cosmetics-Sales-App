@@ -121,6 +121,9 @@ public class ActivityAdminMain extends AppCompatActivity {
     }
     
     private void handleLogout() {
+        // Clear cart data trước khi logout
+        authManager.clearCartOnLogout(this);
+        
         // Clear auth data
         authManager.clear();
         

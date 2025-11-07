@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class ActivityOrderDetail extends AppCompatActivity {
 
     // ========== UI COMPONENTS ==========
-    private TextView tvOrderDate, tvOrderStatus, tvAddress, tvPaymentMethod, tvTotal;
+    private TextView tvOrderDate, tvOrderStatus, tvRecipientName, tvRecipientPhone, tvAddress, tvPaymentMethod, tvTotal;
     private RecyclerView rvOrderItems;
     private MaterialButton btnCancelOrder;
 
@@ -109,6 +109,8 @@ public class ActivityOrderDetail extends AppCompatActivity {
         // Ánh xạ các view components
         tvOrderDate = findViewById(R.id.tvOrderDate);
         tvOrderStatus = findViewById(R.id.tvOrderStatus);
+        tvRecipientName = findViewById(R.id.tvRecipientName);
+        tvRecipientPhone = findViewById(R.id.tvRecipientPhone);
         tvAddress = findViewById(R.id.tvAddress);
         tvPaymentMethod = findViewById(R.id.tvPaymentMethod);
         tvTotal = findViewById(R.id.tvTotal);
@@ -222,10 +224,61 @@ public class ActivityOrderDetail extends AppCompatActivity {
         // Hiển thị trạng thái đơn hàng - Chuyển sang tiếng Việt
         String statusVietnamese = getStatusInVietnamese(order.getOrderStatus());
         tvOrderStatus.setText("Trạng thái: " + statusVietnamese);
-        
-        // Hiển thị địa chỉ giao hàng
-        tvAddress.setText(order.getBillingAddress());
-        
+
+        // Hiển thị địa chỉ giao hàng (format: Tên | SĐT | Địa chỉ)
+        String billingAddr = order.getBillingAddress();
+        if (billingAddr != null && !billingAddr.trim().isEmpty()) {
+            // Nếu địa chỉ có format "Tên | SĐT | Địa chỉ", parse và hiển thị riêng biệt
+            if (billingAddr.contains(" | ")) {
+                String[] parts = billingAddr.split(" \\| ", 3);
+                if (parts.length >= 3) {
+                    // Có đầy đủ: Tên, SĐT, Địa chỉ
+                    tvRecipientName.setText(parts[0].trim());
+                    tvRecipientPhone.setText(parts[1].trim());
+                    tvAddress.setText(parts[2].trim());
+                } else if (parts.length == 2) {
+                    // Có 2 phần: có thể là Tên | SĐT hoặc Tên | Địa chỉ
+                    // Kiểm tra phần thứ 2 có phải là số điện thoại không
+                    String part2 = parts[1].trim();
+                    if (part2.matches(".*\\d{10,11}.*") || part2.matches(".*0\\d{9}.*")) {
+                        // Phần 2 là SĐT
+                        tvRecipientName.setText(parts[0].trim());
+                        tvRecipientPhone.setText(part2);
+                        tvAddress.setText("Chưa có địa chỉ");
+                    } else {
+                        // Phần 2 là địa chỉ
+                        tvRecipientName.setText(parts[0].trim());
+                        tvRecipientPhone.setText("Chưa có SĐT");
+                        tvAddress.setText(part2);
+                    }
+                } else {
+                    // Chỉ có 1 phần: có thể là tên hoặc địa chỉ
+                    tvRecipientName.setText(parts[0].trim());
+                    tvRecipientPhone.setText("Chưa có SĐT");
+                    tvAddress.setText("Chưa có địa chỉ");
+                }
+            } else {
+                // Địa chỉ không có format đặc biệt, hiển thị toàn bộ ở địa chỉ
+                tvRecipientName.setText("Người nhận");
+                tvRecipientPhone.setText("Chưa có SĐT");
+                tvAddress.setText(billingAddr);
+            }
+        } else if (order.getCart() != null && order.getCart().getUsers() != null) {
+            // Fallback: lấy từ User profile nếu billingAddress rỗng
+            tvRecipientName.setText(order.getCart().getUsers().getUsername() != null ? 
+                    order.getCart().getUsers().getUsername() : "Người nhận");
+            tvRecipientPhone.setText(order.getCart().getUsers().getPhoneNumber() != null ? 
+                    order.getCart().getUsers().getPhoneNumber() : "Chưa có SĐT");
+            tvAddress.setText(order.getCart().getUsers().getAddress() != null ? 
+                    order.getCart().getUsers().getAddress() : "Chưa có địa chỉ");
+        } else {
+            // Không có thông tin
+            tvRecipientName.setText("Người nhận");
+            tvRecipientPhone.setText("Chưa có SĐT");
+            tvAddress.setText("Không có địa chỉ giao hàng");
+        }
+
+
         // Hiển thị phương thức thanh toán
         tvPaymentMethod.setText(order.getPaymentMethod());
         

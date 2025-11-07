@@ -30,12 +30,14 @@ public class ActivityOrderSuccess extends AppCompatActivity {
             finish();
         });
 
-        // 4. *** THAY ĐỔI Ở ĐÂY ***
-        // Thiết lập sự kiện cho nút "Xem đơn hàng"
+        // 4. Thiết lập sự kiện cho nút "Xem đơn hàng"
         btnViewOrders.setOnClickListener(v -> {
-            // Chuyển đến màn hình "Lịch sử đơn hàng"
+            // Chuyển đến màn hình "Đơn hàng đang xử lý" với filter Processing
             Intent orderHistoryIntent = new Intent(ActivityOrderSuccess.this, ActivityOrderHistory.class);
+            orderHistoryIntent.putExtra("status", "Processing");
+            orderHistoryIntent.putExtra("status_name", "Đang xử lý");
             startActivity(orderHistoryIntent);
+            finish(); // Đóng màn hình success sau khi chuyển
         });
     }
 
