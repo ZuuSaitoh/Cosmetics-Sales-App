@@ -98,8 +98,15 @@
 
         <activity
             android:name=".VNPayActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyApplication" />
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="app" android:host="vnpay" android:pathPrefix="/payment/callback"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ActivityOrderDetail"
