@@ -154,6 +154,103 @@
             app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
             app:layout_constraintTop_toBottomOf="@id/rememberMeCheckBox" />
 
+        <TextView
+            android:id="@+id/dividerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Hoặc tiếp tục với"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="@id/dividerText"
+            app:layout_constraintEnd_toStartOf="@id/dividerText"
+            app:layout_constraintStart_toStartOf="@id/loginButton"
+            app:layout_constraintTop_toTopOf="@id/dividerText" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="@id/dividerText"
+            app:layout_constraintEnd_toEndOf="@id/loginButton"
+            app:layout_constraintStart_toEndOf="@id/dividerText"
+            app:layout_constraintTop_toTopOf="@id/dividerText" />
+
+        <LinearLayout
+            android:id="@+id/socialLoginLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerText">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/facebookLoginButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="#1877F2">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_facebook"
+                    android:contentDescription="Facebook Login" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/googleLoginButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@android:color/white">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_google"
+                    android:contentDescription="Google Login" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/appleLoginButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@android:color/black">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_apple"
+                    android:tint="@android:color/white"
+                    android:contentDescription="Apple Login" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,7 +258,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginButton"
+            app:layout_constraintTop_toBottomOf="@id/socialLoginLayout"
             app:layout_constraintVertical_bias="0.5">
 
             <TextView

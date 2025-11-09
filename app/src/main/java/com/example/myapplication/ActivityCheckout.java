@@ -40,6 +40,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import okhttp3.ResponseBody;
 
 public class ActivityCheckout extends AppCompatActivity implements AddressPickerBottomSheet.OnAddressPickedListener {
 
@@ -476,9 +477,31 @@ public class ActivityCheckout extends AppCompatActivity implements AddressPicker
                     }
                 } else {
                     // Xử lý lỗi HTTP
-                    Toast.makeText(ActivityCheckout.this,
-                            "Đặt hàng thất bại. (HTTP " + response.code() + ")",
-                            Toast.LENGTH_SHORT).show();
+                    String errorMessage = "Đặt hàng thất bại. (HTTP " + response.code() + ")";
+                    int errorCode = response.code();
+                    
+                    // Kiểm tra nếu lỗi là HTTP 400 và có thể liên quan đến địa chỉ
+                    if (errorCode == 400) {
+                        try {
+                            okhttp3.ResponseBody errorBody = response.errorBody();
+                            if (errorBody != null) {
+                                String errorBodyString = errorBody.string();
+                                String errorBodyLower = errorBodyString.toLowerCase();
+                                
+                                // Kiểm tra nếu lỗi liên quan đến địa chỉ
+                                if (errorBodyLower.contains("address") || 
+                                    errorBodyLower.contains("địa chỉ") ||
+                                    errorBodyLower.contains("billing") ||
+                                    (errorBodyLower.contains("address") && (errorBodyLower.contains("required") || errorBodyLower.contains("missing") || errorBodyLower.contains("empty")))) {
+                                    errorMessage = "Vui lòng nhập địa chỉ";
+                                }
+                            }
+                        } catch (Exception e) {
+                            // Nếu không đọc được error body, sử dụng message mặc định
+                        }
+                    }
+                    
+                    Toast.makeText(ActivityCheckout.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
