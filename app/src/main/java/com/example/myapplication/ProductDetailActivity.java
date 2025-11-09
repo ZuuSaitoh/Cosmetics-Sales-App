@@ -564,7 +564,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                     // Chạy animation bay vào giỏ hàng
                     runCartAnimation();
                     
-                    Toast.makeText(ProductDetailActivity.this, "Đã cập nhật số lượng sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
                     updateCartBadge();
                 } else {
                     String msg = "Cập nhật số lượng thất bại (" + response.code() + ")";

@@ -56,21 +56,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="bottom"
-                android:layout_marginTop="12dp"> <TextView
-                android:id="@+id/textPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 VND"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#DE0000"/>
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 VND"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="#DE0000"/>
+
+                        <TextView
+                            android:id="@+id/textTotalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 VND"
+                            android:textSize="10sp"
+                            android:textColor="#757575"
+                            android:layout_marginTop="2dp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -120,6 +143,8 @@
                         android:insetBottom="0dp"
                         android:padding="0dp"
                         style="@style/Widget.Material3.Button.IconButton" />
+
+                </LinearLayout>
 
                 </LinearLayout>
 
