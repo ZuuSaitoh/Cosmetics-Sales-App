@@ -262,8 +262,10 @@ public class AdminNotificationFragment extends Fragment {
         Log.d(TAG, "Message: " + message);
         Log.d(TAG, "Type (UI only): " + notificationType);
         
-        // Create request - CHỈ GỬI userID và message theo API spec
-        NotificationRequest request = new NotificationRequest(userId, message, notificationType);
+        // ⚠️ Backend API yêu cầu userID, message và title (bắt buộc)
+        // Tạo title từ message (lấy 50 ký tự đầu hoặc toàn bộ nếu ngắn hơn)
+        String title = message.length() > 50 ? message.substring(0, 50) + "..." : message;
+        NotificationRequest request = new NotificationRequest(userId, message, title);
         
         // Debug: Log request với Gson để thấy exact JSON
         com.google.gson.Gson gson = new com.google.gson.Gson();
@@ -273,6 +275,7 @@ public class AdminNotificationFragment extends Fragment {
         Log.d(TAG, "Body: " + requestJson);
         Log.d(TAG, "UserID value: " + request.getUserId());
         Log.d(TAG, "Message value: " + request.getMessage());
+        Log.d(TAG, "Title value: " + request.getTitle());
         Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         
         // Call API

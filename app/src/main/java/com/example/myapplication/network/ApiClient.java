@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -36,10 +38,14 @@ public final class ApiClient {
                             .writeTimeout(30, TimeUnit.SECONDS)
                             .build();
 
+                    // Tạo Gson instance (mặc định Gson đã không serialize null values)
+                    Gson gson = new GsonBuilder()
+                            .create();
+                    
                     retrofitInstance = new Retrofit.Builder()
                             .baseUrl(BuildConfig.BASE_URL)
                             .client(client)
-                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
                 }
             }
