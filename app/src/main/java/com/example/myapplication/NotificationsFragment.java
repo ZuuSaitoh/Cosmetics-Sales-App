@@ -98,6 +98,16 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
         }
     }
     
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Tự động refresh notifications mỗi khi user quay lại tab này
+        if (currentUserId != null) {
+            Log.d(TAG, "🔄 onResume - Auto refreshing notifications");
+            loadNotificationsFromAPI();
+        }
+    }
+    
     private void initViews(View view) {
         recyclerView = view.findViewById(R.id.recycler_notifications);
         emptyStateView = view.findViewById(R.id.text_empty);
@@ -712,15 +722,5 @@ public class NotificationsFragment extends Fragment implements NotificationAdapt
                 }
             }
         });
-    }
-    
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Refresh notifications khi fragment được hiển thị lại
-        if (currentUserId != null) {
-            Log.d(TAG, "Fragment resumed - refreshing notifications");
-            loadNotificationsFromAPI();
-        }
     }
 }

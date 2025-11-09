@@ -29,6 +29,10 @@ public class NotificationRequest {
     public NotificationRequest(Long userId, String message) {
         this.userId = userId;
         this.message = message;
+        // Set các field không cần thiết thành null để Gson không serialize
+        this.notificationType = null;
+        this.dataPayload = null;
+        this.title = null;
     }
     
     // Constructor đầy đủ cho system notifications

@@ -546,14 +546,20 @@ public class ActivityCheckout extends AppCompatActivity implements AddressPicker
         creator.notifyOrderConfirmed(userId, orderId, new NotificationCreator.OnNotificationCreatedListener() {
             @Override
             public void onSuccess(NotificationDTO notification) {
-                android.util.Log.d("Checkout", "Order notification created successfully - ID: " + notification.getNotificationId());
-                // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
+                android.util.Log.d("Checkout", "✅ Order notification created successfully - ID: " + notification.getNotificationId());
+                // Show toast để confirm notification đã được tạo
+                Toast.makeText(ActivityCheckout.this, 
+                    "💬 Thông báo đơn hàng đã được tạo!", 
+                    Toast.LENGTH_SHORT).show();
             }
             
             @Override
             public void onError(String error) {
-                // Silent fail - không ảnh hưởng UX chính
-                android.util.Log.e("Checkout", "Failed to create order notification: " + error);
+                // Log lỗi và show toast để debug
+                android.util.Log.e("Checkout", "❌ Failed to create order notification: " + error);
+                Toast.makeText(ActivityCheckout.this, 
+                    "⚠️ Lỗi tạo thông báo: " + error, 
+                    Toast.LENGTH_SHORT).show();
             }
         });
     }
