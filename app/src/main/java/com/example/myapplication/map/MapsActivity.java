@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.mapbox.geojson.Point;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.vietmap.vietmapsdk.Vietmap;
 import vn.vietmap.vietmapsdk.annotations.Marker;
@@ -42,6 +44,9 @@ public class MapsActivity extends AppCompatActivity {
     private VietMapGL vietMapGL;
     private MapsManager mapsManager;
     private MapsNavigationManager mapsNavigationManager;
+    private Button btnZoomIn;
+    private Button btnZoomOut;
+    private double currentZoomLevel = 13.0; // Lưu zoom level hiện tại
 
     private PermissionsManager permissionsManager;
     private TextToSpeech textToSpeech;
@@ -51,7 +56,52 @@ public class MapsActivity extends AppCompatActivity {
 
 
     private LatLng userLatLng; // ⚠️ Lưu vị trí người dùng để dùng khi nhấn nút
-    private static final LatLng STORE_LOCATION = new LatLng(10.976238345142892, 106.61804099635049);
+    
+    // ✅ Danh sách các cửa hàng
+    private static class Store {
+        LatLng location;
+        String name;
+        String address;
+        int[] images; // Danh sách ảnh cho popup
+        
+        Store(LatLng location, String name, String address, int[] images) {
+            this.location = location;
+            this.name = name;
+            this.address = address;
+            this.images = images;
+        }
+    }
+    
+    // ✅ 4 vị trí cửa hàng với ảnh khác nhau cho mỗi cửa hàng
+    private static final Store[] STORES = {
+        new Store(
+            new LatLng(10.976238345142892, 106.61804099635049), 
+            "Cửa hàng Hòa Phú", 
+            "Hòa Phú, Củ Chi, Hồ Chí Minh, Việt Nam",
+            new int[]{R.drawable.store1, R.drawable.store2, R.drawable.store3} // Ảnh cho cửa hàng 1
+        ),
+        new Store(
+            new LatLng(10.8231, 106.6297), 
+            "Cửa hàng Quận 1", 
+            "Đường Nguyễn Huệ, Quận 1, Hồ Chí Minh, Việt Nam",
+            new int[]{R.drawable.store2, R.drawable.store3, R.drawable.store1} // Ảnh cho cửa hàng 2
+        ),
+        new Store(
+            new LatLng(10.762622, 106.660172), 
+            "Cửa hàng Quận 3", 
+            "Đường Lê Văn Sỹ, Quận 3, Hồ Chí Minh, Việt Nam",
+            new int[]{R.drawable.store3, R.drawable.store1, R.drawable.store2} // Ảnh cho cửa hàng 3
+        ),
+        new Store(
+            new LatLng(10.8412, 106.8098), 
+            "Cửa hàng Quận 7", 
+            "Đường Nguyễn Thị Thập, Quận 7, Hồ Chí Minh, Việt Nam",
+            new int[]{R.drawable.store1, R.drawable.store3, R.drawable.store2} // Ảnh cho cửa hàng 4
+        )
+    };
+    
+    // ✅ Map để lưu marker và cửa hàng tương ứng
+    private Map<Marker, Store> markerStoreMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +111,13 @@ public class MapsActivity extends AppCompatActivity {
 
         mapView = findViewById(R.id.vmMapView);
         mapView.onCreate(savedInstanceState);
+        
+        // ✅ Ánh xạ các nút zoom
+        btnZoomIn = findViewById(R.id.btnZoomIn);
+        btnZoomOut = findViewById(R.id.btnZoomOut);
+        
+        // ✅ Thiết lập click listeners cho các nút zoom
+        setupZoomControls();
 
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -114,43 +171,83 @@ public class MapsActivity extends AppCompatActivity {
         mapsManager.initLocationEngine();
         mapsManager.enableLocationComponent(style);
 
-        // 📍 Thêm marker cửa hàng
-        Marker storeMarker = mapsManager.addMarker(STORE_LOCATION);
+        // 📍 Thêm marker cho tất cả các cửa hàng
+        markerStoreMap.clear();
+        for (Store store : STORES) {
+            Marker marker = mapsManager.addMarker(store.location);
+            markerStoreMap.put(marker, store);
+        }
 
         // ✅ Lấy vị trí người dùng và hiển thị camera
         mapsManager.getUserLocation(location -> {
             if (location != null) {
                 userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                // Hiển thị vùng chứa user + store
-                vn.vietmap.vietmapsdk.geometry.LatLngBounds bounds =
+                // Hiển thị vùng chứa user + tất cả các cửa hàng
+                vn.vietmap.vietmapsdk.geometry.LatLngBounds.Builder boundsBuilder =
                         new vn.vietmap.vietmapsdk.geometry.LatLngBounds.Builder()
-                                .include(userLatLng)
-                                .include(STORE_LOCATION)
-                                .build();
+                                .include(userLatLng);
+                
+                // Thêm tất cả các cửa hàng vào bounds
+                for (Store store : STORES) {
+                    boundsBuilder.include(store.location);
+                }
+                
+                vn.vietmap.vietmapsdk.geometry.LatLngBounds bounds = boundsBuilder.build();
 
                 vietMapGL.animateCamera(
                         vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngBounds(bounds, 100)
                 );
+                // Cập nhật zoom level (bounds sẽ tự động tính zoom phù hợp)
+                currentZoomLevel = 13.0;
             } else {
+                // Nếu không có vị trí người dùng, zoom vào cửa hàng đầu tiên
+                currentZoomLevel = 13.0;
                 vietMapGL.moveCamera(
-                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORE_LOCATION, 13.0)
+                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.newLatLngZoom(STORES[0].location, currentZoomLevel)
                 );
                 Toast.makeText(MapsActivity.this, "Không thể lấy vị trí người dùng", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // ✅ Gán listener click (phải nằm trong này để đảm bảo storeMarker đã được tạo)
+        // ✅ Gán listener click cho tất cả các marker
         vietMapGL.setOnMarkerClickListener(marker -> {
-            // Thêm kiểm tra marker != null để an toàn
-            if (marker != null && marker.equals(storeMarker)) {
-                showStoreBottomSheet();
+            if (marker != null && markerStoreMap.containsKey(marker)) {
+                Store selectedStore = markerStoreMap.get(marker);
+                showStoreBottomSheet(selectedStore);
                 return true;
             }
             return false;
         });
     }
 
+
+    /**
+     * ✅ Thiết lập các nút zoom controls
+     */
+    private void setupZoomControls() {
+        btnZoomIn.setOnClickListener(v -> {
+            if (vietMapGL != null) {
+                // Tăng zoom level lên 1
+                currentZoomLevel = Math.min(currentZoomLevel + 1, 20.0); // Giới hạn zoom tối đa là 20
+                vietMapGL.animateCamera(
+                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.zoomTo(currentZoomLevel),
+                        300
+                );
+            }
+        });
+
+        btnZoomOut.setOnClickListener(v -> {
+            if (vietMapGL != null) {
+                // Giảm zoom level xuống 1
+                currentZoomLevel = Math.max(currentZoomLevel - 1, 3.0); // Giới hạn zoom tối thiểu là 3
+                vietMapGL.animateCamera(
+                        vn.vietmap.vietmapsdk.camera.CameraUpdateFactory.zoomTo(currentZoomLevel),
+                        300
+                );
+            }
+        });
+    }
 
     // ⚠️ Check quyền truy cập vị trí
     private boolean checkPermission() {
@@ -184,7 +281,7 @@ public class MapsActivity extends AppCompatActivity {
     }
 
 
-    private void showStoreBottomSheet() {
+    private void showStoreBottomSheet(Store store) {
         // --- Tạo BottomSheetDialog ---
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.dialog_store_info);
@@ -197,16 +294,16 @@ public class MapsActivity extends AppCompatActivity {
 
         // --- Gán thông tin cửa hàng ---
         if (txtStoreAddress != null) {
-            txtStoreAddress.setText("Hòa Phú, Củ Chi, Hồ Chí Minh, Việt Nam");
+            txtStoreAddress.setText(store.address);
         }
 
-        // --- Danh sách ảnh cửa hàng ---
-        int[] imageRes = {R.drawable.store1, R.drawable.store2, R.drawable.store3};
+        // --- Danh sách ảnh cửa hàng (sử dụng ảnh riêng cho từng cửa hàng) ---
         if (recyclerView != null) {
             recyclerView.setLayoutManager(
                     new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             );
-            recyclerView.setAdapter(new StoreImageAdapter(imageRes));
+            // Sử dụng ảnh của cửa hàng được chọn
+            recyclerView.setAdapter(new StoreImageAdapter(store.images));
         }
 
         // ✅ Khi popup mở ra, tính trước khoảng cách thực tế
@@ -220,8 +317,8 @@ public class MapsActivity extends AppCompatActivity {
                             userLatLng.getLatitude()
                     ),
                     com.mapbox.geojson.Point.fromLngLat(
-                            STORE_LOCATION.getLongitude(),
-                            STORE_LOCATION.getLatitude()
+                            store.location.getLongitude(),
+                            store.location.getLatitude()
                     ),
                     distanceMeters -> runOnUiThread(() -> {
                         distance = distanceMeters; // ✅ lưu lại giá trị
@@ -255,8 +352,8 @@ public class MapsActivity extends AppCompatActivity {
                                 userLatLng.getLatitude()
                         ),
                         com.mapbox.geojson.Point.fromLngLat(
-                                STORE_LOCATION.getLongitude(),
-                                STORE_LOCATION.getLatitude()
+                                store.location.getLongitude(),
+                                store.location.getLatitude()
                         ),
                         null // không cần callback nữa
                 );
