@@ -186,10 +186,11 @@ public class ActivitySignUp extends AppCompatActivity {
             return false;
         }
 
-        if (email.isEmpty()) {
-            emailInputLayout.setError("Vui lòng nhập email");
-            return false;
-        }
+        // Email là tùy chọn, không bắt buộc
+        // if (email.isEmpty()) {
+        //     emailInputLayout.setError("Vui lòng nhập email");
+        //     return false;
+        // }
 
         if (password.isEmpty()) {
             passwordInputLayout.setError("Vui lòng nhập mật khẩu");

@@ -87,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Email"
+            android:hint="Email (Tùy chọn)"
             app:endIconDrawable="@drawable/ic_check_circle"
             app:endIconMode="custom"
             app:endIconTint="#00C853"
