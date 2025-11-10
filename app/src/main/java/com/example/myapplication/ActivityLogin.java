@@ -44,6 +44,7 @@ public class ActivityLogin extends AppCompatActivity {
     // --- SERVICES & MANAGERS ---
     private AuthService authService;
     private AuthManager authManager;
+    private static final int REQUEST_CODE_SIGNUP = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,33 @@ public class ActivityLogin extends AppCompatActivity {
         });
 
         setupClickListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Clear username và password khi quay lại từ sign up
+        // (Khi đăng ký thành công, ActivityLogin sẽ được tạo mới nên các trường sẽ tự động trống)
+        // onActivityResult sẽ xử lý trường hợp quay lại bằng back button
+    }
+
+    /**
+     * Xóa tất cả các trường nhập liệu (username và password)
+     */
+    private void clearInputFields() {
+        if (fullNameEditText != null) {
+            fullNameEditText.setText("");
+        }
+        if (passwordEditText != null) {
+            passwordEditText.setText("");
+        }
+        // Xóa các lỗi validation nếu có
+        if (fullNameInputLayout != null) {
+            fullNameInputLayout.setError(null);
+        }
+        if (passwordInputLayout != null) {
+            passwordInputLayout.setError(null);
+        }
     }
 
     private void initializeViews() {
@@ -96,8 +124,10 @@ public class ActivityLogin extends AppCompatActivity {
         });
 
         signUpTextView.setOnClickListener(v -> {
+            // Clear input fields trước khi chuyển sang sign up
+            clearInputFields();
             Intent intent = new Intent(ActivityLogin.this, ActivitySignUp.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_SIGNUP);
         });
 
         backButton.setOnClickListener(v -> onBackPressed());
@@ -260,5 +290,14 @@ public class ActivityLogin extends AppCompatActivity {
                 Toast.makeText(ActivityLogin.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Khi quay lại từ sign up, clear input fields
+        if (requestCode == REQUEST_CODE_SIGNUP) {
+            clearInputFields();
+        }
     }
 }
