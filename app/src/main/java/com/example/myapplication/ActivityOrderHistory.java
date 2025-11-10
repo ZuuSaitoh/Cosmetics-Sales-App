@@ -23,6 +23,7 @@ import com.example.myapplication.network.dto.ApiResponse;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -256,6 +257,9 @@ public class ActivityOrderHistory extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         if (response.isSuccessful() && response.body() != null) {
                             List<Order> orders = response.body().getResult();
+                            if (orders != null) {
+                                Collections.sort(orders, (o1, o2) -> Long.compare(o2.getOrderID(), o1.getOrderID()));
+                            }
                             if (filterStatus != null && !filterStatus.isEmpty()) {
                                 List<Order> filtered = new ArrayList<>();
                                 if (orders != null) {
