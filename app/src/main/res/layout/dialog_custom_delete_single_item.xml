@@ -31,11 +31,12 @@
 
     <!-- Message -->
     <TextView
+        android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="24dp"
-        android:text="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm trong giỏ hàng?"
+        android:text="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
         android:textColor="#666666"
         android:textSize="16sp"
         android:gravity="center"
@@ -80,3 +81,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

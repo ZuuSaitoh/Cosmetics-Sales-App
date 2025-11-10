@@ -93,6 +93,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         h.title.setText(item.getProduct().getName());
         // Hiển thị giá niêm yết (không phải total)
         h.price.setText(formatPrice(item.getProduct().getPrice()));
+        // Hiển thị giá tổng (giá gốc × số lượng)
+        double totalPrice = item.getProduct().getPrice() * item.getQuantity();
+        h.totalPrice.setText(formatPrice(totalPrice));
         h.quantity.setText(String.valueOf(item.getQuantity()));
 
         // Cập nhật hình ảnh sản phẩm
@@ -155,7 +158,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title, price;
+        final TextView title, price, totalPrice;
         final android.widget.EditText quantity;
         final android.widget.CheckBox checkSelect;
         final MaterialButton btnPlus, btnMinus, btnRemove;
@@ -165,8 +168,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             image = itemView.findViewById(R.id.imageProduct);
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
+            totalPrice = itemView.findViewById(R.id.textTotalPrice);
             quantity = itemView.findViewById(R.id.textQty);
-//            total = itemView.findViewById(R.id.textTotal);
             btnPlus = itemView.findViewById(R.id.btn_plus);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnRemove = itemView.findViewById(R.id.btn_remove);

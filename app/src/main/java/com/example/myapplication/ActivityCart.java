@@ -228,22 +228,32 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
     }
 
     private void showDeleteConfirmDialog(CartItem itemToDelete, int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Xác nhận xóa");
-        builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm \"" + itemToDelete.getProduct().getName() + "\" khỏi giỏ hàng?");
-
-        builder.setPositiveButton("Xóa", (dialog, which) -> {
-            // Thực hiện xóa item
-            deleteCartItem(itemToDelete.getCartItemID(), itemToDelete);
-        });
-
-        builder.setNegativeButton("Hủy", (dialog, which) -> {
+        Dialog dialog = new Dialog(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_custom_delete_single_item, null);
+        
+        TextView tvMessage = dialogView.findViewById(R.id.tv_message);
+        Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
+        Button btnConfirmDelete = dialogView.findViewById(R.id.btn_confirm_delete);
+        
+        // Set message với tên sản phẩm
+        tvMessage.setText("Bạn có chắc chắn muốn xóa sản phẩm \"" + itemToDelete.getProduct().getName() + "\" khỏi giỏ hàng?");
+        
+        btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
             // Khôi phục item trong adapter
             cartAdapter.notifyItemChanged(position);
         });
-
-        builder.setCancelable(false);
-        builder.show();
+        
+        btnConfirmDelete.setOnClickListener(v -> {
+            dialog.dismiss();
+            // Thực hiện xóa item
+            deleteCartItem(itemToDelete.getCartItemID(), itemToDelete);
+        });
+        
+        dialog.setContentView(dialogView);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private void setupClickListeners() {
@@ -448,7 +458,6 @@ public class ActivityCart extends AppCompatActivity implements CartAdapter.OnIte
                 if (response.isSuccessful()) {
                     // Cập nhật CartManager để badge hiển thị đúng
                     CartManager.getInstance().updateQuantity(item.getProduct(), newQuantity);
-                    Toast.makeText(ActivityCart.this, "Đã cập nhật số lượng cho " + item.getProduct().getName(), Toast.LENGTH_SHORT).show();
                     loadCartData(); // Reload to update the cart
                 } else {
                     android.util.Log.e("CartActivity", "Change quantity failed with code: " + response.code());

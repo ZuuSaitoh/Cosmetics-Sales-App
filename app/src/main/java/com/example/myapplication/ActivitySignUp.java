@@ -156,8 +156,9 @@ public class ActivitySignUp extends AppCompatActivity {
                     // Đóng màn hình đăng ký và quay lại màn hình đăng nhập
                     finish();
                 } else {
-                    // Xử lý lỗi từ server, ví dụ: email đã tồn tại
-                    Toast.makeText(ActivitySignUp.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                    // Xử lý lỗi từ server với thông báo cụ thể
+                    String errorMessage = getErrorMessage(response);
+                    Toast.makeText(ActivitySignUp.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -208,5 +209,66 @@ public class ActivitySignUp extends AppCompatActivity {
         // Bạn có thể thêm các kiểm tra phức tạp hơn ở đây (ví dụ: độ dài mật khẩu, định dạng email)
 
         return true;
+    }
+
+    /**
+     * Đọc và phân tích error message từ response để hiển thị thông báo cụ thể.
+     * @param response Response từ API
+     * @return Thông báo lỗi cụ thể
+     */
+    private String getErrorMessage(Response<RegisterResponse> response) {
+        String defaultMessage = "Đăng ký thất bại. Vui lòng thử lại.";
+        
+        try {
+            if (response.errorBody() != null) {
+                String errorBody = response.errorBody().string();
+                String errorBodyLower = errorBody.toLowerCase();
+                
+                // Kiểm tra các trường hợp lỗi cụ thể
+                if (errorBodyLower.contains("email") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    return "Email đã tồn tại. Vui lòng sử dụng email khác.";
+                }
+                
+                if (errorBodyLower.contains("tài khoản") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    return "Tài khoản đã tồn tại. Vui lòng sử dụng tên đăng nhập khác.";
+                }
+                
+                if (errorBodyLower.contains("username") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    return "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
+                }
+                
+                // Thử extract message từ JSON nếu có
+                if (errorBody.contains("\"message\"")) {
+                    try {
+                        int messageStart = errorBody.indexOf("\"message\":\"") + 11;
+                        int messageEnd = errorBody.indexOf("\"", messageStart);
+                        if (messageStart > 10 && messageEnd > messageStart) {
+                            String extractedMsg = errorBody.substring(messageStart, messageEnd);
+                            if (!extractedMsg.isEmpty()) {
+                                return extractedMsg;
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Nếu không parse được, tiếp tục với logic khác
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Nếu không đọc được error body, sử dụng message mặc định
+        }
+        
+        return defaultMessage;
     }
 }

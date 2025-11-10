@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageButton;
@@ -37,6 +38,8 @@ public class ActivityLogin extends AppCompatActivity {
     private TextView signUpTextView;
     private TextView forgotPasswordTextView;
     private ImageButton backButton;
+    // Social login buttons
+    private View facebookLoginButton, googleLoginButton, appleLoginButton;
 
     // --- SERVICES & MANAGERS ---
     private AuthService authService;
@@ -74,6 +77,11 @@ public class ActivityLogin extends AppCompatActivity {
         signUpTextView = findViewById(R.id.signUpText);
         forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
         backButton = findViewById(R.id.backButton);
+        
+        // Ánh xạ các nút social login
+        facebookLoginButton = findViewById(R.id.facebookLoginButton);
+        googleLoginButton = findViewById(R.id.googleLoginButton);
+        appleLoginButton = findViewById(R.id.appleLoginButton);
     }
 
     private void setupClickListeners() {
@@ -98,6 +106,25 @@ public class ActivityLogin extends AppCompatActivity {
             Intent intent = new Intent(ActivityLogin.this, ActivityForgotPassword.class);
             startActivity(intent);
         });
+
+        // Sự kiện click cho các nút social login
+        if (facebookLoginButton != null) {
+            facebookLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng nhập Facebook đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (googleLoginButton != null) {
+            googleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng nhập Google đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (appleLoginButton != null) {
+            appleLoginButton.setOnClickListener(v -> {
+                Toast.makeText(this, "Tính năng đăng nhập Apple đang được phát triển", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private boolean validateInput(String fullName, String password) {

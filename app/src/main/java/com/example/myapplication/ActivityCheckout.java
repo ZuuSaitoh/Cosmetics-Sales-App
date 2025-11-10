@@ -40,6 +40,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import okhttp3.ResponseBody;
 
 public class ActivityCheckout extends AppCompatActivity implements AddressPickerBottomSheet.OnAddressPickedListener {
 
@@ -476,9 +477,31 @@ public class ActivityCheckout extends AppCompatActivity implements AddressPicker
                     }
                 } else {
                     // Xử lý lỗi HTTP
-                    Toast.makeText(ActivityCheckout.this,
-                            "Đặt hàng thất bại. (HTTP " + response.code() + ")",
-                            Toast.LENGTH_SHORT).show();
+                    String errorMessage = "Đặt hàng thất bại. (HTTP " + response.code() + ")";
+                    int errorCode = response.code();
+                    
+                    // Kiểm tra nếu lỗi là HTTP 400 và có thể liên quan đến địa chỉ
+                    if (errorCode == 400) {
+                        try {
+                            okhttp3.ResponseBody errorBody = response.errorBody();
+                            if (errorBody != null) {
+                                String errorBodyString = errorBody.string();
+                                String errorBodyLower = errorBodyString.toLowerCase();
+                                
+                                // Kiểm tra nếu lỗi liên quan đến địa chỉ
+                                if (errorBodyLower.contains("address") || 
+                                    errorBodyLower.contains("địa chỉ") ||
+                                    errorBodyLower.contains("billing") ||
+                                    (errorBodyLower.contains("address") && (errorBodyLower.contains("required") || errorBodyLower.contains("missing") || errorBodyLower.contains("empty")))) {
+                                    errorMessage = "Vui lòng nhập địa chỉ";
+                                }
+                            }
+                        } catch (Exception e) {
+                            // Nếu không đọc được error body, sử dụng message mặc định
+                        }
+                    }
+                    
+                    Toast.makeText(ActivityCheckout.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -523,14 +546,20 @@ public class ActivityCheckout extends AppCompatActivity implements AddressPicker
         creator.notifyOrderConfirmed(userId, orderId, new NotificationCreator.OnNotificationCreatedListener() {
             @Override
             public void onSuccess(NotificationDTO notification) {
-                android.util.Log.d("Checkout", "Order notification created successfully - ID: " + notification.getNotificationId());
-                // Không cần show gì cho user - notification sẽ hiển thị trong NotificationsFragment
+                android.util.Log.d("Checkout", "✅ Order notification created successfully - ID: " + notification.getNotificationId());
+                // Show toast để confirm notification đã được tạo
+                Toast.makeText(ActivityCheckout.this, 
+                    "💬 Thông báo đơn hàng đã được tạo!", 
+                    Toast.LENGTH_SHORT).show();
             }
             
             @Override
             public void onError(String error) {
-                // Silent fail - không ảnh hưởng UX chính
-                android.util.Log.e("Checkout", "Failed to create order notification: " + error);
+                // Log lỗi và show toast để debug
+                android.util.Log.e("Checkout", "❌ Failed to create order notification: " + error);
+                Toast.makeText(ActivityCheckout.this, 
+                    "⚠️ Lỗi tạo thông báo: " + error, 
+                    Toast.LENGTH_SHORT).show();
             }
         });
     }
