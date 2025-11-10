@@ -53,6 +53,44 @@ public class ChatActivity extends AppCompatActivity {
     private Date lastMessageTimestamp = null;
     private Set<Long> addedMessageIds = new HashSet<>(); // Track message IDs đã thêm để tránh duplicate
     
+    /**
+     * Parse timestamp từ string ISO 8601, hỗ trợ nhiều format khác nhau
+     * @param timestampString String timestamp từ server
+     * @return Date object hoặc null nếu parse lỗi
+     */
+    private Date parseTimestamp(String timestampString) {
+        if (timestampString == null || timestampString.isEmpty()) {
+            return null;
+        }
+        
+        // Thử các format khác nhau
+        String[] formats = {
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",  // ISO 8601 với timezone (ví dụ: 2025-11-10T17:02:38.524Z)
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // ISO 8601 với Z literal
+            "yyyy-MM-dd'T'HH:mm:ss.SSS",    // ISO 8601 không có timezone
+            "yyyy-MM-dd'T'HH:mm:ssX",       // ISO 8601 không có milliseconds
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",     // ISO 8601 không có milliseconds với Z
+            "yyyy-MM-dd'T'HH:mm:ss"         // ISO 8601 cơ bản
+        };
+        
+        for (String format : formats) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+                sdf.setLenient(false);
+                Date date = sdf.parse(timestampString);
+                if (date != null) {
+                    android.util.Log.d("ChatActivity", "Successfully parsed timestamp: " + timestampString + " with format: " + format + " -> " + date);
+                    return date;
+                }
+            } catch (Exception e) {
+                // Thử format tiếp theo
+            }
+        }
+        
+        android.util.Log.e("ChatActivity", "Failed to parse timestamp: " + timestampString);
+        return null;
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,31 +198,12 @@ public class ChatActivity extends AppCompatActivity {
                         continue;
                     }
                     
-                    Date messageDate;
-                    try {
-                        String sentAtStr = dto.getSentAt();
-                        // Nếu sentAt null hoặc rỗng, sử dụng createdAt từ conversation
-                        if (sentAtStr == null || sentAtStr.isEmpty()) {
-                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
-                                sentAtStr = dto.getConversation().getCreatedAt();
-                            }
-                        }
-                        if (sentAtStr != null && !sentAtStr.isEmpty()) {
-                            messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(sentAtStr);
-                        } else {
-                            messageDate = new Date();
-                        }
-                    } catch (Exception e) {
-                        // Nếu parse sentAt thất bại, thử dùng createdAt từ conversation
-                        try {
-                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
-                                messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getConversation().getCreatedAt());
-                            } else {
-                                messageDate = new Date();
-                            }
-                        } catch (Exception e2) {
-                            messageDate = new Date();
-                        }
+                    // Sử dụng sentAt (thời gian gửi tin nhắn từ server) để đảm bảo thời gian chính xác
+                    Date messageDate = parseTimestamp(dto.getSentAt());
+                    if (messageDate == null) {
+                        // Nếu không parse được, chỉ dùng thời gian hiện tại như fallback
+                        android.util.Log.w("ChatActivity", "No valid sentAt for message " + messageId + ", using current time");
+                        messageDate = new Date();
                     }
                     
                     boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
@@ -297,7 +316,7 @@ public class ChatActivity extends AppCompatActivity {
                     public void onResponse(retrofit2.Call<ApiResponse<ChatMessageDto>> call, retrofit2.Response<ApiResponse<ChatMessageDto>> response) {
                         android.util.Log.d("ChatActivity", "createMessage response code=" + response.code());
                         
-                        // Cập nhật message ID từ server response
+                        // Cập nhật message ID và timestamp từ server response
                         if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
                             ChatMessageDto createdDto = response.body().getResult();
                             Long createdMessageId = createdDto.getChatMessageID();
@@ -311,9 +330,24 @@ public class ChatActivity extends AppCompatActivity {
                                         msg.getMessage().equals(messageText) && 
                                         msg.isFromUser() &&
                                         !addedMessageIds.contains(createdMessageId)) {
+                                        // Cập nhật message ID
                                         msg.setMessageId(createdMessageId);
                                         addedMessageIds.add(createdMessageId);
-                                        android.util.Log.d("ChatActivity", "Updated message ID: " + createdMessageId);
+                                        
+                                        // Cập nhật timestamp từ sentAt của server để đảm bảo thời gian chính xác
+                                        Date serverTimestamp = parseTimestamp(createdDto.getSentAt());
+                                        if (serverTimestamp != null) {
+                                            msg.setTimestamp(serverTimestamp);
+                                            // Cập nhật lastMessageTimestamp nếu cần
+                                            if (lastMessageTimestamp == null || serverTimestamp.after(lastMessageTimestamp)) {
+                                                lastMessageTimestamp = serverTimestamp;
+                                            }
+                                            // Thông báo adapter cập nhật để hiển thị timestamp mới
+                                            chatAdapter.notifyItemChanged(i);
+                                            android.util.Log.d("ChatActivity", "Updated message ID: " + createdMessageId + ", timestamp: " + createdDto.getSentAt() + " -> " + serverTimestamp);
+                                        } else {
+                                            android.util.Log.w("ChatActivity", "Updated message ID: " + createdMessageId + " but could not parse sentAt: " + createdDto.getSentAt());
+                                        }
                                         break;
                                     }
                                 }
@@ -420,31 +454,12 @@ public class ChatActivity extends AppCompatActivity {
                     if (messageId == null) continue; // Bỏ qua nếu không có ID
                     
                     boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
-                    Date ts;
-                    try {
-                        String sentAtStr = dto.getSentAt();
-                        // Nếu sentAt null hoặc rỗng, sử dụng createdAt từ conversation
-                        if (sentAtStr == null || sentAtStr.isEmpty()) {
-                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
-                                sentAtStr = dto.getConversation().getCreatedAt();
-                            }
-                        }
-                        if (sentAtStr != null && !sentAtStr.isEmpty()) {
-                            ts = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(sentAtStr);
-                        } else {
-                            ts = new Date();
-                        }
-                    } catch (Exception e) {
-                        // Nếu parse sentAt thất bại, thử dùng createdAt từ conversation
-                        try {
-                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
-                                ts = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getConversation().getCreatedAt());
-                            } else {
-                                ts = new Date();
-                            }
-                        } catch (Exception e2) {
-                            ts = new Date();
-                        }
+                    // Sử dụng sentAt (thời gian gửi tin nhắn từ server) để đảm bảo thời gian chính xác
+                    Date ts = parseTimestamp(dto.getSentAt());
+                    if (ts == null) {
+                        // Nếu không parse được, chỉ dùng thời gian hiện tại như fallback
+                        android.util.Log.w("ChatActivity", "fetchConversationMessages - No valid sentAt for message " + messageId + ", using current time");
+                        ts = new Date();
                     }
                     
                     ChatMessage msg = new ChatMessage(messageId, dto.getMessage(), fromUser, ts);
