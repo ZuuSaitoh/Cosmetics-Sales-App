@@ -162,9 +162,29 @@ public class ChatActivity extends AppCompatActivity {
                     
                     Date messageDate;
                     try {
-                        messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getSentAt());
+                        String sentAtStr = dto.getSentAt();
+                        // Nếu sentAt null hoặc rỗng, sử dụng createdAt từ conversation
+                        if (sentAtStr == null || sentAtStr.isEmpty()) {
+                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
+                                sentAtStr = dto.getConversation().getCreatedAt();
+                            }
+                        }
+                        if (sentAtStr != null && !sentAtStr.isEmpty()) {
+                            messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(sentAtStr);
+                        } else {
+                            messageDate = new Date();
+                        }
                     } catch (Exception e) {
-                        messageDate = new Date();
+                        // Nếu parse sentAt thất bại, thử dùng createdAt từ conversation
+                        try {
+                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
+                                messageDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getConversation().getCreatedAt());
+                            } else {
+                                messageDate = new Date();
+                            }
+                        } catch (Exception e2) {
+                            messageDate = new Date();
+                        }
                     }
                     
                     boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
@@ -402,9 +422,29 @@ public class ChatActivity extends AppCompatActivity {
                     boolean fromUser = currentUserId != null && dto.getUser() != null && currentUserId.equals(dto.getUser().getUserID());
                     Date ts;
                     try {
-                        ts = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getSentAt());
+                        String sentAtStr = dto.getSentAt();
+                        // Nếu sentAt null hoặc rỗng, sử dụng createdAt từ conversation
+                        if (sentAtStr == null || sentAtStr.isEmpty()) {
+                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
+                                sentAtStr = dto.getConversation().getCreatedAt();
+                            }
+                        }
+                        if (sentAtStr != null && !sentAtStr.isEmpty()) {
+                            ts = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(sentAtStr);
+                        } else {
+                            ts = new Date();
+                        }
                     } catch (Exception e) {
-                        ts = new Date();
+                        // Nếu parse sentAt thất bại, thử dùng createdAt từ conversation
+                        try {
+                            if (dto.getConversation() != null && dto.getConversation().getCreatedAt() != null) {
+                                ts = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()).parse(dto.getConversation().getCreatedAt());
+                            } else {
+                                ts = new Date();
+                            }
+                        } catch (Exception e2) {
+                            ts = new Date();
+                        }
                     }
                     
                     ChatMessage msg = new ChatMessage(messageId, dto.getMessage(), fromUser, ts);
