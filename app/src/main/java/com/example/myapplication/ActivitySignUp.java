@@ -142,8 +142,11 @@ public class ActivitySignUp extends AppCompatActivity {
         // Vô hiệu hóa nút để tránh click nhiều lần
         registerButton.setEnabled(false);
 
+        // Nếu email rỗng, set thành null để không gửi empty string xuống server
+        String emailToSend = (email == null || email.isEmpty()) ? null : email;
+
         // Tạo yêu cầu đăng ký
-        RegisterRequest request = new RegisterRequest(fullName, password, confirmPassword, email);
+        RegisterRequest request = new RegisterRequest(fullName, password, confirmPassword, emailToSend);
 
         // Gọi API đăng ký
         Call<RegisterResponse> call = authService.register(request);
@@ -153,11 +156,14 @@ public class ActivitySignUp extends AppCompatActivity {
                 registerButton.setEnabled(true); // Kích hoạt lại nút
                 if (response.isSuccessful()) {
                     Toast.makeText(ActivitySignUp.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                    // Đóng màn hình đăng ký và quay lại màn hình đăng nhập
+                    // Chuyển hướng về trang đăng nhập
+                    Intent intent = new Intent(ActivitySignUp.this, ActivityLogin.class);
+                    startActivity(intent);
                     finish();
                 } else {
-                    // Xử lý lỗi từ server, ví dụ: email đã tồn tại
-                    Toast.makeText(ActivitySignUp.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                    // Xử lý lỗi từ server với thông báo cụ thể
+                    String errorMessage = getErrorMessage(response);
+                    Toast.makeText(ActivitySignUp.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -185,10 +191,11 @@ public class ActivitySignUp extends AppCompatActivity {
             return false;
         }
 
-        if (email.isEmpty()) {
-            emailInputLayout.setError("Vui lòng nhập email");
-            return false;
-        }
+        // Email là tùy chọn, không bắt buộc
+        // if (email.isEmpty()) {
+        //     emailInputLayout.setError("Vui lòng nhập email");
+        //     return false;
+        // }
 
         if (password.isEmpty()) {
             passwordInputLayout.setError("Vui lòng nhập mật khẩu");
@@ -208,5 +215,74 @@ public class ActivitySignUp extends AppCompatActivity {
         // Bạn có thể thêm các kiểm tra phức tạp hơn ở đây (ví dụ: độ dài mật khẩu, định dạng email)
 
         return true;
+    }
+
+    /**
+     * Đọc và phân tích error message từ response để hiển thị thông báo cụ thể.
+     * @param response Response từ API
+     * @return Thông báo lỗi cụ thể
+     */
+    private String getErrorMessage(Response<RegisterResponse> response) {
+        String defaultMessage = "Đăng ký thất bại. Vui lòng thử lại.";
+        
+        try {
+            if (response.errorBody() != null) {
+                String errorBody = response.errorBody().string();
+                String errorBodyLower = errorBody.toLowerCase();
+                
+                // Kiểm tra các trường hợp lỗi cụ thể
+                // Chỉ hiển thị lỗi email nếu thực sự có vấn đề với email (không phải do empty string)
+                if (errorBodyLower.contains("email") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    // Kiểm tra xem có phải do empty string không
+                    if (errorBodyLower.contains("empty") || errorBodyLower.contains("rỗng") || 
+                        errorBodyLower.contains("required") || errorBodyLower.contains("bắt buộc")) {
+                        // Nếu là lỗi empty/required, bỏ qua vì email là optional
+                        // Tiếp tục kiểm tra các lỗi khác
+                    } else {
+                        return "Email đã tồn tại. Vui lòng sử dụng email khác.";
+                    }
+                }
+                
+                if (errorBodyLower.contains("tài khoản") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    return "Tài khoản đã tồn tại. Vui lòng sử dụng tên đăng nhập khác.";
+                }
+                
+                if (errorBodyLower.contains("username") && 
+                    (errorBodyLower.contains("đã tồn tại") || 
+                     errorBodyLower.contains("already exists") || 
+                     errorBodyLower.contains("existed") ||
+                     errorBodyLower.contains("duplicate"))) {
+                    return "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
+                }
+                
+                // Thử extract message từ JSON nếu có
+                if (errorBody.contains("\"message\"")) {
+                    try {
+                        int messageStart = errorBody.indexOf("\"message\":\"") + 11;
+                        int messageEnd = errorBody.indexOf("\"", messageStart);
+                        if (messageStart > 10 && messageEnd > messageStart) {
+                            String extractedMsg = errorBody.substring(messageStart, messageEnd);
+                            if (!extractedMsg.isEmpty()) {
+                                return extractedMsg;
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Nếu không parse được, tiếp tục với logic khác
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Nếu không đọc được error body, sử dụng message mặc định
+        }
+        
+        return defaultMessage;
     }
 }

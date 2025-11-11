@@ -160,23 +160,27 @@ public class VNPayActivity extends AppCompatActivity {
                         Intent intent = new Intent(VNPayActivity.this, ActivityOrderSuccess.class);
                         startActivity(intent);
                     } else {
-                        Intent intent = new Intent(VNPayActivity.this, OrderFailedActivity.class);
-                        startActivity(intent);
+                        goToFailedActivity();
                     }
                 } else {
-                    Intent intent = new Intent(VNPayActivity.this, OrderFailedActivity.class);
-                    startActivity(intent);
+                    goToFailedActivity();
                 }
                 finish();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Intent intent = new Intent(VNPayActivity.this, OrderFailedActivity.class);
-                startActivity(intent);
+                goToFailedActivity();
                 finish();
             }
         });
+    }
+
+    private void goToFailedActivity() {
+        Intent intent = new Intent(VNPayActivity.this, OrderFailedActivity.class);
+        intent.putExtra("orderId", orderId);
+        intent.putExtra("amount", amount);
+        startActivity(intent);
     }
 
     public static String hmacSHA512(final String key, final String data) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ChatMessage implements Serializable {
+    private Long messageId;
     private String message;
     private boolean isFromUser;
     private Date timestamp;
@@ -11,9 +12,22 @@ public class ChatMessage implements Serializable {
     public ChatMessage() {}
     
     public ChatMessage(String message, boolean isFromUser, Date timestamp) {
+        this(null, message, isFromUser, timestamp);
+    }
+    
+    public ChatMessage(Long messageId, String message, boolean isFromUser, Date timestamp) {
+        this.messageId = messageId;
         this.message = message;
         this.isFromUser = isFromUser;
         this.timestamp = timestamp;
+    }
+    
+    public Long getMessageId() {
+        return messageId;
+    }
+    
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
     }
     
     public String getMessage() {

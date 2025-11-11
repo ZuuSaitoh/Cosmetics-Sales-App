@@ -258,6 +258,9 @@ public class ActivityOrderHistory extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         if (response.isSuccessful() && response.body() != null) {
                             List<Order> orders = response.body().getResult();
+                            if (orders != null) {
+                                Collections.sort(orders, (o1, o2) -> Long.compare(o2.getOrderID(), o1.getOrderID()));
+                            }
                             if (filterStatus != null && !filterStatus.isEmpty()) {
                                 List<Order> filtered = new ArrayList<>();
                                 if (orders != null) {
@@ -325,19 +328,19 @@ public class ActivityOrderHistory extends AppCompatActivity {
                 public int compare(Order o1, Order o2) {
                     try {
                         // Parse ngày đặt hàng từ ISO format
-                        java.text.SimpleDateFormat isoFormat = 
+                        java.text.SimpleDateFormat isoFormat =
                             new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", java.util.Locale.getDefault());
-                        
+
                         String date1Str = o1.getOrderDate();
                         String date2Str = o2.getOrderDate();
-                        
+
                         if (date1Str == null && date2Str == null) return 0;
                         if (date1Str == null) return 1; // null xếp sau
                         if (date2Str == null) return -1; // null xếp sau
-                        
+
                         java.util.Date date1 = isoFormat.parse(date1Str);
                         java.util.Date date2 = isoFormat.parse(date2Str);
-                        
+
                         // So sánh ngược lại để mới nhất lên đầu (date2.compareTo(date1))
                         return date2.compareTo(date1);
                     } catch (Exception e) {
@@ -348,7 +351,7 @@ public class ActivityOrderHistory extends AppCompatActivity {
                     }
                 }
             });
-            
+
             emptyLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             orderAdapter.setOrderList(orders);

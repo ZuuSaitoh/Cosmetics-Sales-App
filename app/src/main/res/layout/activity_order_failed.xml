@@ -41,10 +41,19 @@
             android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/btn_back_to_home"
+            android:id="@+id/btn_pay_again"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:backgroundTint="@color/lavender"
+            android:text="Thanh toán lại"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_back_to_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/red"
             android:text="Quay về trang chủ"
             android:textColor="@color/white" />

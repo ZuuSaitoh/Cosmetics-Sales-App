@@ -354,17 +354,19 @@ public class NotificationCreator {
         Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         Log.d(TAG, "📤 CREATING NOTIFICATION");
         Log.d(TAG, "UserId: " + userId);
-        Log.d(TAG, "Type: " + notificationType);
+        Log.d(TAG, "Type (for reference): " + notificationType);
         Log.d(TAG, "Message: " + message);
-        Log.d(TAG, "DataPayload: " + dataPayload);
+        Log.d(TAG, "DataPayload (for reference): " + dataPayload);
         
-        // Tạo request object
-        NotificationRequest request = new NotificationRequest(userId, message, notificationType, dataPayload);
+        // ⚠️ Backend API yêu cầu userID, message và title (bắt buộc)
+        // Tạo title từ message (lấy 50 ký tự đầu hoặc toàn bộ nếu ngắn hơn)
+        String title = message.length() > 50 ? message.substring(0, 50) + "..." : message;
+        NotificationRequest request = new NotificationRequest(userId, message, title);
         
         // Log request JSON để thấy chính xác những gì được gửi
         com.google.gson.Gson gson = new com.google.gson.Gson();
         String requestJson = gson.toJson(request);
-        Log.d(TAG, "Request JSON: " + requestJson);
+        Log.d(TAG, "📤 REQUEST JSON (gửi userID, message và title): " + requestJson);
         Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         
         // Gọi API
@@ -387,16 +389,6 @@ public class NotificationCreator {
                         Log.d(TAG, "User ID: " + result.getUserId());
                         Log.d(TAG, "Type FROM BACKEND: " + result.getNotificationType());
                         Log.d(TAG, "Message: " + result.getMessage());
-                        Log.d(TAG, "⚠️ EXPECTED Type: " + notificationType);
-                        
-                        if (!notificationType.equals(result.getNotificationType())) {
-                            Log.e(TAG, "❌ TYPE MISMATCH!");
-                            Log.e(TAG, "   Sent to backend: " + notificationType);
-                            Log.e(TAG, "   Received from backend: " + result.getNotificationType());
-                            Log.e(TAG, "   => Backend is NOT saving notificationType from request!");
-                        } else {
-                            Log.d(TAG, "✅ Type matches - backend saved correctly");
-                        }
                         Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
                         
                         if (listener != null) {
@@ -410,7 +402,21 @@ public class NotificationCreator {
                         }
                     }
                 } else {
+                    // Đọc error body để debug
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                            Log.e(TAG, "Error Body: " + errorBody);
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Cannot read error body", e);
+                    }
+                    
                     String error = "HTTP Error: " + response.code();
+                    if (!errorBody.isEmpty()) {
+                        error += " - " + errorBody;
+                    }
                     Log.e(TAG, error);
                     if (listener != null) {
                         listener.onError(error);
