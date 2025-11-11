@@ -193,7 +193,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         textDescription.setText(product.getBriefDescription() != null ? product.getBriefDescription() : "Mô tả sản phẩm");
         if (textFullDescription != null) {
             textFullDescription.setText(product.getFullDescription() != null ? product.getFullDescription() : "Mô tả chi tiết");
-            // Luôn hiển thị mô tả đầy đủ
+            // Luôn hiển thị mô tả đầy đủ, không cần nút đọc thêm/thu gọn
             textFullDescription.setVisibility(View.VISIBLE);
         }
         if (textBrand != null) {
