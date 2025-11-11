@@ -24,6 +24,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -321,6 +322,36 @@ public class ActivityOrderHistory extends AppCompatActivity {
 
     private void updateList(List<Order> orders) {
         if (orders != null && !orders.isEmpty()) {
+            // Sắp xếp đơn hàng từ mới nhất đến cũ nhất theo ngày đặt hàng
+            Collections.sort(orders, new Comparator<Order>() {
+                @Override
+                public int compare(Order o1, Order o2) {
+                    try {
+                        // Parse ngày đặt hàng từ ISO format
+                        java.text.SimpleDateFormat isoFormat =
+                            new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", java.util.Locale.getDefault());
+
+                        String date1Str = o1.getOrderDate();
+                        String date2Str = o2.getOrderDate();
+
+                        if (date1Str == null && date2Str == null) return 0;
+                        if (date1Str == null) return 1; // null xếp sau
+                        if (date2Str == null) return -1; // null xếp sau
+
+                        java.util.Date date1 = isoFormat.parse(date1Str);
+                        java.util.Date date2 = isoFormat.parse(date2Str);
+
+                        // So sánh ngược lại để mới nhất lên đầu (date2.compareTo(date1))
+                        return date2.compareTo(date1);
+                    } catch (Exception e) {
+                        // Nếu parse lỗi, so sánh theo string
+                        String date1 = o1.getOrderDate() != null ? o1.getOrderDate() : "";
+                        String date2 = o2.getOrderDate() != null ? o2.getOrderDate() : "";
+                        return date2.compareTo(date1); // Ngược lại để mới nhất lên đầu
+                    }
+                }
+            });
+
             emptyLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             orderAdapter.setOrderList(orders);

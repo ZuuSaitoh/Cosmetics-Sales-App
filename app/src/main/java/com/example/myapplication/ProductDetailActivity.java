@@ -42,11 +42,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView imageProduct;
     private TextView textName, textPrice, textDescription, textFullDescription, textBrand, textCategory, textStock;
-    private TextView btnReadMore;
     private Button btnAddToCart;
     private ImageButton btnBack;
     private ImageButton btnCart;
-    private boolean isDescriptionExpanded = false;
 
     private Product product;
     private Long productId;
@@ -96,9 +94,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(v -> finish());
-        
-        // Setup Read more button
-        setupReadMoreButton();
 
     }
 
@@ -124,32 +119,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         btnCart = findViewById(R.id.btn_cart);
         cartBadge = findViewById(R.id.cart_badge);
-        btnReadMore = findViewById(R.id.btn_read_more);
 
-    }
-    
-    private void setupReadMoreButton() {
-        if (btnReadMore == null) {
-            return;
-        }
-        
-        btnReadMore.setOnClickListener(v -> {
-            if (textFullDescription == null) {
-                return;
-            }
-            
-            if (isDescriptionExpanded) {
-                // Thu gọn
-                textFullDescription.setVisibility(View.GONE);
-                btnReadMore.setText("Đọc thêm");
-                isDescriptionExpanded = false;
-            } else {
-                // Mở rộng
-                textFullDescription.setVisibility(View.VISIBLE);
-                btnReadMore.setText("Thu gọn");
-                isDescriptionExpanded = true;
-            }
-        });
     }
 
     public void setupCart() {
@@ -223,12 +193,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         textDescription.setText(product.getBriefDescription() != null ? product.getBriefDescription() : "Mô tả sản phẩm");
         if (textFullDescription != null) {
             textFullDescription.setText(product.getFullDescription() != null ? product.getFullDescription() : "Mô tả chi tiết");
-            // Reset trạng thái khi load dữ liệu mới
-            textFullDescription.setVisibility(View.GONE);
-            if (btnReadMore != null) {
-                btnReadMore.setText("Đọc thêm");
-            }
-            isDescriptionExpanded = false;
+            // Luôn hiển thị mô tả đầy đủ
+            textFullDescription.setVisibility(View.VISIBLE);
         }
         if (textBrand != null) {
             textBrand.setText("Thương hiệu: " + (product.getBrand() != null ? product.getBrand() : "Không có"));
